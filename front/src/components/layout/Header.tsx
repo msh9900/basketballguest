@@ -61,7 +61,7 @@ export default function Header() {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ height: 100 }}>
           <SportsBasketballIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
