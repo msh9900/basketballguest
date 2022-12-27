@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import IntroducePage from "./pages/IntroducePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "./components/layout/Header";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile";
 
 function App() {
