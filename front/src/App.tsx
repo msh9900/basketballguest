@@ -6,7 +6,7 @@ import IntroducePage from "./pages/intro/IntroducePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "./components/layout/Header";
 import LoginPage from "./pages/login/LoginPage";
-import Profile from "./pages/intro/Profile";
+import Profile from "./pages/profile/Profile";
 import Service from "./pages/service/Service";
 
 function App() {
