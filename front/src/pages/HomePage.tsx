@@ -10,9 +10,7 @@ export default function HomePage() {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box bgcolor="warning.main" color="info.contrastText" p={2}>
-            2
-          </Box>
+          <Box bgcolor="warning.main" color="info.contrastText" p={2}></Box>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Box bgcolor="warning.main" color="info.contrastText" p={2}>
