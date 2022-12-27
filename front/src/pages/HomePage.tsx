@@ -5,12 +5,24 @@ export default function HomePage() {
     <>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Box bgcolor="primary.main" color="info.contrastText" p={2}>
-            농구영상
+          <Box
+            bgcolor="primary.main"
+            color="info.contrastText"
+            p={2}
+            height="300px"
+          >
+            <video
+              src="/front/src/assets/video/basketball.mp4"
+              autoPlay
+              muted
+              loop
+            ></video>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box bgcolor="warning.main" color="info.contrastText" p={2}></Box>
+          <Box bgcolor="warning.main" color="info.contrastText" p={2}>
+            2
+          </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Box bgcolor="warning.main" color="info.contrastText" p={2}>

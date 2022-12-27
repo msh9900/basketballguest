@@ -6,6 +6,7 @@ import IntroducePage from "./pages/IntroducePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "./components/layout/Header";
 import Login from "./pages/Login/Login";
+import LoginPage from "./pages/LoginPage";
 import Profile from "./pages/Profile";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Route path="/intro" element={<IntroducePage />} />
         <Route path="/guest" element={<GuestRecruitmentPage />} />
         <Route path="/gym" element={<GymRental />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
