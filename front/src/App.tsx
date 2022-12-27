@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import GuestRecruitmentPage from "./pages/guest/GuestRecruitmentPage";
 import GymRental from "./pages/rental/GymRental";
 import HomePage from "./pages/HomePage";
@@ -8,11 +8,17 @@ import Header from "./components/layout/Header";
 import LoginPage from "./pages/login/LoginPage";
 import Profile from "./pages/profile/Profile";
 import Service from "./pages/service/Service";
+import { useEffect, useState } from "react";
 
 function App() {
+  const location = useLocation();
+  useEffect(() => {
+    location.pathname === "/login" ? setHeaderDel(false) : setHeaderDel(true);
+  }, [location.pathname]);
+  const [headerDel, setHeaderDel] = useState(true);
   return (
     <>
-      <Header />
+      {headerDel ? <Header /> : ""}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<IntroducePage />} />
