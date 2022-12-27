@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import GuestRecruitmentPage from "./pages/GuestRecruitmentPage";
-import GymRental from "./pages/GymRental";
+import GuestRecruitmentPage from "./pages/guest/GuestRecruitmentPage";
+import GymRental from "./pages/rental/GymRental";
 import HomePage from "./pages/HomePage";
-import IntroducePage from "./pages/IntroducePage";
+import IntroducePage from "./pages/intro/IntroducePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "./components/layout/Header";
-import LoginPage from "./pages/LoginPage";
-import Profile from "./pages/Profile";
+import LoginPage from "./pages/login/LoginPage";
+import Profile from "./pages/intro/Profile";
+import Service from "./pages/service/Service";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/gym" element={<GymRental />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/service" element={<Service />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
