@@ -1,20 +1,19 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+import classes from "./Header.module.scss";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 
-const pages = ["소개", "게스트모집", "체육관대여"];
+const pages = ["소개", "게스트모집", "체육관대여", "서비스"];
 
 export default function Header() {
   let navigate = useNavigate();
@@ -42,6 +41,9 @@ export default function Header() {
     if (event.currentTarget.textContent === "체육관대여") {
       navigate("/gym");
     }
+    if (event.currentTarget.textContent === "서비스") {
+      navigate("/service");
+    }
 
     setAnchorElNav(null);
   };
@@ -59,31 +61,14 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ height: 100 }}>
-          <SportsBasketballIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            농구게스트
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+    <AppBar position="static" style={{ background: "#f1a707" }}>
+      <div className={classes.container}>
+        <Toolbar
+          disableGutters
+          sx={{ height: 100 }}
+          className={classes.toolbar}
+        >
+          <div className={classes.appmenu}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -118,41 +103,30 @@ export default function Header() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-          <SportsBasketballIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            농구게스트
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={MenuLinkClickHandler}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          </div>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Link to="/" className={classes.homename}>
+            <div>
+              <SportsBasketballIcon />
+            </div>
+            <div>BPT</div>
+          </Link>
+          <div className={classes.listcontainer}>
+            <Link to="/intro" className={classes.HeaderList}>
+              소개
+            </Link>
+            <Link to="/guest" className={classes.HeaderList}>
+              게스트모집
+            </Link>
+            <Link to="/gym" className={classes.HeaderList}>
+              체육관대여
+            </Link>
+            <Link to="/service" className={classes.HeaderList}>
+              서비스
+            </Link>
+          </div>
+
+          <div className={classes.usercircle}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* 로그인을 하면 사용자가 등록한 이미지가 나오게 해야함 만약 등록안하면 기본이미지 */}
@@ -185,9 +159,9 @@ export default function Header() {
                 <Typography textAlign="center">로그아웃</Typography>
               </MenuItem>
             </Menu>
-          </Box>
+          </div>
         </Toolbar>
-      </Container>
+      </div>
     </AppBar>
   );
 }
