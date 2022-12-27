@@ -5,7 +5,6 @@ import HomePage from "./pages/HomePage";
 import IntroducePage from "./pages/IntroducePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "./components/layout/Header";
-import Login from "./pages/Login/Login";
 import LoginPage from "./pages/LoginPage";
 import Profile from "./pages/Profile";
 
