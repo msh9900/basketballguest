@@ -56,12 +56,16 @@ export default function Header() {
       navigate("/login");
     }
     if (event.currentTarget.textContent === "로그아웃") {
+      logoutHandler();
     }
     setAnchorElUser(null);
   };
+  const logoutHandler = () => {
+    //LOGOUT 구현
+  };
 
   return (
-    <AppBar position="static" style={{ background: "#f1a707" }}>
+    <AppBar position="fixed" style={{ background: "#f1a707" }}>
       <div className={classes.container}>
         <Toolbar
           disableGutters

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 function App() {
   const location = useLocation();
   useEffect(() => {
+    
     location.pathname === "/login" ? setHeaderDel(false) : setHeaderDel(true);
   }, [location.pathname]);
   const [headerDel, setHeaderDel] = useState(true);

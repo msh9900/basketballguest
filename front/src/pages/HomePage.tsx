@@ -11,9 +11,10 @@ export default function HomePage() {
           loop
         />
         <div className={classes.videologocontainer}>
-          <div className={classes.videologo}>basketball </div>
-          <div className={classes.videologo}>play</div>
-          <div className={classes.videologo}>together</div>
+          <div className={classes.videologo}>Basketball </div>
+          <div className={classes.videologo}>Play</div>
+          <div className={classes.videologo}>Together</div>
+          <div className={classes.videotext}>함께 농구를 즐기다.</div>
         </div>
       </div>
       <div>소개</div>
