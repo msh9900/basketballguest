@@ -9,12 +9,14 @@ import LoginPage from "./pages/login/LoginPage";
 import Profile from "./pages/profile/Profile";
 import Service from "./pages/service/Service";
 import { useEffect, useState } from "react";
+import Register from "./pages/login/RegisterPage";
 
 function App() {
   const location = useLocation();
   useEffect(() => {
-    
-    location.pathname === "/login" ? setHeaderDel(false) : setHeaderDel(true);
+    location.pathname === "/login" || location.pathname === "/register"
+      ? setHeaderDel(false)
+      : setHeaderDel(true);
   }, [location.pathname]);
   const [headerDel, setHeaderDel] = useState(true);
   return (
@@ -28,6 +30,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/service" element={<Service />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
