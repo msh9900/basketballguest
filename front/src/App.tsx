@@ -9,6 +9,7 @@ import LoginPage from "./pages/login/LoginPage";
 import Profile from "./pages/profile/Profile";
 import Service from "./pages/service/Service";
 import { useEffect, useState } from "react";
+import Footer from "./components/layout/Footer";
 import Register from "./pages/login/RegisterPage";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
   return (
     <>
       {headerDel ? <Header /> : ""}
+      {headerDel ? <div style={{ height: 100 }} /> : ""}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<IntroducePage />} />
@@ -33,6 +35,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+
+      <Footer />
     </>
   );
 }
