@@ -4,79 +4,88 @@ $textcolor: #666666;
 .videocontainer {
   height: 1080px;
   overflow: hidden;
+  .backgroundvideo {
+    position: absolute;
+    width: 100%;
+    height: 1080px;
+    object-fit: cover;
+  }
+  .videologocontainer {
+    width: 600px;
+    height: 500px;
+    position: absolute;
+    left: 100px;
+    top: 200px;
+    .videologo {
+      font-size: 100px;
+      font-weight: bold;
+      line-height: 100px;
+      height: 100px;
+      color: #f1ed07;
+    }
+    .videotext {
+      font-size: 60px;
+      color: white;
+      margin-top: 200px;
+    }
+  }
 }
-.backgroundvideo {
-  position: absolute;
-  width: 100%;
-  height: 1080px;
-  object-fit: cover;
-}
-.videologocontainer {
-  width: 600px;
-  height: 500px;
-  position: absolute;
-  left: 100px;
-  top: 200px;
-}
-.videologo {
-  font-size: 100px;
-  font-weight: bold;
-  line-height: 100px;
-  height: 100px;
-  color: #f1ed07;
-}
-.videotext {
-  font-size: 60px;
-  color: white;
-  margin-top: 200px;
-}
+
 // 소개 부분
 .introcontainer {
   display: grid;
   margin-left: 50px;
   margin-right: 50px;
-}
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40vw;
-  div {
-    .title {
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 30px;
+  .video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    position: relative;
+    video {
+      width: 100%;
+      height: 400px;
+      position: absolute;
+      object-fit: cover;
     }
-    .text {
-      font-size: 16px;
-      margin-bottom: 30px;
-    }
-    .link {
-      font-size: 16px;
-      color: black;
-      font-weight: bolder;
-      text-decoration: none;
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    > div {
+      margin-left: 50px;
+      .title {
+        font-size: 45px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+      .text {
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+      .link {
+        font-size: 32px;
+        border-radius: 30px;
+        background-color: #111111;
+        color: white;
+        font-weight: bolder;
+        text-decoration: none;
+        &:hover {
+          background-color: #757575;
+        }
+      }
     }
   }
 }
-.video {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40vw;
-  position: relative;
-  video {
-    width: 100%;
-    position: absolute;
-    object-fit: cover;
-  }
-}
+
 ////게스트 모집 페이지
 .guestcontainer {
   background-size: cover;
   width: 100%;
   position: relative;
-  height: 850px;
+  height: 70vw;
   .title {
     display: flex;
     position: absolute;
@@ -85,17 +94,22 @@ $textcolor: #666666;
     flex-direction: column;
     right: 0;
     width: 65vw;
-    height: 700px;
+    height: 50vw;
     .text {
-      margin-bottom: 50px;
-      font-size: 30px;
+      margin-bottom: 45px;
+      font-size: 60px;
       color: black;
     }
     .link {
-      font-size: 16px;
-      color: black;
+      border-radius: 30px;
+      background-color: #111111;
+      font-size: 32px;
+      color: white;
       font-weight: bolder;
       text-decoration: none;
+      &:hover {
+        background-color: #757575;
+      }
     }
   }
 }
@@ -111,18 +125,22 @@ $textcolor: #666666;
     justify-content: center;
     align-items: baseline;
     flex-direction: column;
-    width: 65vw;
     height: 700px;
     .text {
-      margin-bottom: 50px;
-      font-size: 30px;
+      margin-bottom: 45px;
+      font-size: 60px;
       color: black;
     }
     .link {
-      font-size: 16px;
-      color: black;
+      font-size: 32px;
+      border-radius: 30px;
+      background-color: #111111;
+      color: white;
       font-weight: bolder;
       text-decoration: none;
+      &:hover {
+        background-color: #757575;
+      }
     }
   }
 }
@@ -131,49 +149,53 @@ $textcolor: #666666;
 @media (max-width: 900px) {
   .videocontainer {
     height: 600px;
+    .backgroundvideo {
+      height: 600px;
+    }
+    .videologocontainer {
+      width: 300px;
+      height: 300px;
+      top: 150px;
+      left: 50px;
+      .videologo {
+        font-size: 50px;
+        line-height: 50px;
+        height: 50px;
+      }
+      .videotext {
+        font-size: 30px;
+        margin-top: 100px;
+      }
+    }
   }
-  .backgroundvideo {
-    height: 600px;
-  }
-  .videologocontainer {
-    width: 350px;
-    height: 300px;
-    top: 150px;
-    left: 50px;
-  }
-  .videologo {
-    font-size: 50px;
-    line-height: 50px;
-    height: 50px;
-  }
-  .videotext {
-    font-size: 30px;
-    margin-top: 100px;
-  }
+
   //소개 부분
   .introcontainer {
     margin-left: 0;
     margin-right: 0;
-  }
-  .content {
-    height: 200px;
-    div {
-      .title {
-        font-size: 22px;
-        margin-bottom: 15px;
+    .video {
+      height: 450px;
+      video {
       }
-      .text {
-        margin-bottom: 15px;
-      }
-      .link {
+    }
+    .content {
+      height: 200px;
+      div {
+        .title {
+          font-size: 22px;
+          margin-bottom: 15px;
+        }
+        .text {
+          font-size: 16px;
+          margin-bottom: 15px;
+        }
+        .link {
+          font-size: 16px;
+        }
       }
     }
   }
-  .video {
-    height: 55vw;
-    video {
-    }
-  }
+
   //게스트모집 부분
   .guestcontainer {
     height: 600px;
@@ -184,17 +206,20 @@ $textcolor: #666666;
         font-size: 22px;
       }
       .link {
+        font-size: 16px;
       }
     }
   }
   //체육관대여 부분
   .gymcontainer {
     .title {
+      margin-left: 30px;
       .text {
         font-size: 22px;
         color: black;
       }
       .link {
+        font-size: 16px;
       }
     }
   }

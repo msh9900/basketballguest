@@ -1,0 +1,39 @@
+//푸터
+footer {
+  width: 100%;
+  background-color: black;
+  color: white;
+  height: 200px;
+  > div {
+    margin-left: 20px;
+    margin-right: 20px;
+    .menus {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      align-items: center;
+      .menu {
+        margin: 50px;
+        color: white;
+      }
+    }
+  }
+  .copyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+//모바일
+@media (max-width: 900px) {
+  footer {
+    height: 200px;
+    > div {
+      .menus {
+        .menu {
+          margin: 10px;
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import classes from "./HomePage.module.scss";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-import { url } from "inspector";
 export default function HomePage() {
   return (
     <>
@@ -69,7 +68,6 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
-      <div>고객센터</div>
     </>
   );
 }
