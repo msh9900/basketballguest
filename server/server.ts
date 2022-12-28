@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
 const server = express();
+const fs = require('fs');
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));

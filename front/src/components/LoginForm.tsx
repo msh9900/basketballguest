@@ -81,27 +81,26 @@ export default function LoginForm(props: any) {
     <>
       <form onSubmit={loginFormHandler} className={classes.loginForm}>
         <div className={classes.logo}>
-          <div>
-            <SportsBasketballIcon fontSize="large" className={classes.ball} />
+          <div className={classes.title}>
+            <SportsBasketballIcon fontSize="inherit" className={classes.ball} />
+            BPT
           </div>
-          <div className={classes.title}>BPT</div>
         </div>
         <div className={classes.login}>
           <input
             type="text"
             className={classes.id}
             value={id}
-            placeholder="아이디를 입력해주세요"
+            placeholder="아이디"
             onChange={handleId}
             onClick={() => {
               setIsRecentSubmitted(false);
             }}
           />
-
           <input
             type="password"
             className={classes.pw}
-            placeholder="비밀번호를 입력해주세요"
+            placeholder="비밀번호"
             value={pw}
             onChange={handlePw}
             onClick={() => {
