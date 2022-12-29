@@ -1,4 +1,4 @@
-const mongoClient = require('../routes/mongoconnect');
+const mongoClient = require('../routes/mongoconnet')!;
 const _user = mongoClient.connect();
 const mongoDB = {
   setId: async (id: string, pw: string) => {
