@@ -1,4 +1,6 @@
 $textcolor: #666666;
+$title: "Noto Sans KR", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
 
 //메인 홈페이지 첫번째 부분
 .videocontainer {
@@ -97,6 +99,8 @@ $textcolor: #666666;
     height: 50vw;
     .text {
       margin-bottom: 45px;
+      font-family: $title;
+      font-weight: bold;
       font-size: 60px;
       color: black;
     }
@@ -128,6 +132,8 @@ $textcolor: #666666;
     height: 700px;
     .text {
       margin-bottom: 45px;
+      font-family: $title;
+      font-weight: bold;
       font-size: 60px;
       color: black;
     }
