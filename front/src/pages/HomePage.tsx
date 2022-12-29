@@ -1,4 +1,4 @@
-import classes from "./HomePage.module.scss";
+import classes from "./Homepage.module.scss";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 export default function HomePage() {
