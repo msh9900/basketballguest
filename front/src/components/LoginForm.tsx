@@ -42,8 +42,8 @@ export default function LoginForm(props: any) {
         pw: pw,
       }),
     });
-    const result = data.json();
-    console.log(result);
+    const result = await data.json();
+    console.log(result.id);
   };
 
   const loginFormHandler = async (event: any) => {
@@ -55,6 +55,7 @@ export default function LoginForm(props: any) {
     }
 
     // api 호출
+    send();
   };
 
   return (
