@@ -1,7 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap");
 $textcolor: #666666;
 $title: "Noto Sans KR", sans-serif;
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
-
+$text: "Gothic A1", sans-serif;
 //메인 홈페이지 첫번째 부분
 .videocontainer {
   height: 1080px;
@@ -22,12 +23,17 @@ $title: "Noto Sans KR", sans-serif;
       font-size: 100px;
       font-weight: bold;
       line-height: 100px;
+      text-shadow: -3px 0px rgb(0, 0, 0), 0px 3px rgb(0, 0, 0),
+        3px 0px rgb(0, 0, 0), 0px -3px rgb(0, 0, 0);
       height: 100px;
       color: #f1ed07;
     }
     .videotext {
       font-size: 60px;
+      font-family: $title;
+      font-weight: bold;
       color: white;
+
       margin-top: 200px;
     }
   }
@@ -55,28 +61,22 @@ $title: "Noto Sans KR", sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    height: 400px;
     > div {
+      display: flex;
+      flex-direction: column;
       margin-left: 50px;
       .title {
         font-size: 45px;
+        font-family: $title;
         font-weight: bold;
         margin-bottom: 30px;
       }
       .text {
         font-size: 32px;
+        font-family: $text;
+        font-weight: 600;
         margin-bottom: 30px;
-      }
-      .link {
-        font-size: 32px;
-        border-radius: 30px;
-        background-color: #111111;
-        color: white;
-        font-weight: bolder;
-        text-decoration: none;
-        &:hover {
-          background-color: #757575;
-        }
       }
     }
   }
@@ -104,17 +104,6 @@ $title: "Noto Sans KR", sans-serif;
       font-size: 60px;
       color: black;
     }
-    .link {
-      border-radius: 30px;
-      background-color: #111111;
-      font-size: 32px;
-      color: white;
-      font-weight: bolder;
-      text-decoration: none;
-      &:hover {
-        background-color: #757575;
-      }
-    }
   }
 }
 ////체육관 대여 페이지
@@ -136,17 +125,6 @@ $title: "Noto Sans KR", sans-serif;
       font-weight: bold;
       font-size: 60px;
       color: black;
-    }
-    .link {
-      font-size: 32px;
-      border-radius: 30px;
-      background-color: #111111;
-      color: white;
-      font-weight: bolder;
-      text-decoration: none;
-      &:hover {
-        background-color: #757575;
-      }
     }
   }
 }
@@ -187,6 +165,7 @@ $title: "Noto Sans KR", sans-serif;
     .content {
       height: 200px;
       div {
+        margin-left: 0px;
         .title {
           font-size: 22px;
           margin-bottom: 15px;
@@ -194,9 +173,6 @@ $title: "Noto Sans KR", sans-serif;
         .text {
           font-size: 16px;
           margin-bottom: 15px;
-        }
-        .link {
-          font-size: 16px;
         }
       }
     }
@@ -211,9 +187,6 @@ $title: "Noto Sans KR", sans-serif;
       .text {
         font-size: 22px;
       }
-      .link {
-        font-size: 16px;
-      }
     }
   }
   //체육관대여 부분
@@ -223,9 +196,6 @@ $title: "Noto Sans KR", sans-serif;
       .text {
         font-size: 22px;
         color: black;
-      }
-      .link {
-        font-size: 16px;
       }
     }
   }
