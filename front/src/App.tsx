@@ -11,8 +11,7 @@ import Service from "./pages/service/Service";
 import { useEffect, useState } from "react";
 import Footer from "./components/layout/Footer";
 import Register from "./pages/login/RegisterPage";
-import { useSelector, useDispatch } from "react-redux";
-import { IsLogin } from "./redux/modules/login";
+import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
