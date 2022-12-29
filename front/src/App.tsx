@@ -1,3 +1,4 @@
+import classes from "./App.module.scss";
 import { Routes, Route, useLocation } from "react-router-dom";
 import GuestRecruitmentPage from "./pages/guest/GuestRecruitmentPage";
 import GymRental from "./pages/rental/GymRental";
@@ -14,30 +15,34 @@ import Register from "./pages/login/RegisterPage";
 
 function App() {
   const location = useLocation();
+  const [headerDel, setHeaderDel] = useState(true);
+
   useEffect(() => {
     location.pathname === "/login" || location.pathname === "/register"
       ? setHeaderDel(false)
       : setHeaderDel(true);
   }, [location.pathname]);
-  const [headerDel, setHeaderDel] = useState(true);
+
   return (
-    <>
-      {headerDel ? <Header /> : ""}
-      {headerDel ? <div style={{ height: 100 }} /> : ""}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/intro" element={<IntroducePage />} />
-        <Route path="/guest" element={<GuestRecruitmentPage />} />
-        <Route path="/gym" element={<GymRental />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/service" element={<Service />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+    <div className={classes.wrapper}>
+      <div className={classes.contentWrapper}>
+        {headerDel ? <Header /> : ""}
+        {headerDel ? <div style={{ height: 100 }} /> : ""}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/intro" element={<IntroducePage />} />
+          <Route path="/guest" element={<GuestRecruitmentPage />} />
+          <Route path="/gym" element={<GymRental />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

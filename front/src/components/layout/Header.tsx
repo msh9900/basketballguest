@@ -12,10 +12,12 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
+import { useSelector } from "react-redux";
 
 const pages = ["소개", "게스트모집", "체육관대여", "서비스"];
 
 export default function Header() {
+  const loginState = useSelector((state: any) => state.login.islogin);
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -156,12 +158,16 @@ export default function Header() {
               <MenuItem onClick={UserMenuClickHandler}>
                 <Typography textAlign="center">프로필</Typography>
               </MenuItem>
-              <MenuItem onClick={UserMenuClickHandler}>
-                <Typography textAlign="center">로그인</Typography>
-              </MenuItem>
-              <MenuItem onClick={UserMenuClickHandler}>
-                <Typography textAlign="center">로그아웃</Typography>
-              </MenuItem>
+              {!loginState && (
+                <MenuItem onClick={UserMenuClickHandler}>
+                  <Typography textAlign="center">로그인</Typography>
+                </MenuItem>
+              )}
+              {loginState && (
+                <MenuItem onClick={UserMenuClickHandler}>
+                  <Typography textAlign="center">로그아웃</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </div>
         </Toolbar>

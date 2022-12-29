@@ -14,7 +14,10 @@ footer {
       align-items: center;
       .menu {
         margin: 50px;
-        color: white;
+        .font {
+          color: white;
+          text-decoration: none;
+        }
       }
     }
   }
