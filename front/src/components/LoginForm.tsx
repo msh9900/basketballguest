@@ -34,16 +34,16 @@ export default function LoginForm(props: any) {
     setPw(e.target.value);
   };
   const send: any = async () => {
-    await fetch("http://localhost:4000/login", {
+    const data = await fetch("http://localhost:4000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id: id,
         pw: pw,
       }),
-    }).then((send: object) => {
-      console.log(send);
     });
+    const result = data.json();
+    console.log(result);
   };
 
   const loginFormHandler = async (event: any) => {
