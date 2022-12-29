@@ -1,0 +1,232 @@
+$textcolor: #666666;
+$title: "Noto Sans KR", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
+
+//메인 홈페이지 첫번째 부분
+.videocontainer {
+  height: 1080px;
+  overflow: hidden;
+  .backgroundvideo {
+    position: absolute;
+    width: 100%;
+    height: 1080px;
+    object-fit: cover;
+  }
+  .videologocontainer {
+    width: 600px;
+    height: 500px;
+    position: absolute;
+    left: 100px;
+    top: 200px;
+    .videologo {
+      font-size: 100px;
+      font-weight: bold;
+      line-height: 100px;
+      height: 100px;
+      color: #f1ed07;
+    }
+    .videotext {
+      font-size: 60px;
+      color: white;
+      margin-top: 200px;
+    }
+  }
+}
+
+// 소개 부분
+.introcontainer {
+  display: grid;
+  margin-left: 50px;
+  margin-right: 50px;
+  .video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    position: relative;
+    video {
+      width: 100%;
+      height: 400px;
+      position: absolute;
+      object-fit: cover;
+    }
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    > div {
+      margin-left: 50px;
+      .title {
+        font-size: 45px;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+      .text {
+        font-size: 32px;
+        margin-bottom: 30px;
+      }
+      .link {
+        font-size: 32px;
+        border-radius: 30px;
+        background-color: #111111;
+        color: white;
+        font-weight: bolder;
+        text-decoration: none;
+        &:hover {
+          background-color: #757575;
+        }
+      }
+    }
+  }
+}
+
+////게스트 모집 페이지
+.guestcontainer {
+  background-size: cover;
+  width: 100%;
+  position: relative;
+  height: 70vw;
+  .title {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    right: 0;
+    width: 65vw;
+    height: 50vw;
+    .text {
+      margin-bottom: 45px;
+      font-family: $title;
+      font-weight: bold;
+      font-size: 60px;
+      color: black;
+    }
+    .link {
+      border-radius: 30px;
+      background-color: #111111;
+      font-size: 32px;
+      color: white;
+      font-weight: bolder;
+      text-decoration: none;
+      &:hover {
+        background-color: #757575;
+      }
+    }
+  }
+}
+////체육관 대여 페이지
+.gymcontainer {
+  background-size: cover;
+  width: 100%;
+  position: relative;
+  height: 850px;
+  .title {
+    display: flex;
+    margin-left: 100px;
+    justify-content: center;
+    align-items: baseline;
+    flex-direction: column;
+    height: 700px;
+    .text {
+      margin-bottom: 45px;
+      font-family: $title;
+      font-weight: bold;
+      font-size: 60px;
+      color: black;
+    }
+    .link {
+      font-size: 32px;
+      border-radius: 30px;
+      background-color: #111111;
+      color: white;
+      font-weight: bolder;
+      text-decoration: none;
+      &:hover {
+        background-color: #757575;
+      }
+    }
+  }
+}
+
+/////////////////////////////////////모바일
+@media (max-width: 900px) {
+  .videocontainer {
+    height: 600px;
+    .backgroundvideo {
+      height: 600px;
+    }
+    .videologocontainer {
+      width: 300px;
+      height: 300px;
+      top: 150px;
+      left: 50px;
+      .videologo {
+        font-size: 50px;
+        line-height: 50px;
+        height: 50px;
+      }
+      .videotext {
+        font-size: 30px;
+        margin-top: 100px;
+      }
+    }
+  }
+
+  //소개 부분
+  .introcontainer {
+    margin-left: 0;
+    margin-right: 0;
+    .video {
+      height: 450px;
+      video {
+      }
+    }
+    .content {
+      height: 200px;
+      div {
+        .title {
+          font-size: 22px;
+          margin-bottom: 15px;
+        }
+        .text {
+          font-size: 16px;
+          margin-bottom: 15px;
+        }
+        .link {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  //게스트모집 부분
+  .guestcontainer {
+    height: 600px;
+    .title {
+      width: 100vw;
+      height: 600px;
+      .text {
+        font-size: 22px;
+      }
+      .link {
+        font-size: 16px;
+      }
+    }
+  }
+  //체육관대여 부분
+  .gymcontainer {
+    .title {
+      margin-left: 30px;
+      .text {
+        font-size: 22px;
+        color: black;
+      }
+      .link {
+        font-size: 16px;
+      }
+    }
+  }
+}
