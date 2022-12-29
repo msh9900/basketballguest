@@ -5,11 +5,11 @@ const router = express.Router();
 
 const dir = './images';
 const storage = multer.diskStorage({
-  destination: function (req: any, file: any, cb: any) {
+  destination: function (req: Request, file: any, cb: any) {
     cb(null, dir);
   },
-  filename: (req: any, file: any, cb: any) => {
-    cb(null, file.fieldname);
+  filename: (req: Request, file: any, cb: any) => {
+    cb(null, file.fieldname + '_' + Date.now());
   },
 });
 
@@ -21,8 +21,26 @@ const upload = multer({ storage, limits });
 
 //회원가입
 router.post('/', upload.single('img'), async (req: Request, res: Response) => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-  // res.send(JSON.stringify(req.file?.filename));
+  try {
+    if (!fs.existsSync) {
+      fs.mkdirSync('images');
+    }
+  } catch (error) {
+    if (!fs.existsSync)
+      console.log('images 폴더가 없어 images 폴더를 생성합니다.');
+    fs.mkdirSync('images');
+  }
+  res.send(JSON.stringify(req.file?.filename));
+});
+router.post('/', async (req: Request, res: Response) => {
+  const result = await mongoDB.incId(
+    req.body.id,
+    req.body.pw,
+    req.body.userName,
+    req.body.email,
+    `http://localhost:4000/images/${req.body.userImg}`
+  );
+  res.send(JSON.stringify(result.msg));
 });
 
 module.exports = router;

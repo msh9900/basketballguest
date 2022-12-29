@@ -12,8 +12,10 @@ require('dotenv').config();
 
 //Router
 const loginRouter = require('./routes/login');
+const boardRouter = require('./routes/board');
 
 server.use('/login', loginRouter);
+server.use('/board', boardRouter);
 
 // ERROR 처리
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {

@@ -1,12 +1,29 @@
 const mongoClient = require('../routes/mongoconnet')!;
 const _user = mongoClient.connect();
 const mongoDB = {
+  //로그인
   setId: async (id: string, pw: string) => {
+    console.log(id, pw);
     const user = await _user;
     const db = user.db('basket').collection('login');
     const result = await db.findOne({ id });
+    if (result) {
+      return {
+        id: result.id,
+        pw: result.pw,
+      };
+    } else {
+      return { msg: '로그인 실패' };
+    }
   },
-  IncId: async (id: any, pw: any, email: any, userName: any, userImg: any) => {
+  //회원가입
+  incId: async (
+    id: string,
+    pw: string,
+    email: string,
+    userName: string,
+    userImg: string
+  ) => {
     const user = await _user;
     const db = user.db('project').collection('user');
     const duplicated = await db.findOne({ id });
@@ -19,7 +36,7 @@ const mongoDB = {
         userImg,
       });
       if (result.acknowledged) {
-        return '회원가입 완료';
+        return { duplicated: false, msg: '회원가입 완료' };
       }
     }
     if (duplicated) {

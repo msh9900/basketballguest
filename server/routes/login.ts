@@ -9,7 +9,8 @@ router.get('/', async (req: Request, res: Response) => {
 });
 router.post('/', async (req: Request, res: Response) => {
   const result = await mongoClient.setId(req.body.id, req.body.pw);
-  console.log(req.body);
+  console.log(result);
+  res.send(JSON.stringify(result));
 });
 
 module.exports = router;
