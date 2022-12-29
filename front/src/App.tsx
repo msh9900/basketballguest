@@ -11,15 +11,21 @@ import Service from "./pages/service/Service";
 import { useEffect, useState } from "react";
 import Footer from "./components/layout/Footer";
 import Register from "./pages/login/RegisterPage";
+import { useSelector, useDispatch } from "react-redux";
+import { IsLogin } from "./redux/modules/login";
 
 function App() {
   const location = useLocation();
+  const loginState = useSelector((state: any) => state.login.islogin);
+  const [headerDel, setHeaderDel] = useState(true);
+
+  console.log(loginState);
   useEffect(() => {
     location.pathname === "/login" || location.pathname === "/register"
       ? setHeaderDel(false)
       : setHeaderDel(true);
   }, [location.pathname]);
-  const [headerDel, setHeaderDel] = useState(true);
+
   return (
     <>
       {headerDel ? <Header /> : ""}

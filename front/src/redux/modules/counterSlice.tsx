@@ -8,21 +8,22 @@ const counterSlice = createSlice({
   name: "counter",
   initialState: initialState,
   reducers: {
-    increment(state) {
+    increment: (state) => {
       state.counter++;
     },
-    decrement(state) {
+    decrement: (state) => {
       state.counter--;
     },
-    increase(state, action) {
+    increase: (state, action) => {
       state.counter = state.counter + action.payload;
     },
-    toggleCounter(state) {
+    toggleCounter: (state) => {
       state.showCounter = !state.showCounter;
     },
   },
 });
 
-export const counterActions = counterSlice.actions;
+export const { increment, decrement, increase, toggleCounter } =
+  counterSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default counterSlice.reducer;
