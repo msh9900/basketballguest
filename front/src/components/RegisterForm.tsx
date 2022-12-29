@@ -24,7 +24,7 @@ export default function LoginForm(props: any) {
     } else {
       setIsIdPwValid(false);
     }
-  }, [id, pw]);
+  }, [id, pw, email, name]);
 
   const navigate = useNavigate();
 

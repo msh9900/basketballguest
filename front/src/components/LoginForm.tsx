@@ -33,20 +33,21 @@ export default function LoginForm(props: any) {
   const handlePw = (e: any) => {
     setPw(e.target.value);
   };
-  const send: any = () => {
-    fetch("http://localhost:4000/login", {
+  const send: any = async () => {
+    await fetch("http://localhost:4000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id: id,
         pw: pw,
       }),
+    }).then((send: object) => {
+      console.log(send);
     });
   };
 
   const loginFormHandler = async (event: any) => {
     event.preventDefault();
-
     setIsRecentSubmitted(true);
 
     if (isIdPwValid === false) {
@@ -54,27 +55,6 @@ export default function LoginForm(props: any) {
     }
 
     // api 호출
-    try {
-      // send()...
-      send()
-        .then((res: any) => res.json())
-        .then((data: any) => {
-          if (data.isValid) {
-            alert("로그인 성공");
-
-            // 페이지 이동 (화면 처리)
-            navigate("/");
-            // 로그인 처리
-            // redux...
-          } else {
-            alert("아이디나 패스워드를 확인해주세요");
-            setId("");
-            setPw("");
-          }
-        });
-    } catch {
-      //   console.log(error:any);
-    }
   };
 
   return (
