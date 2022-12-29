@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../../components/layout/Footer";
 import LoginForm from "../../components/LoginForm";
 
 export default function LoginPage() {

@@ -1,5 +1,5 @@
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
-import classes from "./LoginForm.module.scss";
+import classes from "./RegisterForm.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState, useEffect } from "react";
 import Button from "./Button";
@@ -13,6 +13,8 @@ export default function LoginForm(props: any) {
   const [formInputValid, setFormInputValid] = useState(false);
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [isIdPwValid, setIsIdPwValid] = useState(false);
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
@@ -88,6 +90,16 @@ export default function LoginForm(props: any) {
         </div>
         <div className={classes.login}>
           <input
+            type="email"
+            className={classes.email}
+            value={email}
+            placeholder="이메일"
+            onChange={handleId}
+            onClick={() => {
+              setIsRecentSubmitted(false);
+            }}
+          />
+          <input
             type="text"
             className={classes.id}
             value={id}
@@ -99,9 +111,19 @@ export default function LoginForm(props: any) {
           />
           <input
             type="password"
-            className={classes.pw}
+            className={classes.id}
             placeholder="비밀번호"
             value={pw}
+            onChange={handlePw}
+            onClick={() => {
+              setIsRecentSubmitted(false);
+            }}
+          />
+          <input
+            type="text"
+            className={classes.id}
+            placeholder="이름"
+            value={name}
             onChange={handlePw}
             onClick={() => {
               setIsRecentSubmitted(false);
@@ -113,11 +135,8 @@ export default function LoginForm(props: any) {
           )}
 
           <Button type="submit">
-            <p>로그인</p>
+            <p>가입하기</p>
           </Button>
-          <Link to="/register" className={classes.register}>
-            <p>회원가입</p>
-          </Link>
         </div>
       </form>
     </>

@@ -6,7 +6,7 @@
 }
 
 .loginForm {
-  top: 5%;
+  top: 15%;
   margin: auto;
   position: absolute;
   display: flex;
@@ -54,7 +54,8 @@
   }
 
   .id,
-  .pw {
+  .pw,
+  .email {
     display: flex;
     position: relative;
     margin-bottom: 1.5em;
