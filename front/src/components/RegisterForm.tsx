@@ -46,7 +46,7 @@ export default function LoginForm(props: any) {
     });
   };
 
-  const loginFormHandler = async (event: any) => {
+  const registerFormHandler = async (event: any) => {
     event.preventDefault();
 
     setIsRecentSubmitted(true);
@@ -81,7 +81,7 @@ export default function LoginForm(props: any) {
 
   return (
     <>
-      <form onSubmit={loginFormHandler} className={classes.loginForm}>
+      <form onSubmit={registerFormHandler} className={classes.loginForm}>
         <div className={classes.logo}>
           <div className={classes.title}>
             <SportsBasketballIcon fontSize="inherit" className={classes.ball} />
