@@ -1,13 +1,11 @@
-// // @ts-check
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-// const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = process.env.DB_URI_ATLAS;
 
-// const uri = process.env.DB_URI_ATLAS;
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
 
-// const client = new MongoClient(uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   serverApi: ServerApiVersion.v1,
-// });
-
-// module.exports = client;
+module.exports = client;
