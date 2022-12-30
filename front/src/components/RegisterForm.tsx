@@ -5,77 +5,62 @@ import React, { useRef, useState, useEffect } from "react";
 import Button from "./Button";
 import { FlashAuto } from "@mui/icons-material";
 
-// interface LoginProps {
-//   onConfirm: () => any;
-// }
+const formData = new FormData();
 
 export default function LoginForm(props: any) {
-  const [formInputValid, setFormInputValid] = useState(false);
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [isIdPwValid, setIsIdPwValid] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userImg, setUserImg] = useState("");
+  const [isValid, setIsValid] = useState(false);
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (id.length > 3 && pw.length > 3) {
-      setIsIdPwValid(true);
-    } else {
-      setIsIdPwValid(false);
-    }
-  }, [id, pw, email, name]);
 
   const navigate = useNavigate();
 
-  const handleId = (e: any) => {
-    setId(e.target.value);
-  };
-
-  const handlePw = (e: any) => {
-    setPw(e.target.value);
-  };
-  const send: any = () => {
-    fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: id,
-        pw: pw,
-      }),
-    });
-  };
+  async function imgHandler(e: any) {
+    formData.append("img", e.target.files[0]);
+    setUserImg(e.target.files[0].name);
+    console.log(e.target.files[0]);
+  }
 
   const registerFormHandler = async (event: any) => {
     event.preventDefault();
-
     setIsRecentSubmitted(true);
 
-    if (isIdPwValid === false) {
+    if (isValid === false) {
       return;
+    } else {
     }
 
-    // api 호출
-    try {
-      // send()...
-      send()
-        .then((res: any) => res.json())
-        .then((data: any) => {
-          if (data.isValid) {
-            alert("로그인 성공");
+    const resImg = await fetch("http://localhost:4000/img", {
+      method: "POST",
+      body: formData,
+    });
+    const imgName = await resImg.json();
 
-            // 페이지 이동 (화면 처리)
-            navigate("/");
-            // 로그인 처리
-            // redux...
-          } else {
-            alert("아이디나 패스워드를 확인해주세요");
-            setId("");
-            setPw("");
-          }
-        });
+    const response = await fetch("http://localhost:4000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id,
+        pw,
+        email,
+        userName,
+        userImg: imgName,
+      }),
+    });
+    const data = await response.json();
+
+    try {
+      if (data !== id) {
+        alert("중복된 아이디가 존재합니다.");
+        navigate("#");
+      } else if (data) {
+        alert("회원 가입성공");
+      }
     } catch {
-      //   console.log(error:any);
+      throw new Error("통신 에러");
     }
   };
 
@@ -88,13 +73,14 @@ export default function LoginForm(props: any) {
             BPT
           </div>
         </div>
+
         <div className={classes.login}>
+          <input type="file" value={userImg} onChange={imgHandler} />
           <input
             type="email"
             className={classes.email}
             value={email}
             placeholder="이메일"
-            onChange={handleId}
             onClick={() => {
               setIsRecentSubmitted(false);
             }}
@@ -104,7 +90,6 @@ export default function LoginForm(props: any) {
             className={classes.id}
             value={id}
             placeholder="아이디"
-            onChange={handleId}
             onClick={() => {
               setIsRecentSubmitted(false);
             }}
@@ -114,7 +99,6 @@ export default function LoginForm(props: any) {
             className={classes.id}
             placeholder="비밀번호"
             value={pw}
-            onChange={handlePw}
             onClick={() => {
               setIsRecentSubmitted(false);
             }}
@@ -123,16 +107,11 @@ export default function LoginForm(props: any) {
             type="text"
             className={classes.id}
             placeholder="이름"
-            value={name}
-            onChange={handlePw}
+            value={userName}
             onClick={() => {
               setIsRecentSubmitted(false);
             }}
           />
-
-          {!isIdPwValid && isRecentSubmitted && (
-            <p className={classes.invalid}>ID와 PW값은 4글자 이상입니다.</p>
-          )}
 
           <Button type="submit">
             <p>가입하기</p>

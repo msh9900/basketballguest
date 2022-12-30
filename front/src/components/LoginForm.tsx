@@ -1,20 +1,16 @@
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import classes from "./LoginForm.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./Button";
-import { FlashAuto } from "@mui/icons-material";
-
-// interface LoginProps {
-//   onConfirm: () => any;
-// }
 
 export default function LoginForm(props: any) {
-  const [formInputValid, setFormInputValid] = useState(false);
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [isIdPwValid, setIsIdPwValid] = useState(false);
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id.length > 3 && pw.length > 3) {
@@ -24,26 +20,12 @@ export default function LoginForm(props: any) {
     }
   }, [id, pw]);
 
-  const navigate = useNavigate();
-
   const handleId = (e: any) => {
     setId(e.target.value);
   };
 
   const handlePw = (e: any) => {
     setPw(e.target.value);
-  };
-  const send: any = async () => {
-    await fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: id,
-        pw: pw,
-      }),
-    }).then((send: object) => {
-      console.log(send);
-    });
   };
 
   const loginFormHandler = async (event: any) => {
@@ -54,7 +36,26 @@ export default function LoginForm(props: any) {
       return;
     }
 
-    // api 호출
+    const response = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: id,
+        pw: pw,
+      }),
+    });
+    const data = await response.json();
+
+    try {
+      if (data.msg === "로그인 실패") {
+        alert("아이디나 패스워드를 확인해주세요");
+      } else {
+        alert("로그인성공");
+        navigate("/");
+      }
+    } catch {
+      throw new Error("통신 에러");
+    }
   };
 
   return (
