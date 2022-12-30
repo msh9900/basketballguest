@@ -28,6 +28,7 @@ export default function LoginForm(props: any) {
     setPw(e.target.value);
   };
 
+
   const loginFormHandler = async (event: any) => {
     event.preventDefault();
     setIsRecentSubmitted(true);
@@ -56,6 +57,7 @@ export default function LoginForm(props: any) {
     } catch {
       throw new Error("통신 에러");
     }
+
   };
 
   return (
