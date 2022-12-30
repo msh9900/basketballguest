@@ -9,8 +9,12 @@ router.get('/', async (req: Request, res: Response) => {
 });
 router.post('/', async (req: Request, res: Response) => {
   const result = await mongoClient.setId(req.body.id, req.body.pw);
-  console.log(result);
-  res.send(JSON.stringify(result));
+  const errormessage = { msg: '로그인 실패' };
+  if (result === errormessage) {
+    res.send(JSON.stringify(errormessage));
+  } else {
+    res.send(JSON.stringify(result));
+  }
 });
 
 module.exports = router;

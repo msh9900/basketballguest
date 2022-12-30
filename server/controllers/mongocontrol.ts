@@ -3,7 +3,6 @@ const _user = mongoClient.connect();
 const mongoDB = {
   //로그인
   setId: async (id: string, pw: string) => {
-    console.log(id, pw);
     const user = await _user;
     const db = user.db('basket').collection('login');
     const result = await db.findOne({ id });
@@ -13,7 +12,8 @@ const mongoDB = {
         pw: result.pw,
       };
     } else {
-      return { msg: '로그인 실패' };
+      const errormessage = { msg: '로그인 실패' };
+      return errormessage;
     }
   },
   //회원가입

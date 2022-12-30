@@ -20,18 +20,23 @@ const limits = {
 const upload = multer({ storage, limits });
 
 //회원가입
-router.post('/', upload.single('img'), async (req: Request, res: Response) => {
-  try {
-    if (!fs.existsSync) {
+router.post(
+  '/img',
+  upload.single('img'),
+  async (req: Request, res: Response) => {
+    console.log(req.body);
+    try {
+      if (!fs.existsSync) {
+        fs.mkdirSync('images');
+      }
+    } catch (error) {
+      if (!fs.existsSync)
+        console.log('images 폴더가 없어 images 폴더를 생성합니다.');
       fs.mkdirSync('images');
     }
-  } catch (error) {
-    if (!fs.existsSync)
-      console.log('images 폴더가 없어 images 폴더를 생성합니다.');
-    fs.mkdirSync('images');
+    res.send(JSON.stringify(req.file?.filename));
   }
-  res.send(JSON.stringify(req.file?.filename));
-});
+);
 router.post('/', async (req: Request, res: Response) => {
   const result = await mongoDB.incId(
     req.body.id,
