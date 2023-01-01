@@ -1,3 +1,9 @@
+import Card from "../../components/Card";
+
 export default function GuestRecruitmentPage() {
-  return <div>GuestRecruitmentPage</div>;
+  return (
+    <>
+      <Card />
+    </>
+  );
 }
