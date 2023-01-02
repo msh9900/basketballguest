@@ -21,11 +21,11 @@ const mongoDB = {
     id: string,
     pw: string,
     email: string,
-    userName: string,
-    userImg: string
+    userName: string
+    // userImg: string
   ) => {
     const user = await _user;
-    const db = user.db('project').collection('user');
+    const db = user.db('basket').collection('login');
     const duplicated = await db.findOne({ id });
     if (duplicated === null) {
       const result = await db.insertOne({
@@ -33,15 +33,14 @@ const mongoDB = {
         pw,
         email,
         userName,
-        userImg,
+        // userImg,
       });
-      if (result.acknowledged) {
-        return { duplicated: false, msg: '회원가입 완료' };
+      if (result) {
+        return { msg: '회원가입 완료' };
       }
     }
     if (duplicated) {
       return {
-        duplicated: true,
         msg: '중복 회원 존재',
       };
     } else {
