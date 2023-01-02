@@ -13,6 +13,5 @@ const innerCheck = (innerClick, outerClick) => {
 };
 
 export { outerCheck, innerCheck };
-
 // console.log('out : inner, outer', innerClick, outerClick);
 // console.log('inn : inner, outer', innerClick, outerClick);

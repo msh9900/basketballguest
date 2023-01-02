@@ -1,0 +1,20 @@
+.priceFilterLayout{
+  width:200px;
+  >div{
+    border:1px solid black;
+  }
+  span{
+    margin:10px;
+    font-weight: bold;
+  }
+  input{
+    padding:5px;
+    width:100px;
+    border-radius: 10px;
+    margin:5px;
+  }
+  button{
+    margin:10px;
+    width:100px;
+  }
+}

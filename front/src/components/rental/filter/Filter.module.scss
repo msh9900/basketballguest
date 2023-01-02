@@ -1,0 +1,50 @@
+.FilterLayout{
+  // size
+  margin:0 auto;
+  margin-top:20px;
+  margin-bottom:20px;
+  max-width:1000px;
+  padding:10px;
+
+  // style
+  border:solid 1px black;
+  border-radius: 3px;
+  
+  background-color:bisque;
+
+  .center{
+    text-align:center;
+  }
+}
+
+button{
+  cursor:pointer;
+  width: 50px;
+  height: 30px;
+  font-weight: bold;
+  
+  color:black;
+  margin:0 0 10px 10px;
+  border-radius: 10px;
+}
+
+.on{
+  color:white;
+  background-color: red;
+  border:solid 2px red;
+}
+.off{
+  color:white;
+  background-color: black;
+  border:solid 2px black;
+}
+.reset{
+  color:black;
+  background-color: white;
+  
+  &:hover{
+    border:solid 2px black;
+    border-style: double;
+  }
+}
+
