@@ -1,13 +1,13 @@
+
 - component
-Filter        : 메인 컴포넌트
+Filter        : 메인
 Filter_Area   : 지역 필터
 Filter_Price  : 가격 필터
 Filter_Period : 기간 필터
 SlectedValues : 화면에 적용할 필터 목록 (active filters)
 
 - util
-getDate       : 날짜 처리 유틸
+getDate       : 날짜처리
 
 - 현재 해결할 부분
-... 가격필터 시작, 종료값 앞자리수가 바뀌지 않고있음.
 ... 크롬 경고가 뜨고있음 : [Violation]... 
