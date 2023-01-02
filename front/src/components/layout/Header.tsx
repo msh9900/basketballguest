@@ -1,29 +1,29 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import classes from "./Header.module.scss";
-import { useNavigate } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
-import { useSelector } from "react-redux";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import classes from './Header.module.scss';
+import { useNavigate } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import { useSelector } from 'react-redux';
 
-const pages = ["소개", "게스트모집", "체육관대여", "서비스"];
+const pages = ['소개', '게스트모집', '체육관대여', '서비스'];
 
 export default function Header() {
   const loginState = useSelector((state: any) => state.login.islogin);
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
+    null,
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
+    null,
   );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,30 +34,30 @@ export default function Header() {
   };
 
   const MenuLinkClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.currentTarget.textContent === "소개") {
-      navigate("/intro");
+    if (event.currentTarget.textContent === '소개') {
+      navigate('/intro');
     }
-    if (event.currentTarget.textContent === "게스트모집") {
-      navigate("/guest");
+    if (event.currentTarget.textContent === '게스트모집') {
+      navigate('/guest');
     }
-    if (event.currentTarget.textContent === "체육관대여") {
-      navigate("/gym");
+    if (event.currentTarget.textContent === '체육관대여') {
+      navigate('/gym');
     }
-    if (event.currentTarget.textContent === "서비스") {
-      navigate("/service");
+    if (event.currentTarget.textContent === '서비스') {
+      navigate('/service');
     }
 
     setAnchorElNav(null);
   };
 
   const UserMenuClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.currentTarget.textContent === "프로필") {
-      navigate("/profile");
+    if (event.currentTarget.textContent === '프로필') {
+      navigate('/profile');
     }
-    if (event.currentTarget.textContent === "로그인") {
-      navigate("/login");
+    if (event.currentTarget.textContent === '로그인') {
+      navigate('/login');
     }
-    if (event.currentTarget.textContent === "로그아웃") {
+    if (event.currentTarget.textContent === '로그아웃') {
       logoutHandler();
     }
     setAnchorElUser(null);
@@ -67,7 +67,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="fixed" style={{ background: "#f1a707" }}>
+    <AppBar position="fixed" style={{ background: '#f1a707' }}>
       <div className={classes.container}>
         <Toolbar
           disableGutters
@@ -89,18 +89,18 @@ export default function Header() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={MenuLinkClickHandler}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
@@ -140,17 +140,17 @@ export default function Header() {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
               onClose={UserMenuClickHandler}
