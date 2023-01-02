@@ -1,7 +1,8 @@
-.priceFilterLayout{
+
+
+.periodFilterLayout{
 
   // width:1100px;
-  margin:0 auto;
   display: flex;
   padding:10px;
   background-color: wheat;
@@ -9,29 +10,31 @@
   margin:10 auto;
   border-radius: 10px;
 
-  >div{
-    margin-top:10px;
-    text-align: center;
-    width:150px;
-    
-  }
   span{
-    margin:10px;
-    margin-bottom:15px;
     font-weight: bold;
   }
-  input{
+  
+  >div>div{
+    width:200px;
     text-align: center;
+    // border-radius: 10px;
     padding:10px;
-    // font-weight: bold;
-    font-size:15px;
-    width:100px;
+    // margin:
+  }
+
+  input{
+    margin:5px;
+    width:150px;
     height:30px;
-    border-radius: 10px;
-    margin:10px;
+    font-weight: bold;
+    font-size:15px;
+    border-radius:10px;
+    padding:10px;
   }
   button{
     margin:10px;
     width:100px;
   }
+
+
 }
