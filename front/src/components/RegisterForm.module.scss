@@ -6,17 +6,19 @@
 }
 
 .loginForm {
-  top: 15%;
+  bottom: 60px;
   margin: auto;
-  position: absolute;
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  height: 800px;
   max-width: 2600px;
 
   .logo {
+    top: 5%;
     text-align: center;
     width: 100%;
     position: relative;
@@ -73,7 +75,6 @@
     background-color: rgb(247, 222, 180);
     &:active {
       border: 1px solid orange;
-
       outline: none;
     }
   }
@@ -81,7 +82,7 @@
     color: red;
   }
 
-  .register {
+  .loginBtn {
     max-width: 300px;
     display: flex;
     height: 40px;
