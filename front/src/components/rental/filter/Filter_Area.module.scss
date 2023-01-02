@@ -1,0 +1,43 @@
+.Filter_Area_Layout{
+
+  display: flex;
+  padding:10px;
+  background-color: wheat;
+  justify-content: center;
+  margin:10 auto;
+  border-radius: 10px;
+  
+  >div{
+    text-align:center;
+    width:100px;
+    // background-color: brown; 
+    padding-top:10px;
+    margin:3px;
+    border-radius: 10px;
+  }
+
+  .title{font-weight: bold;}
+  .center{text-align: center;}
+  .content{font-weight:normal;}
+
+  ul{
+    padding:10px;
+    li{
+      padding:5px;
+      &:hover{
+        background-color: red;
+        color:white;
+        font-weight: bold;
+        cursor:pointer;
+      }
+    }
+  }
+
+}
+.on{
+  background-color: orange;
+  font-weight: bold;
+}
+.off{
+  background-color: white;
+}

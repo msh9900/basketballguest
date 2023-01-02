@@ -5,18 +5,21 @@
   box-sizing: border-box;
 }
 
+// 로그인 전체 div
 .loginForm {
-  top: 5%;
+  bottom: 80px;
   margin: auto;
-  position: absolute;
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  height: 700px;
   max-width: 2600px;
 
   .logo {
+    top: 15%;
     text-align: center;
     width: 100%;
     position: relative;
@@ -32,6 +35,7 @@
   }
 
   .login {
+    left: 2%;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -72,7 +76,6 @@
     background-color: rgb(247, 222, 180);
     &:active {
       border: 1px solid orange;
-
       outline: none;
     }
   }

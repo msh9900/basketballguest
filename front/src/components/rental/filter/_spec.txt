@@ -1,0 +1,4 @@
+Filter        : 메인 컴포넌트
+Filter_Area   : 지역 필터
+Filter_Price  : 가격 필터
+SlectedValues : 화면에 적용할 필터 목록 (active filters)
