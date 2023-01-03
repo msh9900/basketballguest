@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
 * {
   margin: 0%;
   padding: 0;
@@ -17,6 +17,10 @@
   flex-wrap: wrap;
   height: 700px;
   max-width: 2600px;
+  .title {
+    text-decoration-line: none;
+    color: black;
+  }
 
   .logo {
     top: 15%;
@@ -27,7 +31,7 @@
     padding: 0.5em;
     display: block;
     color: black;
-    font-family: "Rubik Vinyl";
+    font-family: 'Rubik Vinyl';
     min-width: 400px;
   }
   .ball {
@@ -35,7 +39,6 @@
   }
 
   .login {
-    left: 2%;
     display: flex;
     flex-direction: column;
     width: 100%;

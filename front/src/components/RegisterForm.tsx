@@ -1,24 +1,18 @@
-import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
-import classes from "./RegisterForm.module.scss";
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import Button from "./Button";
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import classes from './RegisterForm.module.scss';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Button from './Button';
 
 export default function LoginForm(props: any) {
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  // const [userImg, setUserImg] = useState("");
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   // const [isValid, setIsValid] = useState(false);
   // const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
   const navigate = useNavigate();
-
-  // async function imgHandler(e: any) {
-  //   formData.append("img", e.target.files[0]);
-  //   setUserImg(e.target.files[0].name);
-  // }
 
   const handleId = (e: any) => {
     setId(e.target.value);
@@ -38,35 +32,27 @@ export default function LoginForm(props: any) {
 
   const registerFormHandler = async (event: any) => {
     event.preventDefault();
-
-    // const resImg = await fetch("http://localhost:4000/img", {
-    //   method: "POST",
-    //   body: formData,
-    // });
-    // const imgName = await resImg.json();
-
-    const response = await fetch("http://localhost:4000/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id: id,
         pw: pw,
         email: email,
         userName: userName,
-        // userImg: imgName,
       }),
     });
     const data = await response.json();
 
     try {
-      if (data.msg === "회원가입 완료") {
-        alert("회원 가입성공");
-        navigate("/login");
+      if (data.msg === '회원가입 완료') {
+        alert('회원 가입성공');
+        navigate('/login');
       } else {
-        alert("중복된 회원 존재");
+        alert('중복된 회원 존재');
       }
     } catch {
-      throw new Error("통신 에러");
+      throw new Error('통신 에러');
     }
   };
 
@@ -74,12 +60,12 @@ export default function LoginForm(props: any) {
     <>
       <form onSubmit={registerFormHandler} className={classes.loginForm}>
         <div className={classes.logo}>
-          <div className={classes.title}>
+          <Link to="/" className={classes.title}>
             <SportsBasketballIcon fontSize="inherit" className={classes.ball} />
             BPT
-          </div>
+          </Link>
         </div>
-        <div className={classes.login}>
+        <div className={classes.register}>
           <input
             type="email"
             className={classes.email}
