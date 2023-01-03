@@ -16,25 +16,22 @@ const FilterPrice = (props:Props) => {
   // <<가격 변경>>
   const onChangePrice = (e: React.FormEvent<HTMLInputElement>) => {
 
-    // 사용할 값
     let str:string = e.currentTarget.value
     const lastValue = str[str.length-1]
     const id  = e.currentTarget.id
-    console.log('str :', str)
     
-    // 문자 => 제거 + 종료
-    const num = parseInt(lastValue)
-    if(!(num >= 0 && num <= 9)) return;
-  
     // 빈칸 => 0 처리 + 종료
     if(lastValue === undefined){
-      console.log('진입');
       if(id === 'stt') setStt('0')
       else setEnd('0')
       return
     }
 
-    //  0으로 시작하는 경우 (2자 이상) 앞의 0 제거 + 종료
+    // 문자 => 제거 + 종료
+    const num = parseInt(lastValue)
+    if(!(num >= 0 && num <= 9)) return;
+
+    // 0으로 시작하는 경우 앞의 0제거 + 종료
     if(str.length>1 && str[0]==='0'){
       let temp = str.split('')
       const str2 = temp.slice(1).join('')
@@ -43,9 +40,7 @@ const FilterPrice = (props:Props) => {
       return
     }
 
-    // 이외는 그대로 적용
-    if(id === 'stt') setStt(str)
-    else setEnd(str)
+    id === 'stt' ? setStt(str) : setEnd(str)
   }
 
   // <<설정 ON>>
@@ -54,8 +49,6 @@ const FilterPrice = (props:Props) => {
     const endNum = parseInt(end)
 
     if(sttNum > endNum){
-      console.log('sttNum', sttNum)
-      console.log('endNum', endNum)
       alert('시작값이 더 큽니다.')
       return
     } 
@@ -65,11 +58,6 @@ const FilterPrice = (props:Props) => {
     }
     props.setPrice([stt, end])
     props.setPriceActive(true)
-  }
-
-  // <설정 Off>
-  const setOff = () => {
-    props.setPriceActive(false)
   }
 
   return (
@@ -85,8 +73,7 @@ const FilterPrice = (props:Props) => {
             <span>종료값</span>
             <input id='end' className='' autoComplete="off" value={end} onChange={onChangePrice}/>원
           </div>
-          { props.priceActive && <button onClick={setOff}>가격설정 Off</button>}
-          {!props.priceActive && <button onClick={setOn}> 가격설정 ON </button>}
+          <button onClick={setOn}> 가격설정 ON </button>
         </div>
       </div>
     </>

@@ -10,8 +10,6 @@ import SelectedValues from './SelectedValues'
 // library
 import {useState} from 'react'
 
-// util
-import getDate from './getDate'
 
 const Filter = () => { 
   // filter on off
@@ -25,7 +23,8 @@ const Filter = () => {
   const [price, setPrice] =  useState<string[]>(['0', '0'])
   const [priceActive, setPriceActive] = useState(false)
   
-  const [period, setPeriod] =  useState<string[]>([getDate('today'), getDate('tomorrow')])
+  // const [period, setPeriod] =  useState<string[]>([getDate('today'), getDate('tomorrow')])
+  const [period, setPeriod] =  useState<string[]>([])
   const [periodActive, setPeriodActive] = useState(false)
   
   const priceFilterOn = () => {
