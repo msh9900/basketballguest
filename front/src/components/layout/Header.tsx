@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import SearchIcon from '@mui/icons-material/Search';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import { useSelector } from 'react-redux';
 
@@ -25,12 +26,17 @@ export default function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
+  const [selectValue, setSelectValue] = React.useState('gym');
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const selectChangeHanlder = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectValue(event.target.value);
   };
 
   const MenuLinkClickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -131,7 +137,22 @@ export default function Header() {
               서비스
             </Link>
           </div>
-
+          <div className={classes.searchContainer}>
+            <select
+              className={classes.select}
+              onChange={selectChangeHanlder}
+              value={selectValue}
+            >
+              <option value="gym">체육관대여</option>
+              <option value="guest">게스트모집</option>
+            </select>
+            <input
+              type="text"
+              className={classes.searchinputbox}
+              placeholder="search..."
+            />
+            <SearchIcon className={classes.searchIcon} />
+          </div>
           <div className={classes.usercircle}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -171,6 +192,22 @@ export default function Header() {
             </Menu>
           </div>
         </Toolbar>
+        <div className={classes.searchMoblieContainer}>
+          <select
+            className={classes.select}
+            onChange={selectChangeHanlder}
+            value={selectValue}
+          >
+            <option value="gym">체육관대여</option>
+            <option value="guest">게스트모집</option>
+          </select>
+          <input
+            type="text"
+            className={classes.searchinputbox}
+            placeholder="search..."
+          />
+          <SearchIcon className={classes.searchIcon} />
+        </div>
       </div>
     </AppBar>
   );
