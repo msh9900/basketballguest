@@ -3,10 +3,16 @@ import cls from "./SelectedValues.module.scss";
 interface Props{
   areas:Array<string>;
   setAreas:React.Dispatch<React.SetStateAction<string[]>>;
-  priceRange:Array<string>;
-  setPriceRange:React.Dispatch<React.SetStateAction<string[]>>;
+
+  price:Array<number>;
+  setPrice:React.Dispatch<React.SetStateAction<number[]>>;
   priceActive:boolean;
   setPriceActive:React.Dispatch<React.SetStateAction<boolean>>;
+
+  period:Array<string>;
+  setPeriod:React.Dispatch<React.SetStateAction<string[]>>;
+  periodActive:boolean;
+  setPeriodActive:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SelectedValues = (props:Props) => {
@@ -28,9 +34,16 @@ const SelectedValues = (props:Props) => {
 
         {props.priceActive && (
           <div className={cls.price} onClick={()=>{props.setPriceActive(false)}}>
-            {props.priceRange[0]} ~ {props.priceRange[1]} X
+            {props.price[0]}원  ~ {props.price[1]}원 X
           </div>
         )}
+
+        {props.periodActive && (
+          <div className={cls.price} onClick={()=>{props.setPeriodActive(false)}}>
+            {props.period[0]} ~ {props.period[1]} X
+          </div>
+        )}
+
       </div>
     </>
   )

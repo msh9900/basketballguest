@@ -6,7 +6,6 @@ interface Props{
 }
 
 const FilterArea = (props:Props) => {
-
   const listClick = (e:any) => {
     const curValue:string = e.target.id
     if(props.areas.includes(curValue)){
