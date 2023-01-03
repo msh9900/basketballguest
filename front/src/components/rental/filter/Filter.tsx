@@ -21,12 +21,13 @@ const Filter = () => {
 
   // filters
   const [areas, setAreas] =  useState<string[]>([])
-  const [price, setPrice] =  useState<number[]>([0, 0])
+  
+  const [price, setPrice] =  useState<string[]>(['0', '0'])
   const [priceActive, setPriceActive] = useState(false)
+  
   const [period, setPeriod] =  useState<string[]>([getDate('today'), getDate('tomorrow')])
   const [periodActive, setPeriodActive] = useState(false)
   
-
   const priceFilterOn = () => {
     setAreaFilter(false)
     setPriceFilter(prev=>!prev)
@@ -44,7 +45,7 @@ const Filter = () => {
   }
   const filterReset = () => {
     setAreas([])
-    setPrice([0, 0])
+    setPrice(['0', '0'])
     setPriceActive(false)
     setPeriodActive(false)
   }
@@ -86,8 +87,6 @@ const Filter = () => {
         setPeriodActive={setPeriodActive}
       />
 
-
-      
       {/* 필터 제너레이터 */}
       {areaFilter && <FilterArea 
         areas={areas} 
