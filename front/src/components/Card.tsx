@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
@@ -33,6 +32,7 @@ export default function RecipeReviewCard(props: any) {
   ];
   const [commentMore, setCommentMore] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
+  const [cardClick, setCardClick] = React.useState(false);
   // 줄 수를 계산해서 저장할 변수
   const [textareaHeight, setTextareaHeight] = React.useState(0);
 
@@ -45,60 +45,71 @@ export default function RecipeReviewCard(props: any) {
     setExpanded(!expanded);
     setCommentMore(!commentMore);
   };
+  const cardClickHandler = () => {
+    setCardClick(true);
+  };
 
   return (
-    <Card className={classes.Card} variant="outlined">
+    <Card
+      className={!cardClick ? classes.Card : classes.CardClick}
+      variant="outlined"
+      onClick={cardClickHandler}
+    >
       <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
-        action={<MenuList />}
-        title={props.data.id}
+        avatar={cardClick ? <Avatar aria-label="recipe">R</Avatar> : ''}
+        action={cardClick ? <MenuList /> : ''}
+        title={cardClick ? props.data.id : props.data.title}
         subheader={props.data.date}
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {props.data.content}
-        </Typography>
-      </CardContent>
+      {cardClick && (
+        <div>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {props.data.content}
+            </Typography>
+          </CardContent>
 
-      {props.data.image && (
-        <CardMedia
-          component="img"
-          height="194"
-          image="/static/images/cards/paella.jpg"
-          alt="사진 이미지"
-        />
-      )}
-      <div className={classes.comment}>
-        <Avatar aria-label="recipe">R</Avatar>
-        <textarea
-          className={classes.comment_input}
-          placeholder="댓글을 입력해주세요"
-          onChange={checkItemChangeHandler}
-          style={{ height: 50 + textareaHeight * 24 + 'px' }}
-        />
-        <div className={classes.comment_submit}>전송</div>
-      </div>
-      <div className={classes.firstComment}>
-        <MainComment key={data[0].commentidx} data={data[0]} />
-      </div>
-      <div>
-        {!commentMore && (
-          <div className={classes.commentMore} onClick={handleExpandClick}>
-            댓글 더보기
+          {props.data.image && (
+            <CardMedia
+              component="img"
+              height="194"
+              image="/static/images/cards/paella.jpg"
+              alt="사진 이미지"
+            />
+          )}
+          <div className={classes.comment}>
+            <Avatar aria-label="recipe">R</Avatar>
+            <textarea
+              className={classes.comment_input}
+              placeholder="댓글을 입력해주세요"
+              onChange={checkItemChangeHandler}
+              style={{ height: 50 + textareaHeight * 24 + 'px' }}
+            />
+            <div className={classes.comment_submit}>전송</div>
           </div>
-        )}
-      </div>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          {data.map((val) => {
-            if (val.commentidx !== 1) {
-              return <MainComment key={val.commentidx} data={val} />;
-            } else {
-              return '';
-            }
-          })}
-        </CardContent>
-      </Collapse>
+          <div className={classes.firstComment}>
+            <MainComment key={data[0].commentidx} data={data[0]} />
+          </div>
+          <div>
+            {!commentMore && (
+              <div className={classes.commentMore} onClick={handleExpandClick}>
+                댓글 더보기
+              </div>
+            )}
+          </div>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              {data.map((val) => {
+                if (val.commentidx !== 1) {
+                  return <MainComment key={val.commentidx} data={val} />;
+                } else {
+                  return '';
+                }
+              })}
+            </CardContent>
+          </Collapse>
+        </div>
+      )}
     </Card>
   );
 }
