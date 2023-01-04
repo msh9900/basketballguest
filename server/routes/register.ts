@@ -7,8 +7,8 @@ router.post('/', async (req: Request, res: Response) => {
   const result = await mongoDB.incId(
     req.body.id,
     req.body.pw,
-    req.body.userName,
-    req.body.email
+    req.body.email,
+    req.body.userName
   );
   res.send(JSON.stringify(result));
 });
