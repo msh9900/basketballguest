@@ -4,6 +4,9 @@ import { useState } from 'react'
 
 const Order = () => {
 
+  const [ priceOrderOn, setPriceOrderOn] = useState(false)
+  const [ distanceOrderOn, setDistanceOrderOn] = useState(false)
+
   const priceOrderActivate = () => {
     if(priceOrderOn) setPriceOrderOn(false)
     else setPriceOrderOn(true)
@@ -19,9 +22,6 @@ const Order = () => {
     setDistanceOrderOn(false)
   }
 
-  const [ priceOrderOn, setPriceOrderOn] = useState(false)
-  const [ distanceOrderOn, setDistanceOrderOn] = useState(false)
-
   return (
     <>
       <div className={cls.OrderLayout}>
@@ -35,10 +35,12 @@ const Order = () => {
             className={distanceOrderOn ? cls.on : cls.off} 
             onClick={distanceOrderActivate}>거리순
           </button>
-          <button 
-            className={cls.reset} 
-            onClick={orderReset}>
-          </button>
+          {(priceOrderOn || distanceOrderOn) &&
+            <button 
+              className={cls.reset} 
+              onClick={orderReset}>
+            </button>
+          }
         </div>
       </div>
     </>
@@ -46,3 +48,5 @@ const Order = () => {
 }
 
 export default Order
+
+

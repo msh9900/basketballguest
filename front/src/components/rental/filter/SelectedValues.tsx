@@ -26,21 +26,18 @@ const SelectedValues = (props:Props) => {
     <>
       <div className={cls.SelectedValuesLayout}>
 
-        {/*  */}
         {props.areas.map((v:any, i:any)=> {
           return (
             <div className={cls.areas} key={`areas-${i}`} id={v} onClick={deleteAreaFilter}>{v} X</div>
           )
         })} 
 
-        {/*  */}
         {props.priceActive && (
           <div className={cls.price} onClick={()=>{props.setPriceActive(false)}}>
             {props.price[0]}원  ~ {props.price[1]}원 X
           </div>
         )}
 
-        {/*  */}
         {props.periodActive && (
           <div className={cls.price} onClick={()=>{props.setPeriodActive(false)}}>
             {props.period[0]} ~ {props.period[1]} X

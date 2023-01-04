@@ -19,10 +19,8 @@ const Filter = () => {
   // filters
   const [areas, setAreas] =  useState<string[]>([])
   const [price, setPrice] =  useState<string[]>(['0', '0'])
-  const [priceActive, setPriceActive] = useState(false)
-  
-  // const [period, setPeriod] =  useState<string[]>([getDate('today'), getDate('tomorrow')])
   const [period, setPeriod] =  useState<string[]>([])
+  const [priceActive, setPriceActive] = useState(false)
   const [periodActive, setPeriodActive] = useState(false)
   
   const priceFilterOn = () => {
@@ -61,7 +59,6 @@ const Filter = () => {
           className={areaFilter ? cls.on : cls.off} 
           onClick={areaFilterOn}>지역
         </button>
-
         <button 
           className={priceFilter ? cls.on : cls.off} 
           onClick={priceFilterOn}>가격
@@ -70,24 +67,20 @@ const Filter = () => {
           className={periodFilter ? cls.on : cls.off} 
           onClick={periodFilterOn}>기간
         </button>
-        <button 
-          className={cls.reset} 
-          onClick={filterReset}>
-        </button>
+
+        {(areas.length>=1 || priceActive || periodActive) &&
+          <button 
+            className={cls.reset} 
+            onClick={filterReset}>
+          </button>}
         {(areaFilter || priceFilter || periodFilter) &&
           <button 
             className={cls.fold} 
             onClick={closeFilters}>
-              {/* 접기 */}
-          </button>
-        }
+          </button>}
       </div>
 
-      
-
-
-
-      {/* 현재 필터링 태그 */}
+      {/* active filters */}
       <SelectedValues 
         areas={areas} 
         setAreas={setAreas} 
