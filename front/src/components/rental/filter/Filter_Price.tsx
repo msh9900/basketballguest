@@ -52,8 +52,8 @@ const FilterPrice = (props:Props) => {
       alert('시작값이 더 큽니다.')
       return
     } 
-    if(sttNum === 0 || endNum === 0){
-      alert('값을 모두 채워주세요')
+    if(endNum === 0){
+      alert('값을 채워주세요')
       return
     }
     props.setPrice([stt, end])

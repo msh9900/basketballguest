@@ -10,7 +10,6 @@ import SelectedValues from './SelectedValues'
 // library
 import {useState} from 'react'
 
-
 const Filter = () => { 
   // filter on off
   const [areaFilter, setAreaFilter] = useState(false)
@@ -19,7 +18,6 @@ const Filter = () => {
 
   // filters
   const [areas, setAreas] =  useState<string[]>([])
-  
   const [price, setPrice] =  useState<string[]>(['0', '0'])
   const [priceActive, setPriceActive] = useState(false)
   
@@ -48,15 +46,22 @@ const Filter = () => {
     setPriceActive(false)
     setPeriodActive(false)
   }
+  const closeFilters = () => {
+    setAreaFilter(false)
+    setPriceFilter(false)
+    setPeriodFilter(false)
+  }
 
   return (
     <div className={cls.FilterLayout}>
+      
       <div className={cls.topSection}>
         <h3 className='topTitle'> 필터 : </h3>
         <button 
           className={areaFilter ? cls.on : cls.off} 
           onClick={areaFilterOn}>지역
         </button>
+
         <button 
           className={priceFilter ? cls.on : cls.off} 
           onClick={priceFilterOn}>가격
@@ -67,10 +72,20 @@ const Filter = () => {
         </button>
         <button 
           className={cls.reset} 
-          onClick={filterReset}>리셋
+          onClick={filterReset}>
         </button>
+        {(areaFilter || priceFilter || periodFilter) &&
+          <button 
+            className={cls.fold} 
+            onClick={closeFilters}>
+              {/* 접기 */}
+          </button>
+        }
       </div>
+
       
+
+
 
       {/* 현재 필터링 태그 */}
       <SelectedValues 
@@ -103,4 +118,4 @@ const Filter = () => {
     </div>
   )
 }
-export default Filter
+export default Filter;
