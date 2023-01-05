@@ -25,7 +25,6 @@ router.post(
   '/img',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log(req.body);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     res.send(JSON.stringify(req.file?.filename));
   }
@@ -43,13 +42,14 @@ router.post(
 
 router.post('/userdata', async (req: Request, res: Response) => {
   console.log(req.body);
-  const result = await mongoDB.UserData(
-    req.body.id,
-    req.body.pw,
-    req.body.userName,
-    req.body.email,
-    req.body.userImg
-  );
+  const logindata = {
+    id: req.body.id,
+    pw: req.body.pw,
+    userName: req.body.userName,
+    email: req.body.email,
+    userImg: req.body.userImg,
+  };
+  const result = await mongoDB.userData(logindata);
   res.send(JSON.stringify(result));
 });
 
