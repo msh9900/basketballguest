@@ -8,24 +8,28 @@ import { IsLogin } from '../../redux/modules/login';
 const formData = new FormData();
 
 export default function Profile() {
-  const [id, setId] = useState<string>();
-  const [pw, setPw] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [image, setImage] = useState<string>();
-  const [userName, setUserName] = useState<string>();
-  const [userImg, setUserImg] = useState<any>();
+  const [id, setId] = useState<string>('');
+  const [pw, setPw] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [image, setImage] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
+  const [userImg, setUserImg] = useState<any>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const InputPasswordHandler = (event: any) => {
-    setPw(event.traget.value);
+  const InputIdHandler = (event: any) => {
+    setId(event.target.value);
   };
 
-  const InputNameHandler = (event: {
-    target: { value: SetStateAction<string | undefined> };
-  }) => {
+  const InputPasswordHandler = (event: any) => {
+    setPw(event.target.value);
+  };
+  const InputEmailHandler = (event: any) => {
+    setEmail(event.target.value);
+  };
+
+  const InputNameHandler = (event: any) => {
     setUserName(event.target.value);
   };
 
@@ -55,10 +59,10 @@ export default function Profile() {
       }),
     });
     const data = await response.json();
-    console.log(data);
-    if (data) {
-      setId(data.id);
-    }
+
+    // if (data) {
+    //   navigate('/login');
+    // }
   }
   return (
     <form onSubmit={profileSumbit} className={classes.profile}>
@@ -71,13 +75,13 @@ export default function Profile() {
       <div className={classes.ProfileForm}>
         <p>유저 정보</p>
         <p>아이디</p>
-        <input type="text" value={id}></input>
+        <input type="text" value={id} onChange={InputIdHandler}></input>
         <p>비밀번호 변경</p>
         <input type="password" value={pw} onChange={InputPasswordHandler} />
-        <p>비밀번호 재확인</p>
-        <input type="password" />
+        {/* <p>비밀번호 재확인</p>
+        <input type="password" /> */}
         <p>이메일</p>
-        <input type="text" value={email} />
+        <input type="text" value={email} onChange={InputEmailHandler} />
         <p>이름</p>
         <input type="text" value={userName} onChange={InputNameHandler} />
         <Button type="submit">정보 변경</Button>
