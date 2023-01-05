@@ -26,6 +26,7 @@ const mongoDB = {
         pw,
         email,
         userName,
+        userImg: '',
       });
       if (result) {
         return { msg: '회원가입 완료' };
@@ -52,9 +53,25 @@ const mongoDB = {
     console.log(userdata);
   },
 
-  UserData: async (id: string, pw: string, email: string, userName: string) => {
+  userData: async (logindata: any) => {
+    console.log(logindata);
     const user = await _user;
     const db = user.db('basket').collection('login');
+    const data = await db.findOne({ id: logindata.id, email: logindata.email });
+    if (data) {
+      const result = await db.updateOne(
+        { id: logindata.id },
+        {
+          $set: {
+            pw: logindata.pw,
+            userName: logindata.userName,
+            userImg: logindata.userImg,
+          },
+        }
+      );
+      console.log(result);
+      return { msg: '정보 수정완료' };
+    }
   },
 };
 
