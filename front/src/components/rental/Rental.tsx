@@ -19,9 +19,13 @@ const Rental = () => {
 
   const [inputImgs, setInputImgs] = useState<string[]>([])
   const deleteImgs = () => {setInputImgs([])}
+  const formData = new FormData();
 
   const handleImageUpload = (e:any) => {
+
     const fileArr = e.target.files;
+    formData.append('img', fileArr)
+
     let fileURLs : string[] = [];
     let file;
     let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
@@ -36,6 +40,32 @@ const Rental = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  
+
+  const sendImgs = async () => {
+    // profile.tsx <= 참고
+    
+    const resImg = await fetch('http://localhost:4000/rental/img', {
+      method: 'POST',
+      headers: {},
+      body: formData,
+    });
+    const imgName = await resImg.json();
+    
+    const response = await fetch('http://localhost:4000/rental/userdata', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        // id,
+        // pw,
+        // email,
+        // userName,
+        userImg: imgName,
+      }),
+    });
+    const data = await response.json();
+  }
 
   return (<>
     <div className={cls.rentalCompLayout}>
@@ -55,13 +85,12 @@ const Rental = () => {
           <img key={i} src={v} alt='profileImg1' width='100'></img>
         )}
       </div>
-      <button onClick={deleteImgs}>
-        이미지 삭제
-      </button>
+      <button onClick={deleteImgs}>삭제</button>
+      <button onClick={sendImgs}>전송</button>
     
-      {/* <Order/> */}
-      {/* <Filter/> */}
-      {/* <Articles/> */}
+      <Order/>
+      <Filter/>
+      <Articles/>
     </div>
   </>)
 }
