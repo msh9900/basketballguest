@@ -15,8 +15,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import { useSelector } from 'react-redux';
 
-const pages = ['소개', '게스트모집', '체육관대여', '서비스'];
+type RouteMapType = {
+  [index: string]: string;
+  소개: string;
+  게스트모집: string;
+  체육관대여: string;
+  서비스: string;
+};
 
+const RouteMap: RouteMapType = {
+  소개: '/intro',
+  게스트모집: '/guest',
+  체육관대여: 'gym',
+  서비스: '/service',
+};
 export default function Header() {
   const loginState = useSelector((state: any) => state.login.islogin);
   let navigate = useNavigate();
@@ -40,18 +52,8 @@ export default function Header() {
   };
 
   const MenuLinkClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.currentTarget.textContent === '소개') {
-      navigate('/intro');
-    }
-    if (event.currentTarget.textContent === '게스트모집') {
-      navigate('/guest');
-    }
-    if (event.currentTarget.textContent === '체육관대여') {
-      navigate('/gym');
-    }
-    if (event.currentTarget.textContent === '서비스') {
-      navigate('/service');
-    }
+    const text = event.currentTarget.textContent as string;
+    navigate(RouteMap[text]);
 
     setAnchorElNav(null);
   };
@@ -109,9 +111,9 @@ export default function Header() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={MenuLinkClickHandler}>
-                  <Typography textAlign="center">{page}</Typography>
+              {Object.entries(RouteMap).map(([idx]) => (
+                <MenuItem key={idx} onClick={MenuLinkClickHandler}>
+                  <Typography textAlign="center">{idx}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -124,18 +126,11 @@ export default function Header() {
             <div>BPT</div>
           </Link>
           <div className={classes.listcontainer}>
-            <Link to="/intro" className={classes.HeaderList}>
-              소개
-            </Link>
-            <Link to="/guest" className={classes.HeaderList}>
-              게스트모집
-            </Link>
-            <Link to="/gym" className={classes.HeaderList}>
-              체육관대여
-            </Link>
-            <Link to="/service" className={classes.HeaderList}>
-              서비스
-            </Link>
+            {Object.entries(RouteMap).map(([key, value]) => (
+              <Link key={key} to={value} className={classes.HeaderList}>
+                {key}
+              </Link>
+            ))}
           </div>
           <div className={classes.searchContainer}>
             <select

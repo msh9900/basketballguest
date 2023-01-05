@@ -46,23 +46,27 @@ export default function RecipeReviewCard(props: any) {
     setCommentMore(!commentMore);
   };
   const cardClickHandler = () => {
-    setCardClick(true);
+    setCardClick(!cardClick);
   };
 
   return (
-    <Card
-      className={!cardClick ? classes.Card : classes.CardClick}
-      variant="outlined"
-      onClick={cardClickHandler}
-    >
-      <CardHeader
-        avatar={cardClick ? <Avatar aria-label="recipe">R</Avatar> : ''}
-        action={cardClick ? <MenuList /> : ''}
-        title={cardClick ? props.data.id : props.data.title}
-        subheader={props.data.date}
-      />
+    <>
+      <Card
+        className={classes.Card}
+        variant="outlined"
+        onClick={cardClickHandler}
+      >
+        <CardHeader title={props.data.title} subheader={props.data.date} />
+      </Card>
       {cardClick && (
-        <div>
+        <Card className={classes.textContent} variant="outlined">
+          <CardHeader
+            avatar={<Avatar aria-label="recipe">R</Avatar>}
+            action={<MenuList />}
+            title={props.data.id}
+            subheader={props.data.date}
+          />
+
           <CardContent>
             <Typography variant="body2" color="text.secondary">
               {props.data.content}
@@ -108,8 +112,8 @@ export default function RecipeReviewCard(props: any) {
               })}
             </CardContent>
           </Collapse>
-        </div>
+        </Card>
       )}
-    </Card>
+    </>
   );
 }
