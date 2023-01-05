@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 .Card {
   width: 100%;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(241, 167, 7);
+  }
 }
 .CardClick {
   width: 600px;
