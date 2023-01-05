@@ -50,7 +50,7 @@ const PostRental = (props:Props) => {
           <div>비용<input className={classes.priceInput}/></div>
         </form>
         <button className={classes.submitButton} onClick={()=>{alert('제출')}}>
-          <img src={process.env.PUBLIC_URL + 'img/submit.png'} width='30px' alt="submit" /> 
+          <img src={process.env.PUBLIC_URL + 'images/submit.png'} width='30px' alt="submit" /> 
         </button>
         <div><span className={classes.gray}>esc로 창 종료</span></div>
       </div>

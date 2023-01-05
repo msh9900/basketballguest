@@ -1,10 +1,10 @@
 .SelectedValuesLayout{
   // max-width:700px;
-
-  height:50px;
+  min-height: 52px;
   margin:10px;
   border:solid gray 1px;
   display:flex;
+  flex-wrap: wrap;
 
   .areas{
     background-color: orange;

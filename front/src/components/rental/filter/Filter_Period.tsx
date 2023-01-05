@@ -1,4 +1,8 @@
 import cls from './Filter_Period.module.scss'
+import {useState} from 'react'
+
+// util
+import getDate from './getDate'
 
 interface Props{
   period:Array<string>
@@ -9,6 +13,9 @@ interface Props{
 
 const Filter_Period = (props:Props) => {
 
+  const [stt, setStt] = useState(getDate('today'))
+  const [end, setEnd] = useState(getDate('tomorrow'))
+
   // 시작일 변경
   const onChangeStart = (e: React.FormEvent<HTMLInputElement>) => {
     const val = e.currentTarget.value;
@@ -16,7 +23,7 @@ const Filter_Period = (props:Props) => {
       alert('시작일은 종료일보다 늦을 수 없습니다.')
       return
     }
-    props.setPeriod([val, props.period[1]])
+    setStt(val)
   }
 
   // 종료일 변경
@@ -26,16 +33,13 @@ const Filter_Period = (props:Props) => {
       alert('종료일은 시작일보다 빠를 수 없습니다.')
       return
     }
-    props.setPeriod([props.period[0], val])
+    setEnd(val)
   }
 
   // 기간 설정
   const setOn = () => {
+    props.setPeriod([stt, end])
     props.setPeriodActive(true)
-  }
-  // 설정 취소
-  const setOff = () => {
-    props.setPeriodActive(false)
   }
   
   return (
@@ -49,7 +53,7 @@ const Filter_Period = (props:Props) => {
             <input 
               type="date"
               id="date"
-              value={props.period[0]}
+              value={stt} 
               onChange={onChangeStart}
             />
           </div>
@@ -59,16 +63,14 @@ const Filter_Period = (props:Props) => {
             <input 
               type="date"
               id="date"
-              value={props.period[1]}
+              value={end} 
               onChange={onChangeEnd}
             />
           </div>
 
           <div>
-            { props.periodActive && <button onClick={setOff}>기간설정 Off</button>}
-            {!props.periodActive && <button onClick={setOn}> 기간설정 ON </button>}
+            {<button onClick={setOn}> 기간설정 ON </button>}
           </div>
-
         </div>
         
       </div>

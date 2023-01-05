@@ -1,0 +1,61 @@
+.OrderLayout{
+  // size
+  margin:0 auto;
+  margin-top:20px;
+  margin-bottom:20px;
+  max-width:1000px;
+  padding:10px;
+  max-width:450px;
+
+  // style
+  border:solid 1px black;
+  border-radius: 3px;
+  
+  background-color:bisque;
+
+  .center{
+    text-align:center;
+  }
+  .topSection{
+    display:flex;
+  }
+}
+
+button{
+  cursor:pointer;
+  width:70px;
+  height: 30px;
+  font-weight: bold;
+  
+  color:black;
+  margin:0 0 10px 10px;
+  border-radius: 10px;
+}
+
+.on{
+  color:black;
+  background-color: orange;
+  border:solid 2px black;
+  font-weight:bold;
+  font-size:14px;
+  width:70px;
+}
+.off{
+  width:70px;
+}
+
+.reset{
+  width:50px;
+  color:black;
+  background-color: white;
+  background-image: url('../../../../public/reset.png');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  background-position-x: 12px;
+  background-position-y: 3px;
+  &:hover{
+    background-color: #FFDFDF;
+    color:white;
+  }
+}

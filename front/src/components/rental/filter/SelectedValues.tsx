@@ -4,8 +4,8 @@ interface Props{
   areas:Array<string>;
   setAreas:React.Dispatch<React.SetStateAction<string[]>>;
 
-  price:Array<number>;
-  setPrice:React.Dispatch<React.SetStateAction<number[]>>;
+  price:Array<string>;
+  setPrice:React.Dispatch<React.SetStateAction<string[]>>;
   priceActive:boolean;
   setPriceActive:React.Dispatch<React.SetStateAction<boolean>>;
 

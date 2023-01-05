@@ -5,11 +5,11 @@
   margin-bottom:20px;
   max-width:1000px;
   padding:10px;
+  max-width:450px;
 
   // style
   border:solid 1px black;
   border-radius: 3px;
-  
   background-color:bisque;
 
   .center{
@@ -32,22 +32,58 @@ button{
 }
 
 .on{
-  color:white;
-  background-color: red;
-  border:solid 2px red;
+  text-align: left;
+  padding-left:25px;
+  color:black;
+  width: 70px;
+  background-image: url('../../../../public/triangle-down.png');
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  background-position-x: 7px;
+  background-position-y: 5px;
 }
 .off{
-  color:white;
-  background-color: black;
-  border:solid 2px black;
+  text-align: left;
+  padding-left:25px;
+  color:black;
+  width: 70px;
+  background-image: url('../../../../public/triangle-right.png');
+  background-size: 13px;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  background-position-x: 7px;
+  background-position-y: 6px;
+}
+
+.fold{
+  color:black;
+  width:50px;
+  &:hover{
+    background-color: #FFDFDF;
+    color:white;
+  }
+  background-color: white;
+  background-image: url('../../../../public/fold.png');
+  background-size: 23px;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  background-position-x: 12px;
+  background-position-y: 1px;
 }
 .reset{
+  width:50px;
   color:black;
   background-color: white;
-  
+  background-image: url('../../../../public/reset.png');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  background-position-x: 12px;
+  background-position-y: 3px;
   &:hover{
-    border:solid 2px black;
-    border-style: double;
+    background-color: #FFDFDF;
+    color:white;
   }
 }
 

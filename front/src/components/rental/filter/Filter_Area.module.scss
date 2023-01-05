@@ -1,16 +1,21 @@
 .Filter_Area_Layout{
 
-  display: flex;
   padding:10px;
-  background-color: wheat;
-  justify-content: center;
-  margin:10 auto;
+  margin:0 auto;
+  padding:0;
   border-radius: 10px;
-  
+  display: flex;
+  justify-content: center;
+
   >div{
+    margin:0 auto;
+    padding:0px;
+    display: flex;
+    justify-content: center;
+  }
+  >div>div{
     text-align:center;
     width:100px;
-    // background-color: brown; 
     padding-top:10px;
     margin:3px;
     border-radius: 10px;
@@ -21,9 +26,13 @@
   .content{font-weight:normal;}
 
   ul{
+    
     padding:10px;
     li{
       padding:5px;
+      border:1px solid black;
+      border-collapse: collapse;
+      margin-top:-1px;
       &:hover{
         background-color: red;
         color:white;

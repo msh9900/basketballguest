@@ -10,9 +10,6 @@ import SelectedValues from './SelectedValues'
 // library
 import {useState} from 'react'
 
-// util
-import getDate from './getDate'
-
 const Filter = () => { 
   // filter on off
   const [areaFilter, setAreaFilter] = useState(false)
@@ -21,12 +18,11 @@ const Filter = () => {
 
   // filters
   const [areas, setAreas] =  useState<string[]>([])
-  const [price, setPrice] =  useState<number[]>([0, 0])
+  const [price, setPrice] =  useState<string[]>(['0', '0'])
+  const [period, setPeriod] =  useState<string[]>([])
   const [priceActive, setPriceActive] = useState(false)
-  const [period, setPeriod] =  useState<string[]>([getDate('today'), getDate('tomorrow')])
   const [periodActive, setPeriodActive] = useState(false)
   
-
   const priceFilterOn = () => {
     setAreaFilter(false)
     setPriceFilter(prev=>!prev)
@@ -44,13 +40,19 @@ const Filter = () => {
   }
   const filterReset = () => {
     setAreas([])
-    setPrice([0, 0])
+    setPrice(['0', '0'])
     setPriceActive(false)
     setPeriodActive(false)
+  }
+  const closeFilters = () => {
+    setAreaFilter(false)
+    setPriceFilter(false)
+    setPeriodFilter(false)
   }
 
   return (
     <div className={cls.FilterLayout}>
+      
       <div className={cls.topSection}>
         <h3 className='topTitle'> 필터 : </h3>
         <button 
@@ -65,14 +67,20 @@ const Filter = () => {
           className={periodFilter ? cls.on : cls.off} 
           onClick={periodFilterOn}>기간
         </button>
-        <button 
-          className={cls.reset} 
-          onClick={filterReset}>리셋
-        </button>
-      </div>
-      
 
-      {/* 현재 필터링 태그 */}
+        {(areas.length>=1 || priceActive || periodActive) &&
+          <button 
+            className={cls.reset} 
+            onClick={filterReset}>
+          </button>}
+        {(areaFilter || priceFilter || periodFilter) &&
+          <button 
+            className={cls.fold} 
+            onClick={closeFilters}>
+          </button>}
+      </div>
+
+      {/* active filters */}
       <SelectedValues 
         areas={areas} 
         setAreas={setAreas} 
@@ -86,8 +94,6 @@ const Filter = () => {
         setPeriodActive={setPeriodActive}
       />
 
-
-      
       {/* 필터 제너레이터 */}
       {areaFilter && <FilterArea 
         areas={areas} 
@@ -105,4 +111,4 @@ const Filter = () => {
     </div>
   )
 }
-export default Filter
+export default Filter;
