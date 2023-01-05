@@ -70,7 +70,7 @@ export default function Profile() {
       <div className={classes.img}>
         <p>프로필사진</p>
         <img alt="img" src={userImg} />
-        <input type="file" onChange={imgHandler} />
+        <input type="file" accept="image/*" onChange={imgHandler} />
       </div>
       <div className={classes.ProfileForm}>
         <p>유저 정보</p>
