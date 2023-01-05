@@ -2,13 +2,12 @@
 .Card {
   width: 100%;
   cursor: pointer;
-  &:hover {
+  &:active {
     background-color: rgb(241, 167, 7);
   }
 }
-.CardClick {
-  width: 600px;
-  margin: 50px 0px;
+.textContent {
+  width: 100%;
   .firstComment {
     padding: 16px 16px 0px;
   }
@@ -47,7 +46,4 @@
   }
 }
 @media (max-width: 900px) {
-  .CardClick {
-    width: 100%;
-  }
 }
