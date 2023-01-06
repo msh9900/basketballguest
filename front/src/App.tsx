@@ -28,7 +28,6 @@ function App() {
     <div className={classes.wrapper}>
       <div className={classes.contentWrapper}>
         {headerDel ? <Header /> : ''}
-        {headerDel ? <div style={{ height: 100 }} /> : ''}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/intro" element={<IntroducePage />} />

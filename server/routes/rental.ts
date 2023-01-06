@@ -19,13 +19,9 @@ const limits = {
 };
 const upload = multer({ storage, limits });
 
-router.post(
-  '/img',
-  upload.array('img', 5),
-  async (req: Request, res: Response) => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    res.send(JSON.stringify(req.file?.filename));
-  }
-);
+router.post('/img', upload.array('img', 5), (req: Request, res: Response) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  res.send(JSON.stringify(req.files));
+});
 
 module.exports = router;
