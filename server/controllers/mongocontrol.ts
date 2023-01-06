@@ -50,7 +50,6 @@ const mongoDB = {
     const user = await _user;
     const db = user.db('basket').collection('login');
     const userdata = await db.find({}).toArray();
-    console.log(userdata);
   },
 
   userData: async (logindata: any) => {
@@ -69,8 +68,6 @@ const mongoDB = {
           },
         }
       );
-      console.log(result);
-      return { msg: '정보 수정완료' };
     }
   },
 };

@@ -21,25 +21,24 @@ const Rental = () => {
   };
   const formData = new FormData();
 
-  const handleImageUpload = (e: any) => {
-    const fileArr = e.target.files;
+  const handleImageUpload = (event: any) => {
+    const fileArr = event.target.files;
     for (let i = 0; i < fileArr.length; i++) {
-      formData.append('img', e.target.files[i]);
+      formData.append('img', event.target.files[i]);
     }
+    // let fileURLs: string[] = [];
+    // let file;
+    // let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
 
-    let fileURLs: string[] = [];
-    let file;
-    let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
-
-    for (let i = 0; i < filesLength; i++) {
-      file = fileArr[i];
-      let reader = new FileReader();
-      reader.onload = () => {
-        fileURLs[i] = reader.result as string;
-        setInputImgs([...fileURLs]);
-      };
-      reader.readAsDataURL(file);
-    }
+    // for (let i = 0; i < filesLength; i++) {
+    //   file = fileArr[i];
+    //   let reader = new FileReader();
+    //   reader.onload = () => {
+    //     fileURLs[i] = reader.result as string;
+    //     setInputImgs([...fileURLs]);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const sendImgs = async (event: any) => {

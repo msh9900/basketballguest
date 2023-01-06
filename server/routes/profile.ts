@@ -41,7 +41,6 @@ router.post(
 // });
 
 router.post('/userdata', async (req: Request, res: Response) => {
-  console.log(req.body);
   const logindata = {
     id: req.body.id,
     pw: req.body.pw,
