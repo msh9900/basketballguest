@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import multer from 'multer';
-
 const router = express.Router();
 
 const dir = './rental';

@@ -17,12 +17,12 @@ const boardRouter = require('./routes/board');
 const profileRouter = require('./routes/profile');
 const rentalRouter = require('./routes/rental');
 
+server.use('/rental', express.static('rental'));
 server.use('/login', loginRouter);
 server.use('/register', registerRouter);
 server.use('/board', boardRouter);
 server.use('/profile', profileRouter);
 server.use('/rental', rentalRouter);
-
 // ERROR 처리
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err.stack);
