@@ -75,7 +75,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="fixed" style={{ background: '#f1a707' }}>
+    <AppBar position="sticky" style={{ background: '#f1a707' }}>
       <div className={classes.container}>
         <Toolbar
           disableGutters
