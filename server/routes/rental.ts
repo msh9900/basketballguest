@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import multer from 'multer';
-
 const router = express.Router();
 
 const dir = './rental';
@@ -19,11 +18,7 @@ const limits = {
 };
 const upload = multer({ storage, limits });
 
-<<<<<<< HEAD
-router.post('/img', upload.array('img', 5), (req: Request, res: Response) => {
-=======
 router.post('/img', upload.array('img', 999), (req: Request, res: Response) => {
->>>>>>> main
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   res.send(JSON.stringify(req.files));
 });
