@@ -21,10 +21,10 @@ const Rental = () => {
   };
   const formData = new FormData();
 
-  const handleImageUpload = (e: any) => {
-    const fileArr = e.target.files;
+  const handleImageUpload = (event: any) => {
+    const fileArr = event.target.files;
     for (let i = 0; i < fileArr.length; i++) {
-      formData.append('img', e.target.files[i]);
+      formData.append('img', event.target.files[i]);
     }
     // let fileURLs: string[] = [];
     // let file;
