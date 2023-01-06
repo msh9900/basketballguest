@@ -44,20 +44,23 @@ export default function GuestRecruitmentPage() {
     }
   };
   return (
-    <div id="parentScrollDiv" className={classes.wrap}>
-      <InfiniteScroll
-        dataLength={contentList}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<p>Loading...</p>}
-        scrollableTarget="parentScrollDiv"
-      >
-        <div className={classes.container}>
-          {data.slice(0, contentList).map((val) => (
-            <Card key={val.contentidx} data={val} />
-          ))}
-        </div>
-      </InfiniteScroll>
-    </div>
+    <>
+      <div className={classes.writeButton}>글쓰기 버튼</div>
+      <div id="parentScrollDiv" className={classes.wrap}>
+        <InfiniteScroll
+          dataLength={contentList}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<p>Loading...</p>}
+          scrollableTarget="parentScrollDiv"
+        >
+          <div className={classes.container}>
+            {data.slice(0, contentList).map((val) => (
+              <Card key={val.contentidx} data={val} />
+            ))}
+          </div>
+        </InfiniteScroll>
+      </div>
+    </>
   );
 }
