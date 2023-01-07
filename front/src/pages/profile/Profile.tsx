@@ -1,26 +1,22 @@
 import classes from './Profile.module.scss';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Button from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IsLogin } from '../../redux/modules/login';
 
 const formData = new FormData();
 
 export default function Profile() {
-  const [id, setId] = useState<string>('');
+  const stateId = useSelector((state: any) => state.login.userid);
   const [pw, setPw] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [image, setImage] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
   const [userImg, setUserImg] = useState<any>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const InputIdHandler = (event: any) => {
-    setId(event.target.value);
-  };
 
   const InputPasswordHandler = (event: any) => {
     setPw(event.target.value);
@@ -51,7 +47,7 @@ export default function Profile() {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        id,
+        stateId,
         pw,
         email,
         userName,
@@ -61,7 +57,7 @@ export default function Profile() {
     const data = await response.json();
 
     // if (data) {
-    //   navigate('/login');
+    //   dispatch(IsLogin(data));
     // }
   }
   return (
@@ -75,13 +71,13 @@ export default function Profile() {
       <div className={classes.ProfileForm}>
         <p>유저 정보</p>
         <p>아이디</p>
-        <input type="text" value={id} onChange={InputIdHandler}></input>
+        <input type="text" defaultValue={stateId} />
         <p>비밀번호 변경</p>
         <input type="password" value={pw} onChange={InputPasswordHandler} />
         {/* <p>비밀번호 재확인</p>
         <input type="password" /> */}
         <p>이메일</p>
-        <input type="text" value={email} onChange={InputEmailHandler} />
+        <input type="email" value={email} onChange={InputEmailHandler} />
         <p>이름</p>
         <input type="text" value={userName} onChange={InputNameHandler} />
         <Button type="submit">정보 변경</Button>
