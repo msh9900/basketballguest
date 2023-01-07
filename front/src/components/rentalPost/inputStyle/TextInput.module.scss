@@ -1,0 +1,26 @@
+.TextInputLayout{
+  margin:10px auto;
+  display:flex;
+
+  >div:first-child{
+    width:20px;
+    color: red;
+    margin-left:10px;
+  }
+  >div:last-child{
+    width:220px;
+  }
+
+  input[type=text]{
+    padding:5px;
+    // border:1px solid white;
+    border:1px solid black;
+    width :220px;
+  }
+}
+
+.explanation{
+  margin-top:15px;
+  margin-left:10px;
+  font-size:15px;
+}
