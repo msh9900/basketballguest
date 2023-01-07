@@ -30,25 +30,16 @@ router.post(
   }
 );
 
-// router.get('/', async (req: Request, res: Response) => {
-//   const result = await mongoDB.findUserData(
-//     req.body.id,
-//     req.body.pw,
-//     req.body.userName,
-//     req.body.email,
-//     req.body.userImg
-//   );
-// });
-
 router.post('/userdata', async (req: Request, res: Response) => {
   const logindata = {
-    id: req.body.id,
+    id: req.body.stateId,
     pw: req.body.pw,
     userName: req.body.userName,
     email: req.body.email,
     userImg: req.body.userImg,
   };
   const result = await mongoDB.userData(logindata);
+  console.log(result);
   res.send(JSON.stringify(result));
 });
 
