@@ -2,7 +2,7 @@ import cls from './GymRentalPost.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-// comp
+// component
 import GymTitle from './templates/GymTitle'
 import GymContent from './templates/GymContent'
 import GymAddress from './templates/GymAddress'
@@ -17,23 +17,92 @@ const GymRentalPost =() => {
   const [isLoading, setIsLoading] = useState(false)
   const cancelPost = () => {navigate('/gym')}
 
-  // const [txtFormValue, setTxtFormValue] = useState([
-  //   {title:''},
-  //   {content:'none'},
-  //   {address:'none'},
-  //   {pricePerHour:'none'},
-  //   {openingHours:'none'},
-  //   {openingPeriod:'none'},
-  //   {openingDays:'none'},
-  // ])
+  // form contents
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [address, setAddress] = useState('')
+  const [price, setPrice] = useState('')
+  const [openingHours, setOpeningHours] = useState('')
+  const [openingPeriod, setOpeningPeriod] = useState<string[]>(['',''])
+  const [openingDays, setOpeningDays] = useState(
+    [
+      {name:'일', open:false},
+      {name:'월', open:false},
+      {name:'화', open:false},
+      {name:'수', open:false},
+      {name:'목', open:false},
+      {name:'금', open:false},
+      {name:'토', open:false},
+    ]
+  )
 
   const post = async () => {
-    await setIsLoading(true)
+    // 텍스트 데이터 유효성 체크
+    await checkFormValid()
+
+    // 텍스트 데이터 번들 생성
+    const formBody = {
+      title,
+      content,
+      address,
+      price,
+      openingHours,
+      openingPeriod,
+      openingDays,
+    }
+    console.log('formBody', formBody)
+
+    // 텍스트 데이터 전송
+    // try {
+    //   const response = await fetch('http://localhost:4000/register', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(formBody),
+    //   });
+    //   const data = await response.json();
+    //   await console.log('post 성공', data);
+    // } catch(err:any){
+    //   await console.log('post 실패', err);
+    // }
+
+    // 이미지 데이터 전송
+    // await setIsLoading(true)
+
+    // gym 페이지로 이동
+    // alert('성공')
     // navigate('/gym')
   }
 
-  const submitForm = (e:any) => {
-    e.preventDefault()
+  const checkFormValid = () => {
+    if(title===''){
+      alert('제목을 입력해주세요')
+      // 포커스 주기
+      return
+    }
+    if(address===''){
+      alert('주소를 입력해주세요')
+      // 포커스 주기
+      return
+    }
+    if(openingHours===''){
+      alert('영업시간을 입력해주세요')
+      // 포커스 주기
+      return
+    }
+
+    const stt = openingPeriod[0]
+    const end = openingPeriod[1]
+    const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+    // https://curryyou.tistory.com/234
+
+    if(stt==='' || end===''){
+      alert('개장기간 값을 입력해주세요')
+      return
+    }
+    if(!regex.test(stt) || !regex.test(end)){
+      alert('개장기간 양식을 확인해주세요')
+      return
+    }
   }
 
   return (
@@ -46,22 +115,39 @@ const GymRentalPost =() => {
         />
         <form>
           <GymTitle 
-            // txtFormValue={txtFormValue}
-            // setTxtFormValue={setTxtFormValue}
+            title={title}
+            setTitle={setTitle}
           />
-          <GymContent/>
-          <GymAddress/>
-          <GymPrice/>
-          <GymOpeningHours/> 
-          <GymOpeningPeriod/> 
-          <GymOpeningDays/>
+          <GymContent
+            content={content}
+            setContent={setContent}
+          />
+          <GymAddress
+            address={address}
+            setAddress={setAddress}
+          />
+          <GymPrice
+            price={price}
+            setPrice={setPrice}
+          />
+          <GymOpeningHours
+            openingHours={openingHours}
+            setOpeningHours={setOpeningHours}
+          /> 
+          <GymOpeningPeriod
+            openingPeriod={openingPeriod}
+            setOpeningPeriod={setOpeningPeriod}
+          /> 
+          <GymOpeningDays
+            openingDays={openingDays}
+            setOpeningDays={setOpeningDays}
+          /> 
         </form>
         <div className={cls.bottomBtns}>
           <button onClick={cancelPost}>취소</button>
-          <button onClick={post}>완료</button>
+          <button onClick={post}>전송</button>
         </div>
       </div>
-
     </div>
   )
 }

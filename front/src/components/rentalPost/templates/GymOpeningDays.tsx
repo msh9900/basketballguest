@@ -1,36 +1,32 @@
 // import 
 import cls from '../inputStyle/CheckBoxInput.module.scss'
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 
-const GymOpeningDays = () => {
+type name_open = {
+  name: string;
+  open: boolean;
+}
+interface Props{
+  openingDays:name_open[]
+  setOpeningDays:React.Dispatch<React.SetStateAction<name_open[]>>
+}
+
+const GymOpeningDays = (props:Props) => {
 
   const days = ['일','월','화','수','목','금','토']
-  const [openingDays, setOpeningDays] = useState(
-    [
-      {name:'일', open:false},
-      {name:'월', open:false},
-      {name:'화', open:false},
-      {name:'수', open:false},
-      {name:'목', open:false},
-      {name:'금', open:false},
-      {name:'토', open:false},
-    ]
-  )
-  const [selectedOnes, setSelectedOnes] = useState<string[]>([])
-
+  
   useEffect(()=>{
-    const iterables = [...openingDays]
+    const iterables = [...props.openingDays]
     const arr:string[] = []
     for(const x of iterables){
       if(x.open === true){
         arr.push(x.name)
       }
     }
-    setSelectedOnes(arr)
-  }, [openingDays])
+  }, [props.openingDays])
 
   const checkClicked = (day:string) => {
-    const iterables = [...openingDays]
+    const iterables = [...props.openingDays]
     for(const x of iterables){
       if(x.name === day){
         return x.open
@@ -39,15 +35,16 @@ const GymOpeningDays = () => {
   }
 
   const setClicked = (day:string) => {
-    let res:any = [...openingDays]
+    let res:any = [...props.openingDays]
     for(const x of res){
       if(x.name === day){
         x.open = !x.open
       }
     }
-    setOpeningDays(res)
+    props.setOpeningDays(res)
     return false
   }
+
   return (
     <div>
       <h3 className={cls.explanation}>영업일</h3>
