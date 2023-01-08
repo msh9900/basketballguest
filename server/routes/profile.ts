@@ -20,7 +20,7 @@ const limits = {
 };
 const upload = multer({ storage, limits });
 
-//이미지 가져오기
+// 이미지 가져오기
 router.post(
   '/img',
   upload.single('img'),
@@ -31,6 +31,7 @@ router.post(
 );
 
 router.post('/userdata', async (req: Request, res: Response) => {
+  console.log(req.body);
   const logindata = {
     id: req.body.stateId,
     pw: req.body.pw,

@@ -1,13 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+
 * {
   margin: 0%;
   padding: 0;
   box-sizing: border-box;
 }
 .profile {
+  padding: 3em;
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
+  height: 800px;
+  max-width: 2600px;
+  .header {
+    padding: 1em;
+    font-family: 'Rubik Vinyl';
+    font-size: bold;
+  }
+  .imgtitle {
+    padding: 2em;
+  }
+  .img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    padding: 1em;
+    border: 5px solid black;
+  }
+
+  .imgcurrent {
+    padding: 1em;
+    height: 120px;
+    border: 5px solid black;
+  }
+  .fileChoice {
+    position: relative;
+    align-items: flex-end;
+    display: flex;
+    padding: 1em;
+  }
+  .profileForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    position: relative;
+    padding: 3em;
+    min-width: 290px;
+    max-width: 384px;
+    border: 1px solid #c9c4c4;
+    border-radius: 6px;
+    input {
+      border-radius: 6px;
+    }
+    p {
+      font-family: 'Rubik Vinyl';
+    }
+  }
+  .button {
+    max-width: 300px;
+    margin: 2em;
+    background-color: #f1a707;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 17px;
+    color: white;
+    border: 0.1em solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    cursor: pointer;
+    &:hover {
+      color: black;
+    }
+  }
 }

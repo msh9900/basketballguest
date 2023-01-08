@@ -62,25 +62,33 @@ export default function Profile() {
   }
   return (
     <form onSubmit={profileSumbit} className={classes.profile}>
-      <Button>개인정보</Button>
+      <p className={classes.header}>개인정보</p>
+      <p className={classes.imgtitle}>프로필사진</p>
       <div className={classes.img}>
-        <p>프로필사진</p>
-        <img alt="img" src={userImg} />
-        <input type="file" accept="image/*" onChange={imgHandler} />
+        <img alt="img" src={userImg} className={classes.imgcurrent} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={imgHandler}
+          className={classes.fileChoice}
+        />
       </div>
-      <div className={classes.ProfileForm}>
-        <p>유저 정보</p>
+
+      <div className={classes.profileForm}>
+        <div>유저 정보</div>
         <p>아이디</p>
         <input type="text" defaultValue={stateId} />
         <p>비밀번호 변경</p>
         <input type="password" value={pw} onChange={InputPasswordHandler} />
-        {/* <p>비밀번호 재확인</p>
-        <input type="password" /> */}
+        <p>비밀번호 재확인</p>
+        <input type="password" />
         <p>이메일</p>
         <input type="email" value={email} onChange={InputEmailHandler} />
         <p>이름</p>
         <input type="text" value={userName} onChange={InputNameHandler} />
-        <Button type="submit">정보 변경</Button>
+        <button type="submit" className={classes.button}>
+          정보 변경
+        </button>
       </div>
     </form>
   );

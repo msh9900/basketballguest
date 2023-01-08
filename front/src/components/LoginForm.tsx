@@ -97,9 +97,7 @@ export default function LoginForm(props: any) {
             <p className={classes.invalid}>ID와 PW값은 4글자 이상입니다.</p>
           )}
 
-          <Button type="submit">
-            <p>로그인</p>
-          </Button>
+          <Button type="submit">로그인</Button>
           <Link to="/register" className={classes.register}>
             <p>회원가입</p>
           </Link>

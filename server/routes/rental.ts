@@ -23,4 +23,8 @@ router.post('/img', upload.array('img', 5), (req: Request, res: Response) => {
   res.send(JSON.stringify(req.files));
 });
 
+router.post('/data', (req: Request, res: Response) => {
+  console.log(req.body);
+});
+
 module.exports = router;
