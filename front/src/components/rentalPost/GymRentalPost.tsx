@@ -5,6 +5,7 @@ import { useState } from 'react';
 // component
 import GymTitle from './templates/GymTitle'
 import GymContent from './templates/GymContent'
+import GymContact from './templates/GymContact'
 import GymAddress from './templates/GymAddress'
 import GymOpeningHours from './templates/GymOpeningHours'
 import GymOpeningPeriod from './templates/GymOpeningPeriod'
@@ -20,6 +21,7 @@ const GymRentalPost =() => {
   // form contents
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [contact, setContact] = useState('')
   const [address, setAddress] = useState('')
   const [price, setPrice] = useState('')
   const [openingHours, setOpeningHours] = useState('')
@@ -44,6 +46,7 @@ const GymRentalPost =() => {
     const formBody = {
       title,
       content,
+      contact,
       address,
       price,
       openingHours,
@@ -121,6 +124,10 @@ const GymRentalPost =() => {
           <GymContent
             content={content}
             setContent={setContent}
+          />
+          <GymContact
+            contact={contact}
+            setContact={setContact}
           />
           <GymAddress
             address={address}
