@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    cb(null, file.fieldname + '_' + Math.random());
+    cb(null, file.fieldname + '_' + new Date());
   },
 });
 
@@ -18,7 +18,7 @@ const limits = {
 };
 const upload = multer({ storage, limits });
 
-router.post('/img', upload.array('img', 999), (req: Request, res: Response) => {
+router.post('/img', upload.array('img', 5), (req: Request, res: Response) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   res.send(JSON.stringify(req.files));
 });

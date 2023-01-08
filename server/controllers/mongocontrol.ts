@@ -1,5 +1,6 @@
 const mongoClient = require('../routes/mongoconnet')!;
 const _user = mongoClient.connect();
+
 const mongoDB = {
   //로그인
   setId: async (id: string, pw: string) => {
@@ -41,33 +42,24 @@ const mongoDB = {
     }
   },
   //프로필 페이지
-  findUserData: async (
-    id: string,
-    pw: string,
-    email: string,
-    userName: string
-  ) => {
-    const user = await _user;
-    const db = user.db('basket').collection('login');
-    const userdata = await db.find({}).toArray();
-  },
-
   userData: async (logindata: any) => {
     console.log(logindata);
     const user = await _user;
     const db = user.db('basket').collection('login');
-    const data = await db.findOne({ id: logindata.id, email: logindata.email });
+    const data = await db.findOne({ id: logindata.id });
     if (data) {
       const result = await db.updateOne(
         { id: logindata.id },
         {
           $set: {
             pw: logindata.pw,
+            email: logindata.email,
             userName: logindata.userName,
             userImg: logindata.userImg,
           },
         }
       );
+      return {};
     }
   },
 };
