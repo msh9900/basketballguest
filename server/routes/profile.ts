@@ -21,25 +21,25 @@ const limits = {
 const upload = multer({ storage, limits });
 
 // 이미지 가져오기
+
 router.post(
-  '/img',
+  '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log(req.body);
+    const logindata = {
+      id: req.body.id.replaceAll('"', ''),
+      pw: req.body.pw.replaceAll('"', ''),
+      userName: req.body.userName.replaceAll('"', ''),
+      email: req.body.email.replaceAll('"', ''),
+      userImg: `http://localhost:4000/images/${req.body.userImg.replaceAll(
+        '"',
+        ''
+      )}`,
+    };
+    const result = await mongoDB.userData(logindata);
+    console.log(result);
+    res.send(JSON.stringify(result));
   }
 );
-
-router.post('/userdata', async (req: Request, res: Response) => {
-  const logindata = {
-    id: req.body.stateId,
-    pw: req.body.pw,
-    userName: req.body.userName,
-    email: req.body.email,
-    userImg: req.body.userImg,
-  };
-  const result = await mongoDB.userData(logindata);
-  console.log(result);
-  res.send(JSON.stringify(result));
-});
 
 module.exports = router;

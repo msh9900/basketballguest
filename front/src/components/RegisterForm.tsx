@@ -94,6 +94,7 @@ export default function LoginForm(props: any) {
             className={classes.id}
             placeholder="비밀번호"
             value={pw}
+            autoComplete="off"
             onChange={handlePw}
             // onClick={() => {
             //   setIsRecentSubmitted(false);
