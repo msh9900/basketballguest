@@ -3,6 +3,8 @@ import classes from './RegisterForm.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Button from './Button';
+import { useDispatch } from 'react-redux';
+import { IsRegister } from '../redux/modules/login';
 
 export default function LoginForm(props: any) {
   const [id, setId] = useState('');
@@ -13,7 +15,7 @@ export default function LoginForm(props: any) {
   // const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleId = (e: any) => {
     setId(e.target.value);
   };
@@ -43,10 +45,11 @@ export default function LoginForm(props: any) {
       }),
     });
     const data = await response.json();
-
+    console.log(data);
     try {
       if (data.msg === '회원가입 완료') {
         alert('회원 가입성공');
+        dispatch(IsRegister(data));
         navigate('/login');
       } else {
         alert('중복된 회원 존재');

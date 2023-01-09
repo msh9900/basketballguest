@@ -6,6 +6,8 @@
   box-sizing: border-box;
 }
 .profile {
+  margin: auto;
+  margin-bottom: 100px;
   padding: 3em;
   position: relative;
   display: flex;
@@ -29,7 +31,7 @@
     align-items: center;
     position: relative;
     width: 100%;
-
+    flex-direction: column;
     padding: 1em;
     border: 5px solid black;
   }
@@ -38,14 +40,32 @@
     padding: 1em;
     height: 120px;
     border: 5px solid black;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .fileChoice {
     position: relative;
-    align-items: flex-end;
-    display: flex;
+
+    display: none;
     padding: 1em;
   }
+  .imglabel {
+    font-weight: bold;
+    border: 3px solid black;
+    color: black;
+    margin: auto;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 7px;
+    &:hover {
+      background-color: orange;
+      color: white;
+      cursor: pointer;
+    }
+  }
   .profileForm {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -56,11 +76,17 @@
     max-width: 384px;
     border: 1px solid #c9c4c4;
     border-radius: 6px;
+
     input {
       border-radius: 6px;
     }
     p {
       font-family: 'Rubik Vinyl';
+    }
+    .profileTitle {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      color: orange;
+      border: 5px solid black;
     }
   }
   .button {

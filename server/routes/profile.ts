@@ -25,13 +25,11 @@ router.post(
   '/img',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    res.send(JSON.stringify(req.file?.filename));
+    console.log(req.body);
   }
 );
 
 router.post('/userdata', async (req: Request, res: Response) => {
-  console.log(req.body);
   const logindata = {
     id: req.body.stateId,
     pw: req.body.pw,
