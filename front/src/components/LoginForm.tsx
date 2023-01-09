@@ -47,7 +47,7 @@ export default function LoginForm(props: any) {
         pw: pw,
       }),
     });
-    const data: any = await response.json();
+    const data = await response.json();
 
     try {
       if (data.msg === '로그인 실패') {
@@ -88,6 +88,7 @@ export default function LoginForm(props: any) {
             placeholder="비밀번호"
             value={pw}
             onChange={handlePw}
+            autoComplete="off"
             onClick={() => {
               setIsRecentSubmitted(false);
             }}

@@ -8,6 +8,8 @@ const formData = new FormData();
 
 export default function Profile() {
   const stateId = useSelector((state: any) => state.login.userid);
+  const stateUserName = useSelector((state: any) => state.login.userName);
+  const stateUserEmail = useSelector((state: any) => state.login.email);
   const defaultStateImg = useSelector(
     (state: any) => state.login.defaultImgUrl,
   );
@@ -27,7 +29,7 @@ export default function Profile() {
     } else {
       setIsValid(false);
     }
-  }, [pw, pw2]);
+  }, []);
 
   const InputPasswordHandler = (e: any) => {
     setPw(e.target.value);
@@ -47,32 +49,27 @@ export default function Profile() {
   const imgHandler = async (event: any) => {
     formData.append('img', event.target.files[0]);
     setUserImg(URL.createObjectURL(event.target.files[0]));
-    await fetch('http://localhost:4000/profile/img', {
+  };
+
+  async function profileSumbit(event: any) {
+    event.preventDefault();
+    formData.append('id', JSON.stringify(stateId));
+    formData.append('pw', JSON.stringify(pw));
+    formData.append('email', JSON.stringify(email));
+    formData.append('userName', JSON.stringify(userName));
+    formData.append('userImg', JSON.stringify(userImg));
+    const response = await fetch('http://localhost:4000/profile/userdata', {
       method: 'POST',
       body: formData,
     });
-  };
-
-  async function profileSumbit() {
-    const response = await fetch('http://localhost:4000/profile/userdata', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        stateId,
-        pw,
-        email,
-        userName,
-        userImg,
-      }),
-    });
     const data = await response.json();
-    try {
-      if (data) {
-        console.log('!');
-        // dispatch(IsLogin(data));
-      }
-    } catch (error) {
-      console.log(error);
+
+    if (!response.ok) {
+      throw new Error('데이터 통신 오류');
+    }
+    if (data) {
+      console.log(data);
+      return data;
     }
   }
 
@@ -130,13 +127,33 @@ export default function Profile() {
         <p>아이디</p>
         <input type="text" defaultValue={stateId} />
         <p>비밀번호 변경</p>
-        <input type="password" value={pw} onChange={InputPasswordHandler} />
+        <input
+          type="password"
+          value={pw}
+          onChange={InputPasswordHandler}
+          autoComplete="off"
+        />
         <p>비밀번호 재확인</p>
-        <input type="password" value={pw2} onChange={InputPasswordHandler2} />
+        <input
+          type="password"
+          value={pw2}
+          onChange={InputPasswordHandler2}
+          autoComplete="off"
+        />
         <p>이메일</p>
-        <input type="email" value={email} onChange={InputEmailHandler} />
+        <input
+          type="email"
+          value={email}
+          onChange={InputEmailHandler}
+          placeholder={`${stateUserEmail}`}
+        />
         <p>이름</p>
-        <input type="text" value={userName} onChange={InputNameHandler} />
+        <input
+          type="text"
+          value={userName}
+          onChange={InputNameHandler}
+          placeholder={`${stateUserName}`}
+        />
 
         <button
           type="submit"

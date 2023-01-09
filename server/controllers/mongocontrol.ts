@@ -11,6 +11,9 @@ const mongoDB = {
       return {
         id: result.id,
         pw: result.pw,
+        email: result.email,
+        userName: result.userName,
+        userImg: result.userImg,
       };
     } else {
       return { msg: '로그인 실패' };
@@ -58,7 +61,7 @@ const mongoDB = {
           },
         }
       );
-      const upDateData = await db.findOne({
+      const updateData = await db.findOne({
         id: logindata.id,
         pw: logindata.pw,
         email: logindata.email,
@@ -66,7 +69,7 @@ const mongoDB = {
         userImg: logindata.userImg,
       });
 
-      return upDateData;
+      return updateData;
     }
   },
 };
