@@ -4,8 +4,7 @@ const initialState = {
   userid: '',
   pw: '',
   email: '',
-  userImg: '',
-  defaultImgUrl:
+  userImg:
     'https://blog.kakaocdn.net/dn/EtXLd/btrcf61KuuI/luhp9I8a1nfwUwQ4MwSTQk/img.jpg',
   userName: '',
   islogin: false,
