@@ -43,12 +43,11 @@ const mongoDB = {
   },
   //프로필 페이지
   userData: async (logindata: any) => {
-    console.log(logindata);
     const user = await _user;
     const db = user.db('basket').collection('login');
     const data = await db.findOne({ id: logindata.id });
     if (data) {
-      const result = await db.updateOne(
+      const data = await db.updateOne(
         { id: logindata.id },
         {
           $set: {
@@ -59,7 +58,15 @@ const mongoDB = {
           },
         }
       );
-      return {};
+      const upDateData = await db.findOne({
+        id: logindata.id,
+        pw: logindata.pw,
+        email: logindata.email,
+        userName: logindata.userName,
+        userImg: logindata.userImg,
+      });
+
+      return upDateData;
     }
   },
 };
