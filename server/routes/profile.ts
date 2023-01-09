@@ -28,13 +28,13 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    let imgpath = 'images/' + req.file?.filename;
+    let imgpath = req.file?.filename;
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
       pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
       email: req.body.email.replaceAll('"', ''),
-      userImg: `http://localhost:4000/${imgpath}`,
+      userImg: `https://localhost:4000/images/${imgpath}`,
     };
     const result = await mongoDB.userData(logindata);
     console.log(result);

@@ -10,10 +10,9 @@ export default function Profile() {
   const stateId = useSelector((state: any) => state.login.userid);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
-  const stateUserImg = useSelector((state: any) => state.login.userImg);
-  // const defaultStateImg = useSelector(
-  //   (state: any) => state.login.defaultImgUrl,
-  // );
+  const defaultStateImg = useSelector(
+    (state: any) => state.login.defaultImgUrl,
+  );
   const [pw, setPw] = useState<string>('');
   const [pw2, setPw2] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -103,14 +102,26 @@ export default function Profile() {
             className={classes.fileChoice}
           />
         </label>
-        <img
-          alt="profileImg"
-          src={stateUserImg}
-          className={classes.imgcurrent}
-          onClick={() => {
-            ImgPop(stateUserImg);
-          }}
-        />
+
+        {userImg === '' ? (
+          <img
+            alt="profileImg"
+            src={defaultStateImg}
+            className={classes.imgcurrent}
+            onClick={() => {
+              ImgPop(defaultStateImg);
+            }}
+          />
+        ) : (
+          <img
+            alt="profileImg"
+            src={userImg}
+            className={classes.imgcurrent}
+            onClick={() => {
+              ImgPop(userImg);
+            }}
+          />
+        )}
       </div>
 
       <div className={classes.profileForm}>
