@@ -10,9 +10,10 @@ export default function Profile() {
   const stateId = useSelector((state: any) => state.login.userid);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
-  const defaultStateImg = useSelector(
-    (state: any) => state.login.defaultImgUrl,
-  );
+  const stateUserImg = useSelector((state: any) => state.login.userImg);
+  // const defaultStateImg = useSelector(
+  //   (state: any) => state.login.defaultImgUrl,
+  // );
   const [pw, setPw] = useState<string>('');
   const [pw2, setPw2] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -68,7 +69,9 @@ export default function Profile() {
       throw new Error('데이터 통신 오류');
     }
     if (data) {
-      console.log(data);
+      alert('프로필 변경 완료');
+      navigate('/');
+      dispatch(IsLogin(data));
       return data;
     }
   }
@@ -100,26 +103,14 @@ export default function Profile() {
             className={classes.fileChoice}
           />
         </label>
-
-        {userImg === '' ? (
-          <img
-            alt="profileImg"
-            src={defaultStateImg}
-            className={classes.imgcurrent}
-            onClick={() => {
-              ImgPop(defaultStateImg);
-            }}
-          />
-        ) : (
-          <img
-            alt="profileImg"
-            src={userImg}
-            className={classes.imgcurrent}
-            onClick={() => {
-              ImgPop(defaultStateImg);
-            }}
-          />
-        )}
+        <img
+          alt="profileImg"
+          src={stateUserImg}
+          className={classes.imgcurrent}
+          onClick={() => {
+            ImgPop(stateUserImg);
+          }}
+        />
       </div>
 
       <div className={classes.profileForm}>

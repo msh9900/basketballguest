@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import fs from 'fs';
+import path from 'path';
 
 const mongoDB = require('../controllers/mongocontrol').mongoDB;
 const router = express.Router();
@@ -11,7 +12,8 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    cb(null, file.fieldname + '_' + Date.now());
+    let newFileName = new Date().valueOf() + path.extname(file.originalname);
+    cb(null, newFileName);
   },
 });
 
@@ -26,15 +28,13 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
+    let imgpath = 'images/' + req.file?.filename;
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
       pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
       email: req.body.email.replaceAll('"', ''),
-      userImg: `http://localhost:4000/images/${req.body.userImg.replaceAll(
-        '"',
-        ''
-      )}`,
+      userImg: `http://localhost:4000/${imgpath}`,
     };
     const result = await mongoDB.userData(logindata);
     console.log(result);
