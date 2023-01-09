@@ -1,9 +1,9 @@
-import Post from '../../components/rentalPost/GymRentalPost'
+import Posting from '../../components/rental/posting/GymRentalPost'
 
 const GymRentalPost = () => {
   return (
     <>
-      <Post/>
+      <Posting/>
     </>
   )
 }

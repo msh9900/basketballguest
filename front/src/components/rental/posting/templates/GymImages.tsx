@@ -8,24 +8,24 @@ interface Props{
 
 const GymImages = (props:Props) => {
 
-  const sendImgs = async () => {
-    try {
-      const resImg = await fetch('http://localhost:4000/rental/img', {
-        method: 'POST',
-        body: formData,
-      });
-      console.log('post 성공 : ', resImg);
-    } catch (error: any) {
-      console.log('post 실패 : ', error);
-    }
-    await props.setIsLoading(false)
-  };
-
-  
   useEffect(()=>{
     if(props.isLoading === true) sendImgs()
   }, [props.isLoading])
 
+  const sendImgs = async () => {
+    // try {
+    //   const resImg = await fetch('http://localhost:4000/rental/img', {
+    //     method: 'POST',
+    //     body: formData,
+    //   });
+    //   console.log('post 성공 : ', resImg);
+    // } catch (error: any) {
+    //   console.log('post 실패 : ', error);
+    // }
+    await console.log('이미지 데이터 보내기');
+    await props.setIsLoading(false)
+  };
+  
   let len = 0;
   const formData = new FormData();
   const [inputImgs, setInputImgs] = useState<string[]>([]);

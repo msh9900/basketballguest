@@ -10,7 +10,6 @@ const dummyArr = [
 ]
 
 const Articles = () => {
-  // console.log()
   return (
     <>
       <div className={classes.boxContainer}>

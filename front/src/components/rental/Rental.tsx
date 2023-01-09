@@ -10,14 +10,14 @@ import cls from './Rental.module.scss';
 
 const Rental = () => {
   const navigate = useNavigate();
-  const postGymRental = () => {
+  const goToPosting = () => {
     navigate('/gym/post')
   }
 
   return (
     <>
       <div className={cls.rentalCompLayout}>
-        <button className={cls.postButton} onClick={postGymRental}>
+        <button className={cls.postButton} onClick={goToPosting}>
           글쓰기
         </button>
         <Order />

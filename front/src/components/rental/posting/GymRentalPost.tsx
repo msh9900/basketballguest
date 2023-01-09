@@ -18,11 +18,19 @@ const GymRentalPost =() => {
   const [isLoading, setIsLoading] = useState(false)
   const cancelPost = () => {navigate('/gym')}
 
-  // form contents
+  // state : form contents
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [contact, setContact] = useState('')
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState(
+    [
+      {category:'postcode', val:''},
+      {category:'roadAddress', val:''},
+      {category:'jibunAddress', val:''},
+      {category:'detailAddress', val:''},
+      {category:'extraAddress', val:''}
+    ]
+  )
   const [price, setPrice] = useState('')
   const [openingHours, setOpeningHours] = useState('')
   const [openingPeriod, setOpeningPeriod] = useState<string[]>(['',''])
@@ -37,7 +45,7 @@ const GymRentalPost =() => {
       {name:'토', open:false},
     ]
   )
-
+  
   const post = async () => {
     // 텍스트 데이터 유효성 체크
     await checkFormValid()
@@ -54,8 +62,9 @@ const GymRentalPost =() => {
       openingDays,
     }
     console.log('formBody', formBody)
+    console.log('텍스트 데이터 보내기')
 
-    // 텍스트 데이터 전송
+    // // 텍스트 데이터 전송
     // try {
     //   const response = await fetch('http://localhost:4000/register', {
     //     method: 'POST',
@@ -67,13 +76,11 @@ const GymRentalPost =() => {
     // } catch(err:any){
     //   await console.log('post 실패', err);
     // }
-
-    // 이미지 데이터 전송
-    // await setIsLoading(true)
-
-    // gym 페이지로 이동
+    // // 이미지 데이터 전송
+    await setIsLoading(true)
+    // // gym 페이지로 이동
     // alert('성공')
-    // navigate('/gym')
+    navigate('/gym')
   }
 
   const checkFormValid = () => {
@@ -82,7 +89,7 @@ const GymRentalPost =() => {
       // 포커스 주기
       return
     }
-    if(address===''){
+    if(address[0].val==='' || address[1].val==='' || address[2].val===''){
       alert('주소를 입력해주세요')
       // 포커스 주기
       return
@@ -92,7 +99,6 @@ const GymRentalPost =() => {
       // 포커스 주기
       return
     }
-
     const stt = openingPeriod[0]
     const end = openingPeriod[1]
     const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
@@ -109,51 +115,49 @@ const GymRentalPost =() => {
   }
 
   return (
-    <div className={cls.GymRentalPostLayout}>
-      <div className={cls.formBox}>
-        <h2 className={cls.formTitle}>글쓰기</h2>
-        <GymImages
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
+    <div className={cls.formBox}>
+      <h2 className={cls.formTitle}>글쓰기</h2>
+      <GymImages
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
+      <form>
+        <GymTitle 
+          title={title}
+          setTitle={setTitle}
         />
-        <form>
-          <GymTitle 
-            title={title}
-            setTitle={setTitle}
-          />
-          <GymContent
-            content={content}
-            setContent={setContent}
-          />
-          <GymContact
-            contact={contact}
-            setContact={setContact}
-          />
-          <GymAddress
-            address={address}
-            setAddress={setAddress}
-          />
-          <GymPrice
-            price={price}
-            setPrice={setPrice}
-          />
-          <GymOpeningHours
-            openingHours={openingHours}
-            setOpeningHours={setOpeningHours}
-          /> 
-          <GymOpeningPeriod
-            openingPeriod={openingPeriod}
-            setOpeningPeriod={setOpeningPeriod}
-          /> 
-          <GymOpeningDays
-            openingDays={openingDays}
-            setOpeningDays={setOpeningDays}
-          /> 
-        </form>
-        <div className={cls.bottomBtns}>
-          <button onClick={cancelPost}>취소</button>
-          <button onClick={post}>전송</button>
-        </div>
+        <GymContent
+          content={content}
+          setContent={setContent}
+        />
+        <GymContact
+          contact={contact}
+          setContact={setContact}
+        />
+        <GymAddress
+          address={address}
+          setAddress={setAddress}
+        />
+        <GymPrice
+          price={price}
+          setPrice={setPrice}
+        />
+        <GymOpeningHours
+          openingHours={openingHours}
+          setOpeningHours={setOpeningHours}
+        /> 
+        <GymOpeningPeriod
+          openingPeriod={openingPeriod}
+          setOpeningPeriod={setOpeningPeriod}
+        /> 
+        <GymOpeningDays
+          openingDays={openingDays}
+          setOpeningDays={setOpeningDays}
+        /> 
+      </form>
+      <div className={cls.bottomBtns}>
+        <button onClick={cancelPost}>취소</button>
+        <button onClick={post}>전송</button>
       </div>
     </div>
   )
