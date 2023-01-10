@@ -29,9 +29,11 @@ export default function Profile() {
     } else {
       setIsValid(false);
     }
-    setUserImg(stateUserImg);
+
     setUserName(stateUserName);
     setEmail(stateUserEmail);
+    setUserImg(stateUserImg);
+
   }, []);
 
   const InputPasswordHandler = (e: any) => {

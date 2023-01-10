@@ -6,7 +6,9 @@ import path from 'path';
 const mongoDB = require('../controllers/mongocontrol').mongoDB;
 const router = express.Router();
 
+
 router.use('/images', express.static('images'));
+
 
 const dir = './images';
 const storage = multer.diskStorage({
@@ -30,6 +32,7 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
+    console.log(req.file);
     let imgpath = req.file?.filename;
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
@@ -39,7 +42,7 @@ router.post(
       userImg: `http://localhost:4000/images/${imgpath}`,
     };
     const result = await mongoDB.userData(logindata);
-    console.log(result);
+
     res.send(JSON.stringify(result));
   }
 );
