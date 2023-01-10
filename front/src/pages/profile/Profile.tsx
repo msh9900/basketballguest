@@ -29,9 +29,11 @@ export default function Profile() {
     } else {
       setIsValid(false);
     }
+
     setUserName(stateUserName);
     setEmail(stateUserEmail);
     setUserImg(stateUserImg);
+
   }, []);
 
   const InputPasswordHandler = (e: any) => {
@@ -146,20 +148,9 @@ export default function Profile() {
           autoComplete="off"
         />
         <p>이메일</p>
-        <input
-          type="email"
-          value={email}
-          onChange={InputEmailHandler}
-          placeholder={`${stateUserEmail}`}
-        />
+        <input type="email" value={email} onChange={InputEmailHandler} />
         <p>이름</p>
-        <input
-          type="text"
-          value={userName}
-          onChange={InputNameHandler}
-          placeholder={`${stateUserName}`}
-        />
-
+        <input type="text" value={userName} onChange={InputNameHandler} />
         <button
           type="submit"
           className={classes.button}

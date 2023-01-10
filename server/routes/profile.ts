@@ -6,7 +6,9 @@ import path from 'path';
 const mongoDB = require('../controllers/mongocontrol').mongoDB;
 const router = express.Router();
 
-router.use('/images', express.static('/images'));
+
+router.use('/images', express.static('images'));
+
 
 const dir = './images';
 const storage = multer.diskStorage({
