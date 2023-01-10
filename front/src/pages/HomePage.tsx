@@ -60,8 +60,7 @@ export default function HomePage() {
       >
         <div className={classes.title}>
           <div className={classes.text}>
-            농구를 할 체육관이 <br />
-            대관이 필요합니까?
+            체육관 대관이 필요하십니까? <br />
           </div>
           <Button2 src="/gym" />
         </div>

@@ -2,6 +2,7 @@
 import Articles from './articles/MainArticles';
 import Filter from './filter/Filter';
 import Order from './order/Order';
+import Search from './search/Search';
 
 import { useNavigate} from 'react-router-dom';
 // import { useState } from 'react';
@@ -22,6 +23,7 @@ const Rental = () => {
         </button>
         <Order />
         <Filter />
+        <Search/>
         <Articles />
       </div>
     </>
