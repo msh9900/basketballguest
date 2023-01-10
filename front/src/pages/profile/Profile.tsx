@@ -33,7 +33,6 @@ export default function Profile() {
     setUserName(stateUserName);
     setEmail(stateUserEmail);
     setUserImg(stateUserImg);
-
   }, []);
 
   const InputPasswordHandler = (e: any) => {
@@ -78,6 +77,9 @@ export default function Profile() {
       dispatch(IsLogin(data));
       return data;
     }
+    const getUrl = await fetch('http://localhost:4000/profile', {
+      body: formData,
+    });
   }
 
   const ImgPop = (v: string) => {

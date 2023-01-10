@@ -6,9 +6,7 @@ import path from 'path';
 const mongoDB = require('../controllers/mongocontrol').mongoDB;
 const router = express.Router();
 
-
 router.use('/images', express.static('images'));
-
 
 const dir = './images';
 const storage = multer.diskStorage({
@@ -27,12 +25,14 @@ const limits = {
 const upload = multer({ storage, limits });
 
 // 이미지 가져오기
+router.get('/', (req: Request, res: Response) => {
+  res.send(req.file);
+});
 
 router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log(req.file);
     let imgpath = req.file?.filename;
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
