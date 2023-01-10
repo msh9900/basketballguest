@@ -16,6 +16,7 @@ import IntroducePage from './pages/intro/IntroducePage';
 import GuestRecruitmentPage from './pages/guest/GuestRecruitmentPage';
 import GymRental from './pages/rental/GymRental';
 import GymRentalPost from './pages/rental/GymRentalPost';
+import GymArticles from './pages/rental/GymArticles';
 import Service from './pages/service/Service';
 import LoginPage from './pages/login/LoginPage';
 import Profile from './pages/profile/Profile';
@@ -43,6 +44,7 @@ function App() {
           <Route path="/guest" element={<GuestRecruitmentPage />} />
           <Route path="/gym" element={<GymRental />} />
           <Route path="/gym/post" element={<GymRentalPost />} />
+          <Route path="/gym/articles" element={<GymArticles />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/service" element={<Service />} />

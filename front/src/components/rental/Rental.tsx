@@ -1,5 +1,5 @@
 // comp
-import Articles from './Articles';
+import Articles from './articles/MainArticles';
 import Filter from './filter/Filter';
 import Order from './order/Order';
 

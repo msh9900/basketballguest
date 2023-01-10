@@ -1,0 +1,38 @@
+.DetailArticlesLayout{
+  background-color: burlywood;
+  padding:30px;
+
+  @media screen and (max-width:900px) {
+    padding:10px;
+  }
+  h1{
+    margin:20px;
+    text-align: center;
+  }
+}
+
+.contentBox{
+  max-width:600px;
+  margin:0px auto;
+  padding:10px;
+  padding-top:3px;
+  padding-bottom:3px;
+  background-color:wheat;
+}
+
+.mainContent{
+  margin:5px auto;
+  background-color:white;
+  padding:5px;
+}
+.eachContent{
+  margin:10px auto;
+  background-color:white;
+  padding:10px;
+}
+.imgContent{
+  margin:5px auto;
+  background-color:pink;
+  padding:5px;
+  height:300px;
+}

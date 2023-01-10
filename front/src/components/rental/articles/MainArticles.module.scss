@@ -2,6 +2,7 @@ li{
   list-style-type: none;
 }
 .boxContainer{
+  
   margin:0 auto;
   display: flex;
   
@@ -11,6 +12,7 @@ li{
 }
 
 .boxItem{
+  cursor:pointer;
   border : 1px solid brown;
   background-color: white;
   width:380px;

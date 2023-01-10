@@ -1,4 +1,5 @@
-import classes from "./Articles.module.scss";
+import cls from "./MainArticles.module.scss";
+import { useNavigate } from 'react-router-dom';
 
 const dummyArr = [
   {name:'Alice', title:'제목', contents:'내용', place:'서울', price:1},
@@ -10,18 +11,24 @@ const dummyArr = [
 ]
 
 const Articles = () => {
+
+  const navigate = useNavigate();
+  const moveToDetailPage = () => {
+    navigate('/gym/articles');
+  }
+  
   return (
     <>
-      <div className={classes.boxContainer}>
+      <div className={cls.boxContainer}>
         {dummyArr &&
           dummyArr.map((data, idx) => {
             return (
-              <div key={Date.now() + idx} className={classes.boxItem}>
-                <li className={classes.li} >
-                  <div className={classes.imgBox}></div>
-                  <div className={classes.title}>{data.title}</div>
-                  <div className={classes.place}>{data.place}</div>
-                  <div className={classes.price}>{data.price} 원/시간</div>
+              <div key={Date.now() + idx} className={cls.boxItem} onClick={moveToDetailPage}>
+                <li className={cls.li} >
+                  <div className={cls.imgBox}></div>
+                  <div className={cls.title}>{data.title}</div>
+                  <div className={cls.place}>{data.place}</div>
+                  <div className={cls.price}>{data.price}원/시간</div>
                 </li>
               </div>
             )
