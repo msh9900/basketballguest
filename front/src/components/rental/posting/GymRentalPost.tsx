@@ -15,10 +15,12 @@ import GymPrice from './templates/GymPrice';
 
 // util
 import isFormValid from './utils/isFormValid';
+import { useSelector } from 'react-redux';
 
 const GymRentalPost = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const stateId = useSelector((state: any) => state.login.userid);
   const cancelPost = () => {
     navigate('/gym');
   };
@@ -55,9 +57,9 @@ const GymRentalPost = () => {
       openingHours,
       openingPeriod,
     );
-    if(!isValid){
+    if (!isValid) {
       console.log('post : not valid form');
-      return
+      return;
     }
 
     // 텍스트 데이터 번들 생성
@@ -74,10 +76,10 @@ const GymRentalPost = () => {
 
     // 텍스트 데이터 전송
     try {
-      const response = await fetch('http://localhost:4000/rental/post', {
+      const response = await fetch('http://localhost:4000/rental/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(textData),
+        body: JSON.stringify({ stateId, textData }),
       });
       const data = await response.json();
       console.log('텍스트 데이터 post 성공', data);
@@ -88,7 +90,6 @@ const GymRentalPost = () => {
     // 이미지 데이터 전송
     await setIsLoading(true);
   };
-
 
   return (
     <div className={cls.formBox}>

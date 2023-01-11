@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  userid: '',
-  pw: '',
+  userId: '',
   email: '',
   userImg: '',
   defaultImgUrl:
@@ -10,28 +9,13 @@ const initialState = {
   userName: '',
   islogin: false,
 };
-const registerSlice = createSlice({
-  name: 'register',
-  initialState,
-  reducers: {
-    IsRegister: (state, action) => {
-      state.userid = action.payload.id;
-      state.pw = action.payload.pw;
-      state.email = action.payload.email;
-      state.userImg = action.payload.userImg;
-      state.userName = action.payload.userName;
-      state.islogin = false;
-    },
-  },
-});
 
 const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
     IsLogin: (state, action) => {
-      state.userid = action.payload.id;
-      state.pw = action.payload.pw;
+      state.userId = action.payload.id;
       state.email = action.payload.email;
       state.userImg = action.payload.userImg;
       state.userName = action.payload.userName;
@@ -40,8 +24,7 @@ const loginSlice = createSlice({
   },
 });
 
-export const { userid } = initialState;
+export const { userId } = initialState;
 export const { IsLogin } = loginSlice.actions;
-export const { IsRegister } = registerSlice.actions;
 
 export default loginSlice.reducer;
