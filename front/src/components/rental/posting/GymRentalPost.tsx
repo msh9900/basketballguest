@@ -1,5 +1,6 @@
 import cls from './GymRentalPost.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 // component
@@ -15,7 +16,7 @@ import GymPrice from './templates/GymPrice';
 
 // util
 import isFormValid from './utils/isFormValid';
-import { useSelector } from 'react-redux';
+
 
 const GymRentalPost = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const GymRentalPost = () => {
   };
 
   // state : form contents
+  
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [contact, setContact] = useState('');
