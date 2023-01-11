@@ -7,7 +7,7 @@ const initialState = {
   defaultImgUrl:
     'https://blog.kakaocdn.net/dn/EtXLd/btrcf61KuuI/luhp9I8a1nfwUwQ4MwSTQk/img.jpg',
   userName: '',
-  islogin: false,
+  isLogin: false,
 };
 
 const loginSlice = createSlice({
@@ -19,12 +19,23 @@ const loginSlice = createSlice({
       state.email = action.payload.email;
       state.userImg = action.payload.userImg;
       state.userName = action.payload.userName;
-      state.islogin = true;
+      state.isLogin = true;
+      const userString = JSON.stringify(loginSlice);
+      window.localStorage.setItem('user', userString);
+    },
+    IsLogout: (state, action) => {
+      state.userId = action.payload.id;
+      state.email = action.payload.email;
+      state.userImg = action.payload.userImg;
+      state.userName = action.payload.userName;
+      state.isLogin = false;
+      window.localStorage.removeItem('user');
     },
   },
 });
 
 export const { userId } = initialState;
 export const { IsLogin } = loginSlice.actions;
+export const { IsLogout } = loginSlice.actions;
 
 export default loginSlice.reducer;
