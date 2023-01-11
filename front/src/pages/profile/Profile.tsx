@@ -1,6 +1,5 @@
 import classes from './Profile.module.scss';
 import { useState, useEffect } from 'react';
-import Button from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IsLogin } from '../../redux/modules/login';
@@ -10,6 +9,7 @@ export default function Profile() {
   const stateId = useSelector((state: any) => state.login.userid);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
+  const stateUserImg = useSelector((state: any) => state.login.userImg);
   const defaultStateImg = useSelector(
     (state: any) => state.login.defaultImgUrl,
   );
@@ -29,6 +29,10 @@ export default function Profile() {
     } else {
       setIsValid(false);
     }
+
+    setUserName(stateUserName);
+    setEmail(stateUserEmail);
+    setUserImg(stateUserImg);
   }, []);
 
   const InputPasswordHandler = (e: any) => {
@@ -73,6 +77,9 @@ export default function Profile() {
       dispatch(IsLogin(data));
       return data;
     }
+    const getUrl = await fetch('http://localhost:4000/profile', {
+      body: formData,
+    });
   }
 
   const ImgPop = (v: string) => {
@@ -143,20 +150,9 @@ export default function Profile() {
           autoComplete="off"
         />
         <p>이메일</p>
-        <input
-          type="email"
-          value={email}
-          onChange={InputEmailHandler}
-          placeholder={`${stateUserEmail}`}
-        />
+        <input type="email" value={email} onChange={InputEmailHandler} />
         <p>이름</p>
-        <input
-          type="text"
-          value={userName}
-          onChange={InputNameHandler}
-          placeholder={`${stateUserName}`}
-        />
-
+        <input type="text" value={userName} onChange={InputNameHandler} />
         <button
           type="submit"
           className={classes.button}
