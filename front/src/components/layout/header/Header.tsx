@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import classes from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+// style
+import cls from './Header.module.scss';
+
+// mui
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -13,7 +19,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-import { useSelector } from 'react-redux';
+import { IsLogout } from '../../../redux/modules/login';
 
 type RouteMapType = {
   [index: string]: string;
@@ -29,8 +35,20 @@ const RouteMap: RouteMapType = {
   체육관대여: 'gym',
   서비스: '/service',
 };
+const bin = {
+  userId: '',
+  email: '',
+  userImg: '',
+  userName: '',
+};
 export default function Header() {
-  const loginState = useSelector((state: any) => state.login.islogin);
+  const dispatch = useDispatch();
+  const loginState = useSelector((state: any) => state.login.isLogin);
+
+  useEffect(() => {
+    console.log('loginState', loginState);
+  }, [loginState]);
+
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
@@ -70,19 +88,21 @@ export default function Header() {
     }
     setAnchorElUser(null);
   };
+
   const logoutHandler = () => {
-    //LOGOUT 구현
+    dispatch(IsLogout(bin));
+    //LOGOUT
+    // window.localStorage.removeItem('user');
+    // state 처리
+    // 화면 처리
+    // 쿠키 처리
   };
 
   return (
     <AppBar position="sticky" style={{ background: '#f1a707' }}>
-      <div className={classes.container}>
-        <Toolbar
-          disableGutters
-          sx={{ height: 100 }}
-          className={classes.toolbar}
-        >
-          <div className={classes.appmenu}>
+      <div className={cls.container}>
+        <Toolbar disableGutters sx={{ height: 100 }} className={cls.toolbar}>
+          <div className={cls.appmenu}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -119,22 +139,27 @@ export default function Header() {
             </Menu>
           </div>
 
-          <Link to="/" className={classes.homename}>
+          {/* 홈 */}
+          <Link to="/" className={cls.homename}>
             <div>
               <SportsBasketballIcon />
             </div>
             <div>BPT</div>
           </Link>
-          <div className={classes.listcontainer}>
+
+          {/* 메뉴 */}
+          <div className={cls.listcontainer}>
             {Object.entries(RouteMap).map(([key, value]) => (
-              <Link key={key} to={value} className={classes.HeaderList}>
+              <Link key={key} to={value} className={cls.HeaderList}>
                 {key}
               </Link>
             ))}
           </div>
-          <div className={classes.searchContainer}>
+
+          {/* 검색창 */}
+          <div className={cls.searchContainer}>
             <select
-              className={classes.select}
+              className={cls.select}
               onChange={selectChangeHanlder}
               value={selectValue}
             >
@@ -143,18 +168,20 @@ export default function Header() {
             </select>
             <input
               type="text"
-              className={classes.searchinputbox}
+              className={cls.searchinputbox}
               placeholder="search..."
             />
-            <SearchIcon className={classes.searchIcon} />
+            <SearchIcon className={cls.searchIcon} />
           </div>
-          <div className={classes.usercircle}>
+
+          {/* 유저 메뉴 */}
+          <div className={cls.usercircle}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* 로그인을 하면 사용자가 등록한 이미지가 나오게 해야함 만약 등록안하면 기본이미지 */}
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -187,9 +214,11 @@ export default function Header() {
             </Menu>
           </div>
         </Toolbar>
-        <div className={classes.searchMoblieContainer}>
+
+        {/* 검색바 */}
+        <div className={cls.searchMoblieContainer}>
           <select
-            className={classes.select}
+            className={cls.select}
             onChange={selectChangeHanlder}
             value={selectValue}
           >
@@ -198,10 +227,10 @@ export default function Header() {
           </select>
           <input
             type="text"
-            className={classes.searchinputbox}
+            className={cls.searchinputbox}
             placeholder="search..."
           />
-          <SearchIcon className={classes.searchIcon} />
+          <SearchIcon className={cls.searchIcon} />
         </div>
       </div>
     </AppBar>

@@ -1,4 +1,3 @@
-
 // style
 import classes from './App.module.scss';
 
@@ -8,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 // components
 import Footer from './components/layout/Footer';
-import Header from './components/layout/Header';
+import Header from './components/layout/header/Header';
 
 // pages
 import HomePage from './pages/HomePage';

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IsLogin } from '../../redux/modules/login';
-const formData = new FormData();
+let formData = new FormData();
 
 export default function Profile() {
   const stateId = useSelector((state: any) => state.login.userId);
@@ -29,10 +29,13 @@ export default function Profile() {
     } else {
       setIsValid(false);
     }
+  }, [pw, pw2]);
 
+  useEffect(() => {
     setUserName(stateUserName);
     setEmail(stateUserEmail);
     setUserImg(stateUserImg);
+    formData = new FormData();
   }, []);
 
   const InputPasswordHandler = (e: any) => {
@@ -134,7 +137,7 @@ export default function Profile() {
       <div className={classes.profileForm}>
         <div className={classes.profileTitle}>유저 정보</div>
         <p>아이디</p>
-        <input type="text" defaultValue={stateId} />
+        <input type="text" defaultValue={stateId} disabled />
         <p>비밀번호 변경</p>
         <input
           type="password"
