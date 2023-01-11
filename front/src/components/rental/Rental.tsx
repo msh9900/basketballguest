@@ -5,7 +5,7 @@ import Order from './order/Order';
 import Search from './search/Search';
 
 import { useNavigate} from 'react-router-dom';
-// import { useState } from 'react';
+import { useState } from 'react';
 import cls from './Rental.module.scss';
 
 
@@ -14,6 +14,7 @@ const Rental = () => {
   const goToPosting = () => {
     navigate('/gym/post')
   }
+  const [searchRes, setSearchRes] = useState('');
 
   return (
     <>
@@ -23,7 +24,7 @@ const Rental = () => {
         </button>
         <Order />
         <Filter />
-        <Search/>
+        <Search setSearchRes={setSearchRes} searchRes={searchRes}/>
         <Articles />
       </div>
     </>

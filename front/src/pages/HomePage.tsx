@@ -32,8 +32,8 @@ export default function HomePage() {
             <div>
               <div className={classes.title}>BPT 이야기</div>
               <div className={classes.text}>
-                BPT는 농구를 좋은 환경 좋은사람들과 할수 있게 <br />
-                도움이 되도록 노력하겠습니다.
+                좋은 환경에서 좋은 사람들과 경기를 즐겨보세요 <br />
+                BPT가 도움이 되어드리겠습니다.
               </div>
               <Button2 src="/intro" />
             </div>
@@ -47,8 +47,8 @@ export default function HomePage() {
       >
         <div className={classes.title}>
           <div className={classes.text}>
-            농구를 같이할 게스트를 모집 혹은 <br />
-            참여를 원하십니까?
+            경기 참여나 게스트 모집을 원하십니까? <br />
+            BPT에서 경기정보를 찾을 수 있습니다<br />
           </div>
           <Button2 src="/guest" />
         </div>
@@ -60,7 +60,8 @@ export default function HomePage() {
       >
         <div className={classes.title}>
           <div className={classes.text}>
-            체육관 대관이 필요하십니까? <br />
+            체육관 홍보나 대관이 필요하십니까? <br />
+            BPT에서 체육관 정보를 공유할 수 있습니다<br />
           </div>
           <Button2 src="/gym" />
         </div>
