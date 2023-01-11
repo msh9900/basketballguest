@@ -1,17 +1,23 @@
 // style
 import cls from "./Filter.module.scss";
-
+// library
+import {useState, useEffect} from 'react'
 // component
 import FilterArea from './Filter_Area'
 import FilterPrice from './Filter_Price'
 import FilterPeriod from './Filter_Period'
 import SelectedValues from './SelectedValues'
+// interface
+import filterProps from './interface_filterStatus'
 
-// library
-import {useState} from 'react'
+interface Props {
+  filterStatus:filterProps
+  setFilterStatus:React.Dispatch<React.SetStateAction<filterProps>>;
+}
 
-const Filter = () => { 
-  // filter on off
+const Filter = (props:Props): React.ReactElement => { 
+  
+  // filter fold/unfold
   const [areaFilter, setAreaFilter] = useState(false)
   const [priceFilter, setPriceFilter] = useState(false)
   const [periodFilter, setPeriodFilter] = useState(false)
@@ -22,6 +28,17 @@ const Filter = () => {
   const [period, setPeriod] =  useState<string[]>([])
   const [priceActive, setPriceActive] = useState(false)
   const [periodActive, setPeriodActive] = useState(false)
+
+  // send status for higher component
+  useEffect(() => {
+    props.setFilterStatus({
+      activeAreas: [...areas] as string[],
+      priceRange: [...price] as string[],
+      periodRange: [...period] as string[],
+      ispriceActive: priceActive as boolean,
+      isperiodActive: periodActive as boolean
+    })
+  }, [areas, price, period, priceActive, periodActive]);
   
   const priceFilterOn = () => {
     setAreaFilter(false)

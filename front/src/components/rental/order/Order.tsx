@@ -1,11 +1,21 @@
 import cls from './Order.module.scss'
+import { useState, useEffect } from 'react'
+import OrderStatusProps from './interface_orderStatus'
+interface Props{
+  orderStatus:OrderStatusProps
+  setOrderStatus:React.Dispatch<React.SetStateAction<OrderStatusProps>>;
+}
 
-import { useState } from 'react'
-
-const Order = () => {
-
+const Order = (props:Props) => {
   const [ priceOrderOn, setPriceOrderOn] = useState(false)
   const [ distanceOrderOn, setDistanceOrderOn] = useState(false)
+
+  useEffect(() => {
+    props.setOrderStatus({
+      ispriceOrderOn: priceOrderOn,
+      isdistanceOrderOn: distanceOrderOn,
+    })
+  }, [priceOrderOn, distanceOrderOn]);
 
   const priceOrderActivate = () => {
     if(priceOrderOn) setPriceOrderOn(false)

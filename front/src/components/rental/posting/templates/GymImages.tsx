@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import cls from '../inputStyle/FileInput.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface Props{
   isLoading:boolean;
@@ -7,22 +8,24 @@ interface Props{
 }
 
 const GymImages = (props:Props) => {
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(props.isLoading === true) sendImgs()
   }, [props.isLoading])
 
+  // 이미지
   const sendImgs = async () => {
-    // try {
-    //   const resImg = await fetch('http://localhost:4000/rental/img', {
-    //     method: 'POST',
-    //     body: formData,
-    //   });
-    //   console.log('post 성공 : ', resImg);
-    // } catch (error: any) {
-    //   console.log('post 실패 : ', error);
-    // }
-    await console.log('이미지 데이터 보내기');
+    try {
+      const resImg = await fetch('http://localhost:4000/rental/img', {
+        method: 'POST',
+        body: formData,
+      });
+      console.log('이미지 데이터 post 성공 : ', resImg);
+      navigate('/gym')
+    } catch (error: any) {
+      console.log('이미지 데이터 post 실패 : ', error);
+    }
     await props.setIsLoading(false)
   };
   

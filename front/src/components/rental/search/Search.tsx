@@ -1,7 +1,13 @@
 import cls from './Search.module.scss';
 import { useState } from 'react';
+import OrderStatusProps from '../order/interface_orderStatus';
+import filterProps from '../filter/interface_filterStatus';
 
-interface Props {
+interface Props{
+  orderStatus: OrderStatusProps
+  setOrderStatus: React.Dispatch<React.SetStateAction<OrderStatusProps>>;
+  filterStatus: filterProps
+  setFilterStatus: React.Dispatch<React.SetStateAction<filterProps>>;
   searchRes: string;
   setSearchRes: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -12,14 +18,25 @@ const Search = (props: Props) => {
   const onChange = (e: any) => {
     setSearchVal(e.target.value);
   };
-  const getSearchRes = (e: any) => {
+
+  const serachClicked = (e: any) => {
     props.setSearchRes(searchVal);
+    getSearch()
   };
-  const onKeyPress = (e: any) => {
+
+  const serachPressed = (e: any) => {
     if (e.key === 'Enter') {
       props.setSearchRes(searchVal);
+      getSearch()
     }
   };
+  const getSearch = () => {
+    console.log(searchVal, '검색!')
+    console.log('정렬 상태', props.orderStatus);
+    console.log('필터 상태', props.filterStatus);
+    // fetch
+  }
+
   return (
     <>
       <div className={cls.SearchLayout}>
@@ -29,9 +46,9 @@ const Search = (props: Props) => {
             type="text"
             value={searchVal}
             onChange={onChange}
-            onKeyPress={onKeyPress}
+            onKeyPress={serachPressed}
           />
-          <button className={cls.serarchBtn} onClick={getSearchRes}/>
+          <button className={cls.serarchBtn} onClick={serachClicked}/>
         </div>
       </div>
       {props.searchRes.length > 0 && (

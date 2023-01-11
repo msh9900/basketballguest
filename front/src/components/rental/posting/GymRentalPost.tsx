@@ -48,10 +48,11 @@ const GymRentalPost =() => {
   
   const post = async () => {
     // 텍스트 데이터 유효성 체크
-    await checkFormValid()
+    // const isValid = await checkFormValid()
+    // if(!isValid) return
 
     // 텍스트 데이터 번들 생성
-    const formBody = {
+    const textData = {
       title,
       content,
       contact,
@@ -61,43 +62,42 @@ const GymRentalPost =() => {
       openingPeriod,
       openingDays,
     }
-    console.log('formBody', formBody)
-    console.log('텍스트 데이터 보내기')
+    // console.log('textData', textData)
+    // console.log('텍스트 데이터 보내기')
 
-    // // 텍스트 데이터 전송
-    // try {
-    //   const response = await fetch('http://localhost:4000/register', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(formBody),
-    //   });
-    //   const data = await response.json();
-    //   await console.log('post 성공', data);
-    // } catch(err:any){
-    //   await console.log('post 실패', err);
-    // }
-    // // 이미지 데이터 전송
+    // 텍스트 데이터 전송
+    try {
+      const response = await fetch('http://localhost:4000/rental/post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(textData),
+      });
+      const data = await response.json();
+      await console.log('텍스트 데이터 post 성공', data);
+    } catch(err:any){
+      await console.log('텍스트 데이터 post 실패', err);
+    }
+
+    // 이미지 데이터 전송
     await setIsLoading(true)
-    // // gym 페이지로 이동
-    // alert('성공')
-    navigate('/gym')
+
   }
 
   const checkFormValid = () => {
     if(title===''){
       alert('제목을 입력해주세요')
       // 포커스 주기
-      return
+      return false
     }
     if(address[0].val==='' || address[1].val==='' || address[2].val===''){
       alert('주소를 입력해주세요')
       // 포커스 주기
-      return
+      return false
     }
     if(openingHours===''){
       alert('영업시간을 입력해주세요')
       // 포커스 주기
-      return
+      return false
     }
     const stt = openingPeriod[0]
     const end = openingPeriod[1]
@@ -106,12 +106,13 @@ const GymRentalPost =() => {
 
     if(stt==='' || end===''){
       alert('개장기간 값을 입력해주세요')
-      return
+      return false
     }
     if(!regex.test(stt) || !regex.test(end)){
       alert('개장기간 양식을 확인해주세요')
-      return
+      return false
     }
+    return true
   }
 
   return (
@@ -157,7 +158,7 @@ const GymRentalPost =() => {
       </form>
       <div className={cls.bottomBtns}>
         <button onClick={cancelPost}>취소</button>
-        <button onClick={post}>전송</button>
+        <button onClick={post}>글생성</button>
       </div>
     </div>
   )
