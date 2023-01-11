@@ -39,7 +39,7 @@ export default function LoginForm(props: any) {
       return;
     }
 
-    const response = await fetch('http://localhost:4000/login', {
+    const response: any = await fetch('http://localhost:4000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
