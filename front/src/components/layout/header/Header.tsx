@@ -35,12 +35,7 @@ const RouteMap: RouteMapType = {
   체육관대여: 'gym',
   서비스: '/service',
 };
-const bin = {
-  userId: '',
-  email: '',
-  userImg: '',
-  userName: '',
-};
+
 export default function Header() {
   const dispatch = useDispatch();
   const loginState = useSelector((state: any) => state.login.isLogin);
@@ -90,12 +85,7 @@ export default function Header() {
   };
 
   const logoutHandler = () => {
-    dispatch(IsLogout(bin));
-    //LOGOUT
-    // window.localStorage.removeItem('user');
-    // state 처리
-    // 화면 처리
-    // 쿠키 처리
+    dispatch(IsLogout());
   };
 
   return (
