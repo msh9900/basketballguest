@@ -27,7 +27,7 @@ const mongoDB = {
     const db = user.db('basket').collection('login');
     const result = await db.findOne({ id });
     const decodePw = verfiyPassword(pw, result.salt, result.pw);
-    if (decodePw) {
+    if (decodePw && result) {
       return {
         id: result.id,
         email: result.email,
