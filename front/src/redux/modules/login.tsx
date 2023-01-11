@@ -24,6 +24,9 @@ const loginSlice = createSlice({
       window.localStorage.setItem('user', userString);
     },
     IsLogout: (state) => {
+      state.userId = '';
+      state.email = '';
+      state.userImg = '';
       state.isLogin = false;
       window.localStorage.removeItem('user');
     },
