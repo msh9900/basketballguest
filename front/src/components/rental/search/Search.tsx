@@ -48,7 +48,7 @@ const Search = (props: Props) => {
             type="text"
             value={searchVal}
             onChange={onChange}
-            onKeyPress={serachPressed}
+            onKeyDown={serachPressed}
           />
           <button className={cls.serarchBtn} onClick={serachClicked}/>
         </div>

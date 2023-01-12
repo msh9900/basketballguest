@@ -1,0 +1,29 @@
+.ReviewSectionLayout {
+  margin: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: white;
+
+  .postReviewBtn {
+    // background-color:red;
+    text-align: right;
+    button {
+      width: 100px;
+      margin-right: 10px;
+      margin-top:20px;
+      height: 30px;
+      cursor: pointer;
+    }
+  }
+
+  .moreReviewBtn {
+    button {
+      width: 100px;
+      margin-left: 20px;
+      margin-bottom:10px;
+      height: 30px;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,10 +1,11 @@
 import cls from './DetailArticles.module.scss';
 import SlickSlider from './SlickSlider';
+import ReviewSection from './ReviewSection';
 import { useEffect } from 'react';
 
 const DetailArticles = () => {
 
-  const dummyData = {
+  const dummyArticleData = {
     title:'title',
     content:'content',
     contact:'contact',
@@ -30,16 +31,14 @@ const DetailArticles = () => {
   }
   
   useEffect(() => {
-    
     // article
     // review
     // comments
-    
   }, []);
 
 
-  const getOepningDays = () => {
-    const days = dummyData.openingDays
+  const getOepningDaysFromData = () => {
+    const days = dummyArticleData.openingDays
     let temp:string[] = []
     days.forEach(ele => {
       if(ele.open === true){
@@ -48,8 +47,7 @@ const DetailArticles = () => {
     });
     return temp
   }
-  const openingDaysRes:string[] = getOepningDays()
-  console.log('openingDaysRes', openingDaysRes);
+  const openingDaysRes:string[] = getOepningDaysFromData()
 
   return (
     <>
@@ -60,7 +58,7 @@ const DetailArticles = () => {
           <div className={cls.mainContent}>
             <h2>제목</h2>
             <div className={cls.eachContent}>
-              {dummyData.title}
+              {dummyArticleData.title}
             </div>
           </div>
 
@@ -71,46 +69,46 @@ const DetailArticles = () => {
           <div className={cls.mainContent}>
             <h2>내용</h2>
             <div className={cls.eachContent}>
-              {dummyData.content}
+              {dummyArticleData.content}
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>연락처</h2>
             <div className={cls.eachContent}>
-              {dummyData.contact}
+              {dummyArticleData.contact}
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>주소</h2>
             <div className={cls.eachContent}>
-              우편번호 : {dummyData.address[0].val} <br/>
-              도로명주소 : {dummyData.address[1].val} <br/>
-              지번주소 : {dummyData.address[2].val} <br/>
-              상세주소 : {dummyData.address[3].val} <br/>
-              참고정보 : {dummyData.address[4].val} <br/>
+              우편번호 : {dummyArticleData.address[0].val} <br/>
+              도로명주소 : {dummyArticleData.address[1].val} <br/>
+              지번주소 : {dummyArticleData.address[2].val} <br/>
+              상세주소 : {dummyArticleData.address[3].val} <br/>
+              참고정보 : {dummyArticleData.address[4].val} <br/>
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>가격</h2>
             <div className={cls.eachContent}>
-              {dummyData.price} 원/시간
+              {dummyArticleData.price} 원/시간
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>오픈시간</h2>
             <div className={cls.eachContent}>
-              {dummyData.openingHours} 
+              {dummyArticleData.openingHours} 
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>오픈기간</h2>
             <div className={cls.eachContent}>
-              {dummyData.openingPeriod} 
+              {dummyArticleData.openingPeriod} 
             </div>
           </div>
 
@@ -118,25 +116,22 @@ const DetailArticles = () => {
             <h2>영업일</h2>
             <div className={cls.eachContent}>
               {openingDaysRes.map((ele,i)=>(
-              <li key={i}>{ele}</li>))} 
+              <li key={'openingDays'+i}>{ele}</li>))} 
             </div>
           </div>
         </div>
-
-        
         
         <h1>리뷰</h1>
         <div className={cls.contentBox}>
-          <div className={cls.mainContent}>리뷰</div>
-          <div className={cls.mainContent}>리뷰</div>
+          <ReviewSection/>
         </div>
 
-        
         <h1>댓글</h1>
         <div className={cls.contentBox}>
           <div className={cls.mainContent}>댓글</div>
           <div className={cls.mainContent}>댓글</div>
         </div>
+
       </div>
     </>
   );

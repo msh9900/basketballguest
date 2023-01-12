@@ -39,14 +39,18 @@ const UserMenu = (props: Props) => {
           open={Boolean(props.anchorElUser)}
           onClose={props.UserMenuClickHandler}
         >
-          <MenuItem onClick={props.UserMenuClickHandler}>
-            <Typography textAlign="center">프로필</Typography>
-          </MenuItem>
+          {props.loginState && (
+            <MenuItem onClick={props.UserMenuClickHandler}>
+              <Typography textAlign="center">프로필</Typography>
+            </MenuItem>
+          )}
+
           {!props.loginState && (
             <MenuItem onClick={props.UserMenuClickHandler}>
               <Typography textAlign="center">로그인</Typography>
             </MenuItem>
           )}
+
           {props.loginState && (
             <MenuItem onClick={props.UserMenuClickHandler}>
               <Typography textAlign="center">로그아웃</Typography>

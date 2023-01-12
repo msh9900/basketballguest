@@ -1,13 +1,13 @@
-// component
-import Articles from './articles/MainArticles';
-import Filter from './filter/Filter';
-import Order from './order/Order';
-import Search from './search/Search';
 // library
 import { useNavigate} from 'react-router-dom';
 import { useState} from 'react';
 // style
 import cls from './Rental.module.scss';
+// component
+import AllArticles from './allArticles/AllArticles';
+import Filter from './filter/Filter';
+import Order from './order/Order';
+import Search from './search/Search';
 
 const Rental = () => {
   const [searchRes, setSearchRes] = useState('');
@@ -42,7 +42,7 @@ const Rental = () => {
           orderStatus={orderStatus} setOrderStatus={setOrderStatus}
           filterStatus={filterStatus} setFilterStatus={setFilterStatus}
           searchRes={searchRes} setSearchRes={setSearchRes}/>
-        <Articles />
+        <AllArticles />
       </div>
     </>
   );
