@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+
 // style
 import cls from './Header.module.scss';
 // mui
@@ -16,21 +16,11 @@ import PcMenu from './PcMenu';
 import PcSearchbar from './PcSearchbar';
 import UserMenu from './UserMenu';
 import MbSearchbar from './MbSearchbar';
-import RouteMap from './_RouteMap'
+import RouteMap from './_RouteMap';
 
-const bin = {
-  userId: '',
-  email: '',
-  userImg: '',
-  userName: '',
-};
 export default function Header() {
   const dispatch = useDispatch();
   const loginState = useSelector((state: any) => state.login.isLogin);
-
-  useEffect(() => {
-    console.log('loginState', loginState);
-  }, [loginState]);
 
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -71,8 +61,7 @@ export default function Header() {
   };
 
   const logoutHandler = () => {
-    dispatch(IsLogout(bin));
-    // 쿠키 처리
+    dispatch(IsLogout());
   };
 
   return (
