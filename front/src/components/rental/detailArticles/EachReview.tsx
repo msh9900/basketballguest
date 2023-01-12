@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import cls from './EachReview.module.scss';
 
 const dummyReviews = [
@@ -6,7 +7,7 @@ const dummyReviews = [
     profileImg: 'A',
     createdDate: '2023-10-10',
     contents: '비싼 값 합니다.',
-    ratings: '3',
+    ratings: '3.5',
   },
   {
     userName: 'Brian',
@@ -25,10 +26,28 @@ const dummyReviews = [
 ];
 
 const EachReview = () => {
+  const renderStars = (str: string) => {
+    const num = Number(str);
+    const Blacks = Math.floor(num);
+    const half = num === Math.floor(num) ? 0 : 1;
+    const Whites = 5 - Blacks - half;
+    const ele = [];
+    for (let index = 0; index < Blacks; index++) {
+      ele.push(<span key={Math.random()}>★</span>);
+    }
+    if (half !== 0) {
+      ele.push(<span key={Math.random()}>✭</span>);
+    }
+    for (let index = 0; index < Whites; index++) {
+      ele.push(<span key={Math.random()}>✩</span>);
+    }
+    return ele;
+  };
+
   return (
     <div className={cls.EachReviewLayout}>
       {dummyReviews.map((e, i) => (
-        <div key={i} className={cls.reviewContents}>
+        <div key={JSON.stringify(e)} className={cls.reviewContents}>
           <div className={cls.profileSection}>
             <div>Img</div>
             <div>{e.userName}</div>
@@ -37,6 +56,9 @@ const EachReview = () => {
             <div>{e.createdDate}</div>
             <div>{e.contents}</div>
             <div>{e.ratings}점</div>
+            <div>
+              {renderStars(e.ratings)}
+            </div>
           </div>
         </div>
       ))}

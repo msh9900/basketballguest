@@ -115,7 +115,7 @@ const DetailArticles = () => {
           <div className={cls.mainContent}>
             <h2>영업일</h2>
             <div className={cls.eachContent}>
-              {openingDaysRes.map((ele,i)=>(
+              {openingDaysRes.map((ele, i)=>(
               <li key={'openingDays'+i}>{ele}</li>))} 
             </div>
           </div>
