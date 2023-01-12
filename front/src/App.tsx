@@ -10,6 +10,7 @@ import Footer from './components/layout/Footer';
 import Header from './components/layout/header/Header';
 
 // pages
+// import HomePage from './pages/HomePage';
 import HomePage from './pages/HomePage';
 import IntroducePage from './pages/intro/IntroducePage';
 import GuestRecruitmentPage from './pages/guest/GuestRecruitmentPage';

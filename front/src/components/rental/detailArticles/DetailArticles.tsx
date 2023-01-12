@@ -1,6 +1,7 @@
 import cls from './DetailArticles.module.scss';
 import SlickSlider from './SlickSlider';
-import ReviewSection from './ReviewSection';
+import ReviewSection from 'src/components/rental/detailArticles/ReviewSection';
+
 import { useEffect } from 'react';
 
 const DetailArticles = () => {
@@ -35,7 +36,6 @@ const DetailArticles = () => {
     // review
     // comments
   }, []);
-
 
   const getOepningDaysFromData = () => {
     const days = dummyArticleData.openingDays
