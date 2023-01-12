@@ -1,5 +1,6 @@
 import cls from './DetailArticles.module.scss';
-import SlickSlider from './SlickSlider'
+import SlickSlider from './SlickSlider';
+import { useEffect } from 'react';
 
 const DetailArticles = () => {
 
@@ -27,6 +28,15 @@ const DetailArticles = () => {
       {name:'토', open:true},
     ],
   }
+  
+  useEffect(() => {
+    
+    // article
+    // review
+    // comments
+    
+  }, []);
+
 
   const getOepningDays = () => {
     const days = dummyData.openingDays

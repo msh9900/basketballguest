@@ -3,87 +3,120 @@
   margin:0 auto;
   margin-top:20px;
   margin-bottom:20px;
-  max-width:1000px;
-  padding:10px;
-  max-width:450px;
+  max-width:280px;
+  padding-top:10px;
 
   // style
   border:solid 1px black;
   border-radius: 3px;
   background-color:bisque;
+  button{
+    cursor:pointer;
+  }
 
+  .topSection{
+    >div{
+      display:flex;
+    }
+    display:flex;
+    justify-content: center;
+    img{
+      margin-top:5px;
+    }
+    h3{
+      font-size:20px;
+      margin-right:5px;
+      margin-bottom:15px;
+    }
+  }
+  
+  .filterSection{
+    display:flex;
+    .filterBtns{
+      button{
+        width:55px;
+        height:30px;
+        font-weight: bold;
+        color:black;
+        margin:0 0 10px 10px;
+        margin-left:5px;
+        padding-left:20px;
+        border-radius: 10px;
+      }
+    }
+    .utilBtns{
+      button{
+        width:37px;
+        height: 30px;
+        font-weight: bold;
+        color:black;
+        margin:0 0 10px 10px;
+        border-radius: 10px;
+      }
+      .fold{
+        color:black;
+        &:hover{
+          background-color: #FFDFDF;
+          color:white;
+        }
+        background-color: white;
+        background-image: url('../../../../public/fold.png');
+        background-size: 23px;
+        background-repeat: no-repeat;
+        background-origin: padding-box;
+        background-position-x: 5px;
+        background-position-y: 1px;
+      }
+      
+      .reset{
+        color:black;
+        background-color: white;
+        background-image: url('../../../../public/reset.png');
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-origin: padding-box;
+        background-position-x: 6.5px;
+        background-position-y: 3px;
+        &:hover{
+          background-color: #FFDFDF;
+          color:white;
+        }
+      }
+    }
+  }
   .center{
     text-align:center;
   }
-  .topSection{
-    display:flex;
-  }
-}
 
-button{
-  cursor:pointer;
-  width: 50px;
-  height: 30px;
-  font-weight: bold;
-  
-  color:black;
-  margin:0 0 10px 10px;
-  border-radius: 10px;
+  .filterGenerators{
+    margin:10px;
+    padding:10px;
+    border:1px solid black;
+  }
+
 }
 
 .on{
   text-align: left;
   padding-left:25px;
   color:black;
-  width: 70px;
   background-image: url('../../../../public/triangle-down.png');
-  background-size: 16px;
+  background-size: 13px;
   background-repeat: no-repeat;
   background-origin: padding-box;
-  background-position-x: 7px;
-  background-position-y: 5px;
+  background-position-x: 6px;
+  background-position-y: 7px;
 }
 .off{
   text-align: left;
   padding-left:25px;
   color:black;
-  width: 70px;
   background-image: url('../../../../public/triangle-right.png');
-  background-size: 13px;
+  background-size: 10px;
   background-repeat: no-repeat;
   background-origin: padding-box;
-  background-position-x: 7px;
-  background-position-y: 6px;
+  background-position-x: 6px;
+  background-position-y: 7px;
 }
 
-.fold{
-  color:black;
-  width:50px;
-  &:hover{
-    background-color: #FFDFDF;
-    color:white;
-  }
-  background-color: white;
-  background-image: url('../../../../public/fold.png');
-  background-size: 23px;
-  background-repeat: no-repeat;
-  background-origin: padding-box;
-  background-position-x: 12px;
-  background-position-y: 1px;
-}
-.reset{
-  width:50px;
-  color:black;
-  background-color: white;
-  background-image: url('../../../../public/reset.png');
-  background-size: 20px;
-  background-repeat: no-repeat;
-  background-origin: padding-box;
-  background-position-x: 12px;
-  background-position-y: 3px;
-  &:hover{
-    background-color: #FFDFDF;
-    color:white;
-  }
-}
 

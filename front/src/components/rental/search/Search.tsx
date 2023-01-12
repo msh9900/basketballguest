@@ -40,8 +40,10 @@ const Search = (props: Props) => {
   return (
     <>
       <div className={cls.SearchLayout}>
+        <div className={cls.searchTitle}>
+          <h3>적용하여 검색 :</h3>
+        </div>
         <div>
-          <h3 className={cls.alignLeft}>검색 :</h3>
           <input
             type="text"
             value={searchVal}
@@ -51,12 +53,13 @@ const Search = (props: Props) => {
           <button className={cls.serarchBtn} onClick={serachClicked}/>
         </div>
       </div>
+
       {props.searchRes.length > 0 && (
-          <div className= {cls.SearchRes}>
-            <div>'{props.searchRes}'</div> 
-            <div>검색결과</div>
-          </div>
-        )}
+        <div className= {cls.SearchRes}>
+          <div>'{props.searchRes}'</div> 
+          <div>검색결과</div>
+        </div>
+      )}
     </>
   );
 };
