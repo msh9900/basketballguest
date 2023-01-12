@@ -1,32 +1,23 @@
 .Filter_Area_Layout{
-
-  padding:10px;
-  margin:0 auto;
-  padding:0;
   border-radius: 10px;
-  display: flex;
+  // display: flex;
   justify-content: center;
 
   >div{
-    margin:0 auto;
-    padding:0px;
     display: flex;
     justify-content: center;
   }
   >div>div{
     text-align:center;
-    width:100px;
-    padding-top:10px;
-    margin:3px;
+    width:90px;
     border-radius: 10px;
+    font-size:14px;
+    h4{
+      font-size:17px;
+    }
   }
 
-  .title{font-weight: bold;}
-  .center{text-align: center;}
-  .content{font-weight:normal;}
-
   ul{
-    
     padding:10px;
     li{
       padding:5px;
@@ -41,8 +32,8 @@
       }
     }
   }
-
 }
+
 .on{
   background-color: orange;
   font-weight: bold;
