@@ -61,7 +61,7 @@ export default function Header() {
   };
 
   const logoutHandler = () => {
-    dispatch(IsLogout());
+    dispatch(IsLogout(''));
   };
 
   return (
