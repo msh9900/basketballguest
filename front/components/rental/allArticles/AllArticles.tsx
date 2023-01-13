@@ -1,9 +1,6 @@
 import cls from "./AllArticles.module.scss";
-import { useNavigate } from 'react-router-dom';
-
 import { useRouter } from 'next/router'
   
-
 const dummyArr = [
   {name:'Alice', title:'제목', contents:'내용', place:'서울', price:1},
   {name:'Brian', title:'제목', contents:'내용', place:'부산', price:1},

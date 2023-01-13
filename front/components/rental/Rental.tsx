@@ -1,5 +1,4 @@
 // library
-// import { useNavigate} from 'react-router-dom';
 import { useState} from 'react';
 import { useRouter } from 'next/router'
 
@@ -14,8 +13,6 @@ import Search from './search/Search';
 const Rental = () => {
   const [searchRes, setSearchRes] = useState('');
   const router = useRouter()
-  // const navigate = useNavigate();
-  
   const [orderStatus, setOrderStatus] = useState({
     ispriceOrderOn: false,
     isdistanceOrderOn: false,
@@ -30,7 +27,6 @@ const Rental = () => {
   })
 
   const goToPosting = () => {
-    // navigate('/gym/post')
     router.push('/gym/post')
   }
 

@@ -1,11 +1,12 @@
 import classes from './Profile.module.scss';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
 import { IsLogin } from '../../redux/modules/login';
 let formData = new FormData();
 
 export default function Profile() {
+  const router = useRouter()
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -19,8 +20,6 @@ export default function Profile() {
   const [userName, setUserName] = useState<string>('');
   const [userImg, setUserImg] = useState<any>('');
   const [isValid, setIsValid] = useState<boolean>(false);
-
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -76,7 +75,7 @@ export default function Profile() {
     }
     if (data) {
       alert('프로필 변경 완료');
-      navigate('/');
+      router.push('/');
       dispatch(IsLogin(data));
       return data;
     }
