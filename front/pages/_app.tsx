@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 
 import { useEffect, useState } from "react";
 //style
+import "../styles/globals.scss";
 import classes from "./App.module.scss";
 //MUI
 import CssBaseline from "@mui/material/CssBaseline";
