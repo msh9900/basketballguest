@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { IsLogout } from '../../../redux/modules/login';
 // component
 import MbMenu from './MbMenu';
-import PcMenu from './PCMenu';
+import PcMenu from './PcMenu';
 import PcSearchbar from './PcSearchbar';
 import UserMenu from './UserMenu';
 import MbSearchbar from './MbSearchbar';

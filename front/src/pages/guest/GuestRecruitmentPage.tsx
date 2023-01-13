@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Card from '../../components/Card';
 import classes from './GuestRecruitmentPage.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import WriteModal from '../../components/WriteModal';
 export default function GuestRecruitmentPage() {
   //임시 데이터 카드
   const data = [
@@ -23,16 +23,6 @@ export default function GuestRecruitmentPage() {
       date: '1시간전',
     },
   ];
-  for (let i = 3; i < 150; i++) {
-    data.push({
-      contentidx: i,
-      id: '테스트3',
-      title: `번호${i}`,
-      content: '테스트3 입니다',
-      image: 'src주소 3',
-      date: '1시간전',
-    });
-  }
 
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
@@ -59,7 +49,9 @@ export default function GuestRecruitmentPage() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className={classes.modal}>글쓰기 카드 만드는 부분</div>
+        <div className={classes.modal}>
+          <WriteModal />
+        </div>
       </Modal>
       <div id="parentScrollDiv" className={classes.wrap}>
         <InfiniteScroll
