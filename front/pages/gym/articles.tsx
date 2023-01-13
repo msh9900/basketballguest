@@ -1,9 +1,11 @@
-import DetailArticles from '../../components/rental/detailArticles/DetailArticles'
+import DetailArticles from "../../components/rental/detailArticles/DetailArticles";
 
 const articles = () => {
-  return ( <>
-    <DetailArticles/>
-  </> );
-}
- 
+  return (
+    <>
+      <DetailArticles />
+    </>
+  );
+};
+
 export default articles;
