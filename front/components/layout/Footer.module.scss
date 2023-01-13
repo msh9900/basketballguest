@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap");
 
-footer {
+.footer {
   width: 100%;
   background-color: black;
   color: white;
@@ -32,7 +32,7 @@ footer {
 }
 //모바일
 @media (max-width: 900px) {
-  footer {
+  .footer {
     height: 100px;
     > div {
       .menus {
