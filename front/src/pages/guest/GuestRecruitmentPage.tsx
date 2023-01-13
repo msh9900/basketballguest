@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Card from '../../components/Card';
 import classes from './GuestRecruitmentPage.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Modal from '@mui/material/Modal';
+import WriteModal from '../../components/WriteModal';
 export default function GuestRecruitmentPage() {
   //임시 데이터 카드
   const data = [
@@ -21,19 +23,12 @@ export default function GuestRecruitmentPage() {
       date: '1시간전',
     },
   ];
-  for (let i = 3; i < 150; i++) {
-    data.push({
-      contentidx: i,
-      id: '테스트3',
-      title: `번호${i}`,
-      content: '테스트3 입니다',
-      image: 'src주소 3',
-      date: '1시간전',
-    });
-  }
 
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const fetchMoreData = () => {
     if (contentList < 150) {
       setTimeout(() => {
@@ -45,7 +40,19 @@ export default function GuestRecruitmentPage() {
   };
   return (
     <>
-      <div className={classes.writeButton}>글쓰기 버튼</div>
+      <div className={classes.writeButton} onClick={handleOpen}>
+        글쓰기 버튼
+      </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className={classes.modal}>
+          <WriteModal />
+        </div>
+      </Modal>
       <div id="parentScrollDiv" className={classes.wrap}>
         <InfiniteScroll
           dataLength={contentList}

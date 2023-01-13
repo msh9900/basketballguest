@@ -32,6 +32,7 @@ export default function RecipeReviewCard(props: any) {
   ];
   const [commentMore, setCommentMore] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
+  const [writeComment, setWriteComment] = React.useState('');
   const [cardClick, setCardClick] = React.useState(false);
   // 줄 수를 계산해서 저장할 변수
   const [textareaHeight, setTextareaHeight] = React.useState(0);
@@ -40,6 +41,11 @@ export default function RecipeReviewCard(props: any) {
   // 엔터('\n') 개수를 세서 textareaHeight에 저장
   const checkItemChangeHandler = (event: any) => {
     setTextareaHeight(event.target.value.split('\n').length - 1);
+    setWriteComment(event.target.value);
+  };
+  const commentSubmitHandler = () => {
+    //댓글 입력 post 구현
+    console.log(writeComment);
   };
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -62,7 +68,7 @@ export default function RecipeReviewCard(props: any) {
         <Card className={classes.textContent} variant="outlined">
           <CardHeader
             avatar={<Avatar aria-label="recipe">R</Avatar>}
-            action={<MenuList />}
+            action={<MenuList idx={props.data.contentidx} />}
             title={props.data.id}
             subheader={props.data.date}
           />
@@ -89,7 +95,12 @@ export default function RecipeReviewCard(props: any) {
               onChange={checkItemChangeHandler}
               style={{ height: 50 + textareaHeight * 24 + 'px' }}
             />
-            <div className={classes.comment_submit}>전송</div>
+            <div
+              className={classes.comment_submit}
+              onClick={commentSubmitHandler}
+            >
+              전송
+            </div>
           </div>
           <div className={classes.firstComment}>
             <MainComment key={data[0].commentidx} data={data[0]} />
