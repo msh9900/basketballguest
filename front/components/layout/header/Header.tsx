@@ -1,35 +1,35 @@
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 // style
-import cls from './Header.module.scss';
+import cls from "./Header.module.scss";
 // mui
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { IsLogout } from '../../../redux/modules/login';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { IsLogout } from "../../../redux/modules/login";
 // component
-import MbMenu from './MbMenu';
-import PcMenu from './PcMenu';
-import PcSearchbar from './PcSearchbar';
-import UserMenu from './UserMenu';
-import MbSearchbar from './MbSearchbar';
-import RouteMap from './_RouteMap';
+import MbMenu from "./MbMenu";
+import PcMenu from "./PcMenu";
+import PcSearchbar from "./PcSearchbar";
+import UserMenu from "./UserMenu";
+import MbSearchbar from "./MbSearchbar";
+import RouteMap from "./_RouteMap";
 
 export default function Header() {
   const dispatch = useDispatch();
   const loginState = useSelector((state: any) => state.login.isLogin);
 
-  let navigate = useNavigate();
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
+    null
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
+    null
   );
-  const [selectValue, setSelectValue] = React.useState('gym');
+  const [selectValue, setSelectValue] = React.useState("gym");
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -43,29 +43,29 @@ export default function Header() {
 
   const MenuLinkClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     const text = event.currentTarget.textContent as string;
-    navigate(RouteMap[text]);
+    router.push(RouteMap[text]);
     setAnchorElNav(null);
   };
 
   const UserMenuClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.currentTarget.textContent === '프로필') {
-      navigate('/profile');
+    if (event.currentTarget.textContent === "프로필") {
+      router.push("/profile");
     }
-    if (event.currentTarget.textContent === '로그인') {
-      navigate('/login');
+    if (event.currentTarget.textContent === "로그인") {
+      router.push("/login");
     }
-    if (event.currentTarget.textContent === '로그아웃') {
+    if (event.currentTarget.textContent === "로그아웃") {
       logoutHandler();
     }
     setAnchorElUser(null);
   };
 
   const logoutHandler = () => {
-    dispatch(IsLogout(''));
+    dispatch(IsLogout(""));
   };
 
   return (
-    <AppBar position="sticky" style={{ background: '#f1a707' }}>
+    <AppBar position="sticky" style={{ background: "#f1a707" }}>
       <div className={cls.container}>
         <Toolbar disableGutters sx={{ height: 100 }} className={cls.toolbar}>
           <div className={cls.appmenu}>

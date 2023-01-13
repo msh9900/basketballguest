@@ -1,13 +1,13 @@
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-import { Link } from 'react-router-dom';
-import cls from './Header.module.scss';
-import RouteMap from './_RouteMap';
+import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
+import Link from "next/link";
+import cls from "./Header.module.scss";
+import RouteMap from "./_RouteMap";
 
 const PcMenu = () => {
   return (
     <>
       {/* 홈 */}
-      <Link to="/" className={cls.homename}>
+      <Link href="/" className={cls.homename}>
         <div>
           <SportsBasketballIcon />
         </div>
@@ -17,7 +17,7 @@ const PcMenu = () => {
       {/* 상단 메뉴 */}
       <div className={cls.listcontainer}>
         {Object.entries(RouteMap).map(([key, value]) => (
-          <Link key={key} to={value} className={cls.HeaderList}>
+          <Link key={key} href={value} className={cls.HeaderList}>
             {key}
           </Link>
         ))}

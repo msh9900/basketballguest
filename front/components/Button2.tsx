@@ -1,7 +1,6 @@
 import classes from "./Button2.module.scss";
-// import { Link } from "react-router-dom";
 
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Button2(props: any) {
   return (
