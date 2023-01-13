@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
 import { IsLogin } from '../../redux/modules/login';
+const FormData = require('form-data');
+
 let formData = new FormData();
 
 export default function Profile() {
