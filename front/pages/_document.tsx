@@ -1,13 +1,16 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head />
-      <body>
-        <Main />
+import Document, { Html, Head, Main, NextScript } from "next/document";
+export default class CustomDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head>
+          <meta property="custom" content="123123" />
+        </Head>
+        <body>
+          <Main />
+        </body>
         <NextScript />
-      </body>
-    </Html>
-  )
+      </Html>
+    );
+  }
 }
