@@ -58,7 +58,8 @@
         &:hover{
           color:white;
         }
-        background-image: url('../../../../public/images/rental/fold.png');
+        // background-image: url('../../../../public/images/rental/fold.png');
+        background-image: url('../../../public/images/rental/fold.png');
         background-size: 23px;
         background-repeat: no-repeat;
         background-origin: padding-box;
@@ -68,7 +69,7 @@
       
       .reset{
         color:black;
-        background-image: url('../../../../public/images/rental/reset.png');
+        background-image: url('../../../public/images/rental/reset.png');
         background-size: 20px;
         background-repeat: no-repeat;
         background-origin: padding-box;
@@ -93,7 +94,7 @@
   text-align: left;
   padding-left:25px;
   color:black;
-  background-image: url('../../../../public/images/rental/triangle-down.png');
+  background-image: url('../../../public/images/rental/triangle-down.png');
   background-size: 13px;
   background-repeat: no-repeat;
   background-origin: padding-box;
@@ -104,7 +105,7 @@
   text-align: left;
   padding-left:25px;
   color:black;
-  background-image: url('../../../../public/images/rental/triangle-right.png');
+  background-image: url('../../../public/images/rental/triangle-right.png');
   background-size: 10px;
   background-repeat: no-repeat;
   background-origin: padding-box;

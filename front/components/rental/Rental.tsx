@@ -1,6 +1,8 @@
 // library
-import { useNavigate} from 'react-router-dom';
+// import { useNavigate} from 'react-router-dom';
 import { useState} from 'react';
+import { useRouter } from 'next/router'
+
 // style
 import cls from './Rental.module.scss';
 // component
@@ -11,7 +13,8 @@ import Search from './search/Search';
 
 const Rental = () => {
   const [searchRes, setSearchRes] = useState('');
-  const navigate = useNavigate();
+  const router = useRouter()
+  // const navigate = useNavigate();
   
   const [orderStatus, setOrderStatus] = useState({
     ispriceOrderOn: false,
@@ -27,7 +30,8 @@ const Rental = () => {
   })
 
   const goToPosting = () => {
-    navigate('/gym/post')
+    // navigate('/gym/post')
+    router.push('/gym/post')
   }
 
   return (

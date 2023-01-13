@@ -1,10 +1,17 @@
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-import classes from './RegisterForm.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+// react
+import Link from 'next/link'
+import { useRouter } from "next/router";
 import { useState } from 'react';
+
+// style
+import cls from './RegisterForm.module.scss';
 import Button from './Button';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+
+// state
 import { useDispatch } from 'react-redux';
 import { IsLogin } from '../redux/modules/login';
+
 
 export default function LoginForm(props: any) {
   const [id, setId] = useState('');
@@ -14,7 +21,7 @@ export default function LoginForm(props: any) {
   // const [isValid, setIsValid] = useState(false);
   // const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
   const handleId = (e: any) => {
     setId(e.target.value);
@@ -50,7 +57,7 @@ export default function LoginForm(props: any) {
       if (data.msg === '회원가입 완료') {
         alert('회원 가입성공');
         dispatch(IsLogin(data));
-        navigate('/login');
+        router.push('/login');
       } else {
         alert('중복된 회원 존재');
       }
@@ -61,17 +68,17 @@ export default function LoginForm(props: any) {
 
   return (
     <>
-      <form onSubmit={registerFormHandler} className={classes.loginForm}>
-        <div className={classes.logo}>
-          <Link to="/" className={classes.title}>
-            <SportsBasketballIcon fontSize="inherit" className={classes.ball} />
+      <form onSubmit={registerFormHandler} className={cls.loginForm}>
+        <div className={cls.logo}>
+          <Link href="/" className={cls.title}>
+            <SportsBasketballIcon fontSize="inherit" className={cls.ball} />
             BPT
           </Link>
         </div>
-        <div className={classes.register}>
+        <div className={cls.register}>
           <input
             type="email"
-            className={classes.email}
+            className={cls.email}
             placeholder="이메일"
             value={email}
             onChange={handleEmail}
@@ -81,7 +88,7 @@ export default function LoginForm(props: any) {
           />
           <input
             type="text"
-            className={classes.id}
+            className={cls.id}
             placeholder="아이디"
             value={id}
             onChange={handleId}
@@ -91,7 +98,7 @@ export default function LoginForm(props: any) {
           />
           <input
             type="password"
-            className={classes.id}
+            className={cls.id}
             placeholder="비밀번호"
             value={pw}
             autoComplete="off"
@@ -102,7 +109,7 @@ export default function LoginForm(props: any) {
           />
           <input
             type="text"
-            className={classes.id}
+            className={cls.id}
             placeholder="이름"
             value={userName}
             onChange={handleUserName}
@@ -113,7 +120,7 @@ export default function LoginForm(props: any) {
           <Button type="submit">
             <p>가입하기</p>
           </Button>
-          <Link to="/login" className={classes.loginBtn}>
+          <Link href="/login" className={cls.loginBtn}>
             <p>로그인</p>
           </Link>
         </div>

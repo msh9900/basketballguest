@@ -1,5 +1,8 @@
-import cls from "./MainArticles.module.scss";
+import cls from "./AllArticles.module.scss";
 import { useNavigate } from 'react-router-dom';
+
+import { useRouter } from 'next/router'
+  
 
 const dummyArr = [
   {name:'Alice', title:'제목', contents:'내용', place:'서울', price:1},
@@ -12,9 +15,9 @@ const dummyArr = [
 
 const AllArticles = () => {
 
-  const navigate = useNavigate();
+  const router = useRouter()
   const moveToDetailPage = () => {
-    navigate('/gym/detailArticles');
+    router.push('/gym/articles');
   }
   
   return (

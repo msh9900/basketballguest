@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import cls from '../inputStyle/FileInput.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/router";
+const FormData = require('form-data');
 
 interface Props{
   isLoading:boolean;
@@ -8,7 +9,7 @@ interface Props{
 }
 
 const GymImages = (props:Props) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(()=>{
     if(props.isLoading === true) sendImgs()
@@ -22,7 +23,7 @@ const GymImages = (props:Props) => {
         body: formData,
       });
       console.log('이미지 데이터 post 성공 : ', resImg);
-      navigate('/gym')
+      router.push('/gym')
     } catch (error: any) {
       console.log('이미지 데이터 post 실패 : ', error);
     }

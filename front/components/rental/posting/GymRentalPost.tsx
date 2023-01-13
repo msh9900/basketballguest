@@ -1,5 +1,5 @@
 import cls from './GymRentalPost.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/router";
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
@@ -19,15 +19,14 @@ import isFormValid from './utils/isFormValid';
 
 
 const GymRentalPost = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const stateId = useSelector((state: any) => state.login.userid);
   const cancelPost = () => {
-    navigate('/gym');
+    router.push('/gym');
   };
 
   // state : form contents
-  
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [contact, setContact] = useState('');

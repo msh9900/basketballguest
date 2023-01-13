@@ -2,6 +2,7 @@
 import { findAllByAltText } from '@testing-library/react';
 import { forEachChild } from 'typescript';
 import cls from '../inputStyle/TextInput.module.scss'
+import {useEffect} from 'react'
 
 type addr = {
   category: string;
@@ -13,14 +14,18 @@ interface Props{
 }
 
 const GymAddress = (props:Props) => {
-  let scriptSrc = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
-  let script = document.querySelector(`script[src="${scriptSrc}"]`) as HTMLScriptElement;
-  if (!script) {
-    script = document.createElement("script") as HTMLScriptElement;
-    script.src = scriptSrc;
-    script.async = true;
-  }
-  document.body.appendChild(script);
+
+  useEffect(() => {
+    let scriptSrc = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+    let script = document.querySelector(`script[src="${scriptSrc}"]`) as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement("script") as HTMLScriptElement;
+      script.src = scriptSrc;
+      script.async = true;
+    }
+    document.body.appendChild(script);
+    console.log('script', script);
+  }, []);
 
   function DaumPostcode() {
     new daum.Postcode({

@@ -1,6 +1,9 @@
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import classes from './LoginForm.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+
+import Link from 'next/link'
+import { useRouter } from "next/router";
+
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
 import { useDispatch } from 'react-redux';
@@ -12,7 +15,8 @@ export default function LoginForm(props: any) {
   const [isIdPwValid, setIsIdPwValid] = useState(false);
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
-  const navigate = useNavigate();
+  const router = useRouter();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -54,7 +58,7 @@ export default function LoginForm(props: any) {
         alert('아이디나 패스워드를 확인해주세요');
       } else {
         alert('로그인성공');
-        navigate('/');
+        router.push('/');
         dispatch(IsLogin(data));
       }
     } catch {
@@ -66,7 +70,7 @@ export default function LoginForm(props: any) {
     <>
       <form onSubmit={loginFormHandler} className={classes.loginForm}>
         <div className={classes.logo}>
-          <Link to="/" className={classes.title}>
+          <Link href="/" className={classes.title}>
             <SportsBasketballIcon fontSize="inherit" className={classes.ball} />
             BPT
           </Link>
@@ -99,7 +103,7 @@ export default function LoginForm(props: any) {
           )}
 
           <Button type="submit">로그인</Button>
-          <Link to="/register" className={classes.register}>
+          <Link href="/register" className={classes.register}>
             <p>회원가입</p>
           </Link>
         </div>

@@ -5,6 +5,10 @@
   margin:5px auto;
   padding:10px;
   
+  button{
+    margin-top:10px;
+    border-radius:10px;
+  }
 }
 
 .explanation{
@@ -43,8 +47,4 @@
     height:50px;
     object-fit: cover;
   }
-}
-button{
-  margin-top:10px;
-  border-radius:10px;
 }

@@ -1,7 +1,6 @@
 import cls from './DetailArticles.module.scss';
 import SlickSlider from './SlickSlider';
-import ReviewSection from 'src/components/rental/detailArticles/ReviewSection';
-
+import ReviewSection from './ReviewSection';
 import { useEffect } from 'react';
 
 const DetailArticles = () => {

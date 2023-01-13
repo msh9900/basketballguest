@@ -10,7 +10,7 @@ type RouteMapType = {
 const RouteMap: RouteMapType = {
   소개: '/intro',
   게스트모집: '/guest',
-  체육관대여: 'gym',
+  체육관대여: '/gym',
   서비스: '/service',
 };
 

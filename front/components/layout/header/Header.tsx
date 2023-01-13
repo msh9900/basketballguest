@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-
 // style
 import cls from "./Header.module.scss";
 // mui
