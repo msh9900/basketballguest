@@ -93,7 +93,7 @@ export default function Profile() {
     const attr = `width=${winWidth}, height=${winHeight}, menubars=no, scrollbars=auto style="cursor:pointer;"`;
     var OpenWindow = window.open('', '_blank', attr) as typeof window;
     OpenWindow.document.write(
-      `<img src=${v} width=100% onClick='window.close()'/>`,
+      `<img src=${v} width=100% style='cursor:pointer;' onClick='window.close()'/>`,
     );
   };
 

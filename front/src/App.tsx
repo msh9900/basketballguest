@@ -10,6 +10,7 @@ import Footer from './components/layout/Footer';
 import Header from './components/layout/header/Header';
 
 // pages
+// import HomePage from './pages/HomePage';
 import HomePage from './pages/HomePage';
 import IntroducePage from './pages/intro/IntroducePage';
 import GuestRecruitmentPage from './pages/guest/GuestRecruitmentPage';
@@ -41,9 +42,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/intro" element={<IntroducePage />} />
           <Route path="/guest" element={<GuestRecruitmentPage />} />
+
           <Route path="/gym" element={<GymRental />} />
           <Route path="/gym/post" element={<GymRentalPost />} />
-          <Route path="/gym/articles" element={<GymArticles />} />
+          <Route path="/gym/detailArticles" element={<GymArticles />} />
+          
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/service" element={<Service />} />

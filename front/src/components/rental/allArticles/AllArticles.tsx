@@ -10,11 +10,11 @@ const dummyArr = [
   {name:'Chris', title:'제목', contents:'내용', place:'대구', price:1},
 ]
 
-const Articles = () => {
+const AllArticles = () => {
 
   const navigate = useNavigate();
   const moveToDetailPage = () => {
-    navigate('/gym/articles');
+    navigate('/gym/detailArticles');
   }
   
   return (
@@ -38,4 +38,4 @@ const Articles = () => {
   )
 }
 
-export default Articles
+export default AllArticles

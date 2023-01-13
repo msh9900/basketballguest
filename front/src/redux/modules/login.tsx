@@ -23,10 +23,11 @@ const loginSlice = createSlice({
       const userString = JSON.stringify(loginSlice);
       window.localStorage.setItem('user', userString);
     },
-    IsLogout: (state) => {
-      state.userId = '';
-      state.email = '';
-      state.userImg = '';
+    IsLogout: (state, action) => {
+      state.userId = action.payload;
+      state.email = action.payload;
+      state.userImg = action.payload;
+      state.userName = action.payload;
       state.isLogin = false;
       window.localStorage.removeItem('user');
     },
