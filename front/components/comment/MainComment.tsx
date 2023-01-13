@@ -1,6 +1,6 @@
-import classes from './MainComment.module.scss';
-import Avatar from '@mui/material/Avatar';
-import React, { useState } from 'react';
+import classes from "./MainComment.module.scss";
+import Avatar from "@mui/material/Avatar";
+import React, { useState } from "react";
 export default function MainComment(props: any) {
   const [replyClick, setReplyClick] = useState<Boolean>(false);
   const replyHandler = () => {

@@ -1,11 +1,11 @@
 import type { AppProps } from "next/app";
 
 import { useEffect, useState } from "react";
-
+//style
+import classes from "./App.module.scss";
 //MUI
 import CssBaseline from "@mui/material/CssBaseline";
 // components
-import classes from "./App.module.scss";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/header/Header";
 import { Provider } from "react-redux";
@@ -18,8 +18,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Provider store={store}>
         <CssBaseline />
-        <Header />
         <div className={classes.wrapper}>
+          <Header />
           <div className={classes.contentWrapper}>
             <Component {...pageProps} />
           </div>

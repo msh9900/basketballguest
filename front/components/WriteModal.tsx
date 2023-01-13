@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './WriteModal.scss';
+import React from "react";
+import classes from "./WriteModal.module.scss";
 export default function WriteModal() {
   return (
     <>
