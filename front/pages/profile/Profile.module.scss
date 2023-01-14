@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
 
 .profile {
-
   margin: 0%;
   padding: 0;
   box-sizing: border-box;
-
   margin: auto;
   margin-bottom: 100px;
   padding: 3em;
@@ -15,11 +13,11 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  height: 800px;
+  height: 1200px;
   max-width: 2600px;
   .header {
     padding: 1em;
-    font-family: 'Rubik Vinyl';
+    font-family: "Rubik Vinyl";
     font-size: bold;
   }
   .imgtitle {
@@ -81,10 +79,10 @@
       border-radius: 6px;
     }
     p {
-      font-family: 'Rubik Vinyl';
+      font-family: "Rubik Vinyl";
     }
     .profileTitle {
-      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-family: Georgia, "Times New Roman", Times, serif;
       color: orange;
       border: 5px solid black;
     }

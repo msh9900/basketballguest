@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
 
 .loginForm {
-
   margin: 0%;
   padding: 0;
   box-sizing: border-box;
@@ -26,7 +25,7 @@
     padding: 0.5em;
     display: block;
     color: black;
-    font-family: 'Rubik Vinyl';
+    font-family: "Rubik Vinyl";
     min-width: 400px;
   }
   .ball {
@@ -51,6 +50,7 @@
     align-items: center;
     position: relative;
     padding: 3em;
+    line-height: 30px;
     min-width: 290px;
     max-width: 384px;
     border: 1px solid #c9c4c4;
@@ -73,9 +73,10 @@
     position: relative;
     margin-bottom: 1.5em;
     width: 100%;
+    height: 50px;
     max-width: 300px;
     font-weight: 400px;
-    line-height: 50px;
+    line-height: 40px;
     text-align: left;
     letter-spacing: -0.5px;
     border-radius: 6px;
@@ -100,7 +101,7 @@
     position: relative;
     text-align: center;
     justify-content: center;
-    line-height: 40px;
+    line-height: 10px;
     width: 100%;
     border: 0.1em solid rgba(0, 0, 0, 0.15);
     text-decoration: none;

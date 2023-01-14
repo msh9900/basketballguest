@@ -1,26 +1,26 @@
-import classes from './Profile.module.scss';
-import { useState, useEffect } from 'react';
+import classes from "./Profile.module.scss";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from 'react-redux';
-import { IsLogin } from '../../redux/modules/login';
-const FormData = require('form-data');
+import { useDispatch, useSelector } from "react-redux";
+import { IsLogin } from "../../redux/modules/login";
+const FormData = require("form-data");
 
 let formData = new FormData();
 
 export default function Profile() {
-  const router = useRouter()
+  const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
   const stateUserImg = useSelector((state: any) => state.login.userImg);
   const defaultStateImg = useSelector(
-    (state: any) => state.login.defaultImgUrl,
+    (state: any) => state.login.defaultImgUrl
   );
-  const [pw, setPw] = useState<string>('');
-  const [pw2, setPw2] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [userName, setUserName] = useState<string>('');
-  const [userImg, setUserImg] = useState<any>('');
+  const [pw, setPw] = useState<string>("");
+  const [pw2, setPw2] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
+  const [userImg, setUserImg] = useState<any>("");
   const [isValid, setIsValid] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -55,33 +55,33 @@ export default function Profile() {
   };
 
   const imgHandler = async (event: any) => {
-    formData.append('img', event.target.files[0]);
+    formData.append("img", event.target.files[0]);
     setUserImg(URL.createObjectURL(event.target.files[0]));
   };
 
   async function profileSumbit(event: any) {
     event.preventDefault();
-    formData.append('id', JSON.stringify(stateId));
-    formData.append('pw', JSON.stringify(pw));
-    formData.append('email', JSON.stringify(email));
-    formData.append('userName', JSON.stringify(userName));
-    formData.append('userImg', JSON.stringify(userImg));
-    const response = await fetch('http://localhost:4000/profile/userdata', {
-      method: 'POST',
+    formData.append("id", JSON.stringify(stateId));
+    formData.append("pw", JSON.stringify(pw));
+    formData.append("email", JSON.stringify(email));
+    formData.append("userName", JSON.stringify(userName));
+    formData.append("userImg", JSON.stringify(userImg));
+    const response = await fetch("http://localhost:4000/profile/userdata", {
+      method: "POST",
       body: formData,
     });
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error('데이터 통신 오류');
+      throw new Error("데이터 통신 오류");
     }
     if (data) {
-      alert('프로필 변경 완료');
-      router.push('/');
+      alert("프로필 변경 완료");
+      router.push("/");
       dispatch(IsLogin(data));
       return data;
     }
-    const getUrl = await fetch('http://localhost:4000/profile', {
+    const getUrl = await fetch("http://localhost:4000/profile", {
       body: formData,
     });
   }
@@ -92,9 +92,9 @@ export default function Profile() {
     const winWidth = 500;
     const winHeight = 500;
     const attr = `width=${winWidth}, height=${winHeight}, menubars=no, scrollbars=auto style="cursor:pointer;"`;
-    var OpenWindow = window.open('', '_blank', attr) as typeof window;
+    var OpenWindow = window.open("", "_blank", attr) as typeof window;
     OpenWindow.document.write(
-      `<img src=${v} width=100% style='cursor:pointer;' onClick='window.close()'/>`,
+      `<img src=${v} width=100% style='cursor:pointer;' onClick='window.close()'/>`
     );
   };
 
@@ -114,7 +114,7 @@ export default function Profile() {
           />
         </label>
 
-        {userImg === '' ? (
+        {userImg === "" ? (
           <img
             alt="profileImg"
             src={defaultStateImg}
