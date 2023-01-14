@@ -46,9 +46,9 @@ const GymOpeningDays = (props:Props) => {
   }
 
   return (
-    <div>
+    <div className={cls.openingDaysLayout}>
       <h3 className={cls.explanation}>영업일</h3>
-      <div className={cls.Input_CheckBoxLayout}>
+      <div className={cls.Input_CheckBox}>
         {days.map((v,i)=>(
           <label htmlFor={v} className={checkClicked(v) ? cls.on : cls.off} key={v}>
             <input type="checkbox" id={v} onChange={()=>setClicked(v)}/>{v}

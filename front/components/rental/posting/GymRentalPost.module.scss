@@ -1,35 +1,41 @@
-.GymRentalPostLayout{
-  max-width:900px;
-  margin:0 auto;
-  // margin-top:50px;
-  // background-color:antiquewhite;
-  padding-top:30px;
-}
 
-.formBox{
+.GymRentalPostLayout{
   // border-radius:
   width:300px;
-
   margin:0 auto;
+  margin-top:40px;
   margin-bottom:50px;
   
   border:1px solid black;
   background-color: antiquewhite;
-  // background-color:red;
-}
+  
 
-.formTitle{
-  margin-top:20px;
-  text-align: center;
-}
+  .formTitle{
+    margin-top:20px;
+    text-align: center;
+  }
+  .bottomBtns{
+    display:flex;
+    justify-content: center;
+    margin:0 auto;
+    margin-top:30px;
+    // background-color:red;
+  
+    button{
+      margin-left:10px;
+      margin-bottom:10px;
+      font-size:15px;
+      border-radius: 5px;
+      border:solid 1px black;
+      padding:10px;
+      padding-left:15px;
+      padding-right:15px;
 
-.bottomBtns{
-  display:flex;
-  margin:0 auto;
-  margin-top:30px;
-  width:170px;
-  // background-color: red;
-  button{
-    display:inline-block;
+      display:inline-block;
+      text-align: center;
+    }
   }
 }
+
+
+

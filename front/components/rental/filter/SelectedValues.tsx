@@ -28,19 +28,19 @@ const SelectedValues = (props:Props) => {
 
         {props.areas.map((v:any, i:any)=> {
           return (
-            <div className={cls.areas} key={`areas-${i}`} id={v} onClick={deleteAreaFilter}>{v} X</div>
+            <div className={`${cls.common} ${cls.areas}`} key={`areas-${i}`} id={v} onClick={deleteAreaFilter}>{v} <span>X</span></div>
           )
         })} 
 
         {props.priceActive && (
-          <div className={cls.price} onClick={()=>{props.setPriceActive(false)}}>
-            {props.price[0]}원  ~ {props.price[1]}원 X
+          <div className={cls.common} onClick={()=>{props.setPriceActive(false)}}>
+            {props.price[0]}원  ~ {props.price[1]}원 <span>X</span>
           </div>
         )}
 
         {props.periodActive && (
-          <div className={cls.price} onClick={()=>{props.setPeriodActive(false)}}>
-            {props.period[0]} ~ {props.period[1]} X
+          <div className={cls.common} onClick={()=>{props.setPeriodActive(false)}}>
+            {props.period[0]} ~ {props.period[1]} <span>X</span>
           </div>
         )}
 

@@ -93,7 +93,7 @@ const GymRentalPost = () => {
   };
 
   return (
-    <div className={cls.formBox}>
+    <div className={cls.GymRentalPostLayout}>
       <h2 className={cls.formTitle}>글쓰기</h2>
       <GymImages isLoading={isLoading} setIsLoading={setIsLoading} />
       <form>

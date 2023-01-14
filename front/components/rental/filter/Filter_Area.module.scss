@@ -1,6 +1,5 @@
 .Filter_Area_Layout{
   border-radius: 10px;
-  // display: flex;
   justify-content: center;
 
   >div{
@@ -24,6 +23,7 @@
       border:1px solid black;
       border-collapse: collapse;
       margin-top:-1px;
+      list-style-type: none;
       &:hover{
         background-color: red;
         color:white;
