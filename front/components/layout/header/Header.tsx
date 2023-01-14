@@ -2,7 +2,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 // style
-import cls from "./Header.module.scss";
+import classes from "./Header.module.scss";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -65,9 +65,13 @@ export default function Header() {
 
   return (
     <AppBar position="sticky" style={{ background: "#f1a707" }}>
-      <div className={cls.container}>
-        <Toolbar disableGutters sx={{ height: 100 }} className={cls.toolbar}>
-          <div className={cls.appmenu}>
+      <div className={classes.container}>
+        <Toolbar
+          disableGutters
+          sx={{ height: 100 }}
+          className={classes.toolbar}
+        >
+          <div className={classes.appmenu}>
             <IconButton
               size="large"
               aria-label="account of current user"
