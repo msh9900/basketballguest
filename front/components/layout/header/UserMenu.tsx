@@ -2,7 +2,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
-import cls from "./Header.module.scss";
+import classes from "./Header.module.scss";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 
@@ -16,7 +16,7 @@ interface Props {
 const UserMenu = (props: Props) => {
   return (
     <>
-      <div className={cls.usercircle}>
+      <div className={classes.usercircle}>
         <Tooltip title="Open settings">
           <IconButton onClick={props.handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar alt="Remy Sharp" src="" />

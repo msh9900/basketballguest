@@ -1,15 +1,15 @@
-import SearchIcon from '@mui/icons-material/Search';
-import cls from './Header.module.scss';
+import SearchIcon from "@mui/icons-material/Search";
+import classes from "./Header.module.scss";
 interface Props {
   selectChangeHanlder: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  selectValue:string;
+  selectValue: string;
 }
 
-const MbSearchbar = (props:Props) => {
+const MbSearchbar = (props: Props) => {
   return (
-    <div className={cls.searchMoblieContainer}>
+    <div className={classes.searchMoblieContainer}>
       <select
-        className={cls.select}
+        className={classes.select}
         onChange={props.selectChangeHanlder}
         value={props.selectValue}
       >
@@ -18,10 +18,10 @@ const MbSearchbar = (props:Props) => {
       </select>
       <input
         type="text"
-        className={cls.searchinputbox}
+        className={classes.searchinputbox}
         placeholder="search..."
       />
-      <SearchIcon className={cls.searchIcon} />
+      <SearchIcon className={classes.searchIcon} />
     </div>
   );
 };
