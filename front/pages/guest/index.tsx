@@ -23,6 +23,15 @@ export default function GuestRecruitmentPage() {
       date: "1시간전",
     },
   ];
+  for (let i = 3; i < 100; i++) {
+    data.push({
+      contentidx: i,
+      id: "테스트2",
+      title: "[이태원] 농구 게스트 구합니다",
+      content: "테스트2 입니다",
+      date: "1시간전",
+    });
+  }
 
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
