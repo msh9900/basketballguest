@@ -1,29 +1,10 @@
-
-
-// 기본 넥스트 값
-
-// import Head from 'next/head'
-// import Image from 'next/image'
-
-// export default function Home() {
-//   return (
-//     <>
-//       <Head>
-
-//       </Head>
-      
-//     </>
-//   )
-// }
-
-
-// import classes from "../styles/index.module.scss";
 import classes from "./index.module.scss";
 import Grid from "@mui/material/Grid";
 import Button2 from "../components/Button2";
+import withGetServerSideProps from 'hocs/withServersideProps';
+
 export default function HomePage() {
   return (
-    
     <>
       {/* 메인홈페이지 비디오 타이틀 부분 */}
       <div className={classes.videocontainer}>
@@ -71,7 +52,8 @@ export default function HomePage() {
         <div className={classes.title}>
           <div className={classes.text}>
             경기 참여나 게스트 모집을 원하십니까? <br />
-            BPT에서 경기정보를 찾을 수 있습니다<br />
+            BPT에서 경기정보를 찾을 수 있습니다
+            <br />
           </div>
           <Button2 src="/guest" />
         </div>
@@ -85,7 +67,8 @@ export default function HomePage() {
         <div className={classes.title}>
           <div className={classes.text}>
             체육관 홍보나 대관이 필요하십니까? <br />
-            BPT에서 체육관 정보를 공유할 수 있습니다<br />
+            BPT에서 체육관 정보를 공유할 수 있습니다
+            <br />
           </div>
           <Button2 src="/gym" />
         </div>
@@ -93,3 +76,10 @@ export default function HomePage() {
     </>
   );
 }
+
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+  console.log('asdfasdf');
+	return {
+		props: {},
+	};
+});

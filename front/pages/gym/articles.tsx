@@ -1,4 +1,7 @@
 import DetailArticles from "../../components/rental/detailArticles/DetailArticles";
+// Seo
+import withGetServerSideProps from 'hocs/withServersideProps';
+import Loading from 'components/common/Loading'
 
 const articles = () => {
   return (
@@ -9,3 +12,8 @@ const articles = () => {
 };
 
 export default articles;
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+	return {
+		props: {},
+	};
+});

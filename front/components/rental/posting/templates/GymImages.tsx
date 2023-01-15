@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import cls from '../inputStyle/FileInput.module.scss';
 import { useRouter } from "next/router";
+
 const FormData = require('form-data');
+
+// isloading
 
 interface Props{
   isLoading:boolean;
@@ -76,6 +79,7 @@ const GymImages = (props:Props) => {
     // 썸네일 삭제
     setInputImgs([])
   }
+
   return (
     <div className={cls.GymImagesLayout}>
       <form id='imgForm' encType="multipart/form-data" >

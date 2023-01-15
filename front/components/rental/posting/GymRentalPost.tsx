@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-// component
+//  component
 import GymTitle from './templates/GymTitle';
 import GymContent from './templates/GymContent';
 import GymContact from './templates/GymContact';
@@ -13,14 +13,17 @@ import GymOpeningPeriod from './templates/GymOpeningPeriod';
 import GymOpeningDays from './templates/GymOpeningDays';
 import GymImages from './templates/GymImages';
 import GymPrice from './templates/GymPrice';
+import Loading from 'components/common/Loading';
 
 // util
 import isFormValid from './utils/isFormValid';
 
-
 const GymRentalPost = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+
+  // data for posting
   const stateId = useSelector((state: any) => state.login.userid);
   const cancelPost = () => {
     router.push('/gym');
@@ -52,16 +55,16 @@ const GymRentalPost = () => {
 
   const post = async () => {
     // 텍스트 데이터 유효성 체크
-    const isValid = await isFormValid(
-      title,
-      address,
-      openingHours,
-      openingPeriod,
-    );
-    if (!isValid) {
-      console.log('post : not valid form');
-      return;
-    }
+    // const isValid = await isFormValid(
+    //   title,
+    //   address,
+    //   openingHours,
+    //   openingPeriod,
+    // );
+    // if (!isValid) {
+    //   console.log('post : not valid form');
+    //   return;
+    // }
 
     // 텍스트 데이터 번들 생성
     const textData = {
@@ -92,7 +95,8 @@ const GymRentalPost = () => {
     await setIsLoading(true);
   };
 
-  return (
+  if(isLoading) return <Loading/>
+  else return (
     <div className={cls.GymRentalPostLayout}>
       <h2 className={cls.formTitle}>글쓰기</h2>
       <GymImages isLoading={isLoading} setIsLoading={setIsLoading} />
