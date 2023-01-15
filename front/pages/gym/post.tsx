@@ -1,7 +1,7 @@
 import Posting from '../../components/rental/posting/GymRentalPost'
 // Seo
 import withGetServerSideProps from 'hocs/withServersideProps';
-import Loading from 'components/common/Loading'
+import Loading from 'components/common/loadingModule/Loading'
 
 const post = () => {
   return (

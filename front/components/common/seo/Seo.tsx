@@ -1,40 +1,22 @@
 import Head from 'next/head';
-import Script from 'next/script';
+// import Script from 'next/script';
+import getTitleFromPath from './getTitleFromPath';
+import getDescFromPath from './getDescFromPath';
 
-interface obj {
+interface Props {
   pagePath:string
-  pageTitle:string
-  pageDesc:string
 }
 
-const Seo = ({ pagePath, pageTitle, pageDesc }:obj) => {
-
-  console.log('pagePath : ', pagePath);
-
-	let seoPath; // 배포할 사이트 경로 ex) www.bpt.com
-	let seoTitle;
-	let seoDesc;
-	let appName;
-  const prjTitle = 'BPT'
+const Seo = (props:Props) => {
+  const pagePath = props.pagePath
+  const serviceTitle = 'BPT'
+	
+  // content for metatags
+  let seoPath; // 배포할 사이트 경로 ex) www.bpt.com
+	const seoTitle = getTitleFromPath(pagePath);
+	const seoDesc = getDescFromPath(pagePath);
+	let appName = serviceTitle;
   // const ogImageSrc =	'https://res.cloudinary.com/dtq075vja/image/upload/v1669879703/9gle/ogImage_uki29n.png';
-  
-  // 페이지 경로에 따른 로직 구현 필요 (아래는 예시...)
-	// if (pagePath === undefined && pageTitle === undefined && pageDesc === undefined) {
-	// 	seoPath = process.env.NEXT_PUBLIC_OGURL_URL;
-	// 	seoTitle = `Error`;
-	// 	seoDesc = '에러 페이지';
-	// 	appName = prjTitle
-	// } else {
-	// 	seoPath = process.env.NEXT_PUBLIC_OGURL_URL + pagePath;
-	// 	seoTitle = pageTitle;
-	// 	seoDesc = pageDesc;
-	// 	appName = `${prjTitle} ${pageTitle}`;
-	// }
-  
-  seoPath = process.env.NEXT_PUBLIC_OGURL_URL + pagePath;
-  seoTitle = pageTitle;
-  seoDesc = pageDesc;
-  appName = `${prjTitle} ${pageTitle}`;
 
 	return (
 		<Head>
@@ -43,13 +25,13 @@ const Seo = ({ pagePath, pageTitle, pageDesc }:obj) => {
 			<meta name='description' content={seoDesc} />
 
 			<meta name='application-name' content={appName} />
-			<meta name='msapplication-tooltip' content={prjTitle} />
+			<meta name='msapplication-tooltip' content={serviceTitle} />
 			<meta name='msapplication-starturl' content={seoPath} />
 
-			{/* Open Graph (Naver & Kakao*/}
+			{/* Open Graph (Naver & Kakao */}
 			<meta property='og:title' content={seoTitle} />
-			<meta property='og:site_name' content={prjTitle} />
-			<meta property='og:description' content={pageDesc} />
+			<meta property='og:site_name' content={serviceTitle} />
+			<meta property='og:description' content={seoDesc} />
 			<meta property='og:url' content={seoPath} />
 			<meta property='og:locale' content='en_US' />
 			<meta property='og:locale' content='ko_KR' />
@@ -65,7 +47,7 @@ const Seo = ({ pagePath, pageTitle, pageDesc }:obj) => {
 			<meta name='twitter:url' content={seoPath} />
 			{/* <meta name='twitter:image' content={ogImageSrc} /> */}
 
-			<title> {prjTitle}  {seoTitle}</title>
+			<title> {seoTitle}</title>
 		</Head>
 	);
 };

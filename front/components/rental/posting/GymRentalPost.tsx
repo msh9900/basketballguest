@@ -13,7 +13,7 @@ import GymOpeningPeriod from './templates/GymOpeningPeriod';
 import GymOpeningDays from './templates/GymOpeningDays';
 import GymImages from './templates/GymImages';
 import GymPrice from './templates/GymPrice';
-import Loading from 'components/common/Loading';
+import Loading from 'components/common/loadingModule/Loading';
 
 // util
 import isFormValid from './utils/isFormValid';

@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { useRouter } from "next/router";
 
 import React, { useState, useEffect } from 'react';
-import Button from './Button';
+import Button from '../common/Button';
 import { useDispatch } from 'react-redux';
-import { IsLogin } from '../redux/modules/login';
+import { IsLogin } from '../../redux/modules/login';
 
 export default function LoginForm(props: any) {
   const [id, setId] = useState('');

@@ -5,12 +5,12 @@ import { useState } from 'react';
 
 // style
 import cls from './RegisterForm.module.scss';
-import Button from './Button';
+import Button from '../common/Button';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 
 // state
 import { useDispatch } from 'react-redux';
-import { IsLogin } from '../redux/modules/login';
+import { IsLogin } from '../../redux/modules/login';
 
 
 export default function LoginForm(props: any) {

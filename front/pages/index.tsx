@@ -1,6 +1,6 @@
 import classes from "./index.module.scss";
 import Grid from "@mui/material/Grid";
-import Button2 from "../components/Button2";
+import Button2 from "../components/common/Button2";
 import withGetServerSideProps from 'hocs/withServersideProps';
 
 export default function HomePage() {

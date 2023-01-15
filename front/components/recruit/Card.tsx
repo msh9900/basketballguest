@@ -8,7 +8,7 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-import MenuList from "../components/MenuList";
+import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
 
 export default function RecipeReviewCard(props: any) {

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Card from "../../components/Card";
+import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from "@mui/material/Modal";
-import WriteModal from "../../components/WriteModal";
+import WriteModal from "../../components/recruit/WriteModal";
 export default function GuestRecruitmentPage() {
   //임시 데이터 카드
   const data = [

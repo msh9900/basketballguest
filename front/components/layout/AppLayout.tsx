@@ -1,6 +1,6 @@
-// import classes from "./App.module.scss";
+
 import classes from "pages/App.module.scss";
-import Footer from "components/layout/Footer";
+import Footer from "components/layout/footer/Footer";
 import Header from "components/layout/header/Header";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
