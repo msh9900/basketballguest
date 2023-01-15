@@ -1,28 +1,30 @@
 // react
-import Link from 'next/link'
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 
 // style
-import cls from './RegisterForm.module.scss';
-import Button from './Button';
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import cls from "./RegisterForm.module.scss";
+import Button from "./Button";
+import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 
 // state
-import { useDispatch } from 'react-redux';
-import { IsLogin } from '../redux/modules/login';
-
+import { useDispatch } from "react-redux";
+import { IsLogin } from "../redux/modules/login";
 
 export default function LoginForm(props: any) {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
-  const [email, setEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  // const [isValid, setIsValid] = useState(false);
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
+  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [isValid, setIsValid] = useState(false);
   // const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
+
+  useEffect(() => {});
+
   const handleId = (e: any) => {
     setId(e.target.value);
   };
@@ -41,9 +43,9 @@ export default function LoginForm(props: any) {
 
   const registerFormHandler = async (event: any) => {
     event.preventDefault();
-    const response = await fetch('http://localhost:4000/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("http://localhost:4000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id: id,
         pw: pw,
@@ -54,15 +56,15 @@ export default function LoginForm(props: any) {
     const data = await response.json();
     console.log(data);
     try {
-      if (data.msg === '회원가입 완료') {
-        alert('회원 가입성공');
+      if (data.msg === "회원가입 완료") {
+        alert("회원 가입성공");
         dispatch(IsLogin(data));
-        router.push('/login');
+        router.push("/login");
       } else {
-        alert('중복된 회원 존재');
+        alert("중복된 회원 존재");
       }
     } catch {
-      throw new Error('통신 에러');
+      throw new Error("통신 에러");
     }
   };
 
