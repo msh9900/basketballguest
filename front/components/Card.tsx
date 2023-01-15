@@ -1,38 +1,38 @@
-import * as React from 'react';
-import classes from './Card.module.scss';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import classes from "./Card.module.scss";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
 
-import MenuList from '../components/MenuList';
-import MainComment from './comment/MainComment';
+import MenuList from "../components/MenuList";
+import MainComment from "./comment/MainComment";
 
 export default function RecipeReviewCard(props: any) {
   //임시 데이터 댓글
   const data = [
     {
       commentidx: 1,
-      id: 'test1',
-      content: '안녕하세요 게스트 구하려고 하는데 몇명정도 구하시나요',
+      id: "test1",
+      content: "안녕하세요 게스트 구하려고 하는데 몇명정도 구하시나요",
     },
     {
       commentidx: 2,
-      id: 'test2',
-      content: 'test2 댓글 입니다',
+      id: "test2",
+      content: "test2 댓글 입니다",
     },
     {
       commentidx: 3,
-      id: 'test3',
-      content: 'test3 댓글 입니다',
+      id: "test3",
+      content: "test3 댓글 입니다",
     },
   ];
   const [commentMore, setCommentMore] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
-  const [writeComment, setWriteComment] = React.useState('');
+  const [writeComment, setWriteComment] = React.useState("");
   const [cardClick, setCardClick] = React.useState(false);
   // 줄 수를 계산해서 저장할 변수
   const [textareaHeight, setTextareaHeight] = React.useState(0);
@@ -40,7 +40,7 @@ export default function RecipeReviewCard(props: any) {
   // 사용자 입력 값이 변경될 때마다 checkItemContent에 저장하고
   // 엔터('\n') 개수를 세서 textareaHeight에 저장
   const checkItemChangeHandler = (event: any) => {
-    setTextareaHeight(event.target.value.split('\n').length - 1);
+    setTextareaHeight(event.target.value.split("\n").length - 1);
     setWriteComment(event.target.value);
   };
   const commentSubmitHandler = () => {
@@ -67,7 +67,11 @@ export default function RecipeReviewCard(props: any) {
       {cardClick && (
         <Card className={classes.textContent} variant="outlined">
           <CardHeader
-            avatar={<Avatar aria-label="recipe">R</Avatar>}
+            avatar={
+              <Avatar aria-label="recipe" src="">
+                R
+              </Avatar>
+            }
             action={<MenuList idx={props.data.contentidx} />}
             title={props.data.id}
             subheader={props.data.date}
@@ -83,17 +87,19 @@ export default function RecipeReviewCard(props: any) {
             <CardMedia
               component="img"
               height="194"
-              image="/static/images/cards/paella.jpg"
+              image=""
               alt="사진 이미지"
             />
           )}
           <div className={classes.comment}>
-            <Avatar aria-label="recipe">R</Avatar>
+            <Avatar aria-label="recipe" src="">
+              R
+            </Avatar>
             <textarea
               className={classes.comment_input}
               placeholder="댓글을 입력해주세요"
               onChange={checkItemChangeHandler}
-              style={{ height: 50 + textareaHeight * 24 + 'px' }}
+              style={{ height: 50 + textareaHeight * 24 + "px" }}
             />
             <div
               className={classes.comment_submit}
@@ -118,7 +124,7 @@ export default function RecipeReviewCard(props: any) {
                 if (val.commentidx !== 1) {
                   return <MainComment key={val.commentidx} data={val} />;
                 } else {
-                  return '';
+                  return "";
                 }
               })}
             </CardContent>

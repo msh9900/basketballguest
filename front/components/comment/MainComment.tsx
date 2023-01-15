@@ -9,7 +9,7 @@ export default function MainComment(props: any) {
   return (
     <div className={classes.maincontainer}>
       <div className={classes.container}>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        <Avatar alt="Remy Sharp" src="" />
         <div className={classes.content_container}>
           <div className={classes.id}>{props.data.id}</div>
           <div className={classes.content}>{props.data.content}</div>

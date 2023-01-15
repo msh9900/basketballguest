@@ -30,7 +30,6 @@ export default function App({ Component, pageProps }: AppProps) {
       setFooterDel(false);
     }
   }, [router.pathname]);
-  console.log(router.pathname);
   return (
     <>
       <Provider store={store}>
