@@ -3,12 +3,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
-const FormData = require("form-data");
 
-let formData = new FormData();
+let formData: any = new FormData();
 
 export default function Profile() {
-  const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -22,10 +20,18 @@ export default function Profile() {
   const [userName, setUserName] = useState<string>("");
   const [userImg, setUserImg] = useState<any>("");
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
+
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (pw === pw2) {
+    if (
+      pw === pw2 &&
+      pw.match(
+        /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{4,}$/
+      )
+    ) {
       setIsValid(true);
     } else {
       setIsValid(false);
@@ -61,11 +67,16 @@ export default function Profile() {
 
   async function profileSumbit(event: any) {
     event.preventDefault();
+    setIsRecentSubmitted(true);
+
     formData.append("id", JSON.stringify(stateId));
     formData.append("pw", JSON.stringify(pw));
     formData.append("email", JSON.stringify(email));
     formData.append("userName", JSON.stringify(userName));
     formData.append("userImg", JSON.stringify(userImg));
+    if (isValid === false) {
+      return;
+    }
     const response = await fetch("http://localhost:4000/profile/userdata", {
       method: "POST",
       body: formData,
@@ -100,8 +111,8 @@ export default function Profile() {
 
   return (
     <form onSubmit={profileSumbit} className={classes.profile}>
-      <p className={classes.header}>개인정보</p>
-      <p className={classes.imgtitle}>프로필사진</p>
+      <p className={classes.headertitle}>Profile</p>
+      {/* <p className={classes.imgtitle}>프로필사진</p> */}
       <div className={classes.img}>
         <label htmlFor="asdf" className={classes.imglabel}>
           프로필 사진 넣기
@@ -136,7 +147,7 @@ export default function Profile() {
       </div>
 
       <div className={classes.profileForm}>
-        <div className={classes.profileTitle}>유저 정보</div>
+        <p className={classes.profileTitle}>유저 정보</p>
         <p>아이디</p>
         <input type="text" defaultValue={stateId} disabled />
         <p>비밀번호 변경</p>
@@ -145,6 +156,9 @@ export default function Profile() {
           value={pw}
           onChange={InputPasswordHandler}
           autoComplete="off"
+          onClick={() => {
+            setIsRecentSubmitted(false);
+          }}
         />
         <p>비밀번호 재확인</p>
         <input
@@ -153,10 +167,19 @@ export default function Profile() {
           onChange={InputPasswordHandler2}
           autoComplete="off"
         />
+        {!isValid && pw.length > 1 && (
+          <p className={classes.invalid}>PW가 일치하지 않습니다.</p>
+        )}
         <p>이메일</p>
         <input type="email" value={email} onChange={InputEmailHandler} />
         <p>이름</p>
         <input type="text" value={userName} onChange={InputNameHandler} />
+        {!isValid && isRecentSubmitted && (
+          <p className={classes.invalid}>
+            PW는 영문, 숫자, 특수문자 중 2가지 이상 조합하여 4자리 이상이여야
+            합니다.
+          </p>
+        )}
         <button
           type="submit"
           className={classes.button}
