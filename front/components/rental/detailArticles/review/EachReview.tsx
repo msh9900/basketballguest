@@ -1,4 +1,3 @@
-import { stringify } from 'querystring';
 import cls from './EachReview.module.scss';
 
 const dummyReviews = [

@@ -1,0 +1,61 @@
+.EachCommentLayout {
+  span{margin-left:5px;}
+  button {cursor: pointer;}
+  .originalComment {
+
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+    margin-top: -1px;
+
+    .creater{
+      button{
+        color:red; 
+        font-weight: bold;
+      }
+    }
+
+    .buttonSection {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        margin: 5px;
+      }
+    }
+  }
+
+  .replyLayout {
+    padding:10px;
+    border:1px solid black;
+    margin-top:-1px;
+    background-color: whitesmoke;
+
+    .creater{
+      button{
+        color:red; 
+        font-weight: bold;
+      }
+    }
+
+    .replybuttonSection{
+      display:flex;
+      justify-content: flex-end;
+      button {
+        margin: 5px;
+      }
+    }
+  }
+  .ReplyButtonOnOff{
+    button{
+      margin-bottom:15px;
+      font-weight: bold;
+      color: blue;
+    }
+    text-align: right;
+  }
+}
+
+.time{
+  color:gray;
+  font-size:13px;
+}

@@ -1,6 +1,7 @@
 import cls from './DetailArticles.module.scss';
 import SlickSlider from './SlickSlider';
-import ReviewSection from './ReviewSection';
+import ReviewSection from './review/ReviewSection';
+import CommentSection from './comment/CommentSection';
 import { useEffect } from 'react';
 
 const DetailArticles = () => {
@@ -127,8 +128,7 @@ const DetailArticles = () => {
 
         <h1>댓글</h1>
         <div className={cls.contentBox}>
-          <div className={cls.mainContent}>댓글</div>
-          <div className={cls.mainContent}>댓글</div>
+          <CommentSection/>
         </div>
 
       </div>
