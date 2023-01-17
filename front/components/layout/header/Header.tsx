@@ -61,6 +61,7 @@ export default function Header() {
 
   const logoutHandler = () => {
     dispatch(IsLogout());
+    router.push("/");
   };
 
   return (
