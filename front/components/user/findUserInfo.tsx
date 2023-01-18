@@ -1,13 +1,23 @@
-import cls from "./findUserId.module.scss";
+import cls from "./findUserInfo.module.scss";
 import Link from "next/link";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-const findUserId = () => {
+const findUserInfo = () => {
 
   const [email, setEmail] = useState("");
+  const [searchTarget, setSearchTarget] = useState("");
   const router = useRouter()
+
+  useEffect(() => {
+    if(router.asPath == '/findUserPw'){
+      setSearchTarget('비밀번호')
+    }
+    if(router.asPath == '/findUserId'){
+      setSearchTarget('아이디')
+    }
+  }, [router.asPath]);
 
   const onChange = (e: any) => {
     setEmail(e.target.value);
@@ -35,7 +45,7 @@ const findUserId = () => {
         </div>
 
         <div className={cls.login}>
-          <p>이메일 계정을 통해 등록한 아이디를 찾아보세요</p>
+          <p>이메일 계정을 통해 등록한 <b>{searchTarget}</b>를 찾아보세요</p>
           <input
             type="text"
             className={cls.email}
@@ -53,4 +63,4 @@ const findUserId = () => {
   );
 };
 
-export default findUserId;
+export default findUserInfo;

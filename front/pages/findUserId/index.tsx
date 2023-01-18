@@ -1,4 +1,4 @@
-import Comp from 'components/user/findUserId'
+import Comp from 'components/user/findUserInfo'
 
 const findUserId = () => {
   return (

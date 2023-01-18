@@ -1,4 +1,4 @@
-import Comp from '../../components/user/findUserPw';
+import Comp from '../../components/user/findUserInfo';
 
 const findUserPw = () => {
   return (
