@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 // style
 import classes from "./Header.module.scss";
 // mui
@@ -22,6 +23,7 @@ export default function Header() {
   const loginState = useSelector((state: any) => state.login.isLogin);
 
   const router = useRouter();
+  const [cookie, setCookie, removeCookie] = useCookies(["login"]);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -61,6 +63,7 @@ export default function Header() {
 
   const logoutHandler = () => {
     dispatch(IsLogout());
+    removeCookie("login");
     router.push("/");
   };
 

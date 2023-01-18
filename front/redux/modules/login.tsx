@@ -20,8 +20,6 @@ const AuthSlice = createSlice({
       state.userImg = action.payload.userImg;
       state.userName = action.payload.userName;
       state.isLogin = true;
-      const userString = JSON.stringify(AuthSlice);
-      window.localStorage.setItem("user", userString);
     },
     IsLogout: (state) => {
       state.userId = "";
@@ -29,7 +27,6 @@ const AuthSlice = createSlice({
       state.userImg = "";
       state.userName = "";
       state.isLogin = false;
-      window.localStorage.removeItem("user");
     },
   },
 });
