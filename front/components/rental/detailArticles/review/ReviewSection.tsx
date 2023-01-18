@@ -20,6 +20,10 @@ const ReviewSection = () => {
           />
         }
       </div>
+      <div className={cls.reviewInfo}>
+         <p>리뷰 평균 점수 : </p>
+         <p>전체 리뷰 개수 : </p>
+      </div>
       <EachReview/>
       <div className={cls.moreReviewBtn}>
         <button>더불러오기...</button>
@@ -29,4 +33,3 @@ const ReviewSection = () => {
 };
 
 export default ReviewSection;
-

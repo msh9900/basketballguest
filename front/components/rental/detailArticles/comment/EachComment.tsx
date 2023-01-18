@@ -1,21 +1,19 @@
+// style
 import cls from "./EachComment.module.scss";
-import { useState } from "react";
-
-// interface commentType {
-//   id: string;
-//   userName: string;
-//   date: string;
-//   contents: string;
-//   isCreater: boolean;
-//   replys: replyType
-// }
+// library
+import { useState, useEffect } from "react";
+import Image from "next/image";
+// component
+import EachReply from "./EachReply";
+import PostReplyForm from "./PostReplyForm";
 
 interface replyType {
-  id: string,
-  userName: string,
-  date: string,
-  contents: string,
-  isCreater:boolean
+  id: string;
+  to: string;
+  userName: string;
+  date: string;
+  contents: string;
+  isCreater: boolean;
 }
 
 interface Props {
@@ -24,89 +22,129 @@ interface Props {
   date: string;
   contents: string;
   isCreater: boolean;
-  replys: replyType[]
+  replys: replyType[];
 }
 
-const calcMargin = (idx: number) => {
-  const maxDepth = 10;
-  return (idx % maxDepth) * 10;
-};
-
 const EachComment = (v: Props) => {
-  const [isReplyFold, setIsReplyFold] = useState(true);
+  const [replyToggle, setReplyToggle] = useState(true);
+  const [isPostReplyFormOpen, setIsPostReplyFormOpen] = useState(false);
+  const [toInfo, setToInfo] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+
+  const setReplyList = () => {
+    setReplyToggle((prev) => !prev);
+  };
+
+  const ReplyPostFormToggle = (userName: string) => {
+    if (toInfo === userName) {
+      setIsPostReplyFormOpen((prev) => !prev);
+    }
+    setToInfo(userName);
+  };
 
   return (
     <div className={cls.EachCommentLayout} key={Math.random()}>
-      <div className={cls.originalComment}>
-        <div className={v.isCreater === true ? cls.creater : "xxx"}>
-          <button>{v.userName}</button>
-          <span className={cls.time}>{v.date}</span>
-        </div>
-        <div>{v.contents}</div>
-        <div className={cls.buttonSection}>
-          <div>
-            <button>답글</button>
-          </div>
-          <div>
-            <button>수정</button>
-          </div>
-          <div>
-            <button>삭제</button>
-          </div>
-        </div>
-      </div>
-
-      {isReplyFold ? (
-        <>
-          {(v.replys).length > 0 && (
-          <div className={cls.ReplyButtonOnOff}>
-            <button 
-              onClick={() => {
-                setIsReplyFold(false);
-              }}
-            >
-              답글 목록 열기
+      
+      {isEditing && (
+        <div className={cls.originCommentEditForm}>
+          <div><textarea></textarea></div>
+          <div className={cls.btnArea}>
+            <button className={cls.cancelBtn} onClick={() => {setIsEditing(false)}}>
+              x
+            </button>
+            <button className={cls.submitBtn}>
+              <Image src='/images/rental/submit.png' alt='submit' width="20" height="20"/>
             </button>
           </div>
+        </div>
+      )}
+      {!isEditing && (
+        <div className={cls.originalComment} id={v.id}>
+          <div className={cls.topSection}>
+            <div className={cls.topLeft}>{v.contents}</div>
+            <div className={cls.topRight}></div>
+          </div>
 
-          )}
-        </>
-      ) : (
-        <>
-          {(v.replys).map((x, idx) => {
-            return (
-              <div className={cls.replyLayout} key={Math.random()} style={{}}>
-                <div style={{ marginLeft: calcMargin(idx) }}>
-                  <div className={x.isCreater === true ? cls.creater : "xxx"}>
-                    ㄴ<button>{x.userName}</button>
-                    <span className={cls.time}>{x.date}</span>
-                  </div>
-                  <div>{x.contents}</div>
-                  <div className={cls.replybuttonSection}>
-                    <div>
-                      <button>답글</button>
-                    </div>
-                    <div>
-                      <button>수정</button>
-                    </div>
-                    <div>
-                      <button>삭제</button>
-                    </div>
-                  </div>
+          <div className={cls.bottomSection}>
+            {/* L */}
+            <div className={cls.bottomLeft}>
+              <div className={v.isCreater === true ? cls.creater : "vvv"}>
+                <button className={cls.userName}>{v.userName}</button>
+                <span className={cls.time}>{v.date}</span>
+              </div>
+            </div>
+
+            {/* R */}
+            <div className={cls.bottomRight}>
+
+              <button
+                onClick={() => {
+                  setIsEditing(true);
+                }}
+              >
+                <Image
+                  src="/images/rental/comment/pencil.png"
+                  alt="댓글 수정"
+                  width="20"
+                  height="20"
+                />
+              </button>
+              <button>
+                <Image
+                  src="/images/rental/comment/bin.png"
+                  alt="댓글 삭제"
+                  width="20"
+                  height="20"
+                />
+              </button>
+              {v.replys.length > 0 && (
+                <div className={cls.ReplyButtonOnOff}>
+                  <button onClick={setReplyList}>
+                    <Image
+                      src="/images/rental/comment/list.png"
+                      alt="답글 목록"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
                 </div>
+              )}
+              <button onClick={() => {ReplyPostFormToggle(v.userName)}}>
+                <Image
+                  src="/images/rental/comment/down-right.png"
+                  alt="답글 작성"
+                  width="20"
+                  height="20"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {replyToggle && (
+        <>
+          {v.replys.map((x, idx) => {
+            return (
+              <div key={Math.random()}>
+                <EachReply
+                  x={x}
+                  idx={idx}
+                  isPostReplyFormOpen={isPostReplyFormOpen}
+                  setIsPostReplyFormOpen={setIsPostReplyFormOpen}
+                  toInfo={toInfo}
+                  setToInfo={setToInfo}
+                />
               </div>
             );
           })}
-          <div className={cls.ReplyButtonOnOff}>
-            <button 
-              onClick={() => {
-                setIsReplyFold(true);
-              }}
-            >
-              답글 목록 접기
-            </button>
-          </div>
         </>
+      )}
+      {isPostReplyFormOpen && (
+        <PostReplyForm
+          setIsPostReplyFormOpen={setIsPostReplyFormOpen}
+          toInfo={toInfo}
+        />
       )}
     </div>
   );

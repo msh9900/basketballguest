@@ -1,10 +1,20 @@
 .ReviewSectionLayout {
+
   margin: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 5px;
   background-color: white;
 
+  .reviewInfo{
+    margin:10px;
+    padding:10px;
+    border:solid 1px black;
+    p{
+      font-size:14px;
+      font-weight: bold;
+    }
+  }
   .postReviewBtn {
     // background-color:red;
     text-align: right;

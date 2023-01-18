@@ -13,6 +13,7 @@ const Seo = (props:Props) => {
 	
   // content for metatags
   let seoPath; // 배포할 사이트 경로 ex) www.bpt.com
+  
 	const seoTitle = getTitleFromPath(pagePath);
 	const seoDesc = getDescFromPath(pagePath);
 	let appName = serviceTitle;
@@ -47,7 +48,7 @@ const Seo = (props:Props) => {
 			<meta name='twitter:url' content={seoPath} />
 			{/* <meta name='twitter:image' content={ogImageSrc} /> */}
 
-			<title> {seoTitle}</title>
+			<title>{serviceTitle} : {seoTitle}</title>
 		</Head>
 	);
 };

@@ -54,10 +54,7 @@ const EachReview = () => {
           <div className={cls.detailInfos}>
             <div>{e.createdDate}</div>
             <div>{e.contents}</div>
-            <div>{e.ratings}점</div>
-            <div>
-              {renderStars(e.ratings)}
-            </div>
+            <div>{renderStars(e.ratings)}</div>
           </div>
         </div>
       ))}
