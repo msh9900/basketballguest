@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import React, { useState, useEffect } from "react";
 import Button from "../common/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
 export default function LoginForm(props: any) {
@@ -57,13 +57,21 @@ export default function LoginForm(props: any) {
       if (data.msg === "로그인 실패") {
         alert("아이디나 패스워드를 확인해주세요");
       } else {
-        setCookie("login", id, { path: "/" });
+        setCookie("login", JSON.stringify(data), { path: "/" });
         alert("로그인성공");
         router.push("/");
         dispatch(IsLogin(data));
       }
     } catch {
       throw new Error("통신 에러");
+    }
+  };
+  const findUserInfo = (e: any) => {
+    if (e.target.id === "id") {
+      router.push("/findUserId");
+    }
+    if (e.target.id === "pw") {
+      router.push("/findUserPw");
     }
   };
 
@@ -104,6 +112,22 @@ export default function LoginForm(props: any) {
           )}
 
           <Button type="submit">로그인</Button>
+          <div className={classes.buttons}>
+            <div
+              id="id"
+              className={classes.findUserInfoBtn}
+              onClick={findUserInfo}
+            >
+              아이디 찾기
+            </div>
+            <div
+              id="pw"
+              className={classes.findUserInfoBtn}
+              onClick={findUserInfo}
+            >
+              비밀번호 찾기
+            </div>
+          </div>
           <Link href="/register" className={classes.register}>
             <p>회원가입</p>
           </Link>
