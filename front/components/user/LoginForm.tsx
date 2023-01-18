@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '../common/Button';
 import { useDispatch } from 'react-redux';
 import { IsLogin } from '../../redux/modules/login';
+import { clearScreenDown } from 'readline';
 
 export default function LoginForm(props: any) {
   const [id, setId] = useState('');
@@ -16,7 +17,6 @@ export default function LoginForm(props: any) {
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
   const router = useRouter();
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,6 +66,15 @@ export default function LoginForm(props: any) {
     }
   };
 
+  const findUserInfo = (e:any) => {
+    if(e.target.id === 'id'){
+      router.push('/findUserId')
+    }
+    if(e.target.id === 'pw'){
+      router.push('/findUserPw')
+    }
+  }
+
   return (
     <>
       <form onSubmit={loginFormHandler} className={classes.loginForm}>
@@ -103,9 +112,14 @@ export default function LoginForm(props: any) {
           )}
 
           <Button type="submit">로그인</Button>
+          <div className={classes.buttons}>
+            <div id='id' className={classes.findUserInfoBtn} onClick={findUserInfo}>아이디 찾기</div>
+            <div id='pw' className={classes.findUserInfoBtn} onClick={findUserInfo}>비밀번호 찾기</div>
+          </div>
           <Link href="/register" className={classes.register}>
             <p>회원가입</p>
           </Link>
+
         </div>
       </form>
     </>
