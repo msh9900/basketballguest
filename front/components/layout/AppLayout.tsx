@@ -12,10 +12,12 @@ const AppLayout = ({ children }: any) => {
   console.log(cookie);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (cookie !== undefined) {
+    if (cookie.login !== undefined) {
       try {
         dispatch(IsLogin(cookie.login));
-      } catch (error) {}
+      } catch (error) {
+        throw new Error("쿠키 에러");
+      }
     }
   }, [cookie]);
 
