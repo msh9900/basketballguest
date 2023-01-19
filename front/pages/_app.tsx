@@ -14,8 +14,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const { pagePath } = pageProps;
 
   return (
-    <Provider store={store}>
-      <CookiesProvider>
+    <CookiesProvider>
+      <Provider store={store}>
         <Suspense fallback={<Loading />}>
           <Seo pagePath={pagePath} />
           <CssBaseline />
@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </AppLayout>
         </Suspense>
-      </CookiesProvider>
-    </Provider>
+      </Provider>
+    </CookiesProvider>
   );
 }

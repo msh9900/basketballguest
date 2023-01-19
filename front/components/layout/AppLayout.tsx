@@ -5,18 +5,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { IsLogin } from "redux/modules/login";
+import { IsLogin, IsLogout } from "redux/modules/login";
 
 const AppLayout = ({ children }: any) => {
-  const [cookie, setCookie, removeCookie] = useCookies<any>(["cookieText"]);
+  const [cookie, setCookie, removeCookie] = useCookies<any>();
+  console.log(cookie);
   const dispatch = useDispatch();
   useEffect(() => {
     if (cookie !== undefined) {
-      try {
-        dispatch(IsLogin(cookie.login));
-      } catch {
-        throw new Error("쿠키 에러");
-      }
+      // dispatch(IsLogin(cookie.login));
+    } else {
+      dispatch(IsLogin(" "));
     }
   }, [cookie]);
 
