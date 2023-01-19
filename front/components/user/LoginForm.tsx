@@ -57,7 +57,7 @@ export default function LoginForm(props: any) {
       if (data.msg === "로그인 실패") {
         alert("아이디나 패스워드를 확인해주세요");
       } else {
-        setCookie("login", JSON.stringify(data), { path: "/" });
+        setCookie("login", JSON.stringify(data));
         alert("로그인성공");
         router.push("/");
         dispatch(IsLogin(data));

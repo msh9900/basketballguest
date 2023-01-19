@@ -13,7 +13,9 @@ const AppLayout = ({ children }: any) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (cookie !== undefined) {
-      // dispatch(IsLogin(cookie.login));
+      try {
+        dispatch(IsLogin(cookie.login));
+      } catch (error) {}
     } else {
       dispatch(IsLogin(" "));
     }
