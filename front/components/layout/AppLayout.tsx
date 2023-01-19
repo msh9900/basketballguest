@@ -1,11 +1,25 @@
-
 import classes from "pages/App.module.scss";
 import Footer from "components/layout/footer/Footer";
 import Header from "components/layout/header/Header";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { IsLogin, IsLogout } from "redux/modules/login";
 
-const AppLayout = ({ children }:any) => {
+const AppLayout = ({ children }: any) => {
+  const [cookie, setCookie, removeCookie] = useCookies<any>();
+  console.log(cookie);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (cookie.login !== undefined) {
+      try {
+        dispatch(IsLogin(cookie.login));
+      } catch (error) {
+        throw new Error("쿠키 에러");
+      }
+    }
+  }, [cookie]);
 
   const router = useRouter();
 
