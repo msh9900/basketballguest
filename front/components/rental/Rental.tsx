@@ -5,10 +5,10 @@ import { useRouter } from 'next/router'
 // style
 import cls from './Rental.module.scss';
 // component
-import AllArticles from './allArticles/AllArticles';
-import Filter from './filter/Filter';
-import Order from './order/Order';
-import Search from './search/Search';
+import AllArticles from './mainArticles/AllArticles';
+import Filter from './mainArticles/filter/Filter';
+import Order from './mainArticles/order/Order';
+import Search from './mainArticles/search/Search';
 
 const Rental = () => {
   const [searchRes, setSearchRes] = useState('');
