@@ -1,10 +1,9 @@
-import Rental from '../../components/rental/Rental'
-// Seo
+import Gym from '../../components/gym/Gym'
 import withGetServerSideProps from 'hocs/withServersideProps';
 
 export default function Index() {
   return (
-    <Rental/>
+    <Gym/>
   ); 
 }
 

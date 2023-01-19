@@ -3,7 +3,7 @@ import { useState} from 'react';
 import { useRouter } from 'next/router'
 
 // style
-import cls from './Rental.module.scss';
+import cls from './Gym.module.scss';
 // component
 import AllArticles from './mainArticles/AllArticles';
 import Filter from './mainArticles/filter/Filter';

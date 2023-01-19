@@ -1,4 +1,4 @@
-import Posting from '../../components/rental/posting/GymRentalPost'
+import Posting from 'components/gym/posting/GymRentalPost'
 // Seo
 import withGetServerSideProps from 'hocs/withServersideProps';
 import Loading from 'components/common/loadingModule/Loading'
