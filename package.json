@@ -5,9 +5,10 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix back\" \"npm run dev --prefix front\"",
+    "0":"npm install",
     "1":"cd front && npm install",
     "2":"cd back && npm install",
     "3":"cd jsonServer && npm install",
-    "down":"npm-run-all 1 2 3"
+    "install-all":"npm-run-all 0 1 2 3"
   }
 }
