@@ -16,8 +16,6 @@ const AppLayout = ({ children }: any) => {
       try {
         dispatch(IsLogin(cookie.login));
       } catch (error) {}
-    } else {
-      dispatch(IsLogin(" "));
     }
   }, [cookie]);
 
