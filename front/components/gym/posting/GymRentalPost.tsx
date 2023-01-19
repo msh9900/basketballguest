@@ -55,12 +55,7 @@ const GymRentalPost = () => {
 
   const post = async () => {
     // 텍스트 데이터 유효성 체크
-    // const isValid = await isFormValid(
-    //   title,
-    //   address,
-    //   openingHours,
-    //   openingPeriod,
-    // );
+    // const isValid = await isFormValid(title, address, openingHours, openingPeriod,);
     // if (!isValid) {
     //   console.log('post : not valid form');
     //   return;

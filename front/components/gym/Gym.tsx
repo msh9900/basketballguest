@@ -1,5 +1,5 @@
 // library
-import { useState} from 'react';
+import { useState, useCallback} from 'react';
 import { useRouter } from 'next/router'
 
 // style
@@ -11,13 +11,12 @@ import Order from './mainArticles/order/Order';
 import Search from './mainArticles/search/Search';
 
 const Rental = () => {
-  const [searchRes, setSearchRes] = useState('');
   const router = useRouter()
+  const [searchRes, setSearchRes] = useState('');
   const [orderStatus, setOrderStatus] = useState({
     ispriceOrderOn: false,
     isdistanceOrderOn: false,
   })
-
   const [filterStatus, setFilterStatus] = useState({
     activeAreas: [],
     priceRange: [],
@@ -26,9 +25,9 @@ const Rental = () => {
     isperiodActive: false
   })
 
-  const goToPosting = () => {
+  const goToPosting = useCallback(() => {
     router.push('/gym/post')
-  }
+  }, []);
 
   return (
     <>

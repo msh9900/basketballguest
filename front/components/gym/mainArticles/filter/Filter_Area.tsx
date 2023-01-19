@@ -21,44 +21,66 @@ const FilterArea = (props:Props) => {
     else return cls.off
   }
 
+  const areas = {
+    special:['서울', '세종','제주'],
+    Metropolitan:['부산', '대구','대전','인천','광주','울산'],
+    provinces:['강원','경기','충북','충남','전북','전남','경북','경남'],
+  }
+
   return (
     <>
       <div className={cls.Filter_Area_Layout}>
         <div>
+
           <div>
             <h4 className={cls.center}>특별</h4>
             <ul>
-              <li id='서울' className={isOn('서울')} onClick={listClick}>서울</li>
-              <li id='세종' className={isOn('세종')} onClick={listClick}>세종</li>
-              <li id='제주' className={isOn('제주')} onClick={listClick}>제주</li>
+              {areas.special.map((ele, idx) => {
+                return (
+                  <li 
+                    id={ele}
+                    key={idx + ele} 
+                    className={isOn(ele)} 
+                    onClick={listClick}>{ele}
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
           <div>
-          <h4 className={cls.center}>광역시</h4>
+            <h4 className={cls.center}>광역시</h4>
             <ul>
-              <li id='부산' className={isOn('부산')} onClick={listClick}>부산</li>
-              <li id='대구' className={isOn('대구')} onClick={listClick}>대구</li>
-              <li id='대전' className={isOn('대전')} onClick={listClick}>대전</li>
-              <li id='인천' className={isOn('인천')} onClick={listClick}>인천</li>
-              <li id='광주' className={isOn('광주')} onClick={listClick}>광주</li>
-              <li id='울산' className={isOn('울산')} onClick={listClick}>울산</li>
+              {areas.Metropolitan.map((ele, idx) => {
+                return (
+                  <li 
+                    id={ele}
+                    key={idx + ele} 
+                    className={isOn(ele)} 
+                    onClick={listClick}>{ele}
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
           <div>
             <h4 className={cls.center}>팔도</h4>
             <ul>
-              <li id='강원' className={isOn('강원')} onClick={listClick}>강원</li>
-              <li id='경기' className={isOn('경기')} onClick={listClick}>경기</li>
-              <li id='충남' className={isOn('충남')} onClick={listClick}>충남</li>
-              <li id='충북' className={isOn('충북')} onClick={listClick}>충북</li>
-              <li id='전북' className={isOn('전북')} onClick={listClick}>전북</li>
-              <li id='전남' className={isOn('전남')} onClick={listClick}>전남</li>
-              <li id='경북' className={isOn('경북')} onClick={listClick}>경북</li>
-              <li id='경남' className={isOn('경남')} onClick={listClick}>경남</li>
+              {areas.provinces.map((ele, idx) => {
+                return (
+                  <li 
+                    id={ele} 
+                    key={idx + ele} 
+                    className={isOn(ele)} 
+                    onClick={listClick}>{ele}
+                  </li>
+                )
+              })}
             </ul>
           </div>
+
+
         </div>
       </div>
     </>
