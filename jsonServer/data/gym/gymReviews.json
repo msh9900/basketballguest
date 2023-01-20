@@ -1,0 +1,48 @@
+[
+  {
+    "id": "63ca4e30b490c407dca5482a",
+    "body": [
+      {
+        "userName": "Andrew",
+        "profileImg": "A",
+        "createdDate": "2023-10-10",
+        "contents": "비싼 값 합니다.",
+        "ratings": "3.5"
+      },
+      {
+        "userName": "Brian",
+        "profileImg": "B",
+        "createdDate": "2023-10-10",
+        "contents": "가기도 나쁘고 별로였습니다.",
+        "ratings": "2"
+      },
+      {
+        "userName": "Chris",
+        "profileImg": "C",
+        "createdDate": "2023-10-10",
+        "contents": "좋은 곳입니다",
+        "ratings": "5"
+      }
+    ]
+  },
+  {
+    "id": "63ca4e30f0c21f9b1188717f",
+    "body": []
+  },
+  {
+    "id": "63ca4e30e1298a4aa0fdf348",
+    "body": []
+  },
+  {
+    "id": "63ca4e30c7aeba7d9b564a43",
+    "body": []
+  },
+  {
+    "id": "63ca4e30d5ab88462439a7f9",
+    "body": []
+  },
+  {
+    "id": "63ca4e30de075e3c4d457a56",
+    "body": []
+  }
+]
