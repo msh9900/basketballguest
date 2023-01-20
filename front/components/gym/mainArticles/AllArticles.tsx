@@ -1,5 +1,6 @@
 import cls from "./AllArticles.module.scss";
 import { useRouter } from 'next/router'
+import Link from 'next/link'
   
 const dummyArr = [
   {name:'Alice', title:'제목', contents:'내용', place:'서울', price:1},
@@ -13,8 +14,8 @@ const dummyArr = [
 const AllArticles = () => {
 
   const router = useRouter()
-  const moveToDetailPage = () => {
-    router.push('/gym/articles');
+  const moveToDetailPage = (num:string) => {
+    router.push(`/gym/${num}/`);
   }
   
   return (
@@ -23,7 +24,7 @@ const AllArticles = () => {
         {dummyArr &&
           dummyArr.map((data, idx) => {
             return (
-              <div key={Date.now() + idx} className={cls.boxItem} onClick={moveToDetailPage}>
+              <div key={Date.now() + idx} className={cls.boxItem} onClick={()=>{moveToDetailPage(idx.toString())} }>
                 <li className={cls.li} >
                   <div className={cls.imgBox}></div>
                   <div className={cls.title}>{data.title}</div>

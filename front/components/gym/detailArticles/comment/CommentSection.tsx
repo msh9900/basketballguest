@@ -34,7 +34,7 @@ const CommentSection = () => {
   }, []);
   
   const getCommentData = async () => {
-    const response = await fetch("http://localhost:5000/comments");
+    const response = await fetch("http://localhost:5000/gymComments");
     const data = await response.json()
     setCommentData(data)
   }
