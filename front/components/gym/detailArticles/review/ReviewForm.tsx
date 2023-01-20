@@ -20,7 +20,7 @@ const ReviewForm = (props: Props) => {
       content,
       rating,
     }
-    console.log('post review : ', obj);
+    // console.log('post review : ', obj);
   };
   const onChangeTitle = (e: any) => {
     setTitle(e.target.value);

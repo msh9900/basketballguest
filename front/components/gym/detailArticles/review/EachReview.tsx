@@ -1,30 +1,20 @@
 import cls from './EachReview.module.scss';
+import {useState, useEffect} from 'react'
+import {useRouter} from 'next/router'
 
-const dummyReviews = [
-  {
-    userName: 'Andrew',
-    profileImg: 'A',
-    createdDate: '2023-10-10',
-    contents: '비싼 값 합니다.',
-    ratings: '3.5',
-  },
-  {
-    userName: 'Brian',
-    profileImg: 'B',
-    createdDate: '2023-10-10',
-    contents: '가기도 나쁘고 별로였습니다.',
-    ratings: '2',
-  },
-  {
-    userName: 'Chris',
-    profileImg: 'C',
-    createdDate: '2023-10-10',
-    contents: '좋은 곳입니다',
-    ratings: '5',
-  },
-];
+interface reviewType{
+  userName: string,
+  profileImg: string,
+  createdDate: string,
+  contents: string,
+  ratings: string,
+}
 
-const EachReview = () => {
+interface Props{
+  reviewData:reviewType[]
+}
+const EachReview = (props:Props) => {
+
   const renderStars = (str: string) => {
     const num = Number(str);
     const Blacks = Math.floor(num);
@@ -45,7 +35,7 @@ const EachReview = () => {
 
   return (
     <div className={cls.EachReviewLayout}>
-      {dummyReviews.map((e, i) => (
+      {props.reviewData && props.reviewData.map((e, i) => (
         <div key={JSON.stringify(e)} className={cls.reviewContents}>
           <div className={cls.profileSection}>
             <div>Img</div>

@@ -31,9 +31,9 @@ const Search = (props: Props) => {
     }
   };
   const getSearch = () => {
-    console.log(searchVal, '검색!')
-    console.log('정렬 상태', props.orderStatus);
-    console.log('필터 상태', props.filterStatus);
+    // console.log(searchVal, '검색!')
+    // console.log('정렬 상태', props.orderStatus);
+    // console.log('필터 상태', props.filterStatus);
     // fetch
   }
 

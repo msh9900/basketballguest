@@ -1,17 +1,22 @@
 import cls from "./AllArticles.module.scss";
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-  
-const dummyArr = [
-  {name:'Alice', title:'제목', contents:'내용', place:'서울', price:1},
-  {name:'Brian', title:'제목', contents:'내용', place:'부산', price:1},
-  {name:'Chris', title:'제목', contents:'내용', place:'대구', price:1},
-  {name:'Chris', title:'제목', contents:'내용', place:'광주', price:1},
-  {name:'Chris', title:'제목', contents:'내용', place:'대구', price:1},
-  {name:'Chris', title:'제목', contents:'내용', place:'대구', price:1},
-]
+import { useEffect, useState } from 'react';
+import gymArticleDataType from 'util/types/gymArticleDataType';
+// import gymArticleDataBase from 'util/types/gymArticleDataBase';
 
 const AllArticles = () => {
+
+  const [articles, setArticles] = useState<gymArticleDataType[]>([])
+  
+  useEffect(() => {
+    getArticleData()
+  }, []);
+
+  const getArticleData = async () => {
+    const response = await fetch('http://localhost:5000/gymArticles/');
+    const data = await response.json()
+    setArticles(data)
+  }
 
   const router = useRouter()
   const moveToDetailPage = (num:string) => {
@@ -21,15 +26,15 @@ const AllArticles = () => {
   return (
     <>
       <div className={cls.boxContainer}>
-        {dummyArr &&
-          dummyArr.map((data, idx) => {
+        {articles &&
+          articles.map((item, idx) => {
             return (
-              <div key={Date.now() + idx} className={cls.boxItem} onClick={()=>{moveToDetailPage(idx.toString())} }>
+              <div key={Date.now() + idx} className={cls.boxItem} onClick={()=>{moveToDetailPage(item.id)} }>
                 <li className={cls.li} >
                   <div className={cls.imgBox}></div>
-                  <div className={cls.title}>{data.title}</div>
-                  <div className={cls.place}>{data.place}</div>
-                  <div className={cls.price}>{data.price}원/시간</div>
+                  <div className={cls.title}>제목 : {item.title}</div>
+                  <div className={cls.price}>대관료 : {item.price}원/시간</div>
+                  <div className={cls.content}>내용 : {item.content}</div>
                 </li>
               </div>
             )

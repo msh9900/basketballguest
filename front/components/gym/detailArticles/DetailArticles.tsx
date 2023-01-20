@@ -2,53 +2,39 @@ import cls from './DetailArticles.module.scss';
 import SlickSlider from './SlickSlider';
 import ReviewSection from './review/ReviewSection';
 import CommentSection from './comment/CommentSection';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react'
+import {useRouter} from 'next/router'
+
+// types
+import gymArticleDataType from 'util/types/gymArticleDataType';
+import gymArticleDataBase from 'util/types/gymArticleDataBase';
 
 const DetailArticles = () => {
 
-  const dummyArticleData = {
-    title:'title',
-    content:'content',
-    contact:'contact',
-    address:[
-      {category:'postcode', val:'a'},
-      {category:'roadAddress', val:'b'},
-      {category:'jibunAddress', val:'c'},
-      {category:'detailAddress', val:'d'},
-      {category:'extraAddress', val:'e'}
-    ],
-    price:'price',
-    openingHours:'openingHours',
-    openingPeriod:'openingPeriod',
-    openingDays:[
-      {name:'일', open:true},
-      {name:'월', open:false},
-      {name:'화', open:false},
-      {name:'수', open:false},
-      {name:'목', open:false},
-      {name:'금', open:false},
-      {name:'토', open:true},
-    ],
-  }
+  const [gymInfo, setGymInfo] = useState<gymArticleDataType>(gymArticleDataBase)
+  const [openingDays, setOpeningDays] = useState<string[]>([])
   
   useEffect(() => {
-    // article
-    // review
-    // comments
+    const pageIdOrigin = router.query.articles as string
+    getGymData(pageIdOrigin)
+    setOpeningDays(getOepningDaysFromData())
   }, []);
+  
+  const router = useRouter()
+  const getGymData = async (pageIdOrigin:string) => {
+    const response = await fetch(`http://localhost:5000/gymArticles/${pageIdOrigin}`);
+    const data = await response.json()
+    setGymInfo(data)
+  }
 
   const getOepningDaysFromData = () => {
-    const days = dummyArticleData.openingDays
     let temp:string[] = []
-    days.forEach(ele => {
-      if(ele.open === true){
-        temp.push(ele.name)
-      }
+    gymInfo.openingDays.forEach(ele => {
+      if(ele.open === true) temp.push(ele.name)
     });
     return temp
   }
-  const openingDaysRes:string[] = getOepningDaysFromData()
-
+  
   return (
     <>
       <div className={cls.DetailArticlesLayout}>
@@ -58,7 +44,7 @@ const DetailArticles = () => {
           <div className={cls.mainContent}>
             <h2>제목</h2>
             <div className={cls.eachContent}>
-              {dummyArticleData.title}
+              {gymInfo.title}
             </div>
           </div>
 
@@ -69,53 +55,55 @@ const DetailArticles = () => {
           <div className={cls.mainContent}>
             <h2>내용</h2>
             <div className={cls.eachContent}>
-              {dummyArticleData.content}
+              {gymInfo.content}
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>연락처</h2>
             <div className={cls.eachContent}>
-              {dummyArticleData.contact}
+              {gymInfo.contact}
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>주소</h2>
             <div className={cls.eachContent}>
-              우편번호 : {dummyArticleData.address[0].val} <br/>
-              도로명주소 : {dummyArticleData.address[1].val} <br/>
-              지번주소 : {dummyArticleData.address[2].val} <br/>
-              상세주소 : {dummyArticleData.address[3].val} <br/>
-              참고정보 : {dummyArticleData.address[4].val} <br/>
+              우편번호 : {gymInfo.address[0].val} <br/>
+              도로명주소 : {gymInfo.address[1].val} <br/>
+              지번주소 : {gymInfo.address[2].val} <br/>
+              상세주소 : {gymInfo.address[3].val} <br/>
+              참고정보 : {gymInfo.address[4].val} <br/>
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>가격</h2>
             <div className={cls.eachContent}>
-              {dummyArticleData.price} 원/시간
+              {gymInfo.price}원/시간
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>오픈시간</h2>
             <div className={cls.eachContent}>
-              {dummyArticleData.openingHours} 
+              {gymInfo.openingHours[0]}~
+              {gymInfo.openingHours[1]} 
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>오픈기간</h2>
             <div className={cls.eachContent}>
-              {dummyArticleData.openingPeriod} 
+              {gymInfo.openingPeriod[0]}~
+              {gymInfo.openingPeriod[1]} 
             </div>
           </div>
 
           <div className={cls.mainContent}>
             <h2>영업일</h2>
             <div className={cls.eachContent}>
-              {openingDaysRes.map((ele, i)=>(
+              {openingDays.map((ele, i)=>(
               <li key={'openingDays'+i}>{ele}</li>))} 
             </div>
           </div>
@@ -130,7 +118,6 @@ const DetailArticles = () => {
         <div className={cls.contentBox}>
           <CommentSection/>
         </div>
-
       </div>
     </>
   );

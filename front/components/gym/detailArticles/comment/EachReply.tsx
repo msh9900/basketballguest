@@ -10,9 +10,6 @@ interface replys {
   contents: string;
   isCreater: boolean;
 }
-// interface ReplyPostFormToggle {
-//   (userName:string):void;
-// }
 
 interface Props{
   x:replys

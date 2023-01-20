@@ -1,42 +1,25 @@
 import cls from "./CommentSection.module.scss";
 import EachComment from "./EachComment";
 import {useState, useEffect} from 'react'
+import {useRouter} from 'next/router'
+
+// types
+import commentType from 'util/types/gymCommentDataType';
 
 const CommentSection = () => {
-
-  interface replyType{
-    "to": string,
-    "id": string,
-    "userName": string,
-    "date": string,
-    "contents": string,
-    "isCreater": boolean
-  }
-  interface commentType{
-    "id": string,
-    "userName": string,
-    "date": string,
-    "contents": string,
-    "isCreater": boolean,
-    "replys":replyType[]
-  }
-
 
   const [commentData, setCommentData] = useState<commentType[]>([])
 
   useEffect(() => {
-    try{
-      getCommentData()
-    }
-    catch(err:any){
-      console.log('err', err);
-    }
+    const pageId = router.query.articles as string
+    getCommentData(pageId)
   }, []);
   
-  const getCommentData = async () => {
-    const response = await fetch("http://localhost:5000/gymComments");
+  const router = useRouter()
+  const getCommentData = async (pageId:string) => {
+    const response = await fetch(`http://localhost:5000/gymComments/${pageId}`);
     const data = await response.json()
-    setCommentData(data)
+    setCommentData(data.body)
   }
 
   return (
@@ -45,7 +28,7 @@ const CommentSection = () => {
         <div className={cls.postComment}>
           <button>댓글 작성하기</button>
         </div>
-        {commentData.map((v, idx) => {
+        {commentData.length>0 && commentData.map((v, idx) => {
           return (
             <EachComment
               key={"comment:" + idx.toString() + Math.random().toString()}

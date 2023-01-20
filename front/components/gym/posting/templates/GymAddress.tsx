@@ -24,7 +24,7 @@ const GymAddress = (props:Props) => {
       script.async = true;
     }
     document.body.appendChild(script);
-    console.log('script', script);
+    // console.log('script', script);
   }, []);
 
   function DaumPostcode() {
@@ -114,8 +114,6 @@ const GymAddress = (props:Props) => {
       {category:'extraAddress', val:arr[4]}
     ]
 
-    console.log('tempCheck', tempCheck);
-
     props.setAddress(() => {
       return (
         [
@@ -137,7 +135,6 @@ const GymAddress = (props:Props) => {
     addrObjArr.forEach((v:any) => {
       if(v.category === spot) v.val = inputValue
     });
-    console.log('addrObjArr', addrObjArr);
     props.setAddress(addrObjArr)
   }
 

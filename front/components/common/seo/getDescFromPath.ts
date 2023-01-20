@@ -16,7 +16,6 @@ const descMap: titleMapType = {
 };
 
 const getDescFromPath = (path: string) => {
-  console.log('path', path);
   return descMap[path] as string;
 };
 

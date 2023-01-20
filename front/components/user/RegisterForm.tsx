@@ -71,7 +71,6 @@ export default function LoginForm(props: any) {
       }),
     });
     const data = await response.json();
-    console.log(data);
     try {
       if (data.msg === "회원가입 완료") {
         alert("회원 가입성공");

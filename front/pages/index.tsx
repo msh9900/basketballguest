@@ -78,7 +78,6 @@ export default function HomePage() {
 }
 
 export const getServerSideProps = withGetServerSideProps(async (context:any) => {
-  console.log('asdfasdf');
 	return {
 		props: {},
 	};

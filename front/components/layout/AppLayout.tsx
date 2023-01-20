@@ -9,7 +9,7 @@ import { IsLogin, IsLogout } from "redux/modules/login";
 
 const AppLayout = ({ children }: any) => {
   const [cookie, setCookie, removeCookie] = useCookies<any>();
-  console.log(cookie);
+  // console.log(cookie);
   const dispatch = useDispatch();
   useEffect(() => {
     if (cookie.login !== undefined) {
