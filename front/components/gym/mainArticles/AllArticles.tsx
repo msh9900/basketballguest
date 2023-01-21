@@ -13,7 +13,7 @@ const AllArticles = () => {
   }, []);
 
   const getArticleData = async () => {
-    const response = await fetch('http://localhost:5000/gymArticles/');
+    const response = await fetch('http://localhost:5001/gymArticles/');
     const data = await response.json()
     setArticles(data)
   }

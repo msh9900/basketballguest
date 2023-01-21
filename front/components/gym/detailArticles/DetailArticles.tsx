@@ -22,7 +22,7 @@ const DetailArticles = () => {
   
   const router = useRouter()
   const getGymData = async (pageIdOrigin:string) => {
-    const response = await fetch(`http://localhost:5000/gymArticles/${pageIdOrigin}`);
+    const response = await fetch(`http://localhost:5001/gymArticles/${pageIdOrigin}`);
     const data = await response.json()
     setGymInfo(data)
   }
