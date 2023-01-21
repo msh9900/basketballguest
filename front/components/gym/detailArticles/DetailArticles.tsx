@@ -3,7 +3,8 @@ import SlickSlider from './SlickSlider';
 import ReviewSection from './review/ReviewSection';
 import CommentSection from './comment/CommentSection';
 import { useState, useEffect } from 'react'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
+import { GYM_ARTICLES_URL } from 'util/url';
 
 // types
 import gymArticleDataType from 'util/types/gymArticleDataType';
@@ -15,14 +16,14 @@ const DetailArticles = () => {
   const [openingDays, setOpeningDays] = useState<string[]>([])
   
   useEffect(() => {
-    const pageIdOrigin = router.query.articles as string
-    getGymData(pageIdOrigin)
+    const pageOriginId = router.query.articles as string
+    getGymData(pageOriginId)
     setOpeningDays(getOepningDaysFromData())
   }, []);
   
   const router = useRouter()
-  const getGymData = async (pageIdOrigin:string) => {
-    const response = await fetch(`http://localhost:5001/gymArticles/${pageIdOrigin}`);
+  const getGymData = async (pageOriginId:string) => {
+    const response = await fetch(GYM_ARTICLES_URL + `/${pageOriginId}`);
     const data = await response.json()
     setGymInfo(data)
   }
@@ -34,6 +35,23 @@ const DetailArticles = () => {
     });
     return temp
   }
+
+  // const deleteArticles = async () => {
+  //   // DELETE /posts/1
+  //   const targetId = 'asdf'
+  //   try {
+  //     const response = await fetch(GYM_ARTICLES_URL+`${targetId}`, {
+  //       method: 'DELETE',
+  //       headers: { 'Content-Type': 'application/json' }
+  //     });
+  //     const data = await response.json();
+  //     alert('성공')
+  //     console.log('텍스트 데이터 DELETE 성공', data);
+  //   } catch (err: any) {
+  //     alert('실패')
+  //     console.log('텍스트 데이터 DELETE 실패', err);
+  //   }
+  // }
   
   return (
     <>

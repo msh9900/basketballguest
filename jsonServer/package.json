@@ -9,7 +9,7 @@
     "g2": "json-server --watch data/gym/gymReviews.json --port 5002",
     "g3": "json-server --watch data/gym/gymComments.json --port 5003",
     "t1": "json-server --watch data/test/test.json --port 5004",
-    "jsonServer": "concurrently \"npm run g1\" \"npm run gym2\" \"npm run g3\" \"npm run t1\""
+    "jsonServer": "concurrently \"npm run g1\" \"npm run g2\" \"npm run g3\" \"npm run t1\""
   },
   "keywords": [],
   "author": "",

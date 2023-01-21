@@ -3,6 +3,7 @@ import cls from './ReviewSection.module.scss'
 import ReviewForm from './ReviewForm'
 import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
+import { GYM_REVIEWS_URL } from 'util/url';
 
 interface reviewType{
   userName: string,
@@ -40,7 +41,7 @@ const ReviewSection = () => {
   
   const router = useRouter()
   const getReviewData = async (pageId:string) => {
-    const response = await fetch(`http://localhost:5000/gymReviews/${pageId}`);
+    const response = await fetch(GYM_REVIEWS_URL + `/${pageId}`);
     const data = await response.json()
     setReviewData(data.body)
 
@@ -52,15 +53,12 @@ const ReviewSection = () => {
       ratingsArr.push(ratingvalue)
     });
     
-    const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur);
+    const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
     const avgValue = ratingsSum/data.body.length as number
     setAvgRatings(Number(avgValue.toFixed(2)))
 
     // 전체 리뷰 개수
     setAllReviewCount(data.body.length)
-  }
-
-  const getAverageStars = (numArr:number[]) => {
   }
 
   return (

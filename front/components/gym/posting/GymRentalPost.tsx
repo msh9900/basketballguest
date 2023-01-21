@@ -1,7 +1,7 @@
 import cls from './GymRentalPost.module.scss';
 import { useRouter } from "next/router";
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 //  component
 import GymTitle from './templates/GymTitle';
@@ -17,11 +17,17 @@ import Loading from 'components/common/loadingModule/Loading';
 
 // util
 import isFormValid from './utils/isFormValid';
+const BACK_SERVER = process.env.NEXT_PUBLIC_BACK_SERVER + '/rental/data'
+const JSON_SERVER = process.env.NEXT_PUBLIC_JSON_SERVER_GYMARTICLES as string
 
 const GymRentalPost = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+
+  useEffect(() => {
+    console.log('hello');
+  }, []);
 
   // data for posting
   const stateId = useSelector((state: any) => state.login.userid);
@@ -62,32 +68,24 @@ const GymRentalPost = () => {
     // }
 
     // 텍스트 데이터 번들 생성
-    const textData = {
-      title,
-      content,
-      contact,
-      address,
-      price,
-      openingHours,
-      openingPeriod,
-      openingDays,
-    };
+    // const textData = {title,content,contact,address,price,openingHours,openingPeriod,openingDays,};
+    const testData = {'id':'1'}
+
 
     // 텍스트 데이터 전송
     try {
-      const response = await fetch('http://localhost:4000/rental/data', {
+      const response = await fetch(JSON_SERVER, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ stateId, textData }),
+        body: JSON.stringify(testData),
       });
       const data = await response.json();
       console.log('텍스트 데이터 post 성공', data);
     } catch (err: any) {
       console.log('텍스트 데이터 post 실패', err);
     }
-
     // 이미지 데이터 전송
-    await setIsLoading(true);
+    // await setIsLoading(true);
   };
 
   if(isLoading) return <Loading/>
@@ -123,3 +121,4 @@ const GymRentalPost = () => {
 };
 
 export default GymRentalPost;
+
