@@ -1,10 +1,8 @@
 {
   "comments": [
-
     {
       "id": "1",
       "value": "test1",
-      "isCreater":true,
       "userInfo": {
         "id": "1",
         "userName": "1"
@@ -13,7 +11,6 @@
         {
           "id": "1",
           "value": "1",
-          "isCreater":true,
           "userInfo": {
             "id": "1",
             "userName": "1"
@@ -22,7 +19,6 @@
         {
           "id": "2",
           "value": "2",
-          "isCreater":false,
           "userInfo": {
             "id": "2",
             "userName": "2"
@@ -35,7 +31,6 @@
     {
       "id": "2",
       "value": "test2",
-      "isCreater":false,
       "userInfo": {
         "id": "3",
         "userName": "3"
@@ -44,7 +39,6 @@
         {
           "id": "1",
           "value": "1",
-          "isCreater":true,
           "userInfo": {
             "id": "1",
             "userName": "1"
@@ -53,24 +47,11 @@
         {
           "id": "2",
           "value": "2",
-          "isCreater":false,
           "userInfo": {
             "id": "2",
             "userName": "2"
           }
         }
-      ]
-    },
-
-    {
-      "id": "3",
-      "value": "test2",
-      "isCreater":true,
-      "userInfo": {
-        "id": "1",
-        "userName": "1"
-        },
-      "replys": [
       ]
     }
   ]
