@@ -1,5 +1,5 @@
 {
-  "gymArticles": [
+  "articles": [
     {
       "id": "63ca4e30b490c407dca5482a",
       "title": "대관하실 분 찾습니다.",
@@ -73,9 +73,10 @@
       }
     }
   ]
-  , "gymComments": [
+  , 
+  "comments": [
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id": "1",
       "userName": "홍길동",
       "date": "2023-01-01",
@@ -83,7 +84,7 @@
       "isCreater": false
     },
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id": "2",
       "userName": "김정호",
       "date": "2023-01-01",
@@ -91,7 +92,7 @@
       "isCreater": false
     },
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id": "3",
       "userName": "신돈",
       "date": "2023-01-01",
@@ -99,7 +100,7 @@
       "isCreater": false
     },
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id": "4",
       "userName": "강백호",
       "date": "2023-01-01",
@@ -107,10 +108,11 @@
       "isCreater": false
     }
   ]
-  ,"gymReplys": [
+  ,
+  "replys": [
     {
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "1",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "1",
       "id": "aaa",
       "to": "홍길동",
       "userName": "임꺽정",
@@ -120,8 +122,8 @@
     },
     {
       "id": "bbb",
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "1",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "1",
       "to": "홍길동",
       "userName": "장길산",
       "date": "2023-01-01",
@@ -130,8 +132,8 @@
     },
     {
       "id": "ccc",
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "1",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "1",
       "to": "홍길동",
       "userName": "임대인",
       "date": "2023-01-01",
@@ -140,8 +142,8 @@
     },
     {
       "id": "ccc",
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "2",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "2",
       "to": "김정호",
       "userName": "임대인",
       "date": "2023-01-01",
@@ -150,8 +152,8 @@
     },
     {
       "id": "ddd",
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "4",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "4",
       "to": "강백호",
       "userName": "정대만",
       "date": "2023-01-01",
@@ -160,8 +162,8 @@
     },
     {
       "id": "fff",
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "4",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "4",
       "to": "정대만",
       "userName": "채치수",
       "date": "2023-01-01",
@@ -170,8 +172,8 @@
     },
     {
       "id": "ddd",
-      "gymArticlesId": "63ca4e30b490c407dca5482a",
-      "gymCommentsId": "4",
+      "articleId": "63ca4e30b490c407dca5482a",
+      "commentId": "4",
       "to": "채치수",
       "userName": "송태섭",
       "date": "2023-01-01",
@@ -179,9 +181,10 @@
       "isCreater": false
     }
   ]
-  ,"gymReviews": [
+  ,
+  "reviews": [
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id":"1",
       "userName": "Andrew",
       "profileImg": "A",
@@ -190,7 +193,7 @@
       "ratings": "3.5"
     },
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id":"2",
       "userName": "Brian",
       "profileImg": "B",
@@ -199,7 +202,7 @@
       "ratings": "2"
     },
     {
-      "gymArticelsId":"63ca4e30b490c407dca5482a",
+      "articleId":"63ca4e30b490c407dca5482a",
       "id":"3",
       "userName": "Chris",
       "profileImg": "C",

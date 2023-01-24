@@ -3,7 +3,6 @@ import cls from './ReviewSection.module.scss'
 import ReviewForm from './ReviewForm'
 import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
-import { GYM_REVIEWS_URL } from 'util/url';
 
 interface reviewType{
   userName: string,
@@ -41,24 +40,28 @@ const ReviewSection = () => {
   
   const router = useRouter()
   const getReviewData = async (pageId:string) => {
-    const response = await fetch(GYM_REVIEWS_URL + `/${pageId}`);
+    const response = await fetch(`http://localhost:5000/reviews?articleId/+${pageId}`);
+
+    // 63ca4e30b490c407dca5482a
+    // http://localhost:5000/reviews?articleId=63ca4e30b490c407dca5482a
+    
     const data = await response.json()
     setReviewData(data.body)
 
     // 평균 리뷰 점수
-    let ratingsArr:number[] = []
-    data.body.forEach((ele:reviewType) => {
-      const eachRatings = ele.ratings.toString()
-      const ratingvalue = parseInt(eachRatings)
-      ratingsArr.push(ratingvalue)
-    });
+    // let ratingsArr:number[] = []
+    // data.body.forEach((ele:reviewType) => {
+    //   const eachRatings = ele.ratings.toString()
+    //   const ratingvalue = parseInt(eachRatings)
+    //   ratingsArr.push(ratingvalue)
+    // });
     
-    const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
-    const avgValue = ratingsSum/data.body.length as number
-    setAvgRatings(Number(avgValue.toFixed(2)))
+    // const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
+    // const avgValue = ratingsSum/data.body.length as number
+    // setAvgRatings(Number(avgValue.toFixed(2)))
 
     // 전체 리뷰 개수
-    setAllReviewCount(data.body.length)
+    // setAllReviewCount(data.body.length)
   }
 
   return (

@@ -4,7 +4,6 @@ import ReviewSection from './review/ReviewSection';
 import CommentSection from './comment/CommentSection';
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { GYM_ARTICLES_URL } from 'util/url';
 
 // types
 import gymArticleDataType from 'util/types/gymArticleDataType';
@@ -16,14 +15,14 @@ const DetailArticles = () => {
   const [openingDays, setOpeningDays] = useState<string[]>([])
   
   useEffect(() => {
-    const pageOriginId = router.query.articles as string
-    getGymData(pageOriginId)
+    const pId = router.query.articles as string
+    getGymData(pId)
     setOpeningDays(getOepningDaysFromData())
   }, []);
   
   const router = useRouter()
-  const getGymData = async (pageOriginId:string) => {
-    const response = await fetch(GYM_ARTICLES_URL + `/${pageOriginId}`);
+  const getGymData = async (pId:string) => {
+    const response = await fetch('http://localhost:5000/articles' + `/${pId}`);
     const data = await response.json()
     setGymInfo(data)
   }
@@ -40,7 +39,7 @@ const DetailArticles = () => {
   //   // DELETE /posts/1
   //   const targetId = 'asdf'
   //   try {
-  //     const response = await fetch(GYM_ARTICLES_URL+`${targetId}`, {
+  //     const response = await fetch(GYM_ARTICLES_URL + `${targetId}`, {
   //       method: 'DELETE',
   //       headers: { 'Content-Type': 'application/json' }
   //     });

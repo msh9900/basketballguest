@@ -4,10 +4,10 @@
     "npm-run-all": "^4.1.5"
   },
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix back\" \"npm run dev --prefix front\"  \"cd jsonServer && node server.js\"",
     "front":"cd front && npm run dev",
     "back":"cd back && npm run dev",
-    "jsonServer": "cd jsonServer && npm run jsonServer",
+    "jsonServer":"cd jsonServer && npm run jsonServer",
+    "dev": "concurrently \"npm run dev --prefix back\" \"npm run dev --prefix front\"  \"cd jsonServer && npm run jsonServer\"",
     "0":"npm install",
     "1":"cd front && npm install",
     "2":"cd back && npm install",

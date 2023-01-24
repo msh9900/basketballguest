@@ -5,14 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "r1": "json-server --watch data/recruit/posting.json --port 4001",
-    "r2": "json-server --watch data/recruit/comments.json --port 4002",
-    "g1": "json-server --watch data/gym/gymArticles.json --port 5001",
-    "g2": "json-server --watch data/gym/gymReviews.json --port 5002",
-    "g3": "json-server --watch data/gym/gymComments.json --port 5003",
-    "g4": "json-server --watch data/gym/gymReplys.json --port 5004",
-    "t1": "json-server --watch data/test/test.json --port 6000",
-    "jsonServer": "concurrently \"npm run r1\" \"npm run r2\" \"npm run g1\" \"npm run g2\" \"npm run g3\" \"npm run g4\" \"npm run t1\""
+    "jsonServer": "json-server --watch data/gym.json --port 5000"
   },
   "keywords": [],
   "author": "",
