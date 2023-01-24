@@ -8,8 +8,6 @@ server.use(express.urlencoded({ extended: false }));
 server.use(cors());
 server.use('/images', express.static('/images'));
 
-server.use('/images', express.static('images'));
-
 // dotenv
 require('dotenv').config();
 

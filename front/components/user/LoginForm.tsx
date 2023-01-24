@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import React, { useState, useEffect } from "react";
 import Button from "../common/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
 export default function LoginForm(props: any) {
