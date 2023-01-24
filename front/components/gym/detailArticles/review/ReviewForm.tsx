@@ -1,27 +1,45 @@
-import cls from './ReviewForm.module.scss';
-import { useState } from 'react';
+import cls from "./ReviewForm.module.scss";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 interface Props {
   setIsWriting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ReviewForm = (props: Props) => {
+  const router = useRouter();
+  const userName = useSelector((state: any) => state.login.userName);
+
   const cancelWriting = () => {
     props.setIsWriting(false);
   };
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [rating, setRating] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [rating, setRating] = useState("");
 
-  const postWriting = () => {
-    const obj = {
-      userId:'',
+  const postWriting = async () => {
+    // 유효성검사
+    // ...
+    const reviewObj = {
+      articleId: router.query.articles as string,
+      id: (Date.now() + Math.random()).toFixed(13),
+      userName,
       title,
       content,
       rating,
-    }
-    // console.log('post review : ', obj);
+    };
+
+    const response = await fetch("http://localhost:4000/rental/review", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reviewObj),
+    });
+    const data = await response.json();
   };
+
+  const checkReviewFormValid = () => {};
+
   const onChangeTitle = (e: any) => {
     setTitle(e.target.value);
   };
@@ -46,7 +64,7 @@ const ReviewForm = (props: Props) => {
           </div>
           <div className={cls.contentInputSection}>
             <p>점수</p>
-            <input value={rating} onChange={onChangeRating}/>
+            <input value={rating} onChange={onChangeRating} />
           </div>
         </div>
         <div className={cls.ReviewFormBtns}>

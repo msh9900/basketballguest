@@ -26,7 +26,6 @@ const DetailArticles = () => {
       `http://localhost:4000/rental/article?pid=${pId}`
     );
     const data = await response.json();
-    console.log(data);
     setGymInfo(data.data);
   };
 

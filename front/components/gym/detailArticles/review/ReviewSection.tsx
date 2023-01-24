@@ -1,88 +1,96 @@
-import EachReview from './EachReview';
-import cls from './ReviewSection.module.scss'
-import ReviewForm from './ReviewForm'
-import {useState, useEffect} from 'react'
-import {useRouter} from 'next/router'
+import EachReview from "./EachReview";
+import cls from "./ReviewSection.module.scss";
+import ReviewForm from "./ReviewForm";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
-interface reviewType{
-  userName: string,
-  profileImg: string,
-  createdDate: string,
-  contents: string,
-  ratings: string,
+interface reviewType {
+  articleId: string;
+  id: string;
+  userName: string;
+  title: string;
+  content: string;
+  rating: string;
 }
-
 const initialValue = {
-  userName: 'string',
-  profileImg: 'string',
-  createdDate: 'string',
-  contents: 'string',
-  ratings: '5',
-}
-
+  articleId: "",
+  id: "",
+  userName: "",
+  title: "",
+  content: "",
+  rating: "1",
+};
 
 const ReviewSection = () => {
-  const [isWriting, setIsWriting] = useState(false)
-  const [avgRatings, setAvgRatings] = useState(0)
-  const [allReviewCount, setAllReviewCount] = useState(0)
+  const [isWriting, setIsWriting] = useState(false);
+  const [avgRatings, setAvgRatings] = useState(0);
+  const [allReviewCount, setAllReviewCount] = useState(0);
+  const [isFetching, setIsFetching] = useState(true);
 
   const writeReview = () => {
-    if(isWriting) {setIsWriting(false)}
-    if(!isWriting) {setIsWriting(true)}
-  }
+    if (isWriting) {
+      setIsWriting(false);
+    }
+    if (!isWriting) {
+      setIsWriting(true);
+    }
+  };
+  const [reviewData, setReviewData] = useState<reviewType[]>([initialValue]);
 
-  const [reviewData, setReviewData] = useState<reviewType[]>([initialValue])
-  
   useEffect(() => {
-    const pageId = router.query.articles as string
-    getReviewData(pageId)
+    getReviewData();
   }, []);
-  
-  const router = useRouter()
-  const getReviewData = async (pageId:string) => {
-    const response = await fetch(`http://localhost:5000/reviews?articleId/+${pageId}`);
 
-    // 63ca4e30b490c407dca5482a
-    // http://localhost:5000/reviews?articleId=63ca4e30b490c407dca5482a
-    
-    const data = await response.json()
-    setReviewData(data.body)
+  const router = useRouter();
+  const getReviewData = async () => {
+    try {
+      const pId = router.query.articles as string;
+      const response = await fetch(
+        `http://localhost:4000/rental/review?pid=${pId}`
+      );
+      const dataArray = await response.json();
+      console.log(" RETURN된 리뷰 ", dataArray);
+      setReviewData(dataArray);
 
-    // 평균 리뷰 점수
-    // let ratingsArr:number[] = []
-    // data.body.forEach((ele:reviewType) => {
-    //   const eachRatings = ele.ratings.toString()
-    //   const ratingvalue = parseInt(eachRatings)
-    //   ratingsArr.push(ratingvalue)
-    // });
-    
-    // const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
-    // const avgValue = ratingsSum/data.body.length as number
-    // setAvgRatings(Number(avgValue.toFixed(2)))
+      // 평균 리뷰 점수 계산
+      let ratingsArr: number[] = [];
+      reviewData.forEach((ele: reviewType) => {
+        const eachRatings = ele.data.rating.toString();
+        const ratingvalue = parseInt(eachRatings);
+        ratingsArr.push(ratingvalue);
+      });
 
-    // 전체 리뷰 개수
-    // setAllReviewCount(data.body.length)
-  }
+      const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
+      const avgValue = (ratingsSum / reviewData.length) as number;
+      setAvgRatings(Number(avgValue.toFixed(2)));
+
+      // 전체 리뷰 개수
+      setAllReviewCount(reviewData.length);
+    } catch (err: any) {
+      console.log("err", err);
+    }
+    setIsFetching(false);
+  };
 
   return (
-    <div className={cls.ReviewSectionLayout}>
-      <div className={cls.postReviewBtn}>
-        <button onClick={writeReview}>리뷰 작성</button>
-        {isWriting && 
-          <ReviewForm
-            setIsWriting={setIsWriting}
-          />
-        }
-      </div>
-      <div className={cls.reviewInfo}>
-         <p>평균 리뷰 점수 : {avgRatings}</p>
-         <p>전체 리뷰 개수 : {allReviewCount}</p>
-      </div>
-      <EachReview reviewData={reviewData}/>
-      <div className={cls.moreReviewBtn}>
-        <button>더불러오기...</button>
-      </div>
-    </div>
+    <>
+      {!isFetching && (
+        <div className={cls.ReviewSectionLayout}>
+          <div className={cls.postReviewBtn}>
+            <button onClick={writeReview}>리뷰 작성</button>
+            {isWriting && <ReviewForm setIsWriting={setIsWriting} />}
+          </div>
+          <div className={cls.reviewInfo}>
+            <p>평균 리뷰 점수 : {avgRatings}</p>
+            <p>전체 리뷰 개수 : {allReviewCount}</p>
+          </div>
+          <EachReview reviewData={reviewData} />
+          <div className={cls.moreReviewBtn}>
+            <button>더불러오기...</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

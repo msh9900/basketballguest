@@ -41,7 +41,7 @@ router.post('/img', upload.array('img', 5), (req: Request, res: Response) => {
 
 router.post('/article', async (req: Request, res: Response) => {
   const data = {
-    contentId: (Date.now() + Math.random()).toFixed(13),
+    articleId: (Date.now() + Math.random()).toFixed(13),
     userId: req.body.stateId,
     title: req.body.title,
     content: req.body.content,
@@ -53,6 +53,25 @@ router.post('/article', async (req: Request, res: Response) => {
     openingDays: req.body.openingDays,
   };
   const result = await mongoClient.article(data);
+  res.send(JSON.stringify(result));
+});
+
+//리뷰
+router.get('/review', async (req: Request, res: Response) => {
+  const result = await mongoClient.findReview(req.query.pid);
+  res.send(JSON.stringify(result));
+});
+
+router.post('/review', async (req: Request, res: Response) => {
+  const data = {
+    articleId: req.body.articleId,
+    id: req.body.id,
+    userName: req.body.userName,
+    title: req.body.title,
+    content: req.body.content,
+    rating: req.body.rating,
+  };
+  const result = await mongoClient.insertReview(data);
   res.send(JSON.stringify(result));
 });
 

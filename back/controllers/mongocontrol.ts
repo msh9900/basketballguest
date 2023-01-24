@@ -94,7 +94,7 @@ const mongoDB = {
       return updateData;
     }
   },
-  //게시글
+  //게시글 작성
   article: async (data: any) => {
     const user = await _user;
     const db = user.db('basket').collection('article');
@@ -103,18 +103,42 @@ const mongoDB = {
       return { msg: '게시글 작성 완료' };
     }
   },
+  //게시글 목록
   findArticles: async () => {
     const user = await _user;
     const db = user.db('basket').collection('article');
     const foundArticles = await db.find({}).toArray();
     return foundArticles;
   },
+  //게시글 상세 페이지
   findArticle: async (pid: any) => {
     const user = await _user;
     const db = user.db('basket').collection('article');
-    const foundArticle = await db.findOne({ 'data.contentId': pid });
-    console.log(foundArticle);
+    const foundArticle = await db.findOne({ 'data.articleId': pid });
     return foundArticle;
+  },
+
+  // 게시글 별 리뷰 POST
+  insertReview: async (data: any) => {
+    const user = await _user;
+    const db = user.db('basket').collection('review');
+    const insertReview = await db.insertOne({ data });
+    if (insertReview.acknowledged) {
+      return { msg: '리뷰 작성 완료' };
+    }
+  },
+
+  // 게시글 별 리뷰 GET
+  findReview: async (pid: any) => {
+    const user = await _user;
+    const db = user.db('basket').collection('review');
+    const foundReview = await db.find({ 'data.articleId': pid }).toArray();
+    return foundReview;
+  },
+
+  findComment: async () => {
+    const user = await _user;
+    const db = user.db('basket').collection('article');
   },
 };
 

@@ -13,7 +13,7 @@ const AllArticles = () => {
 
   const getArticleData = async () => {
     const response = await fetch("http://localhost:4000/rental/articles");
-    const data = await response.json();
+    const data = await response.json()!;
     setArticles(data);
   };
 
@@ -32,7 +32,7 @@ const AllArticles = () => {
                 key={Date.now() + idx}
                 className={cls.boxItem}
                 onClick={() => {
-                  moveToDetailPage(item.data.contentId);
+                  moveToDetailPage(item.data.articleId);
                 }}
               >
                 <li className={cls.li}>

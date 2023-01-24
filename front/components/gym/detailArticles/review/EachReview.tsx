@@ -1,19 +1,24 @@
-import cls from './EachReview.module.scss';
-import {useState, useEffect} from 'react'
-import {useRouter} from 'next/router'
+import cls from "./EachReview.module.scss";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
-interface reviewType{
-  userName: string,
-  profileImg: string,
-  createdDate: string,
-  contents: string,
-  ratings: string,
+interface reviewType {
+  articleId: string;
+  id: string;
+  userName: string;
+  title: string;
+  content: string;
+  rating: string;
 }
 
-interface Props{
-  reviewData:reviewType[]
+interface Props {
+  reviewData: reviewType[];
 }
-const EachReview = (props:Props) => {
+
+const EachReview = (props: Props) => {
+  useEffect(() => {
+    console.log("props.reviewData", props.reviewData);
+  }, []);
 
   const renderStars = (str: string) => {
     const num = Number(str);
@@ -35,19 +40,19 @@ const EachReview = (props:Props) => {
 
   return (
     <div className={cls.EachReviewLayout}>
-      {props.reviewData && props.reviewData.map((e, i) => (
-        <div key={JSON.stringify(e)} className={cls.reviewContents}>
-          <div className={cls.profileSection}>
-            <div>Img</div>
-            <div>{e.userName}</div>
+      {props.reviewData &&
+        props.reviewData.map((e, i) => (
+          <div key={JSON.stringify(e)} className={cls.reviewContents}>
+            <div className={cls.profileSection}>
+              <div>유저이름 : {e.data.userName}</div>
+            </div>
+            <div className={cls.detailInfos}>
+              {/* <div>{e.createdAt}</div> */}
+              <div>내용 : {e.data.content}</div>
+              <div>별점 : {renderStars(e.data.rating)}</div>
+            </div>
           </div>
-          <div className={cls.detailInfos}>
-            <div>{e.createdDate}</div>
-            <div>{e.contents}</div>
-            <div>{renderStars(e.ratings)}</div>
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };
