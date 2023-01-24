@@ -55,20 +55,26 @@
 
   .asdf{
     // display:flex;
-    background-color:burlywood;
     margin:10px;
+    background-color:rgb(233, 199, 155);
     border:solid 1px black;
     padding:10px;
-    
     
     button{
       margin:0 auto;
       padding:3px;
       border-radius:3px;
-      border:1px solid black; 
+      border:2px solid gray; 
       font-size:13px;
-      font-weight:bold;
+      font-weight:normal;
       width:100px;
+      &:hover{
+        border:solid 2px black;
+      }
+    }
+    .on{
+      border:solid 2px black;
+      font-weight:bold;
     }
     input{
       margin-left:10px;

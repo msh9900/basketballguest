@@ -34,8 +34,8 @@ const Order = (props: Props) => {
     setDistanceOrderOn(false);
   };
 
+  // 현위치 찾기
   const giveCurrentLoaction = () => {
-    
     function onGeoOk(position: any) {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
@@ -45,20 +45,27 @@ const Order = (props: Props) => {
       alert("Can't find you. No weather for you.");
     }
     const value = navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
-    setLocInputStatus("byBrowserStatus");
+    setLocInputStatus("byDeviceLoc");
   };
+
+  // 직접 입력
   const giveValueDirectly = () => {
     setLocInputStatus("byUserInput");
     setLocValue("");
-    const ele = document.getElementById("locInput") as HTMLInputElement;
-    ele.focus();
+    function focusElement() {
+      const ele = document.getElementById("locInput") as HTMLInputElement;
+      ele.focus();
+    }
+    setTimeout(focusElement, 1);
+    
   };
+
   const onChangeLocInput = (e: any) => {
     setLocValue(e.target.value);
   };
   const getinputSubject = (locInputStatus: string) => {
     if (locInputStatus == "byUserInput") {return false;}
-    if (locInputStatus == "byBrowserStatus") {return true;}
+    if (locInputStatus == "byDeviceLoc") {return true;}
   };
 
   return (
@@ -91,7 +98,6 @@ const Order = (props: Props) => {
           </div>
 
           <div>
-            {" "}
             {/* RESET */}
             {(priceOrderOn || distanceOrderOn) && (
               <button className={cls.resetButton} onClick={orderReset}>
@@ -105,10 +111,10 @@ const Order = (props: Props) => {
           <>
             <div className={cls.asdf}>
               <div className={cls.flexbox}>
-                <button className={cls.curLocBtn} onClick={giveCurrentLoaction}>
+                <button className={(locInputStatus == 'byDeviceLoc') ? cls.on : cls.off} onClick={giveCurrentLoaction}>
                   현위치
                 </button>
-                <button className={cls.directBtn} onClick={giveValueDirectly}>
+                <button className={(locInputStatus == 'byUserInput') ? cls.on : cls.off} onClick={giveValueDirectly}>
                   직접 입력
                 </button>
               </div>
@@ -117,9 +123,9 @@ const Order = (props: Props) => {
                 autoComplete="off"
                 id="locInput"
                 type="text"
+                disabled={getinputSubject(locInputStatus)}
                 onChange={onChangeLocInput}
                 value={locValue}
-                disabled={getinputSubject(locInputStatus)}
               />
             </div>
           </>
