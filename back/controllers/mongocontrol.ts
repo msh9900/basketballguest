@@ -94,6 +94,28 @@ const mongoDB = {
       return updateData;
     }
   },
+  //게시글
+  article: async (data: any) => {
+    const user = await _user;
+    const db = user.db('basket').collection('article');
+    const insertArticle = await db.insertOne({ data });
+    if (insertArticle.acknowledged) {
+      return { msg: '게시글 작성 완료' };
+    }
+  },
+  findArticles: async () => {
+    const user = await _user;
+    const db = user.db('basket').collection('article');
+    const foundArticles = await db.find({}).toArray();
+    return foundArticles;
+  },
+  findArticle: async (pid: any) => {
+    const user = await _user;
+    const db = user.db('basket').collection('article');
+    const foundArticle = await db.findOne({ 'data.contentId': pid });
+    console.log(foundArticle);
+    return foundArticle;
+  },
 };
 
 module.exports = { mongoDB };
