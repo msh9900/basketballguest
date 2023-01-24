@@ -10,6 +10,7 @@
   border: solid 1px black;
   border-radius: 3px;
   background-color: bisque;
+  button{cursor:pointer;}
 
   .topSection {
     display: flex;
@@ -49,6 +50,34 @@
         padding-top:3px;
         width:20px;
       }
+    }
+  }
+
+  .asdf{
+    // display:flex;
+    background-color:burlywood;
+    margin:10px;
+    border:solid 1px black;
+    padding:10px;
+    
+    
+    button{
+      margin:0 auto;
+      padding:3px;
+      border-radius:3px;
+      border:1px solid black; 
+      font-size:13px;
+      font-weight:bold;
+      width:100px;
+    }
+    input{
+      margin-left:10px;
+      margin-top:10px;
+      width:220px;
+      height:25px;
+    }
+    .flexbox{
+      display:flex;
     }
   }
 }
