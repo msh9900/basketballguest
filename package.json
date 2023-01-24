@@ -6,12 +6,10 @@
   "scripts": {
     "front":"cd front && npm run dev",
     "back":"cd back && npm run dev",
-    "jsonServer":"cd jsonServer && npm run jsonServer",
-    "dev": "concurrently \"npm run dev --prefix back\" \"npm run dev --prefix front\"  \"cd jsonServer && npm run jsonServer\"",
-    "0":"npm install",
-    "1":"cd front && npm install",
-    "2":"cd back && npm install",
-    "3":"cd jsonServer && npm install",
-    "install-all":"npm-run-all 0 1 2 3"
+    "dev": "concurrently \"npm run dev --prefix back\" \"npm run dev --prefix front\"",
+    "install-root":"npm install",
+    "install-front":"cd front && npm install",
+    "install-back":"cd back && npm install",
+    "install-all":"npm-run-all install-root install-front install-back"
   }
 }
