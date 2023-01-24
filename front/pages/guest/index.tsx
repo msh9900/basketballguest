@@ -14,6 +14,23 @@ export default function GuestRecruitmentPage() {
       content: "안녕하세요 체육관 대여 할려고 하는데 비용이 얼마정도 나오나요?",
       image: "src주소 1",
       date: "1시간전",
+      comment: [
+        {
+          commentidx: 1,
+          id: "test1",
+          content: "안녕하세요 게스트 구하려고 하는데 몇명정도 구하시나요",
+        },
+        {
+          commentidx: 2,
+          id: "test2",
+          content: "test2 댓글 입니다",
+        },
+        {
+          commentidx: 3,
+          id: "test3",
+          content: "test3 댓글 입니다",
+        },
+      ],
     },
     {
       contentidx: 2,
@@ -21,6 +38,23 @@ export default function GuestRecruitmentPage() {
       title: "[이태원] 농구 게스트 구합니다",
       content: "테스트2 입니다",
       date: "1시간전",
+      comment: [
+        {
+          commentidx: 1,
+          id: "test1",
+          content: "안녕하세요 게스트 구하려고 하는데 몇명정도 구하시나요",
+        },
+        {
+          commentidx: 2,
+          id: "test2",
+          content: "가나다라마바사",
+        },
+        {
+          commentidx: 3,
+          id: "test3",
+          content: "test3 댓글 입니다",
+        },
+      ],
     },
   ];
   for (let i = 3; i < 100; i++) {
@@ -30,6 +64,23 @@ export default function GuestRecruitmentPage() {
       title: "[이태원] 농구 게스트 구합니다",
       content: "테스트2 입니다",
       date: "1시간전",
+      comment: [
+        {
+          commentidx: 1,
+          id: "test1",
+          content: "안녕하세요 게스트 구하려고 하는데 몇명정도 구하시나요",
+        },
+        {
+          commentidx: 2,
+          id: "test2",
+          content: "ㅁㄴㅇㅁㄴㅇ",
+        },
+        {
+          commentidx: 3,
+          id: "test3",
+          content: "test3 ㅁㄴㅇㅇㅇ 입니다",
+        },
+      ],
     });
   }
 

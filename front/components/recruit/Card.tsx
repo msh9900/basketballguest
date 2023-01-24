@@ -12,24 +12,6 @@ import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
 
 export default function RecipeReviewCard(props: any) {
-  //임시 데이터 댓글
-  const data = [
-    {
-      commentidx: 1,
-      id: "test1",
-      content: "안녕하세요 게스트 구하려고 하는데 몇명정도 구하시나요",
-    },
-    {
-      commentidx: 2,
-      id: "test2",
-      content: "test2 댓글 입니다",
-    },
-    {
-      commentidx: 3,
-      id: "test3",
-      content: "test3 댓글 입니다",
-    },
-  ];
   const [commentMore, setCommentMore] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [writeComment, setWriteComment] = React.useState("");
@@ -46,6 +28,7 @@ export default function RecipeReviewCard(props: any) {
   const commentSubmitHandler = () => {
     //댓글 입력 post 구현
     console.log(writeComment);
+    console.log(props.data.contentidx);
   };
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -109,7 +92,10 @@ export default function RecipeReviewCard(props: any) {
             </div>
           </div>
           <div className={classes.firstComment}>
-            <MainComment key={data[0].commentidx} data={data[0]} />
+            <MainComment
+              key={props.data.comment[0].commentidx}
+              data={props.data.comment[0]}
+            />
           </div>
           <div>
             {!commentMore && (
@@ -120,7 +106,7 @@ export default function RecipeReviewCard(props: any) {
           </div>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              {data.map((val) => {
+              {props.data.comment.map((val: any) => {
                 if (val.commentidx !== 1) {
                   return <MainComment key={val.commentidx} data={val} />;
                 } else {
