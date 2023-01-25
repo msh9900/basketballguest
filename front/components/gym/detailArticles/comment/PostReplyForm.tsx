@@ -6,7 +6,6 @@ interface ReplyPostFormToggle {
 }
 interface Props {
   toInfo:string
-  // ReplyPostFormToggle:ReplyPostFormToggle
   setIsPostReplyFormOpen:React.Dispatch<React.SetStateAction<boolean>>;
 }
 

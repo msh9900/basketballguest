@@ -1,27 +1,26 @@
 import cls from "./CommentSection.module.scss";
 import EachComment from "./EachComment";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import CommentPostForm from './CommentPostForm';
 import Image from 'next/image'
+import { useSelector } from "react-redux";
 
 // types
 import commentType from "util/types/gymCommentDataType";
 
 const CommentSection = () => {
+
   const [commentData, setCommentData] = useState<commentType[]>([]);
   const [isWriting, setIsWriting] = useState(false);
-  const [writingText, setWritingText] = useState("");
   const [isFetching, setIsFetching] = useState(true);
-  const router = useRouter();
-  // const pId = router.query.articles as string;
 
   const stateId = useSelector((state: any) => state.login.userId);
-  const stateUserName = useSelector((state: any) => state.login.userName);
+  const router = useRouter();
 
   useEffect(() => {
     getCommentData();
-  }, []);
+  }, [isFetching]);
 
   const getCommentData = async () => {
     try {
@@ -35,67 +34,24 @@ const CommentSection = () => {
     } catch (err: any) {}
   };
 
-  const checkSamePerson = () => {
-    // 게시글 정보마다 유저아이디가 있으면
-    // articleId => articcle 작성자 확인 가능?
-    // 작성자랑 아래 댓글작성자랑 일치할때 isCreater true
-  };
-
-  // 댓글 생성 (gymArticle id별 (== gymComments Id))
-  const postGymComment = async () => {
-    const postDataforComment = {
-      articleId: router.query.articles as string,
-      userId: stateId,
-      userName: stateUserName,
-      date: "2023-01-01",
-      contents: writingText,
-      isCreater: false,
-      replys: [],
-    };
-    // comment Id 필드는 백엔드에서 생성됨
-    try {
-      const res = await fetch("http://localhost:4000/rental/comment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postDataforComment),
-      }).then((response) => console.log("jsonserverPost response", response));
-      alert("댓글 작성 성공");
-
-      await setIsFetching(true);
-      await getCommentData();
-    } catch (err: any) {
-      alert("댓글 작성 실패");
+  const postCommentBtnClicked = () => {
+    if(stateId == '') {
+      alert('로그인이 필요합니다.')
+      return
     }
-  };
-
-  // 유저 데이터도 추가
-  const postCommentToUserInfo = () => {
-    const postDataforUser = {};
-    // 나중엔 유저 데이터도 처리할 것!...
-    return false;
-  };
-
-  const postComment = async () => {
-    await postGymComment();
-    // await postCommentToUserInfo()
-  };
-
-  const textAreaHandler = (e: any) => {
-    setWritingText(e.target.value);
-  };
+    setIsWriting(true);
+  }
 
   return (
     <>
       <div className={cls.CommentSectionLayout}>
         <div className={cls.postComment}>
           <button
-            onClick={() => {
-              setIsWriting(true);
-            }}
+            onClick={postCommentBtnClicked}
           >
           <Image
             src="/images/rental/postComment.png"
-            alt="댓글 삭제"
+            alt="댓글 작성"
             width="20"
             height="20"
           />
@@ -103,25 +59,11 @@ const CommentSection = () => {
         </div>
 
         {isWriting && (
-          <div className={cls.commentPostFormLayout}>
-            <div>
-              <textarea onChange={textAreaHandler} value={writingText} />
-            </div>
-            <div className={cls.flexbox}>
-              <div>
-                <button onClick={postComment}>작성</button>
-              </div>
-              <div>
-                <button
-                  onClick={() => {
-                    setIsWriting(false);
-                  }}
-                >
-                  취소
-                </button>
-              </div>
-            </div>
-          </div>
+          <CommentPostForm
+            isFetching={isFetching}
+            setIsFetching={setIsFetching}
+            setIsWriting={setIsWriting}
+          />
         )}
 
         {commentData &&
@@ -140,6 +82,7 @@ const CommentSection = () => {
                 replys={v.data.replys}
                 isFetching={isFetching}
                 setIsFetching={setIsFetching}
+                setIsWriting={setIsWriting}
               />
             );
           })}

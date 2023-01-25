@@ -28,21 +28,16 @@ interface Props {
   isCreater: boolean;
   isFetching: boolean;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsWriting: React.Dispatch<React.SetStateAction<boolean>>;
   replys: replyType[];
 }
 
-const EachComment = (v: Props) => {
+const EachComment = (props: Props) => {
   const [replyToggle, setReplyToggle] = useState(true);
   const [isPostReplyFormOpen, setIsPostReplyFormOpen] = useState(false);
   const [toInfo, setToInfo] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [fixedCommentValue, setFixedCommentValue] = useState("");
-
-  // useEffect(() => {
-  //   if (v.isFetching === false) {
-  //     console.log("v", v);
-  //   }
-  // }, [v.isFetching]);
 
   const setReplyList = () => {
     setReplyToggle((prev) => !prev);
@@ -55,21 +50,22 @@ const EachComment = (v: Props) => {
     setToInfo(userName);
   };
 
-  const onChangeCommentValue = (e: any) => {
-    setFixedCommentValue(e.target.value);
-  };
-
   const updateComment = async (e: any) => {
+
+    const ele = document.querySelector('#fixingComment') as HTMLTextAreaElement
+    const changedValue = ele.value
+
+    props.setIsFetching(true)
     const commentId = e.target.id;
     const updateCommentObj = {
-      articleId: v.articleId,
-      commentId: v.commentId,
-      userId: v.userId,
-      userName: v.userName,
+      articleId: props.articleId,
+      commentId: props.commentId,
+      userId: props.userId,
+      userName: props.userName,
       date: "2099-01-01",
-      contents: fixedCommentValue,
-      isCreater: v.isCreater,
-      replys: v.replys,
+      contents: changedValue,
+      isCreater: props.isCreater,
+      replys: props.replys,
     };
     try {
       const response = await fetch(
@@ -80,14 +76,14 @@ const EachComment = (v: Props) => {
           body: JSON.stringify(updateCommentObj),
         }
       );
-      const data = await response.json();
-      alert("댓글 UPDATE 성공");
+      await props.setIsFetching(false)
+      await props.setIsWriting(false)
     } catch (err: any) {
-      alert("댓글 UPDATE 실패");
     }
   };
 
   const deleteComment = async (e: any) => {
+    await props.setIsFetching(true)
     const commentId = e.target.id;
     try {
       const response = await fetch(
@@ -98,22 +94,21 @@ const EachComment = (v: Props) => {
         }
       );
       const data = await response.json();
-      alert("댓글 DELETE 성공");
+      await props.setIsFetching(false)
     } catch (err: any) {
-      alert("댓글 DELETE 실패");
+      console.log('comment delete error', err)
     }
   };
 
   return (
     <>
-      {!v.isFetching && (
+      {!props.isFetching && (
         <div className={cls.EachCommentLayout} key={Math.random()}>
           {isEditing && (
             <div className={cls.originCommentEditForm}>
               <div>
                 <textarea
-                  onChange={onChangeCommentValue}
-                  value={fixedCommentValue}
+                  id='fixingComment'
                 ></textarea>
               </div>
               <div className={cls.btnArea}>
@@ -137,18 +132,18 @@ const EachComment = (v: Props) => {
             </div>
           )}
           {!isEditing && (
-            <div className={cls.originalComment} id={v.commentId}>
+            <div className={cls.originalComment} id={props.commentId}>
               <div className={cls.topSection}>
-                <div className={cls.topLeft}>{v.contents}</div>
+                <div className={cls.topLeft}>{props.contents}</div>
                 <div className={cls.topRight}></div>
               </div>
 
               <div className={cls.bottomSection}>
                 {/* L */}
                 <div className={cls.bottomLeft}>
-                  <div className={v.isCreater === true ? cls.creater : "vvv"}>
-                    <button className={cls.userName}>{v.userName}</button>
-                    <span className={cls.time}>{v.date}</span>
+                  <div className={props.isCreater === true ? cls.creater : "vvv"}>
+                    <button className={cls.userName}>{props.userName}</button>
+                    <span className={cls.time}>{props.date}</span>
                   </div>
                 </div>
 
@@ -156,7 +151,6 @@ const EachComment = (v: Props) => {
                   <button
                     onClick={() => {setIsEditing(true);}}>
                     <Image
-                      id={v.commentId}
                       src="/images/rental/comment/pencil.png"
                       alt="댓글 수정"
                       width="20"
@@ -165,7 +159,7 @@ const EachComment = (v: Props) => {
                   </button>
                   <button>
                     <Image
-                      id={v.commentId}
+                      id={props.commentId}
                       src="/images/rental/comment/bin.png"
                       alt="댓글 삭제"
                       width="20"
@@ -189,7 +183,7 @@ const EachComment = (v: Props) => {
 
                   <button
                     onClick={() => {
-                      ReplyPostFormToggle(v.userName);
+                      ReplyPostFormToggle(props.userName);
                     }}
                   >
                     <Image
