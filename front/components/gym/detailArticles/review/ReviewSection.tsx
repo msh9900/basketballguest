@@ -49,7 +49,6 @@ const ReviewSection = () => {
         `http://localhost:4000/rental/review?pid=${pId}`
       );
       const dataArray = await response.json();
-      console.log(" RETURN된 리뷰 ", dataArray);
       setReviewData(dataArray);
 
       // 평균 리뷰 점수 계산

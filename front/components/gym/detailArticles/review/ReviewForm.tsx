@@ -23,7 +23,7 @@ const ReviewForm = (props: Props) => {
     // ...
     const reviewObj = {
       articleId: router.query.articles as string,
-      id: (Date.now() + Math.random()).toFixed(13),
+      reviewId: (Date.now() + Math.random()).toFixed(13),
       userName,
       title,
       content,

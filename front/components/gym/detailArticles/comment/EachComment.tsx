@@ -8,8 +8,10 @@ import EachReply from "./EachReply";
 import PostReplyForm from "./PostReplyForm";
 
 interface replyType {
-  id: string;
+  commentId: string;
+  replyId: string;
   to: string;
+  userId: string;
   userName: string;
   date: string;
   contents: string;
@@ -17,11 +19,15 @@ interface replyType {
 }
 
 interface Props {
-  id: string;
+  articleId: string;
+  commentId: string;
+  userId: string;
   userName: string;
   date: string;
   contents: string;
   isCreater: boolean;
+  isFetching: boolean;
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
   replys: replyType[];
 }
 
@@ -30,6 +36,13 @@ const EachComment = (v: Props) => {
   const [isPostReplyFormOpen, setIsPostReplyFormOpen] = useState(false);
   const [toInfo, setToInfo] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [fixedCommentValue, setFixedCommentValue] = useState("");
+
+  // useEffect(() => {
+  //   if (v.isFetching === false) {
+  //     console.log("v", v);
+  //   }
+  // }, [v.isFetching]);
 
   const setReplyList = () => {
     setReplyToggle((prev) => !prev);
@@ -42,111 +55,187 @@ const EachComment = (v: Props) => {
     setToInfo(userName);
   };
 
-  return (
-    <div className={cls.EachCommentLayout} key={Math.random()}>
-      
-      {isEditing && (
-        <div className={cls.originCommentEditForm}>
-          <div><textarea></textarea></div>
-          <div className={cls.btnArea}>
-            <button className={cls.cancelBtn} onClick={() => {setIsEditing(false)}}>
-              x
-            </button>
-            <button className={cls.submitBtn}>
-              <Image src='/images/rental/submit.png' alt='submit' width="20" height="20"/>
-            </button>
-          </div>
-        </div>
-      )}
-      {!isEditing && (
-        <div className={cls.originalComment} id={v.id}>
-          <div className={cls.topSection}>
-            <div className={cls.topLeft}>{v.contents}</div>
-            <div className={cls.topRight}></div>
-          </div>
+  const onChangeCommentValue = (e: any) => {
+    setFixedCommentValue(e.target.value);
+  };
 
-          <div className={cls.bottomSection}>
-            {/* L */}
-            <div className={cls.bottomLeft}>
-              <div className={v.isCreater === true ? cls.creater : "vvv"}>
-                <button className={cls.userName}>{v.userName}</button>
-                <span className={cls.time}>{v.date}</span>
+  const updateComment = async (e: any) => {
+    const commentId = e.target.id;
+    const updateCommentObj = {
+      articleId: v.articleId,
+      commentId: v.commentId,
+      userId: v.userId,
+      userName: v.userName,
+      date: "2099-01-01",
+      contents: fixedCommentValue,
+      isCreater: v.isCreater,
+      replys: v.replys,
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:4000/rental/comment?commentId=${commentId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updateCommentObj),
+        }
+      );
+      const data = await response.json();
+      alert("댓글 UPDATE 성공");
+    } catch (err: any) {
+      alert("댓글 UPDATE 실패");
+    }
+  };
+
+  const deleteComment = async (e: any) => {
+    const commentId = e.target.id;
+    try {
+      const response = await fetch(
+        `http://localhost:4000/rental/comment?commentId=${commentId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      alert("댓글 DELETE 성공");
+    } catch (err: any) {
+      alert("댓글 DELETE 실패");
+    }
+  };
+
+  return (
+    <>
+      {!v.isFetching && (
+        <div className={cls.EachCommentLayout} key={Math.random()}>
+          {isEditing && (
+            <div className={cls.originCommentEditForm}>
+              <div>
+                <textarea
+                  onChange={onChangeCommentValue}
+                  value={fixedCommentValue}
+                ></textarea>
+              </div>
+              <div className={cls.btnArea}>
+                <button
+                  className={cls.cancelBtn}
+                  onClick={() => {
+                    setIsEditing(false);
+                  }}
+                >
+                  x
+                </button>
+                <button className={cls.submitBtn}>
+                  <Image
+                    src="/images/rental/submit.png"
+                    alt="submit"
+                    width="20"
+                    height="20"
+                    onClick={updateComment}
+                  />
+                </button>
               </div>
             </div>
+          )}
+          {!isEditing && (
+            <div className={cls.originalComment} id={v.commentId}>
+              <div className={cls.topSection}>
+                <div className={cls.topLeft}>{v.contents}</div>
+                <div className={cls.topRight}></div>
+              </div>
 
-            {/* R */}
-            <div className={cls.bottomRight}>
+              <div className={cls.bottomSection}>
+                {/* L */}
+                <div className={cls.bottomLeft}>
+                  <div className={v.isCreater === true ? cls.creater : "vvv"}>
+                    <button className={cls.userName}>{v.userName}</button>
+                    <span className={cls.time}>{v.date}</span>
+                  </div>
+                </div>
 
-              <button
-                onClick={() => {
-                  setIsEditing(true);
-                }}
-              >
-                <Image
-                  src="/images/rental/comment/pencil.png"
-                  alt="댓글 수정"
-                  width="20"
-                  height="20"
-                />
-              </button>
-              <button>
-                <Image
-                  src="/images/rental/comment/bin.png"
-                  alt="댓글 삭제"
-                  width="20"
-                  height="20"
-                />
-              </button>
-              {v.replys.length > 0 && (
-                <div className={cls.ReplyButtonOnOff}>
-                  <button onClick={setReplyList}>
+                {/* R */}
+                <div className={cls.bottomRight}>
+                  <button
+                    onClick={() => {
+                      setIsEditing(true);
+                    }}
+                  >
                     <Image
-                      src="/images/rental/comment/list.png"
-                      alt="답글 목록"
+                      id={v.commentId}
+                      src="/images/rental/comment/pencil.png"
+                      alt="댓글 수정"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
+                  <button>
+                    <Image
+                      id={v.commentId}
+                      src="/images/rental/comment/bin.png"
+                      alt="댓글 삭제"
+                      width="20"
+                      height="20"
+                      onClick={deleteComment}
+                    />
+                  </button>
+
+                  {/* {v.replys.length > 0 && (
+                    <div className={cls.ReplyButtonOnOff}>
+                      <button onClick={setReplyList}>
+                        <Image
+                          src="/images/rental/comment/list.png"
+                          alt="답글 목록"
+                          width="20"
+                          height="20"
+                        />
+                      </button>
+                    </div>
+                  )} */}
+
+                  <button
+                    onClick={() => {
+                      ReplyPostFormToggle(v.userName);
+                    }}
+                  >
+                    <Image
+                      src="/images/rental/comment/down-right.png"
+                      alt="답글 작성"
                       width="20"
                       height="20"
                     />
                   </button>
                 </div>
-              )}
-              <button onClick={() => {ReplyPostFormToggle(v.userName)}}>
-                <Image
-                  src="/images/rental/comment/down-right.png"
-                  alt="답글 작성"
-                  width="20"
-                  height="20"
-                />
-              </button>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* {replyToggle && (
+              <>
+                {v.replys.map((x, idx) => {
+                  return (
+                    <div key={Math.random()}>
+                      <EachReply
+                        x={x}
+                        idx={idx}
+                        isPostReplyFormOpen={isPostReplyFormOpen}
+                        setIsPostReplyFormOpen={setIsPostReplyFormOpen}
+                        toInfo={toInfo}
+                        setToInfo={setToInfo}
+                      />
+                    </div>
+                  );
+                })}
+              </>
+            )}
+            {isPostReplyFormOpen && (
+              <PostReplyForm
+                setIsPostReplyFormOpen={setIsPostReplyFormOpen}
+                toInfo={toInfo}
+              />
+            )} */}
         </div>
       )}
-
-      {replyToggle && (
-        <>
-          {v.replys.map((x, idx) => {
-            return (
-              <div key={Math.random()}>
-                <EachReply
-                  x={x}
-                  idx={idx}
-                  isPostReplyFormOpen={isPostReplyFormOpen}
-                  setIsPostReplyFormOpen={setIsPostReplyFormOpen}
-                  toInfo={toInfo}
-                  setToInfo={setToInfo}
-                />
-              </div>
-            );
-          })}
-        </>
-      )}
-      {isPostReplyFormOpen && (
-        <PostReplyForm
-          setIsPostReplyFormOpen={setIsPostReplyFormOpen}
-          toInfo={toInfo}
-        />
-      )}
-    </div>
+    </>
   );
 };
 
