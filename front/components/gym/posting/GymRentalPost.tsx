@@ -89,11 +89,11 @@ const GymRentalPost = () => {
         body: JSON.stringify(textData),
       });
       const data = await response.json();
-      // console.log("텍스트 데이터 post 성공", data);
+
       alert("게시글 생성 완료");
       router.push("/gym");
     } catch (err: any) {
-      // console.log("텍스트 데이터 post 실패", err);
+      console.log("텍스트 데이터 post 실패", err);
     }
     // 이미지 데이터 전송
     // await setIsLoading(true);

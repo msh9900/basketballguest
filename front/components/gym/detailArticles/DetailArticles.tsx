@@ -37,22 +37,37 @@ const DetailArticles = () => {
     return temp;
   };
 
-  // const deleteArticles = async () => {
-  //   // DELETE /posts/1
-  //   const targetId = 'asdf'
-  //   try {
-  //     const response = await fetch(GYM_ARTICLES_URL + `${targetId}`, {
-  //       method: 'DELETE',
-  //       headers: { 'Content-Type': 'application/json' }
-  //     });
-  //     const data = await response.json();
-  //     alert('성공')
-  //     console.log('텍스트 데이터 DELETE 성공', data);
-  //   } catch (err: any) {
-  //     alert('실패')
-  //     console.log('텍스트 데이터 DELETE 실패', err);
-  //   }
-  // }
+  const deleteArticle = async () => {
+    const pId = router.query.articles as string;
+    try {
+      const response = await fetch(
+        `http://localhost:4000/rental/article?pid=${pId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      alert("게시글 DELETE 성공");
+      router.push("/gym");
+    } catch (err: any) {
+      alert("게시글 DELETE 실패");
+    }
+  };
+
+  const updateArticle = async () => {
+    // const pId = router.query.articles as string;
+    // try {
+    //   const response = await fetch("http://localhost:4000/" + `${pId}`, {
+    //     method: "PUT",
+    //     headers: { "Content-Type": "application/json" },
+    //   });
+    //   const data = await response.json();
+    //   alert("성공");
+    // } catch (err: any) {
+    //   alert("실패");
+    // }
+  };
 
   return (
     <>
@@ -63,6 +78,8 @@ const DetailArticles = () => {
           <div className={cls.mainContent}>
             <h2>제목</h2>
             <div className={cls.eachContent}>{gymInfo.title}</div>
+            <button onClick={updateArticle}>글 수정</button>
+            <button onClick={deleteArticle}>글 삭제</button>
           </div>
 
           <div className={cls.imgContent}>
@@ -125,7 +142,9 @@ const DetailArticles = () => {
         </div>
 
         <h1>댓글</h1>
-        <div className={cls.contentBox}>{/* <CommentSection /> */}</div>
+        <div className={cls.contentBox}>
+          <CommentSection />
+        </div>
       </div>
     </>
   );
