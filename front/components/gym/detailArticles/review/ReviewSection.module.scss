@@ -5,6 +5,11 @@
   margin-bottom: 10px;
   padding: 5px;
   background-color: white;
+  button{
+    &:hover{
+      background-color: blanchedalmond;
+    }
+  }
 
   .reviewInfo{
     margin:10px;
@@ -19,11 +24,15 @@
     // background-color:red;
     text-align: right;
     button {
-      width: 100px;
+      width: 70px;
       margin-right: 10px;
       margin-top:20px;
-      height: 30px;
+      height: 35px;
+      width:60px;
+      border-radius:5px;
+      border:1px solid gray;
       cursor: pointer;
+
     }
   }
 

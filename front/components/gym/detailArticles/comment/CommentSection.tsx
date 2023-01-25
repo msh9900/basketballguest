@@ -3,6 +3,7 @@ import EachComment from "./EachComment";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Image from 'next/image'
 
 // types
 import commentType from "util/types/gymCommentDataType";
@@ -92,7 +93,12 @@ const CommentSection = () => {
               setIsWriting(true);
             }}
           >
-            댓글 작성하기
+          <Image
+            src="/images/rental/postComment.png"
+            alt="댓글 삭제"
+            width="20"
+            height="20"
+          />
           </button>
         </div>
 

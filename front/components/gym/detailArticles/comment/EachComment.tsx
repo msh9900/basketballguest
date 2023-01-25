@@ -117,22 +117,21 @@ const EachComment = (v: Props) => {
                 ></textarea>
               </div>
               <div className={cls.btnArea}>
-                <button
-                  className={cls.cancelBtn}
-                  onClick={() => {
-                    setIsEditing(false);
-                  }}
-                >
-                  x
-                </button>
-                <button className={cls.submitBtn}>
+                <button className={cls.submitBtn} onClick={updateComment}>
                   <Image
-                    src="/images/rental/submit.png"
+                    src="/images/rental/checked.png"
                     alt="submit"
                     width="20"
-                    height="20"
-                    onClick={updateComment}
-                  />
+                    height="20"/>
+                </button>
+                <button
+                  className={cls.cancelBtn}
+                  onClick={() => {setIsEditing(false);}}>
+                  <Image
+                    src="/images/rental/cancel.png"
+                    alt="cancel"
+                    width="20"
+                    height="20"/>
                 </button>
               </div>
             </div>
@@ -153,13 +152,9 @@ const EachComment = (v: Props) => {
                   </div>
                 </div>
 
-                {/* R */}
                 <div className={cls.bottomRight}>
                   <button
-                    onClick={() => {
-                      setIsEditing(true);
-                    }}
-                  >
+                    onClick={() => {setIsEditing(true);}}>
                     <Image
                       id={v.commentId}
                       src="/images/rental/comment/pencil.png"

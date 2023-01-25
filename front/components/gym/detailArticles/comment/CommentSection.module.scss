@@ -1,6 +1,9 @@
 .CommentSectionLayout{
   button{
     cursor:pointer;
+    &:hover{
+      background-color: blanchedalmond;
+    }
   }
   background-color: white;
   padding:10px;
@@ -16,6 +19,9 @@
     
     button{
       padding:5px;
+      width:60px;
+      border:1px solid black;
+      border-radius:3px;
       // font-weight:bold;
     }
 

@@ -1,24 +1,27 @@
-import EachReview from "./EachReview";
+import AllReviews from "./AllReviews";
 import cls from "./ReviewSection.module.scss";
-import ReviewForm from "./ReviewForm";
+import ReviewPostForm from "./ReviewPostForm";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 interface reviewType {
   articleId: string;
-  id: string;
+  reviewId: string;
+  userId: string;
   userName: string;
   title: string;
   content: string;
   rating: string;
 }
+
 const initialValue = {
   articleId: "",
-  id: "",
+  reviewId: "",
+  userId: "",
   userName: "",
   title: "",
   content: "",
-  rating: "1",
+  rating: "3",
 };
 
 const ReviewSection = () => {
@@ -39,7 +42,7 @@ const ReviewSection = () => {
 
   useEffect(() => {
     getReviewData();
-  }, []);
+  }, [isFetching]);
 
   const router = useRouter();
   const getReviewData = async () => {
@@ -76,14 +79,20 @@ const ReviewSection = () => {
       {!isFetching && (
         <div className={cls.ReviewSectionLayout}>
           <div className={cls.postReviewBtn}>
-            <button onClick={writeReview}>리뷰 작성</button>
-            {isWriting && <ReviewForm setIsWriting={setIsWriting} />}
+            <button onClick={writeReview}>
+              <Image
+                src="/images/rental/posting.png"
+                alt="댓글 수정"
+                width="25"
+                height="25"
+              />
+            </button>
+            {isWriting && <ReviewPostForm setIsWriting={setIsWriting} setIsFetching={setIsFetching}/>}
           </div>
           <div className={cls.reviewInfo}>
-            <p>평균 리뷰 점수 : {avgRatings}</p>
-            <p>전체 리뷰 개수 : {allReviewCount}</p>
+            <p>평균 점수 : {avgRatings} &nbsp;|&nbsp; 리뷰 개수 : {allReviewCount}</p>
           </div>
-          <EachReview reviewData={reviewData} />
+          <AllReviews reviewData={reviewData} setIsFetching={setIsFetching}/>
           <div className={cls.moreReviewBtn}>
             <button>더불러오기...</button>
           </div>
