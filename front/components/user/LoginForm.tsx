@@ -8,7 +8,7 @@ import Button from "../common/Button";
 import { useDispatch } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
-export default function LoginForm(props: any) {
+const LoginForm = () => {
   const [cookie, setCookie] = useCookies(["login"]);
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
@@ -135,4 +135,5 @@ export default function LoginForm(props: any) {
       </form>
     </>
   );
-}
+};
+export default LoginForm;
