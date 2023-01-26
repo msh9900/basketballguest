@@ -6,7 +6,7 @@ import { IsLogin } from "../../redux/modules/login";
 
 let formData: any = new FormData();
 
-export default function Profile() {
+const Profile = () => {
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -190,4 +190,5 @@ export default function Profile() {
       </div>
     </form>
   );
-}
+};
+export default Profile;

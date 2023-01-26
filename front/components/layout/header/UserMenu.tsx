@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
@@ -14,6 +16,13 @@ interface Props {
 }
 
 const UserMenu = (props: Props) => {
+  const userImg = useSelector((state: any) => state.login.userImg);
+
+  // const imgGet = async () => {
+  //   await fetch("http://localhost:4000/profile/headers", {
+  //     body: props.formData,
+  //   });
+  // };
   return (
     <>
       <div className={classes.usercircle}>

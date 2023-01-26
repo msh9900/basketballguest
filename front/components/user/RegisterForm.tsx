@@ -12,7 +12,7 @@ import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import { useDispatch } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
-export default function LoginForm(props: any) {
+const LoginForm = (props: any) => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [email, setEmail] = useState("");
@@ -145,4 +145,5 @@ export default function LoginForm(props: any) {
       </form>
     </>
   );
-}
+};
+export default LoginForm;

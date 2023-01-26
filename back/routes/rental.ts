@@ -126,7 +126,7 @@ router.put('/comment', async (req: Request, res: Response) => {
     commentId: req.body.commentId,
     userId: req.body.userId,
     userName: req.body.userName,
-    date: new Date(),
+    date: new Date().toISOString(),
     contents: req.body.contents,
     isCreater: false,
     replys: req.body.replys,
