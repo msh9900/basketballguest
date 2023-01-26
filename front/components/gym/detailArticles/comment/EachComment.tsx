@@ -132,7 +132,7 @@ const EachComment = (props: Props) => {
             </div>
           )}
 
-          {/* {props.replys && props.replys.map((item, idx) => {
+          {props.replys && props.replys.map((item, idx) => {
             return (
               <div key={Math.random()}>
                 <EachReply
@@ -154,7 +154,7 @@ const EachComment = (props: Props) => {
               setIsFetching={props.setIsFetching}
               toInfo={toInfo}
             />
-          )} */}
+          )}
         </div>
       )}
     </>

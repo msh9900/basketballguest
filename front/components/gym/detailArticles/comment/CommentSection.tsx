@@ -32,7 +32,7 @@ const CommentSection = () => {
       );
       const res = await response.json();
       console.log('res', res);
-      await setCommentData(res.data);
+      await setCommentData(res);
       await setIsFetching(false);
     } catch (err: any) {}
   };
@@ -73,17 +73,20 @@ const CommentSection = () => {
         {commentData &&
           commentData.length > 0 &&
           commentData.map((item, idx) => {
+            const eachCommentData = item.data
             return (
               <EachComment
                 key={"comment:" + idx.toString() + Math.random().toString()}
-                articleId={item.articleId}
-                commentId={item.commentId}
-                userId={item.userId}
-                userName={item.userName}
-                date={item.date}
-                contents={item.contents}
-                isCreater={item.isCreater}
-                replys={item.replys}
+
+                articleId={eachCommentData.articleId}
+                commentId={eachCommentData.commentId}
+                userId={eachCommentData.userId}
+                userName={eachCommentData.userName}
+                date={eachCommentData.date}
+                contents={eachCommentData.contents}
+                isCreater={eachCommentData.isCreater}
+                replys={eachCommentData.replys}
+
                 isFetching={isFetching}
                 setIsFetching={setIsFetching}
                 setIsCommentWriting={setIsCommentWriting}
