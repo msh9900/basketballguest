@@ -142,10 +142,10 @@ const mongoDB = {
   updateReview: async (data: any) => {
     const user = await _user;
     const db = user.db('basket').collection('review');
-    const findMsg = await db.findOne({ 'data.reviewId': data.ReviewId });
+    const findMsg = await db.findOne({ 'data.reviewId': data.reviewId });
     if (findMsg) {
       await db.updateOne(
-        { 'data.reviewId': data.ReviewId },
+        { 'data.reviewId': data.reviewId },
         {
           $set: {
             'data.title': data.title,

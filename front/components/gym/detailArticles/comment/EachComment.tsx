@@ -6,7 +6,8 @@ import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
 import PostReplyForm from "components/gym/detailArticles/reply/PostReplyForm";
-import EditComment from './EditComment';
+import EditComment from "./EditComment";
+
 interface replyType {
   commentId: string;
   replyId: string;
@@ -16,7 +17,7 @@ interface replyType {
   date: string;
   contents: string;
   isCreater: boolean;
-  indentLevel:number;
+  indentLevel: number;
 }
 
 interface Props {
@@ -40,9 +41,9 @@ const EachComment = (props: Props) => {
 
   const ReplyPostFormToggle = (userName: string) => {
     setToInfo(userName);
-    if(isReplyWriting == false){
-      setIsReplyWriting(true)
-      return
+    if (isReplyWriting == false) {
+      setIsReplyWriting(true);
+      return;
     }
     if (toInfo === userName) {
       setIsReplyWriting((prev) => !prev);
@@ -141,21 +142,22 @@ const EachComment = (props: Props) => {
             </div>
           )}
 
-          {props.replys && props.replys.map((item, idx) => {
-            return (
-              <div key={Math.random()}>
-                <EachReply
-                  replys={item}
-                  idx={idx}
-                  isReplyWriting={isReplyWriting}
-                  setIsReplyWriting={setIsReplyWriting}
-                  toInfo={toInfo}
-                  setToInfo={setToInfo}
-                  setIsFetching={props.setIsFetching}
-                />
-              </div>
-            );
-          })}
+          {props.replys &&
+            props.replys.map((item, idx) => {
+              return (
+                <div key={Math.random()}>
+                  <EachReply
+                    replys={item}
+                    idx={idx}
+                    isReplyWriting={isReplyWriting}
+                    setIsReplyWriting={setIsReplyWriting}
+                    toInfo={toInfo}
+                    setToInfo={setToInfo}
+                    setIsFetching={props.setIsFetching}
+                  />
+                </div>
+              );
+            })}
 
           {isReplyWriting && (
             <PostReplyForm

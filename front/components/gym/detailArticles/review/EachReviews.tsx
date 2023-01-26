@@ -1,8 +1,8 @@
 import cls from "./AllReviews.module.scss";
-import ReviewEditForm from './ReviewEditForm';
+import ReviewEditForm from "./ReviewEditForm";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 interface reviewType {
   articleId: string;
@@ -17,7 +17,7 @@ interface reviewType {
 interface Props {
   e: reviewType;
   i: number;
-  setIsFetching:React.Dispatch<React.SetStateAction<boolean>>
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EachReviews = (props: Props) => {
@@ -37,7 +37,7 @@ const EachReviews = (props: Props) => {
       );
       const data = await response.json();
       alert("리뷰 DELETE 성공");
-      props.setIsFetching(true)
+      props.setIsFetching(true);
     } catch (err: any) {
       alert("리뷰 DELETE 실패");
     }
@@ -62,7 +62,6 @@ const EachReviews = (props: Props) => {
     return ele;
   };
 
-
   return (
     <>
       {/* 리뷰 */}
@@ -83,7 +82,9 @@ const EachReviews = (props: Props) => {
               </div>
               <div className={cls.right}>
                 <button
-                  onClick={() => {setIsEditing(true);}}
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}
                 >
                   <Image
                     src="/images/rental/pencil.png"
@@ -111,11 +112,7 @@ const EachReviews = (props: Props) => {
       )}
       {/* 수정 FORM */}
       {isEditing && (
-        <ReviewEditForm
-          e = {props.e}
-          i = {props.i}
-          setIsEditing = {setIsEditing}
-        />
+        <ReviewEditForm e={props.e} i={props.i} setIsEditing={setIsEditing} />
       )}
     </>
   );

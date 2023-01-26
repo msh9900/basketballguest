@@ -12,6 +12,7 @@ interface Props {
 const ReviewPostForm = (props: Props) => {
   const router = useRouter();
   const userName = useSelector((state: any) => state.login.userName);
+  const userId = useSelector((state: any) => state.login.userId);
 
   const cancelWriting = () => {
     props.setIsWriting(false);
@@ -26,24 +27,24 @@ const ReviewPostForm = (props: Props) => {
     const reviewObj = {
       articleId: router.query.articles as string,
       reviewId: (Date.now() + Math.random()).toFixed(13),
+      userId,
       userName,
       title,
       content,
       rating,
     };
 
-    try{
+    try {
       const response = await fetch("http://localhost:4000/rental/review", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reviewObj),
       });
       const data = await response.json();
-      props.setIsFetching(true)
+      props.setIsFetching(true);
       props.setIsWriting(false);
-    }
-    catch (err:any){
-      console.log('REVIEW 생성 실패')
+    } catch (err: any) {
+      console.log("REVIEW 생성 실패");
     }
   };
 
@@ -59,24 +60,42 @@ const ReviewPostForm = (props: Props) => {
   //   setRating(e.target.value);
   // };
 
-  const setRatings = (e:any) => {
-
+  const setRatings = (e: any) => {
     let str = e.target.value;
-    if(str.length === 1) {str += '.0'}
-    setRating(str)
-  }
+    if (str.length === 1) {
+      str += ".0";
+    }
+    setRating(str);
+  };
   return (
     <>
       <div className={cls.ReviewPostFormLayout}>
         <div>
           <div className={cls.titleInputSection}>
-            <input type="text" placeholder='제목' value={title} onChange={onChangeTitle} />
+            <input
+              type="text"
+              placeholder="제목"
+              value={title}
+              onChange={onChangeTitle}
+            />
           </div>
           <div className={cls.contentInputSection}>
-            <textarea value={content} placeholder='내용' onChange={onChangeContent} />
+            <textarea
+              value={content}
+              placeholder="내용"
+              onChange={onChangeContent}
+            />
           </div>
           <div className={cls.contentInputSection}>
-            <input type="range" min="0" max="5" step="0.5" value={rating} onChange={setRatings}/>&nbsp;{rating}점
+            <input
+              type="range"
+              min="0"
+              max="5"
+              step="0.5"
+              value={rating}
+              onChange={setRatings}
+            />
+            &nbsp;{rating}점
           </div>
         </div>
         <div className={cls.ReviewPostFormBtns}>
@@ -103,4 +122,3 @@ const ReviewPostForm = (props: Props) => {
 };
 
 export default ReviewPostForm;
-

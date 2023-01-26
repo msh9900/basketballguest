@@ -68,6 +68,7 @@ router.get('/review', async (req: Request, res: Response) => {
 });
 
 router.post('/review', async (req: Request, res: Response) => {
+  console.log(req.body);
   const data = {
     articleId: req.body.articleId,
     reviewId: req.body.reviewId,
@@ -81,6 +82,7 @@ router.post('/review', async (req: Request, res: Response) => {
   res.send(JSON.stringify(result));
 });
 router.put('/review', async (req: Request, res: Response) => {
+  console.log(req.body);
   const data = {
     articleId: req.body.articleId,
     reviewId: req.body.reviewId,

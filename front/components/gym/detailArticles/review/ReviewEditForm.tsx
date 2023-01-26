@@ -1,7 +1,7 @@
 import cls from "./AllReviews.module.scss";
 import { useState } from "react";
 import Image from "next/image";
-
+import { useSelector } from "react-redux";
 interface reviewType {
   articleId: string;
   reviewId: string;
@@ -15,10 +15,12 @@ interface reviewType {
 interface Props {
   e: reviewType;
   i: number;
-  setIsEditing : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReviewEditForm = (props:Props) => {
+const ReviewEditForm = (props: Props) => {
+  const userId = useSelector((state: any) => state.login.userId);
+  const userName = useSelector((state: any) => state.login.userName);
 
   const [fixedTitle, setFixedTitle] = useState(props.e.data.title);
   const [fixedContent, setFixedContent] = useState(props.e.data.content);
@@ -34,38 +36,38 @@ const ReviewEditForm = (props:Props) => {
     }
     setFixedRatings(str);
   };
-  const titleChangeHandler = (e:any) => {
+  const titleChangeHandler = (e: any) => {
     setFixedTitle(e.target.value);
   };
 
-    // 리뷰 수정
-    const updateReview = async (ele: any) => {
-      const reviewId = ele.reviewId;
-      const updateReviewObj = {
-        articleId: ele.articleId,
-        reviewId: ele.reviewId,
-        userId: ele.userId,
-        userName: ele.userName,
-        title: fixedTitle,
-        content: fixedContent,
-        rating: fixedRatings,
-      };
-  
-      try {
-        const response = await fetch(
-          `http://localhost:4000/rental/review?reviewId=${reviewId}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updateReviewObj),
-          }
-        );
-        const data = await response.json();
-        alert("리뷰 UPDATE 성공");
-      } catch (err: any) {
-        alert("리뷰 UPDATE 실패");
-      }
+  // 리뷰 수정
+  const updateReview = async (ele: any) => {
+    const reviewId = ele.reviewId;
+    const updateReviewObj = {
+      articleId: ele.articleId,
+      reviewId: ele.reviewId,
+      userId: userId,
+      userName: userName,
+      title: fixedTitle,
+      content: fixedContent,
+      rating: fixedRatings,
     };
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/rental/review?reviewId=${reviewId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updateReviewObj),
+        }
+      );
+      const data = await response.json();
+      alert("리뷰 UPDATE 성공");
+    } catch (err: any) {
+      alert("리뷰 UPDATE 실패");
+    }
+  };
 
   return (
     <>
@@ -84,7 +86,7 @@ const ReviewEditForm = (props:Props) => {
         <div className={cls.editControlBtns}>
           <button
             onClick={() => {
-              updateReview(props.e);
+              updateReview(props.e.data);
             }}
           >
             <Image

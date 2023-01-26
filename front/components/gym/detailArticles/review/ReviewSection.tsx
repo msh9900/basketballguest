@@ -3,7 +3,9 @@ import cls from "./ReviewSection.module.scss";
 import ReviewPostForm from "./ReviewPostForm";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import Image from "next/image";
+
 interface reviewType {
   articleId: string;
   reviewId: string;
@@ -87,12 +89,20 @@ const ReviewSection = () => {
                 height="25"
               />
             </button>
-            {isWriting && <ReviewPostForm setIsWriting={setIsWriting} setIsFetching={setIsFetching}/>}
+            {isWriting && (
+              <ReviewPostForm
+                setIsWriting={setIsWriting}
+                setIsFetching={setIsFetching}
+              />
+            )}
           </div>
           <div className={cls.reviewInfo}>
-            <p>평균 점수 : {avgRatings} &nbsp;|&nbsp; 리뷰 개수 : {allReviewCount}</p>
+            <p>
+              평균 점수 : {avgRatings} &nbsp;|&nbsp; 리뷰 개수 :{" "}
+              {allReviewCount}
+            </p>
           </div>
-          <AllReviews reviewData={reviewData} setIsFetching={setIsFetching}/>
+          <AllReviews reviewData={reviewData} setIsFetching={setIsFetching} />
           <div className={cls.moreReviewBtn}>
             <button>더불러오기...</button>
           </div>
