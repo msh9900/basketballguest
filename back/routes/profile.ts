@@ -24,13 +24,10 @@ const limits = {
 };
 const upload = multer({ storage, limits });
 // 헤더에서 이미지 가져오기
-router.get('/headers', (req: Request, res: Response) => {
-  res.send(req.file);
-});
 
 // 이미지 가져오기
 router.get('/', (req: Request, res: Response) => {
-  res.send(req.files);
+  res.send(req.file);
 });
 
 router.post(

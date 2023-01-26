@@ -11,7 +11,9 @@ interface Props {
   setIsFetching : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReviewEditForm = (props:Props) => {
+const ReviewEditForm = (props: Props) => {
+  const userId = useSelector((state: any) => state.login.userId);
+  const userName = useSelector((state: any) => state.login.userName);
 
   const [fixedTitle, setFixedTitle] = useState(props.eachReview.title);
   const [fixedContent, setFixedContent] = useState(props.eachReview.content);
@@ -27,7 +29,7 @@ const ReviewEditForm = (props:Props) => {
     if (str.length === 1) str += ".0";
     setFixedRatings(str);
   };
-  const titleChangeHandler = (e:any) => {
+  const titleChangeHandler = (e: any) => {
     setFixedTitle(e.target.value);
   };
 

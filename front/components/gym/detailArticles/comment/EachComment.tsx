@@ -31,9 +31,9 @@ const EachComment = (props: Props) => {
 
   const ReplyPostFormToggle = (userName: string) => {
     setToInfo(userName);
-    if(isReplyWriting == false){
-      setIsReplyWriting(true)
-      return
+    if (isReplyWriting == false) {
+      setIsReplyWriting(true);
+      return;
     }
     if (toInfo === userName) {
       setIsReplyWriting((prev) => !prev);

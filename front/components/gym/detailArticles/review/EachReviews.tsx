@@ -13,7 +13,7 @@ import renderStars from './reviewUtils/renderStars';
 interface Props {
   eachReview: reviewType;
   i: number;
-  setIsFetching:React.Dispatch<React.SetStateAction<boolean>>
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EachReviews = (props: Props) => {
@@ -47,7 +47,9 @@ const EachReviews = (props: Props) => {
               </div>
               <div className={cls.right}>
                 <button
-                  onClick={() => {setIsEditing(true);}}
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}
                 >
                   <Image
                     src="/images/rental/pencil.png"

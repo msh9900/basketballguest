@@ -10,6 +10,10 @@ interface Props {
 }
 
 const AllReviews = (props: Props) => {
+  // useEffect(() => {
+  //   console.log("props.reviewData", props.reviewData);
+  // });
+
   return (
     <div className={cls.AllReviewsLayout}>
       {props.allReviewData &&

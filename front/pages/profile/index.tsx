@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
-let formData = require("form-data");
+let formData: any = new FormData();
+// let formData = require("form-data");
 
 const Profile = () => {
   const stateId = useSelector((state: any) => state.login.userId);
@@ -88,13 +89,11 @@ const Profile = () => {
     }
     if (data) {
       alert("프로필 변경 완료");
-      router.push("/");
       dispatch(IsLogin(data));
-      return data;
+      router.push("/");
+
+      // return data;
     }
-    const getUrl = await fetch("http://localhost:4000/profile", {
-      body: formData,
-    });
   }
 
   const ImgPop = (v: string) => {
@@ -127,7 +126,7 @@ const Profile = () => {
 
         {userImg === "" ? (
           <img
-            alt="profileImg"
+            alt="profileBasicImg"
             src={defaultStateImg}
             className={classes.imgcurrent}
             onClick={() => {
