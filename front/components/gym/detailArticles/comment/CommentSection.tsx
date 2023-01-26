@@ -21,6 +21,7 @@ const CommentSection = () => {
 
   useEffect(() => {
     getCommentData();
+    console.log('isFetching is changed', isFetching);
   }, [isFetching]);
 
   const getCommentData = async () => {
@@ -30,6 +31,7 @@ const CommentSection = () => {
         `http://localhost:4000/rental/comment?pid=${pId}`
       );
       const res = await response.json();
+      console.log('res', res);
       await setCommentData(res.data);
       await setIsFetching(false);
     } catch (err: any) {}
@@ -45,7 +47,8 @@ const CommentSection = () => {
 
   return (
     <>
-      <div className={cls.CommentSectionLayout}>
+      {!isFetching && <>
+        <div className={cls.CommentSectionLayout}>
         <div className={cls.postComment}>
           <button
             onClick={postCommentBtnClicked}
@@ -92,6 +95,7 @@ const CommentSection = () => {
           <button>더 불러오기</button>
         </div>
       </div>
+      </>}
     </>
   );
 };

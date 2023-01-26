@@ -29,6 +29,7 @@ const CommentPostForm = (props: Props) => {
       isCreater: false,
       replys: [],
     };
+    console.log('postDataforComment', postDataforComment)
     props.setIsFetching(true);
     try {
       await fetch("http://localhost:4000/rental/comment", {

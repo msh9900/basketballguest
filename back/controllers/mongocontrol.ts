@@ -190,7 +190,7 @@ const mongoDB = {
     const findarticleId = await articledb.findOne({
       'data.userId': data.userId,
     });
-    if (findarticleId.data.userId === findCommentId.data.userId) {
+    if (findarticleId?.data.userId === findCommentId?.data.userId) {
       await commentdb.update(
         { 'data.userId': data.userId },
         {
