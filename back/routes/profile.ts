@@ -30,7 +30,7 @@ router.get('/headers', (req: Request, res: Response) => {
 
 // 이미지 가져오기
 router.get('/', (req: Request, res: Response) => {
-  res.send(req.file);
+  res.send(req.files);
 });
 
 router.post(

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
-let formData: any = new FormData();
+let formData = require("form-data");
 
 const Profile = () => {
   const stateId = useSelector((state: any) => state.login.userId);
