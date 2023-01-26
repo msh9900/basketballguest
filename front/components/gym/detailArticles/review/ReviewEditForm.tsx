@@ -2,13 +2,13 @@ import cls from "./AllReviews.module.scss";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import updateReview from './reviewUtils/updateReview';
-import reviewType from 'components/gym/posting/utils/reviewType';
+import updateReview from "./reviewUtils/updateReview";
+import reviewType from "components/gym/posting/utils/reviewType";
 interface Props {
   eachReview: reviewType;
   i: number;
-  setIsEditing : React.Dispatch<React.SetStateAction<boolean>>;
-  setIsFetching : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ReviewEditForm = (props: Props) => {
@@ -18,8 +18,6 @@ const ReviewEditForm = (props: Props) => {
   const [fixedTitle, setFixedTitle] = useState(props.eachReview.title);
   const [fixedContent, setFixedContent] = useState(props.eachReview.content);
   const [fixedRatings, setFixedRatings] = useState("3.0");
-  const userId = useSelector((state: any) => state.login.userId);
-  const userName = useSelector((state: any) => state.login.userName);
 
   const contentChangeHandler = (e: any) => {
     setFixedContent(e.target.value);
@@ -35,7 +33,7 @@ const ReviewEditForm = (props: Props) => {
 
   // REVIEW UPDATE API LOADER
   const loadReviewUpdater = async (eachReview: reviewType) => {
-    const reviewId = eachReview.reviewId
+    const reviewId = eachReview.reviewId;
     const updateReviewObj = {
       articleId: eachReview.articleId,
       reviewId: reviewId,
@@ -45,15 +43,15 @@ const ReviewEditForm = (props: Props) => {
       content: fixedContent,
       rating: fixedRatings,
     };
-    props.setIsFetching(true)
+    props.setIsFetching(true);
     try {
-      await updateReview(reviewId, updateReviewObj)
+      await updateReview(reviewId, updateReviewObj);
       alert("리뷰 UPDATE 성공");
     } catch (err: any) {
       alert("리뷰 UPDATE 실패");
     }
-    props.setIsFetching(false)
-  }
+    props.setIsFetching(false);
+  };
 
   return (
     <>
