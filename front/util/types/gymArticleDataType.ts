@@ -18,7 +18,7 @@ interface gymArticleDataType {
   contact: string;
   address: addressType[];
   price: string;
-  openingHours: string[];
+  openingHours: string;
   openingPeriod: string[];
   openingDays: openingDaysType[];
   userInfo: userInfoType;
