@@ -17,18 +17,12 @@ interface Props {
 
 const UserMenu = (props: Props) => {
   const userImg = useSelector((state: any) => state.login.userImg);
-
-  // const imgGet = async () => {
-  //   await fetch("http://localhost:4000/profile/headers", {
-  //     body: props.formData,
-  //   });
-  // };
   return (
     <>
       <div className={classes.usercircle}>
         <Tooltip title="Open settings">
           <IconButton onClick={props.handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="" />
+            <Avatar alt="Remy Sharp" src={userImg} />
           </IconButton>
         </Tooltip>
 
