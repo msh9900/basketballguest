@@ -12,7 +12,7 @@ import commentType from "util/types/gymCommentDataType";
 const CommentSection = () => {
 
   const [commentData, setCommentData] = useState<commentType[]>([]);
-  const [isWriting, setIsWriting] = useState(false);
+  const [isCommentWriting, setIsCommentWriting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
 
   const stateId = useSelector((state: any) => state.login.userId);
@@ -28,8 +28,8 @@ const CommentSection = () => {
       const response = await fetch(
         `http://localhost:4000/rental/comment?pid=${pId}`
       );
-      const data = await response.json();
-      await setCommentData(data);
+      const res = await response.json();
+      await setCommentData(res.data);
       await setIsFetching(false);
     } catch (err: any) {}
   };
@@ -39,7 +39,7 @@ const CommentSection = () => {
       alert('로그인이 필요합니다.')
       return
     }
-    setIsWriting(true);
+    setIsCommentWriting(true);
   }
 
   return (
@@ -58,31 +58,31 @@ const CommentSection = () => {
           </button>
         </div>
 
-        {isWriting && (
+        {isCommentWriting && (
           <CommentPostForm
             isFetching={isFetching}
             setIsFetching={setIsFetching}
-            setIsWriting={setIsWriting}
+            setIsCommentWriting={setIsCommentWriting}
           />
         )}
 
         {commentData &&
           commentData.length > 0 &&
-          commentData.map((v, idx) => {
+          commentData.map((item, idx) => {
             return (
               <EachComment
                 key={"comment:" + idx.toString() + Math.random().toString()}
-                articleId={v.data.articleId}
-                commentId={v.data.commentId}
-                userId={v.data.userId}
-                userName={v.data.userName}
-                date={v.data.date}
-                contents={v.data.contents}
-                isCreater={v.data.isCreater}
-                replys={v.data.replys}
+                articleId={item.articleId}
+                commentId={item.commentId}
+                userId={item.userId}
+                userName={item.userName}
+                date={item.date}
+                contents={item.contents}
+                isCreater={item.isCreater}
+                replys={item.replys}
                 isFetching={isFetching}
                 setIsFetching={setIsFetching}
-                setIsWriting={setIsWriting}
+                setIsCommentWriting={setIsCommentWriting}
               />
             );
           })}

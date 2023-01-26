@@ -40,6 +40,7 @@ const ReviewPostForm = (props: Props) => {
       });
       const data = await response.json();
       props.setIsFetching(true)
+      props.setIsWriting(false);
     }
     catch (err:any){
       console.log('REVIEW 생성 실패')

@@ -7,7 +7,7 @@ import Image from "next/image";
 interface Props {
   isFetching: boolean;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsWriting: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CommentPostForm = (props: Props) => {
@@ -38,7 +38,7 @@ const CommentPostForm = (props: Props) => {
       })
       alert("댓글 작성 성공");
       await props.setIsFetching(false);
-      await props.setIsWriting(false);
+      await props.setIsCommentWriting(false);
 
     } catch (err: any) {
       alert("댓글 작성 실패");
@@ -75,7 +75,7 @@ const CommentPostForm = (props: Props) => {
           <div>
             <button
               onClick={() => {
-                props.setIsWriting(false);
+                props.setIsCommentWriting(false);
               }}
             >
               <Image
