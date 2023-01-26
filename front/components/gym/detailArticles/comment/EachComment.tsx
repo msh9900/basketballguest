@@ -1,23 +1,14 @@
 // style
 import cls from "./EachComment.module.scss";
 // library
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
 import PostReplyForm from "components/gym/detailArticles/reply/PostReplyForm";
 import EditComment from './EditComment';
-interface replyType {
-  commentId: string;
-  replyId: string;
-  to: string;
-  userId: string;
-  userName: string;
-  date: string;
-  contents: string;
-  isCreater: boolean;
-  indentLevel:number;
-}
+// Type
+import replyType from 'components/gym/posting/utils/replyType';
 
 interface Props {
   articleId: string;
@@ -141,7 +132,7 @@ const EachComment = (props: Props) => {
             </div>
           )}
 
-          {props.replys && props.replys.map((item, idx) => {
+          {/* {props.replys && props.replys.map((item, idx) => {
             return (
               <div key={Math.random()}>
                 <EachReply
@@ -163,7 +154,7 @@ const EachComment = (props: Props) => {
               setIsFetching={props.setIsFetching}
               toInfo={toInfo}
             />
-          )}
+          )} */}
         </div>
       )}
     </>

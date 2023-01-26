@@ -1,10 +1,11 @@
 import cls from "./CommentSection.module.scss";
-import EachComment from "./EachComment";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import CommentPostForm from './CommentPostForm';
-import Image from 'next/image'
 import { useSelector } from "react-redux";
+import Image from 'next/image'
+
+import PostComment from './PostComment';
+import EachComment from "./EachComment";
 
 // types
 import commentType from "util/types/gymCommentDataType";
@@ -59,7 +60,7 @@ const CommentSection = () => {
         </div>
 
         {isCommentWriting && (
-          <CommentPostForm
+          <PostComment
             isFetching={isFetching}
             setIsFetching={setIsFetching}
             setIsCommentWriting={setIsCommentWriting}

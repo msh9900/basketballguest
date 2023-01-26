@@ -1,71 +1,57 @@
 import cls from "./AllReviews.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-
-interface reviewType {
-  articleId: string;
-  reviewId: string;
-  userId: string;
-  userName: string;
-  title: string;
-  content: string;
-  rating: string;
-}
-
+import { useSelector } from "react-redux";
+import updateReview from './reviewUtils/updateReview';
+import reviewType from 'components/gym/posting/utils/reviewType';
 interface Props {
-  e: reviewType;
+  eachReview: reviewType;
   i: number;
   setIsEditing : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsFetching : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ReviewEditForm = (props:Props) => {
 
-  const [fixedTitle, setFixedTitle] = useState(props.e.data.title);
-  const [fixedContent, setFixedContent] = useState(props.e.data.content);
+  const [fixedTitle, setFixedTitle] = useState(props.eachReview.title);
+  const [fixedContent, setFixedContent] = useState(props.eachReview.content);
   const [fixedRatings, setFixedRatings] = useState("3.0");
+  const userId = useSelector((state: any) => state.login.userId);
+  const userName = useSelector((state: any) => state.login.userName);
 
   const contentChangeHandler = (e: any) => {
     setFixedContent(e.target.value);
   };
   const fixRatings = (e: any) => {
     let str = e.target.value;
-    if (str.length === 1) {
-      str += ".0";
-    }
+    if (str.length === 1) str += ".0";
     setFixedRatings(str);
   };
   const titleChangeHandler = (e:any) => {
     setFixedTitle(e.target.value);
   };
 
-    // 리뷰 수정
-    const updateReview = async (ele: any) => {
-      const reviewId = ele.reviewId;
-      const updateReviewObj = {
-        articleId: ele.articleId,
-        reviewId: ele.reviewId,
-        userId: ele.userId,
-        userName: ele.userName,
-        title: fixedTitle,
-        content: fixedContent,
-        rating: fixedRatings,
-      };
-  
-      try {
-        const response = await fetch(
-          `http://localhost:4000/rental/review?reviewId=${reviewId}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updateReviewObj),
-          }
-        );
-        const data = await response.json();
-        alert("리뷰 UPDATE 성공");
-      } catch (err: any) {
-        alert("리뷰 UPDATE 실패");
-      }
+  // REVIEW UPDATE API LOADER
+  const loadReviewUpdater = async (eachReview: reviewType) => {
+    const reviewId = eachReview.reviewId
+    const updateReviewObj = {
+      articleId: eachReview.articleId,
+      reviewId: reviewId,
+      userId: userId,
+      userName: userName,
+      title: fixedTitle,
+      content: fixedContent,
+      rating: fixedRatings,
     };
+    props.setIsFetching(true)
+    try {
+      await updateReview(reviewId, updateReviewObj)
+      alert("리뷰 UPDATE 성공");
+    } catch (err: any) {
+      alert("리뷰 UPDATE 실패");
+    }
+    props.setIsFetching(false)
+  }
 
   return (
     <>
@@ -84,7 +70,7 @@ const ReviewEditForm = (props:Props) => {
         <div className={cls.editControlBtns}>
           <button
             onClick={() => {
-              updateReview(props.e);
+              loadReviewUpdater(props.eachReview);
             }}
           >
             <Image

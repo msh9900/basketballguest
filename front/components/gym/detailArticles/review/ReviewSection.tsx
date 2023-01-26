@@ -4,70 +4,48 @@ import ReviewPostForm from "./ReviewPostForm";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-interface reviewType {
-  articleId: string;
-  reviewId: string;
-  userId: string;
-  userName: string;
-  title: string;
-  content: string;
-  rating: string;
-}
-
-const initialValue = {
-  articleId: "",
-  reviewId: "",
-  userId: "",
-  userName: "",
-  title: "",
-  content: "",
-  rating: "3",
-};
+import getReview from './reviewUtils/getReview';
 
 const ReviewSection = () => {
   const [isWriting, setIsWriting] = useState(false);
   const [avgRatings, setAvgRatings] = useState(0);
   const [allReviewCount, setAllReviewCount] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
+  const [allReviewData, setAllReviewData] = useState<[]>([]);
+  const router = useRouter();
 
-  const writeReview = () => {
-    if (isWriting) {
-      setIsWriting(false);
-    }
-    if (!isWriting) {
-      setIsWriting(true);
-    }
-  };
-  const [reviewData, setReviewData] = useState<reviewType[]>([initialValue]);
-
+  // 패치마다 새로 GET REVIEW 호출
   useEffect(() => {
-    getReviewData();
+    getallReviewData();
   }, [isFetching]);
 
-  const router = useRouter();
-  const getReviewData = async () => {
+  // 리뷰 포스트 폼 토글
+  const writeReview = () => {
+    if (isWriting) setIsWriting(false);
+    if (!isWriting) setIsWriting(true);
+  };
+
+  // GET REVIEW API LOADER
+  const getallReviewData = async () => {
     try {
       const pId = router.query.articles as string;
-      const response = await fetch(
-        `http://localhost:4000/rental/review?pid=${pId}`
-      );
-      const dataArray = await response.json();
-      setReviewData(dataArray);
+      const dataArray = await getReview(pId)
+      setAllReviewData(dataArray);
 
       // 평균 리뷰 점수 계산
       let ratingsArr: number[] = [];
-      reviewData.forEach((ele: reviewType) => {
-        const eachRatings = ele.data.rating.toString();
+      allReviewData.forEach((item:any) => {
+        const eachRatings = item.data.rating.toString();
         const ratingvalue = parseInt(eachRatings);
         ratingsArr.push(ratingvalue);
       });
 
       const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
-      const avgValue = (ratingsSum / reviewData.length) as number;
+      const avgValue = (ratingsSum / allReviewData.length) as number;
       setAvgRatings(Number(avgValue.toFixed(2)));
 
       // 전체 리뷰 개수
-      setAllReviewCount(reviewData.length);
+      setAllReviewCount(allReviewData.length);
     } catch (err: any) {
       console.log("err", err);
     }
@@ -92,7 +70,7 @@ const ReviewSection = () => {
           <div className={cls.reviewInfo}>
             <p>평균 점수 : {avgRatings} &nbsp;|&nbsp; 리뷰 개수 : {allReviewCount}</p>
           </div>
-          <AllReviews reviewData={reviewData} setIsFetching={setIsFetching}/>
+          <AllReviews allReviewData={allReviewData} setIsFetching={setIsFetching}/>
           <div className={cls.moreReviewBtn}>
             <button>더불러오기...</button>
           </div>

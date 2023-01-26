@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import postReview from './reviewUtils/postReview';
 
 interface Props {
   setIsWriting: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,9 +21,9 @@ const ReviewPostForm = (props: Props) => {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState("3.0");
 
-  const postWriting = async () => {
-    // 유효성검사
-    // ...
+  // load POST REVIEW API
+  const loadReviewPostApi = async () => {
+    await props.setIsFetching(false)
     const reviewObj = {
       articleId: router.query.articles as string,
       reviewId: (Date.now() + Math.random()).toFixed(13),
@@ -31,23 +32,16 @@ const ReviewPostForm = (props: Props) => {
       content,
       rating,
     };
-
     try{
-      const response = await fetch("http://localhost:4000/rental/review", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reviewObj),
-      });
-      const data = await response.json();
-      props.setIsFetching(true)
-      props.setIsWriting(false);
+      await postReview(reviewObj)
     }
     catch (err:any){
       console.log('REVIEW 생성 실패')
     }
-  };
+    await props.setIsFetching(true)
+    await props.setIsWriting(false);
+  }
 
-  const checkReviewPostFormValid = () => {};
 
   const onChangeTitle = (e: any) => {
     setTitle(e.target.value);
@@ -55,9 +49,6 @@ const ReviewPostForm = (props: Props) => {
   const onChangeContent = (e: any) => {
     setContent(e.target.value);
   };
-  // const onChangeRating = (e: any) => {
-  //   setRating(e.target.value);
-  // };
 
   const setRatings = (e:any) => {
 
@@ -80,7 +71,7 @@ const ReviewPostForm = (props: Props) => {
           </div>
         </div>
         <div className={cls.ReviewPostFormBtns}>
-          <button onClick={postWriting}>
+          <button onClick={loadReviewPostApi}>
             <Image
               src="/images/rental/checked.png"
               alt="완료"
