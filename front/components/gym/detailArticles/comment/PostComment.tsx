@@ -17,29 +17,27 @@ const CommentPostForm = (props: Props) => {
   const [writingText, setWritingText] = useState("");
 
   const postGymComment = async () => {
-    if(stateId == ''){ 
-      alert('로그인 필요')
+    if (stateId == "") {
+      alert("로그인 필요");
     }
     const postDataforComment = {
       articleId: router.query.articles as string,
       userId: stateId,
       userName: stateUserName,
-      date: "2023-01-01",
       contents: writingText,
       isCreater: false,
       replys: [],
     };
-    console.log('postDataforComment', postDataforComment)
+    console.log("postDataforComment", postDataforComment);
     props.setIsFetching(true);
     try {
       await fetch("http://localhost:4000/rental/comment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postDataforComment),
-      })
+      });
       await props.setIsFetching(false);
       await props.setIsCommentWriting(false);
-
     } catch (err: any) {
       alert("댓글 작성 실패");
     }
@@ -53,7 +51,6 @@ const CommentPostForm = (props: Props) => {
   const textAreaHandler = (e: any) => {
     setWritingText(e.target.value);
   };
-
 
   return (
     <>

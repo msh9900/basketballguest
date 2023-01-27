@@ -3,12 +3,12 @@ import cls from "./AllReviews.module.scss";
 import { useState } from "react";
 import Image from "next/image";
 // type
-import reviewType from 'components/gym/posting/utils/reviewType';
+import reviewType from "components/gym/posting/utils/reviewType";
 // comp
-import ReviewEditForm from './ReviewEditForm';
+import ReviewEditForm from "./ReviewEditForm";
 // util
-import deleteReview from './reviewUtils/deleteReview';
-import renderStars from './reviewUtils/renderStars';
+import deleteReview from "./reviewUtils/deleteReview";
+import renderStars from "./reviewUtils/renderStars";
 
 interface Props {
   eachReview: reviewType;
@@ -22,17 +22,21 @@ const EachReviews = (props: Props) => {
   // DELETE Review API Loader
   const loadDeleteReview = async (eachReview: any) => {
     const reviewId = eachReview.reviewId;
-    await props.setIsFetching(false)
-    try{deleteReview(reviewId)}
-    catch(err:any){}
-    await props.setIsFetching(true)
-  }
+    await props.setIsFetching(false);
+    try {
+      deleteReview(reviewId);
+    } catch (err: any) {}
+    await props.setIsFetching(true);
+  };
 
   return (
     <>
       {/* 기본 모드 */}
       {!isEditing && (
-        <div key={JSON.stringify(props.eachReview)} className={cls.reviewContents}>
+        <div
+          key={JSON.stringify(props.eachReview)}
+          className={cls.reviewContents}
+        >
           <div className={cls.detailInfos}>
             <div className={cls.topSection}>
               <div className={cls.title}> {props.eachReview.title}</div>
@@ -42,7 +46,9 @@ const EachReviews = (props: Props) => {
             </div>
             <div className={cls.bottomSection}>
               <div className={cls.left}>
+                <span>{props.eachReview.userId}</span> &nbsp;
                 <span>{props.eachReview.userName}</span> &nbsp;
+                <span>{props.eachReview.createdAt}</span> &nbsp;
                 <span>{renderStars(props.eachReview.rating)}</span> &nbsp;
               </div>
               <div className={cls.right}>
@@ -78,10 +84,10 @@ const EachReviews = (props: Props) => {
       {/* 수정 모드 */}
       {isEditing && (
         <ReviewEditForm
-          eachReview = {props.eachReview}
-          i = {props.i}
-          setIsEditing = {setIsEditing}
-          setIsFetching = {props.setIsFetching}
+          eachReview={props.eachReview}
+          i={props.i}
+          setIsEditing={setIsEditing}
+          setIsFetching={props.setIsFetching}
         />
       )}
     </>
