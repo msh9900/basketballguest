@@ -32,16 +32,14 @@ const AllArticles = () => {
                 key={Date.now() + idx}
                 className={cls.boxItem}
                 onClick={() => {
-                  moveToDetailPage(item.data.articleId);
+                  moveToDetailPage(item.articleId);
                 }}
               >
                 <li className={cls.li}>
                   <div className={cls.imgBox}></div>
-                  <div className={cls.title}>제목 : {item.data.title}</div>
-                  <div className={cls.price}>
-                    대관료 : {item.data.price}원/시간
-                  </div>
-                  <div className={cls.content}>내용 : {item.data.content}</div>
+                  <div className={cls.title}>제목 : {item.title}</div>
+                  <div className={cls.price}>대관료 : {item.price}원/시간</div>
+                  <div className={cls.content}>내용 : {item.content}</div>
                 </li>
               </div>
             );
