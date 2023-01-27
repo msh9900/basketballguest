@@ -1,20 +1,24 @@
 import cls from "./PostReplyForm.module.scss";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-interface ReplyPostFormToggle {
-  (userName: string): void;
-}
 interface Props {
-  indent: number;
+  // value for post
   commentId: string;
   toInfo: string;
+
+  // for toggle 
   setIsReplyWriting: React.Dispatch<React.SetStateAction<boolean>>;
+  // for rerender
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+
+  // indent
+  indent:number;
 }
 
 const PostReplyForm = (props: Props) => {
+
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
   const router = useRouter();
@@ -32,7 +36,7 @@ const PostReplyForm = (props: Props) => {
       to: props.toInfo,
       userId: stateId,
       userName: stateName,
-      indentLevel: props.indent,
+      indentLevel: props.indent
     };
 
     try {
@@ -49,11 +53,21 @@ const PostReplyForm = (props: Props) => {
     }
   };
 
+  const separateFront = (text: string) => {
+    return text.split("_")[0];
+  };
+  const separateBack = (text: string) => {
+    const wholeText = text.split("_")[1];
+    if (wholeText?.length > 10) return wholeText.slice(0, 10);
+    return wholeText;
+  };
+
   return (
     <>
       <div className={cls.postReplyFormLayout}>
         <div className={cls.textareaDiv}>
-          <span className={cls.toInfo}>@{props.toInfo}</span>
+          <span className={cls.toInfo}>@{separateFront(props.toInfo)}</span>
+          <span className={cls.toText}>{separateBack(props.toInfo)}</span>
           <textarea value={textContent} onChange={onChangeText} />
         </div>
         <div className={cls.buttons}>

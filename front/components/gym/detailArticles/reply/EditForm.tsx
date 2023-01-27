@@ -1,25 +1,12 @@
 import cls from "./EachReply.module.scss";
 import Image from 'next/image'
-
-interface replyType {
-  commentId: string;
-  replyId: string;
-  to: string;
-  userId: string;
-  userName: string;
-  date: string;
-  contents: string;
-  isCreater: boolean;
-  indentLevel:number;
-}
-
+import replyType from 'util/types/gymReplyType';
 interface Props{
   replys:replyType
   setIsReplyEditing:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditForm = (props:Props) => {
-  console.log('indentLevel', props.replys.indentLevel);
   return ( <>
       <div className={cls.replyCommentEditForm}>
       { props.replys && props.replys.to.length !== 0 && <span className={cls.to}> to {props.replys.to}</span> }

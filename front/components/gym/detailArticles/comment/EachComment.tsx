@@ -11,6 +11,7 @@ import EditComment from "./EditComment";
 import replyType from "util/types/gymReplyType";
 
 interface Props {
+  // value for post
   articleId: string;
   commentId: string;
   userId: string;
@@ -19,9 +20,13 @@ interface Props {
   contents: string;
   isCreater: boolean;
   isFetching: boolean;
-  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
   replys: replyType[];
+
+  // activate rerender
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+
+  // toggle
+  setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EachComment = (props: Props) => {
@@ -36,8 +41,8 @@ const EachComment = (props: Props) => {
 
   const [isCommentEditing, setIsCommentEditing] = useState(false); // comment
 
-  const ReplyPostFormToggle = (userName: string) => {
-    setToInfo(userName);
+  const ReplyPostFormToggle = (userName: string, contents: string) => {
+    setToInfo(userName + "_" + contents);
     if (isReplyWriting == false) {
       setIsReplyWriting(true);
       return;
@@ -50,14 +55,13 @@ const EachComment = (props: Props) => {
   const deleteComment = async (e: any) => {
     const commentId = e.target.id;
     try {
-      const response = await fetch(
+      await fetch(
         `http://localhost:4000/rental/comment?commentId=${commentId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         }
       );
-      const data = await response.json();
       await props.setIsFetching(true);
     } catch (err: any) {
       console.log("댓글 삭제 실패", err);
@@ -84,6 +88,10 @@ const EachComment = (props: Props) => {
           {/* 댓글 평상시 */}
           {!isCommentEditing && (
             <div className={cls.originalComment} id={props.commentId}>
+              <div className={props.isCreater === true ? cls.creater : "vvv"}>
+                <button className={cls.userName}>{props.userName}</button>
+              </div>
+
               <div className={cls.topSection}>
                 <div className={cls.topLeft}>{props.contents}</div>
                 <div className={cls.topRight}></div>
@@ -91,12 +99,7 @@ const EachComment = (props: Props) => {
 
               <div className={cls.bottomSection}>
                 <div className={cls.bottomLeft}>
-                  <div
-                    className={props.isCreater === true ? cls.creater : "vvv"}
-                  >
-                    <button className={cls.userName}>{props.userName}</button>
-                    <span className={cls.time}>{props.createdAt}</span>
-                  </div>
+                  <span className={cls.time}>{props.createdAt}</span>
                 </div>
 
                 <div className={cls.bottomRight}>
@@ -124,7 +127,7 @@ const EachComment = (props: Props) => {
                   </button>
                   <button
                     onClick={() => {
-                      ReplyPostFormToggle(props.userName);
+                      ReplyPostFormToggle(props.userName, props.contents);
                     }}
                   >
                     <Image
@@ -147,6 +150,7 @@ const EachComment = (props: Props) => {
                     replys={item}
                     commentId={props.commentId}
                     setIndent={setIndent}
+                    indent={indent}
                     idx={idx}
                     isReplyWriting={isReplyWriting}
                     setIsReplyWriting={setIsReplyWriting}
@@ -163,8 +167,6 @@ const EachComment = (props: Props) => {
               setIsFetching={props.setIsFetching}
               toInfo={toInfo}
               commentId={props.commentId}
-              // setIndent={setIndent}
-              // indentLevel
               indent={indent}
             />
           )}

@@ -13,7 +13,6 @@ const CommentSection = () => {
   const [commentData, setCommentData] = useState<commentType[]>([]);
   const [isCommentWriting, setIsCommentWriting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
-
   const stateId = useSelector((state: any) => state.login.userId);
   const router = useRouter();
 
@@ -28,6 +27,7 @@ const CommentSection = () => {
         `http://localhost:4000/rental/comment?pid=${pId}`
       );
       const res = await response.json();
+      // console.log('res', res);
       await setCommentData(res);
       await setIsFetching(false);
     } catch (err: any) {}

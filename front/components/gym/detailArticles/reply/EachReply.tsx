@@ -2,9 +2,10 @@ import cls from "./EachReply.module.scss";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import EditForm from "./EditForm";
-import replyType from 'util/types/gymReplyType';
+import replyType from "util/types/gymReplyType";
 
 interface Props {
+  indent: number;
   setIndent: React.Dispatch<React.SetStateAction<number>>;
   replys: replyType;
   commentId: string;
@@ -23,17 +24,16 @@ const calcMargin = (idx: number) => {
 };
 
 const EachReply = (props: Props) => {
-
-  useEffect(()=>{
-    // console.log(props)
-  }, [])
-
   const [isReplyEditing, setIsReplyEditing] = useState(false);
 
-  const replyFormToggler = (userName: string) => {
+  const replyFormToggler = (
+    userName: string,
+    indentValue: number,
+    preText: string
+  ) => {
     // 답글 대상에 대한 정보 입력
-    props.setToInfo(userName);
-    props.setIndent(props.replys.indentLevel + 1);
+    props.setToInfo(userName + "_" + preText);
+    props.setIndent(indentValue + 1);
 
     // 닫힘 => 무조건 열기
     if (props.isReplyWriting === false) {
@@ -48,6 +48,15 @@ const EachReply = (props: Props) => {
     props.setIsReplyWriting(false);
   };
 
+  const separateFront = (text: string) => {
+    return text.split("_")[0];
+  };
+  const separateBack = (text: string) => {
+    const wholeText = text.split("_")[1];
+    if (wholeText?.length > 10) return wholeText.slice(0, 10);
+    return wholeText;
+  };
+
   // 편집
   if (isReplyEditing) {
     return (
@@ -59,62 +68,67 @@ const EachReply = (props: Props) => {
   else
     return (
       <>
-        <div className={cls.replyLayout} key={Math.random()} style={{}}>
-          {/* <div style={{ marginLeft: calcMargin(props.idx) }}> */}
-          <div>
-            <div className={cls.contents}>
-              <span className={cls.to}>ㄴ@{props.replys.to}</span>
-              <span className={cls.contents}>{props.replys.contents}</span>
-              <span>들여쓰기레벨 : {props.replys.indentLevel}</span>
+        <div className={cls.replyLayout} key={Math.random()}>
+          <div style={{ marginLeft: calcMargin(props.replys.indentLevel) }}>
+            <div className={props.replys.isCreater ? cls.creater : "xxx"}>
+              <button className={cls.userName}>{props.replys.userName}</button>
             </div>
-
-            <div className={cls.bottomSection}>
-              <div className={cls.bottomLeft}>
-                <div
-                  className={
-                    props.replys.isCreater === true ? cls.creater : "xxx"
-                  }
-                >
-                  <button className={cls.userName}>
-                    {props.replys.userName}
-                  </button>
-                  <span className={cls.time}>{props.replys.date}</span>
+            <div>
+              <div className={cls.contents}>
+                <div>
+                  <span className={cls.to}>
+                    @{separateFront(props.replys.to)} :{" "}
+                  </span>
+                  <span className={cls.toText}>
+                    {separateBack(props.replys.to)}...
+                  </span>
                 </div>
+                <span className={cls.contents}>{props.replys.contents}</span>
               </div>
 
-              <div className={cls.bottomRight}>
-                <button
-                  onClick={() => {
-                    setIsReplyEditing(true);
-                  }}
-                >
-                  <Image
-                    src="/images/rental/comment/pencil.png"
-                    alt="pencil"
-                    width="20"
-                    height="20"
-                  />
-                </button>
-                <button>
-                  <Image
-                    src="/images/rental/comment/bin.png"
-                    alt="bin"
-                    width="20"
-                    height="20"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    replyFormToggler(props.replys.userName);
-                  }}
-                >
-                  <Image
-                    src="/images/rental/comment/down-right.png"
-                    alt="down-right"
-                    width="20"
-                    height="20"
-                  />
-                </button>
+              <div className={cls.bottomSection}>
+                <div className={cls.bottomLeft}>
+                  <span className={cls.time}>{props.replys.createdAt}</span>
+                </div>
+
+                <div className={cls.bottomRight}>
+                  <button
+                    onClick={() => {
+                      setIsReplyEditing(true);
+                    }}
+                  >
+                    <Image
+                      src="/images/rental/comment/pencil.png"
+                      alt="pencil"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
+                  <button>
+                    <Image
+                      src="/images/rental/comment/bin.png"
+                      alt="bin"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
+                  <button
+                    onClick={() => {
+                      replyFormToggler(
+                        props.replys.userName,
+                        props.replys.indentLevel,
+                        props.replys.contents
+                      );
+                    }}
+                  >
+                    <Image
+                      src="/images/rental/comment/down-right.png"
+                      alt="down-right"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
