@@ -19,9 +19,10 @@ interface Props{
 }
 
 const EditForm = (props:Props) => {
+  console.log('indentLevel', props.replys.indentLevel);
   return ( <>
       <div className={cls.replyCommentEditForm}>
-      { props.replys.to.length !== 0 && <span className={cls.to}> to {props.replys.to}</span> }
+      { props.replys && props.replys.to.length !== 0 && <span className={cls.to}> to {props.replys.to}</span> }
       <div><textarea/></div>
       <div className={cls.btnArea}>
         <button className={cls.cancelBtn} onClick={()=>{props.setIsReplyEditing(false)}}>

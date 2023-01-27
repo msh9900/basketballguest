@@ -39,7 +39,7 @@ const EachReviews = (props: Props) => {
         >
           <div className={cls.detailInfos}>
             <div className={cls.topSection}>
-              <div className={cls.title}> {props.eachReview.title}</div>
+              <div className={cls.title}> {props.eachReview.title} </div>
             </div>
             <div className={cls.contents}>
               <div> {props.eachReview.content} </div>

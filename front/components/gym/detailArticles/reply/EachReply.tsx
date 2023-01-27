@@ -1,20 +1,8 @@
 import cls from "./EachReply.module.scss";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditForm from "./EditForm";
-
-interface replyType {
-  commentId: string;
-  replyId: string;
-  createdAt: string;
-  userId: string;
-  userName: string;
-  to: string;
-  date: string;
-  contents: string;
-  isCreater: boolean;
-  indentLevel: number;
-}
+import replyType from 'util/types/gymReplyType';
 
 interface Props {
   setIndent: React.Dispatch<React.SetStateAction<number>>;
@@ -35,6 +23,11 @@ const calcMargin = (idx: number) => {
 };
 
 const EachReply = (props: Props) => {
+
+  useEffect(()=>{
+    // console.log(props)
+  }, [])
+
   const [isReplyEditing, setIsReplyEditing] = useState(false);
 
   const replyFormToggler = (userName: string) => {

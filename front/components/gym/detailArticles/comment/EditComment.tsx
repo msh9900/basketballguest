@@ -2,19 +2,7 @@
 import cls from "./EachComment.module.scss";
 // library
 import Image from "next/image";
-
-interface replyType {
-  commentId: string;
-  replyId: string;
-  to: string;
-  userId: string;
-  userName: string;
-  date: string;
-  contents: string;
-  isCreater: boolean;
-  indentLevel: number;
-}
-
+import replyType from 'util/types/gymReplyType';
 interface Props {
   articleId: string;
   commentId: string;
@@ -43,7 +31,6 @@ const EditComment = (props: Props) => {
       commentId: props.commentId,
       userId: props.userId,
       userName: props.userName,
-      date: "2099-01-01",
       contents: changedValue,
       isCreater: props.isCreater,
       replys: props.replys,

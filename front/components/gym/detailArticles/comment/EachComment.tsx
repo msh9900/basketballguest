@@ -8,7 +8,7 @@ import EachReply from "components/gym/detailArticles/reply/EachReply";
 import PostReplyForm from "components/gym/detailArticles/reply/PostReplyForm";
 import EditComment from "./EditComment";
 // Type
-import replyType from "components/gym/posting/utils/replyType";
+import replyType from "util/types/gymReplyType";
 
 interface Props {
   articleId: string;

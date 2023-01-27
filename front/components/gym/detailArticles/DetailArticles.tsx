@@ -20,7 +20,6 @@ const DetailArticles = () => {
 
   useEffect(() => {
     getGymData(router.query.articles as string);
-
     setOpeningDays(getOpeningDaysFromData());
   }, [isFetchingArticles]);
 
@@ -38,14 +37,13 @@ const DetailArticles = () => {
   const deleteArticle = async () => {
     const pId = router.query.articles as string;
     try {
-      const response = await fetch(
+      await fetch(
         `http://localhost:4000/rental/article?pid=${pId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         }
       );
-      const data = await response.json();
       alert("게시글 DELETE 성공");
       router.push("/gym");
     } catch (err: any) {

@@ -7,10 +7,10 @@ import PostComment from "./PostComment";
 import EachComment from "./EachComment";
 
 // types
-// import commentType from "util/types/gymCommentDataType";
+import commentType from "util/types/gymCommentDataType";
 
 const CommentSection = () => {
-  const [commentData, setCommentData] = useState([]);
+  const [commentData, setCommentData] = useState<commentType[]>([]);
   const [isCommentWriting, setIsCommentWriting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -28,7 +28,6 @@ const CommentSection = () => {
         `http://localhost:4000/rental/comment?pid=${pId}`
       );
       const res = await response.json();
-      console.log("댓글 결과", res);
       await setCommentData(res);
       await setIsFetching(false);
     } catch (err: any) {}
@@ -69,18 +68,17 @@ const CommentSection = () => {
             {commentData &&
               commentData.length > 0 &&
               commentData.map((item, idx) => {
-                const eachCommentData = item;
                 return (
                   <EachComment
                     key={"comment:" + idx.toString() + Math.random().toString()}
-                    articleId={eachCommentData.articleId}
-                    commentId={eachCommentData.commentId}
-                    userId={eachCommentData.userId}
-                    userName={eachCommentData.userName}
-                    createdAt={eachCommentData.createdAt}
-                    contents={eachCommentData.contents}
-                    isCreater={eachCommentData.isCreater}
-                    replys={eachCommentData.replys}
+                    articleId={item.articleId}
+                    commentId={item.commentId}
+                    userId={item.userId}
+                    userName={item.userName}
+                    createdAt={item.createdAt}
+                    contents={item.contents}
+                    isCreater={item.isCreater}
+                    replys={item.replys}
                     isFetching={isFetching}
                     setIsFetching={setIsFetching}
                     setIsCommentWriting={setIsCommentWriting}
