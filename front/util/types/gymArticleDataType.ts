@@ -2,26 +2,22 @@ interface addressType {
   category: string;
   val: string;
 }
-interface userInfoType {
-  userId: string;
-  userName: string;
-  email: string;
-}
 interface openingDaysType {
   name: string;
   open: boolean;
 }
 interface gymArticleDataType {
-  id: string;
+  articleId: string;
+  userId:string;
+  userName:string;
   title: string;
   content: string;
   contact: string;
-  address: addressType[];
   price: string;
-  openingHours: string;
+  openingHours: string[];
   openingPeriod: string[];
   openingDays: openingDaysType[];
-  userInfo: userInfoType;
+  address: addressType[];
 }
 
 export default gymArticleDataType;

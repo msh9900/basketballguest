@@ -72,6 +72,7 @@ const DetailArticles = () => {
                 <div className={cls.eachContent}>{gymInfo.title}</div>
                 <button onClick={()=>{setIsArticleEditing(true)}}>글 수정</button>
                 <button onClick={deleteArticle}>글 삭제</button>
+                {/* <div>작성자 : {gymInfo.userId} | {gymInfo.userName}</div> */}
               </div>
 
               <div className={cls.imgContent}>

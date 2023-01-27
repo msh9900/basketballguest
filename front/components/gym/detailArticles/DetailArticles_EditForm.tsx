@@ -1,9 +1,11 @@
 import cls from "./DetailArticles_EditForm.module.scss";
-import { useState, useEffect } from 'react';
 import Image from 'next/image'
-// types
+import { useRouter } from "next/router";
+
+import { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+// util
 import gymArticleDataType from "util/types/gymArticleDataType";
-import gymArticleDataBase from "util/types/gymArticleDataBase";
 import setInitialValue from './setInitialValue';
 
 interface Props {
@@ -13,7 +15,9 @@ interface Props {
 }
 
 const DetailArticles_EditForm = (props: Props) => {
-
+  const router = useRouter();
+  const stateId = useSelector((state: any) => state.login.userId);
+  const stateName = useSelector((state: any) => state.login.userName);
   const [openingDays, setOpeningDays] = useState([
     { name: "일", open: false },
     { name: "월", open: false },
@@ -28,9 +32,9 @@ const DetailArticles_EditForm = (props: Props) => {
     setInitialValue(props.gymInfo)
   }, [])
   
-  useEffect(()=>{
-    // console.log('openingDays', openingDays);
-  }, [openingDays])
+  // useEffect(()=>{
+  //   console.log('openingDays', openingDays);
+  // }, [openingDays])
 
   const checkClicked = (day:string) => {
     for(const x of openingDays){
@@ -51,49 +55,49 @@ const DetailArticles_EditForm = (props: Props) => {
   }
 
   const updateArticle = async () => {
-    getArticleEditData()
+    const body = getArticleEditFormData()
+    console.log('body', body);
+
     await props.setIsFetchingArticles(true);
-    // const pId = router.query.articles as string;
-    // try {
-    //   const response = await fetch("http://localhost:4000/" + `${pId}`, {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   const data = await response.json();
-    //   alert("성공");
-    // } catch (err: any) {
-    //   alert("실패");
-    // }
+    
+    try {
+      const response = await fetch("http://localhost:4000/rental/article", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      alert("성공");
+    } catch (err: any) {
+      alert("실패");
+    }
   };
 
-  const getArticleEditData = () => {
-    const field1 = document.querySelector('#article_title') as HTMLInputElement 
-    const field2 = document.querySelector('#article_content')as HTMLTextAreaElement 
-    const field3 = document.querySelector('#article_contact')as HTMLInputElement 
+  const getArticleEditFormData = () => {
+    const x1 = document.querySelector('#article_title') as HTMLInputElement 
+    const x2 = document.querySelector('#article_content') as HTMLTextAreaElement 
+    const x3 = document.querySelector('#article_contact') as HTMLInputElement 
+    const x4 = document.querySelector('#article_price') as HTMLInputElement 
+    const x5 = document.querySelector('#article_openingHours') as HTMLInputElement 
+    const x6 = document.querySelector('#article_openingPeriod_1') as HTMLInputElement 
+    const x7 = document.querySelector('#article_openingPeriod_2') as HTMLInputElement 
+    
+    // values
+    const [title, content, contact, price, openingHours, openingPeriod] = 
+    [x1.value, x2.value, x3.value, x4.value, x5.value, [x6.value, x7.value]]
 
-    const field_addr_1 = document.querySelector('#article_address_1') as HTMLInputElement 
-    const field_addr_2 = document.querySelector('#article_address_2') as HTMLInputElement 
-    const field_addr_3 = document.querySelector('#article_address_3') as HTMLInputElement 
-    const field_addr_4 = document.querySelector('#article_address_4') as HTMLInputElement 
-    const field_addr_5 = document.querySelector('#article_address_5') as HTMLInputElement 
+    const articleId = router.query.articles as string;
+    const address = props.gymInfo.address
+    const userId = stateId
+    const userName = stateName
+    
+    const body = {
+      articleId, title, content, contact, price, openingHours, openingPeriod, address, userId, userName, openingDays
+    }
+    return body
 
-    const field4 = document.querySelector('#article_price')as HTMLInputElement 
-    const field5 = document.querySelector('#article_openingHours')as HTMLInputElement 
-    const field6 = document.querySelector('#article_openingPeriod_1')as HTMLInputElement 
-    const [title, content, contact] = [field1.value, field2.value, field3.value]
-
-    // console.log(title, content, contact);
-  }
-  const checkOpeningDays = (e:any) => {
-    e.target.id
-  };
-  const days = ['일','월','화','수','목','금','토']
-  // const checkClicked = (day:string) => {
-  //   return true
-  // }
-
+    }
   
-
+  const days = ['일','월','화','수','목','금','토']
   return (
     <>
       <h1>체육관 정보 수정</h1>

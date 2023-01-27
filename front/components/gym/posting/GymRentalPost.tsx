@@ -17,13 +17,11 @@ import Loading from "components/common/loadingModule/Loading";
 
 // util
 import isFormValid from "./utils/isFormValid";
-const BACK_SERVER = process.env.NEXT_PUBLIC_BACK_SERVER + "/rental/data";
-const JSON_SERVER = process.env.NEXT_PUBLIC_JSON_SERVER_GYMARTICLES as string;
 
 const GymRentalPost = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  // const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     console.log("hello");
@@ -31,6 +29,7 @@ const GymRentalPost = () => {
 
   // data for posting
   const stateId = useSelector((state: any) => state.login.userId);
+  const stateName = useSelector((state: any) => state.login.userName);
   const cancelPost = () => {
     router.push("/gym");
   };
@@ -69,7 +68,8 @@ const GymRentalPost = () => {
 
     // 텍스트 데이터 번들 생성
     const textData = {
-      stateId,
+      userId:stateId,
+      userName:stateName,
       title,
       content,
       contact,
@@ -79,17 +79,14 @@ const GymRentalPost = () => {
       openingPeriod,
       openingDays,
     };
-    // const testData = { id: "1" };
 
     // 텍스트 데이터 전송
     try {
-      const response = await fetch("http://localhost:4000/rental/article", {
+      await fetch("http://localhost:4000/rental/article", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(textData),
       });
-      const data = await response.json();
-
       alert("게시글 생성 완료");
       router.push("/gym");
     } catch (err: any) {

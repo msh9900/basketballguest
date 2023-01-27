@@ -1,5 +1,5 @@
 import cls from "./CommentSection.module.scss";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Image from "next/image";
@@ -37,7 +37,6 @@ const CommentPostForm = (props: Props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postDataforComment),
       })
-      alert("댓글 작성 성공");
       await props.setIsFetching(false);
       await props.setIsCommentWriting(false);
 
