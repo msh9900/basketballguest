@@ -1,103 +1,104 @@
 import cls from "./CommentSection.module.scss";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import Image from 'next/image'
+
+import PostComment from './PostComment';
 import EachComment from "./EachComment";
-import {useState, useEffect} from 'react'
-import {useRouter} from 'next/router'
 
 // types
-import commentType from 'util/types/gymCommentDataType';
+import commentType from "util/types/gymCommentDataType";
 
 const CommentSection = () => {
 
   const [commentData, setCommentData] = useState<commentType[]>([]);
-  const [isWriting, setIsWriting] = useState(false);
-  const [writingText, setWritingText] = useState('');
-  const router = useRouter()
-  const pageId = router.query.articles as string
+  const [isCommentWriting, setIsCommentWriting] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+
+  const stateId = useSelector((state: any) => state.login.userId);
+  const router = useRouter();
 
   useEffect(() => {
-    getCommentData()
-  }, []);
-  
+    getCommentData();
+    console.log('isFetching is changed', isFetching);
+  }, [isFetching]);
+
   const getCommentData = async () => {
-    const response = await fetch(`http://localhost:5000/?articleId=${pageId}&comments?_embed=replys`);
-    const data = await response.json()
-    setCommentData(data.body)
-    console.log('data', data);
-  }
-  
-  // 댓글 생성 (gymArticle id별 (== gymComments Id))
-  // const postGymComment = async () => {
-  //   const postDataforComment = {
-  //     "userName":"Jane Doe",
-  //     "date":'2023-01-01',
-  //     "contents":writingText,
-  //     "isCreater":false,
-  //     "replys":[]
-  //   }
-  //   try{
-  //     const res = await fetch(GYM_COMMENTS_URL +`/${pageId}`, {
-  //       method: "POST",
-  //       headers: {"Content-Type": "application/json"},
-  //       body: JSON.stringify({postDataforComment}),
-  //     }).then((response) => console.log('jsonserverPost response', response));
-  //     console.log('res', res);
-  //   } catch(err:any){
-  //     console.log('err', err);
-  //   }
-  // }
+    try {
+      const pId = router.query.articles as string;
+      const response = await fetch(
+        `http://localhost:4000/rental/comment?pid=${pId}`
+      );
+      const res = await response.json();
+      console.log('res', res);
+      await setCommentData(res);
+      await setIsFetching(false);
+    } catch (err: any) {}
+  };
 
-  // 유저 데이터도 추가
-  const postCommentToUserInfo = () => {
-    const postDataforUser = {}
-    // 나중엔 유저 데이터도 처리할 것!...
-    return false
+  const postCommentBtnClicked = () => {
+    if(stateId == '') {
+      alert('로그인이 필요합니다.')
+      return
+    }
+    setIsCommentWriting(true);
   }
-
-  const postComment = async () => {
-    // await postGymComment()
-    // await postCommentToUserInfo()
-  }
-  
-  const textAreaHandler = (e:any) => {
-    setWritingText(e.target.value)
-  }
-
 
   return (
     <>
-      <div className={cls.CommentSectionLayout}>
+      {!isFetching && <>
+        <div className={cls.CommentSectionLayout}>
         <div className={cls.postComment}>
-          <button onClick={()=>{setIsWriting(true)}}>댓글 작성하기</button>
+          <button
+            onClick={postCommentBtnClicked}
+          >
+          <Image
+            src="/images/rental/postComment.png"
+            alt="댓글 작성"
+            width="20"
+            height="20"
+          />
+          </button>
         </div>
 
-        {isWriting && 
-          <div className={cls.commentPostFormLayout}>
-            <div><textarea onChange={textAreaHandler} value={writingText}/></div>
-            <div className={cls.flexbox}>
-              <div><button onClick={postComment}>작성</button></div>
-              <div><button onClick={()=>{setIsWriting(false)}}>취소</button></div>
-            </div>
-          </div>
-        }
+        {isCommentWriting && (
+          <PostComment
+            isFetching={isFetching}
+            setIsFetching={setIsFetching}
+            setIsCommentWriting={setIsCommentWriting}
+          />
+        )}
 
-        {commentData && commentData.length>0 && commentData.map((v, idx) => {
-          return (
-            <EachComment
-              key={"comment:" + idx.toString() + Math.random().toString()}
-              id={v.id}
-              userName={v.userName}
-              date={v.date}
-              contents={v.contents}
-              isCreater={v.isCreater}
-              replys={v.replys}
-            />
-          );
-        })}
+        {commentData &&
+          commentData.length > 0 &&
+          commentData.map((item, idx) => {
+            const eachCommentData = item.data
+            return (
+              <EachComment
+                key={"comment:" + idx.toString() + Math.random().toString()}
+
+                articleId={eachCommentData.articleId}
+                commentId={eachCommentData.commentId}
+                userId={eachCommentData.userId}
+                userName={eachCommentData.userName}
+                date={eachCommentData.date}
+                contents={eachCommentData.contents}
+                isCreater={eachCommentData.isCreater}
+                replys={eachCommentData.replys}
+
+                isFetching={isFetching}
+                setIsFetching={setIsFetching}
+                setIsCommentWriting={setIsCommentWriting}
+              />
+            );
+          })}
 
         <div className={cls.moreComments}>
           <button>더 불러오기</button>
         </div>
       </div>
+      </>}
     </>
   );
 };

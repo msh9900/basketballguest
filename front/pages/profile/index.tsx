@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
 let formData: any = new FormData();
+// let formData = require("form-data");
 
-export default function Profile() {
+const Profile = () => {
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -88,13 +89,11 @@ export default function Profile() {
     }
     if (data) {
       alert("프로필 변경 완료");
-      router.push("/");
       dispatch(IsLogin(data));
-      return data;
+      router.push("/");
+
+      // return data;
     }
-    const getUrl = await fetch("http://localhost:4000/profile", {
-      body: formData,
-    });
   }
 
   const ImgPop = (v: string) => {
@@ -127,7 +126,7 @@ export default function Profile() {
 
         {userImg === "" ? (
           <img
-            alt="profileImg"
+            alt="profileBasicImg"
             src={defaultStateImg}
             className={classes.imgcurrent}
             onClick={() => {
@@ -190,4 +189,5 @@ export default function Profile() {
       </div>
     </form>
   );
-}
+};
+export default Profile;

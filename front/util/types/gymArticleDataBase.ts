@@ -1,36 +1,13 @@
 const gymArticleDataBase = {
-  "id": "",
+  "articleId": "",
+  "userId": "",
+  "userName": "",
   "title": "",
   "content": "",
   "contact": "",
-  "address": [
-    {
-      "category": "postCode",
-      "val": ""
-    },
-    {
-      "category": "roadAddress",
-      "val": ""
-    },
-    {
-      "category": "jibunAddress",
-      "val": ""
-    },
-    {
-      "category": "detailAddress",
-      "val": ""
-    },
-    {
-      "category": "extraAddress",
-      "val": ""
-    }
-  ],
   "price": "100000",
   "openingHours": ["09:00","20:00"],
-  "openingPeriod": [
-    "2023-01-01",
-    "2023-12-31"
-  ],
+  "openingPeriod": ["2023-01-01", "2023-12-31"],
   "openingDays": [
     {
       "name": "일",
@@ -61,11 +38,28 @@ const gymArticleDataBase = {
       "open": false
     }
   ],
-  "userInfo": {
-    "userId": "",
-    "userName": "",
-    "email": ""
-  }
+  "address": [
+    {
+      "category": "postCode",
+      "val": ""
+    },
+    {
+      "category": "roadAddress",
+      "val": ""
+    },
+    {
+      "category": "jibunAddress",
+      "val": ""
+    },
+    {
+      "category": "detailAddress",
+      "val": ""
+    },
+    {
+      "category": "extraAddress",
+      "val": ""
+    }
+  ],
 }
 
 export default gymArticleDataBase

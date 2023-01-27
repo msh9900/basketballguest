@@ -1,0 +1,45 @@
+.ReviewPostFormLayout{
+  text-align: left;
+  margin:10px;
+  padding:10px;
+  border:3px solid red;
+
+  .titleInputSection{
+    padding:5px;
+    input{
+      padding:5px;
+    }
+  }
+  
+  .contentInputSection{
+    padding:5px;
+    textarea{
+      padding:5px;
+    }
+  }
+
+  input[type=text]{
+    width:100%;
+    min-width:200px;
+  }
+
+  input[type=range]{
+    cursor:pointer
+  }
+
+  textarea{
+    min-width:200px;
+    width:100%;
+    min-height:200px;
+    resize: none;
+  }
+
+  .ReviewPostFormBtns{
+    text-align: right;
+    button{
+      width:50px;
+      border:1px solid black;
+      border-radius:3px;
+    }
+  }
+}

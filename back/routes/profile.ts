@@ -23,6 +23,7 @@ const limits = {
   fileSize: 1024 * 1024 * 2,
 };
 const upload = multer({ storage, limits });
+// 헤더에서 이미지 가져오기
 
 // 이미지 가져오기
 router.get('/', (req: Request, res: Response) => {
@@ -33,7 +34,6 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log(req.body);
     let imgpath = req.file?.filename;
     const logindata = {
       id: req.body.id.replaceAll('"', ''),

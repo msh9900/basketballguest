@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
@@ -14,12 +16,13 @@ interface Props {
 }
 
 const UserMenu = (props: Props) => {
+  const userImg = useSelector((state: any) => state.login.userImg);
   return (
     <>
       <div className={classes.usercircle}>
         <Tooltip title="Open settings">
           <IconButton onClick={props.handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="" />
+            <Avatar alt="Remy Sharp" src={userImg} />
           </IconButton>
         </Tooltip>
 
