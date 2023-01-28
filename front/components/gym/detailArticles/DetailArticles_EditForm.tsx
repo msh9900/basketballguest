@@ -51,7 +51,7 @@ const DetailArticles_EditForm = (props: Props) => {
   };
 
   const updateArticle = async () => {
-    await props.setIsFetchingArticles(true);
+    
     try {
       const response = await fetch("http://localhost:4000/rental/article", {
         method: "PUT",
@@ -59,7 +59,9 @@ const DetailArticles_EditForm = (props: Props) => {
         body: JSON.stringify(getArticleEditFormData()),
       });
       const data = await response.json();
-      await props.setIsFetchingArticles(false);
+      await props.setIsFetchingArticles(true);
+      await props.setIsArticleEditing(false);
+
       alert("게시글 수정 성공");
     } catch (err: any) {
       alert("게시글 수정 실패");
