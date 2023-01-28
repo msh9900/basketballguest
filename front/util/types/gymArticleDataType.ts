@@ -19,6 +19,7 @@ interface gymArticleDataType {
   openingDays: openingDaysType[];
   address: addressType[];
   createdAt: string;
+  userImg: string[];
 }
 
 export default gymArticleDataType;

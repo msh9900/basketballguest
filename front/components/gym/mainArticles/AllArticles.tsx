@@ -2,6 +2,7 @@ import cls from "./AllArticles.module.scss";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import gymArticleDataType from "util/types/gymArticleDataType";
+import Image from "next/image";
 // import gymArticleDataBase from 'util/types/gymArticleDataBase';
 
 const AllArticles = () => {
@@ -36,7 +37,15 @@ const AllArticles = () => {
                 }}
               >
                 <li className={cls.li}>
-                  <div className={cls.imgBox}></div>
+                  <div className={cls.imgBox}>
+                    <img src={item.userImg[0]} />
+                    {/* <Image
+                      src={item.userImg[0]}
+                      width="200"
+                      height="100"
+                      alt=""
+                    /> */}
+                  </div>
                   <div className={cls.title}>제목 : {item.title}</div>
                   <div className={cls.price}>대관료 : {item.price}원/시간</div>
                   <div className={cls.content}>내용 : {item.content}</div>

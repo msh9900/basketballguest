@@ -40,14 +40,12 @@ router.post(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response) => {
-    console.log('file', req.files);
-
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename = 'http://localhost:4000/images' + ele.filename;
+      const eachFilename = 'http://localhost:4000/rental/' + ele.filename;
       fileNameArray.push(eachFilename);
     });
 
@@ -66,7 +64,6 @@ router.post(
       openingDays: JSON.parse(req.body.openingDays),
       userImg: fileNameArray,
     };
-
     const result = await mongoClient.insertArticle(data);
     res.send(JSON.stringify(result));
   }
@@ -80,7 +77,7 @@ router.put(
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename = 'http://localhost:4000/images' + ele.filename;
+      const eachFilename = 'http://localhost:4000/rental/' + ele.filename;
       fileNameArray.push(eachFilename);
     });
 
@@ -192,7 +189,6 @@ router.delete('/comment', async (req: Request, res: Response) => {
 
 //답글
 router.post('/reply', async (req: Request, res: Response) => {
-  console.log(req.body);
   const data = {
     articleId: req.body.articleId,
     commentId: req.body.commentId,
@@ -207,7 +203,6 @@ router.post('/reply', async (req: Request, res: Response) => {
     replys: req.body.replys,
   };
   const result = await mongoClient.addInsertComment(data);
-  console.log(result);
   res.send(JSON.stringify(result));
 });
 
