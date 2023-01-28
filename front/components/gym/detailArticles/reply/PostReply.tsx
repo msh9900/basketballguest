@@ -71,6 +71,14 @@ const PostReply = (props: Props) => {
           <textarea value={textContent} onChange={onChangeText} />
         </div>
         <div className={cls.buttons}>
+          <button onClick={postReply}>
+            <Image
+              src="/images/rental/checked.png"
+              alt="작성"
+              width="20"
+              height="20"
+            />
+          </button>
           <button
             onClick={() => {
               props.setIsReplyWriting(false);
@@ -79,14 +87,6 @@ const PostReply = (props: Props) => {
             <Image
               src="/images/rental/cancel.png"
               alt="취소"
-              width="20"
-              height="20"
-            />
-          </button>
-          <button onClick={postReply}>
-            <Image
-              src="/images/rental/checked.png"
-              alt="작성"
               width="20"
               height="20"
             />

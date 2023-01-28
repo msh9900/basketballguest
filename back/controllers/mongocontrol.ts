@@ -1,6 +1,7 @@
 const mongoClient = require('../routes/mongoconnet')!;
 const _user = mongoClient.connect();
 import crypto from 'crypto';
+import { Db } from 'mongodb';
 
 // 해시 암호화
 const createHashPassword = (password: string) => {
@@ -94,15 +95,37 @@ const mongoDB = {
       return updateData;
     }
   },
+  //게시글 이미지 보내기
+  // imgArticle: async (data: any) => {
+  //   const user = await _user;
+  //   const col = user.db('basket').collection('article');
+  //   const findArticle = await col.findOne({
+  //     'data.articleId': data.article.Id,
+  //   });
+  //   if (findArticle) {
+  //     await col.updateOne(
+  //       {
+  //         'data.articleId': data.articleId,
+  //       },
+  //       {
+  //         $set: {
+  //           userImg: data.files,
+  //         },
+  //       }
+  //     );
+  //   }
+  // },
   // 게시글 작성
   insertArticle: async (data: any) => {
+    console.log(data);
     const user = await _user;
-    const db = user.db('basket').collection('article');
-    const insertArticle = await db.insertOne({ data });
+    const col = user.db('basket').collection('article');
+    const insertArticle = await col.insertOne({ data });
     if (insertArticle.acknowledged) {
       return { msg: '게시글 작성 완료' };
     }
   },
+
   // 게시글 목록
   findArticles: async () => {
     const user = await _user;
@@ -119,7 +142,7 @@ const mongoDB = {
     const user = await _user;
     const db = user.db('basket').collection('article');
     const foundArticle = await db.findOne({ 'data.articleId': pid });
-    const result = foundArticle.data
+    const result = foundArticle.data;
     return result;
   },
   //게시글 수정
@@ -139,6 +162,7 @@ const mongoDB = {
             'data.openingHours': data.openingHours,
             'data.openingPeriod': data.openingPeriod,
             'data.openingDays': data.openingDays,
+            'data.userImg': data.userImg,
           },
         }
       );
@@ -214,20 +238,22 @@ const mongoDB = {
   // 댓글 POST
   insertComment: async (data: any) => {
     const user = await _user;
-    const commentdb = user.db('basket').collection('comment');
-    const articledb = user.db('basket').collection('article');
-    const foundCommentId = await commentdb.findOne({
+    const commentCol = user.db('basket').collection('comment');
+    const articleCol = user.db('basket').collection('article');
+    await commentCol.insertOne({ data });
+    const foundCommentId = await commentCol.findOne({
       'data.userId': data.userId,
     });
-    const foundArticleId = await articledb.findOne({
+    const foundArticleId = await articleCol.findOne({
       'data.userId': data.userId,
     });
-    if (foundArticleId?.data.userId === foundCommentId?.data.userId) {
-      data.isCreater = true;
-      await commentdb.insertOne({ data });
+    if (foundCommentId?.data?.userId === foundArticleId?.data?.userId) {
+      await commentCol.updateMany(
+        { 'data.userId': data.userId },
+        { $set: { 'data.isCreater': true } }
+      );
       return { msg: '작성자 일치' };
     } else {
-      await commentdb.insertOne({ data });
       return { msg: '댓글 작성 완료' };
     }
   },

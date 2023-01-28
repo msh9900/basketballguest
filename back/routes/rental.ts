@@ -35,48 +35,74 @@ router.get('/articles', async (req: Request, res: Response) => {
   res.send(JSON.stringify(result));
 });
 
-router.post('/img', upload.array('img', 5), (req: Request, res: Response) => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-  res.send(JSON.stringify(req.files));
-});
+//게시판 만들기
+router.post(
+  '/article',
+  upload.array('img', 10),
+  async (req: Request, res: Response) => {
+    console.log('file', req.files);
 
-router.post('/article', async (req: Request, res: Response) => {
-  const data = {
-    articleId: (Date.now() + Math.random()).toFixed(13),
-    userId: req.body.userId,
-    userName: req.body.userName,
-    title: req.body.title,
-    content: req.body.content,
-    contact: req.body.contact,
-    createdAt: new Date().toLocaleString(),
-    address: req.body.address,
-    price: req.body.price,
-    openingHours: req.body.openingHours,
-    openingPeriod: req.body.openingPeriod,
-    openingDays: req.body.openingDays,
-  };
-  const result = await mongoClient.insertArticle(data);
-  res.send(JSON.stringify(result));
-});
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
-router.put('/article', async (req: Request, res: Response) => {
-  const data = {
-    articleId: req.body.articleId,
-    userId: req.body.userId,
-    userName: req.body.userName,
-    title: req.body.title,
-    content: req.body.content,
-    contact: req.body.contact,
-    createdAt: new Date().toLocaleString(),
-    address: req.body.address,
-    price: req.body.price,
-    openingHours: req.body.openingHours,
-    openingPeriod: req.body.openingPeriod,
-    openingDays: req.body.openingDays,
-  };
-  const result = await mongoClient.updateArticle(data);
-  res.send(JSON.stringify(result));
-});
+    const resultFiles = req.files as any;
+    let fileNameArray: any = [];
+    resultFiles.map((ele: any) => {
+      const eachFilename = 'http://localhost:4000/images' + ele.filename;
+      fileNameArray.push(eachFilename);
+    });
+
+    const data = {
+      articleId: (Date.now() + Math.random()).toFixed(13),
+      userId: req.body.userId,
+      userName: req.body.userName,
+      title: req.body.title,
+      content: req.body.content,
+      contact: req.body.contact,
+      createdAt: new Date().toLocaleString(),
+      address: JSON.parse(req.body.address),
+      price: req.body.price,
+      openingHours: req.body.openingHours,
+      openingPeriod: JSON.parse(req.body.openingPeriod),
+      openingDays: JSON.parse(req.body.openingDays),
+      userImg: fileNameArray,
+    };
+
+    const result = await mongoClient.insertArticle(data);
+    res.send(JSON.stringify(result));
+  }
+);
+
+router.put(
+  '/article',
+  upload.array('img', 10),
+  async (req: Request, res: Response) => {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+    const resultFiles = req.files as any;
+    let fileNameArray: any = [];
+    resultFiles.map((ele: any) => {
+      const eachFilename = 'http://localhost:4000/images' + ele.filename;
+      fileNameArray.push(eachFilename);
+    });
+
+    const data = {
+      articleId: req.body.articleId,
+      userId: req.body.userId,
+      userName: req.body.userName,
+      title: req.body.title,
+      content: req.body.content,
+      contact: req.body.contact,
+      createdAt: new Date().toLocaleString(),
+      address: req.body.address,
+      price: req.body.price,
+      openingHours: req.body.openingHours,
+      openingPeriod: req.body.openingPeriod,
+      openingDays: req.body.openingDays,
+      userImg: fileNameArray,
+    };
+    const result = await mongoClient.updateArticle(data);
+    res.send(JSON.stringify(result));
+  }
+);
 
 router.delete('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.deleteArticle(req.query.pid);
@@ -172,7 +198,7 @@ router.post('/reply', async (req: Request, res: Response) => {
     commentId: req.body.commentId,
     replyId: (Date.now() + Math.random()).toFixed(13),
     indentLevel: req.body.indentLevel,
-    to:req.body.to,
+    to: req.body.to,
     userId: req.body.userId,
     userName: req.body.userName,
     createdAt: new Date().toLocaleString(),
