@@ -1,7 +1,7 @@
 import cls from "./EachReply.module.scss";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import EditForm from "./EditForm";
+import EditReply from "./EditReply";
 import replyType from "util/types/gymReplyType";
 
 interface Props {
@@ -25,7 +25,6 @@ const calcMargin = (idx: number) => {
 
 const EachReply = (props: Props) => {
   const [isReplyEditing, setIsReplyEditing] = useState(false);
-
   const replyFormToggler = (
     userName: string,
     indentValue: number,
@@ -53,18 +52,38 @@ const EachReply = (props: Props) => {
   };
   const separateBack = (text: string) => {
     const wholeText = text.split("_")[1];
-    if (wholeText?.length > 10) return wholeText.slice(0, 10);
+    if (wholeText?.length > 10) return wholeText.slice(0, 10)+'...';
     return wholeText;
   };
 
-  // 편집
+  // DELETE REPLY
+  const deleteReply = async () => {
+    const replyId = props.replys.replyId;
+    try {
+      await fetch(
+        `http://localhost:4000/rental/comments?replyId=${replyId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    } catch (err: any) {
+      console.log('REPLY DELETE FAIL',err);
+    }
+    await props.setIsFetching(true);
+  }
+
+  // EDIT MODE
   if (isReplyEditing) {
     return (
-      <EditForm replys={props.replys} setIsReplyEditing={setIsReplyEditing} />
+      <EditForm 
+      replys={props.replys} 
+      setIsReplyEditing={setIsReplyEditing} 
+      setIsFetching={props.setIsFetching} />
     );
   }
 
-  // 일반
+  // NORMAL MODE
   else
     return (
       <>
@@ -80,7 +99,7 @@ const EachReply = (props: Props) => {
                     @{separateFront(props.replys.to)} :{" "}
                   </span>
                   <span className={cls.toText}>
-                    {separateBack(props.replys.to)}...
+                    {separateBack(props.replys.to)}
                   </span>
                 </div>
                 <span className={cls.contents}>{props.replys.contents}</span>
@@ -90,7 +109,7 @@ const EachReply = (props: Props) => {
                 <div className={cls.bottomLeft}>
                   <span className={cls.time}>{props.replys.createdAt}</span>
                 </div>
-
+                
                 <div className={cls.bottomRight}>
                   <button
                     onClick={() => {
@@ -104,7 +123,7 @@ const EachReply = (props: Props) => {
                       height="20"
                     />
                   </button>
-                  <button>
+                  <button onClick={deleteReply}>
                     <Image
                       src="/images/rental/comment/bin.png"
                       alt="bin"

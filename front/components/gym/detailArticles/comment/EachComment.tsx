@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
-import PostReplyForm from "components/gym/detailArticles/reply/PostReplyForm";
+import PostReply from "components/gym/detailArticles/reply/PostReply";
 import EditComment from "./EditComment";
 // Type
 import replyType from "util/types/gymReplyType";
@@ -162,7 +162,7 @@ const EachComment = (props: Props) => {
               );
             })}
           {isReplyWriting && (
-            <PostReplyForm
+            <PostReply
               setIsReplyWriting={setIsReplyWriting}
               setIsFetching={props.setIsFetching}
               toInfo={toInfo}

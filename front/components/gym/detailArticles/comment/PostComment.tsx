@@ -28,15 +28,14 @@ const CommentPostForm = (props: Props) => {
       isCreater: false,
       replys: [],
     };
-    console.log("postDataforComment", postDataforComment);
-    props.setIsFetching(true);
+    
     try {
       await fetch("http://localhost:4000/rental/comment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postDataforComment),
       });
-      await props.setIsFetching(false);
+      await props.setIsFetching(true);
       await props.setIsCommentWriting(false);
     } catch (err: any) {
       alert("댓글 작성 실패");

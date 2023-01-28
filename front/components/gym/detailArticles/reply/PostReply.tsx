@@ -1,4 +1,4 @@
-import cls from "./PostReplyForm.module.scss";
+import cls from "./PostReply.module.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -17,7 +17,7 @@ interface Props {
   indent:number;
 }
 
-const PostReplyForm = (props: Props) => {
+const PostReply = (props: Props) => {
 
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
@@ -58,7 +58,7 @@ const PostReplyForm = (props: Props) => {
   };
   const separateBack = (text: string) => {
     const wholeText = text.split("_")[1];
-    if (wholeText?.length > 10) return wholeText.slice(0, 10);
+    if (wholeText?.length > 10) return wholeText.slice(0, 10)+'...';
     return wholeText;
   };
 
@@ -85,4 +85,4 @@ const PostReplyForm = (props: Props) => {
   );
 };
 
-export default PostReplyForm;
+export default PostReply;
