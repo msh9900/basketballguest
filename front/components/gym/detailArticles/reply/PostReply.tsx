@@ -2,23 +2,23 @@ import cls from "./PostReply.module.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 interface Props {
   // value for post
   commentId: string;
   toInfo: string;
 
-  // for toggle 
+  // for toggle
   setIsReplyWriting: React.Dispatch<React.SetStateAction<boolean>>;
   // for rerender
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 
   // indent
-  indent:number;
+  indent: number;
 }
 
 const PostReply = (props: Props) => {
-
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
   const router = useRouter();
@@ -36,7 +36,7 @@ const PostReply = (props: Props) => {
       to: props.toInfo,
       userId: stateId,
       userName: stateName,
-      indentLevel: props.indent
+      indentLevel: props.indent,
     };
 
     try {
@@ -58,7 +58,7 @@ const PostReply = (props: Props) => {
   };
   const separateBack = (text: string) => {
     const wholeText = text.split("_")[1];
-    if (wholeText?.length > 10) return wholeText.slice(0, 10)+'...';
+    if (wholeText?.length > 10) return wholeText.slice(0, 10) + "...";
     return wholeText;
   };
 
@@ -76,9 +76,21 @@ const PostReply = (props: Props) => {
               props.setIsReplyWriting(false);
             }}
           >
-            취소
+            <Image
+              src="/images/rental/cancel.png"
+              alt="취소"
+              width="20"
+              height="20"
+            />
           </button>
-          <button onClick={postReply}>전송</button>
+          <button onClick={postReply}>
+            <Image
+              src="/images/rental/checked.png"
+              alt="작성"
+              width="20"
+              height="20"
+            />
+          </button>
         </div>
       </div>
     </>

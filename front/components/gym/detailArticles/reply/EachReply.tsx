@@ -76,7 +76,7 @@ const EachReply = (props: Props) => {
   // EDIT MODE
   if (isReplyEditing) {
     return (
-      <EditForm 
+      <EditReply 
       replys={props.replys} 
       setIsReplyEditing={setIsReplyEditing} 
       setIsFetching={props.setIsFetching} />

@@ -1,4 +1,4 @@
-import cls from "./ReviewPostForm.module.scss";
+import cls from "./PostReview.module.scss";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";

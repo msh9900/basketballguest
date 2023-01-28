@@ -1,6 +1,6 @@
 import AllReviews from "./AllReviews";
 import cls from "./ReviewSection.module.scss";
-import ReviewPostForm from "./ReviewPostForm";
+import PostReview from "./PostReview";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -66,7 +66,7 @@ const ReviewSection = () => {
               />
             </button>
             {isWriting && (
-              <ReviewPostForm
+              <PostReview
                 setIsWriting={setIsWriting}
                 setIsFetching={setIsFetching}
               />
@@ -79,7 +79,7 @@ const ReviewSection = () => {
           </div>
           <AllReviews allReviewData={allReviewData} setIsFetching={setIsFetching}/>
           <div className={cls.moreReviewBtn}>
-            <button>더불러오기...</button>
+            <button>더 불러오기...</button>
           </div>
         </div>
       )}
