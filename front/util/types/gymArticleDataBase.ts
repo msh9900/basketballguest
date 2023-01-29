@@ -6,6 +6,7 @@ const gymArticleDataBase = {
   title: "",
   content: "",
   contact: "",
+  gymImg:[],
   price: "100000",
   openingHours: ["09:00", "20:00"],
   openingPeriod: ["2023-01-01", "2023-12-31"],

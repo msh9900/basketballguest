@@ -9,6 +9,7 @@ import PostReply from "components/gym/detailArticles/reply/PostReply";
 import EditComment from "./EditComment";
 // Type
 import replyType from "util/types/gymReplyType";
+import { useSelector } from "react-redux";
 
 interface Props {
   // value for post
@@ -33,6 +34,7 @@ const EachComment = (props: Props) => {
   const [isReplyWriting, setIsReplyWriting] = useState(false);
   const [toInfo, setToInfo] = useState("");
   const [indent, setIndent] = useState(1);
+  const stateId = useSelector((state: any) => state.login.userId);
 
   //  toInfo : string, 상위요소의 userId, 필요하면 사용
   //  indent : number, 상위요소에 대한 자신의 들여쓰기 정도
@@ -44,6 +46,10 @@ const EachComment = (props: Props) => {
   const ReplyPostFormToggle = (userName: string, contents: string) => {
     setToInfo(userName + "_" + contents);
     if (isReplyWriting == false) {
+      if(stateId == ''){
+        alert('로그인이 필요합니다.')
+        return
+      }
       setIsReplyWriting(true);
       return;
     }

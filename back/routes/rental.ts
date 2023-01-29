@@ -62,7 +62,7 @@ router.post(
       openingHours: req.body.openingHours,
       openingPeriod: JSON.parse(req.body.openingPeriod),
       openingDays: JSON.parse(req.body.openingDays),
-      userImg: fileNameArray,
+      gymImg: fileNameArray,
     };
     const result = await mongoClient.insertArticle(data);
     res.send(JSON.stringify(result));
@@ -94,7 +94,7 @@ router.put(
       openingHours: req.body.openingHours,
       openingPeriod: req.body.openingPeriod,
       openingDays: req.body.openingDays,
-      userImg: fileNameArray,
+      gymImg: fileNameArray,
     };
     const result = await mongoClient.updateArticle(data);
     res.send(JSON.stringify(result));

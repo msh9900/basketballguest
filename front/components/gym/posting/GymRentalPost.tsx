@@ -1,7 +1,7 @@
 import cls from "./GymRentalPost.module.scss";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 //  component
 import GymTitle from "./templates/GymTitle";
@@ -13,7 +13,6 @@ import GymOpeningPeriod from "./templates/GymOpeningPeriod";
 import GymOpeningDays from "./templates/GymOpeningDays";
 import GymImages from "./templates/GymImages";
 import GymPrice from "./templates/GymPrice";
-import Loading from "components/common/loadingModule/Loading";
 
 // util
 import isFormValid from "./utils/isFormValid";
@@ -58,9 +57,6 @@ const GymRentalPost = () => {
   const [inputImgs, setInputImgs] = useState<string[]>([]);
 
   const post = async () => {
-
-    // 로그인 확인
-    if(stateId=='') return
 
     // 유효성 체크
     // const isValid = await isFormValid(title, address, openingHours, openingPeriod,);

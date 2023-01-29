@@ -25,7 +25,5 @@ const AllReviews = (props: Props) => {
   );
 };
 
-
-
 export default AllReviews;
 // setIsFetching

@@ -10,7 +10,7 @@ interface Props {
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReviewPostForm = (props: Props) => {
+const PostReview = (props: Props) => {
   const router = useRouter();
   const userName = useSelector((state: any) => state.login.userName);
   const userId = useSelector((state: any) => state.login.userId);
@@ -113,4 +113,4 @@ const ReviewPostForm = (props: Props) => {
   );
 };
 
-export default ReviewPostForm;
+export default PostReview;

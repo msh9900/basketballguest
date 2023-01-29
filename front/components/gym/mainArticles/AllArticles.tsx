@@ -20,6 +20,7 @@ const AllArticles = () => {
 
   const router = useRouter();
   const moveToDetailPage = (num: string) => {
+
     router.push(`/gym/${num}/`);
   };
 
@@ -38,7 +39,7 @@ const AllArticles = () => {
               >
                 <li className={cls.li}>
                   <div className={cls.imgBox}>
-                    <img src={item.userImg[0]} />
+                    <img src={item.gymImg[0]} />
                     {/* <Image
                       src={item.userImg[0]}
                       width="200"

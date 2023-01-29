@@ -2,6 +2,8 @@ import AllReviews from "./AllReviews";
 import cls from "./ReviewSection.module.scss";
 import PostReview from "./PostReview";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import { useRouter } from "next/router";
 import Image from "next/image";
 import getReview from './reviewUtils/getReview';
@@ -12,6 +14,7 @@ const ReviewSection = () => {
   const [allReviewCount, setAllReviewCount] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
   const [allReviewData, setAllReviewData] = useState<[]>([]);
+  const stateId = useSelector((state: any) => state.login.userId);
   const router = useRouter();
 
   // 패치마다 새로 GET REVIEW 호출
@@ -21,8 +24,15 @@ const ReviewSection = () => {
 
   // 리뷰 포스트 폼 토글
   const writeReview = () => {
-    if (isWriting) setIsWriting(false);
-    if (!isWriting) setIsWriting(true);
+    if (!isWriting) {
+      if(stateId == ''){
+        alert('로그인이 필요합니다.')
+        return
+      }
+      setIsWriting(true);
+      return
+    } 
+    setIsWriting(false);
   };
 
   // GET REVIEW API LOADER
@@ -60,7 +70,7 @@ const ReviewSection = () => {
             <button onClick={writeReview}>
               <Image
                 src="/images/rental/posting.png"
-                alt="댓글 수정"
+                alt="리뷰 작성"
                 width="25"
                 height="25"
               />
