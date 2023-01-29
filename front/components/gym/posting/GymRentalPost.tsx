@@ -20,7 +20,6 @@ import isFormValid from "./utils/isFormValid";
 
 const GymRentalPost = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   // const [isFetching, setIsFetching] = useState(false);
 
   // data for posting
@@ -53,69 +52,63 @@ const GymRentalPost = () => {
     { name: "금", open: false },
     { name: "토", open: false },
   ]);
-  const [needToSendImg, setNeedToSendImg] = useState(false);
-  const [textData, setTextData] = useState({});
 
-  // useEffect(() => {
-  //   alert("test");
-  // }, []);
+  // images
+  const [imgFormData, setImgFormData] = useState<any>();
+  const [inputImgs, setInputImgs] = useState<string[]>([]);
+
   const post = async () => {
-    // 텍스트 데이터 유효성 체크
+
+    // 로그인 확인
+    if(stateId=='') return
+
+    // 유효성 체크
     // const isValid = await isFormValid(title, address, openingHours, openingPeriod,);
     // if (!isValid) {
     //   console.log('post : not valid form');
     //   return;
     // }
 
-    // 텍스트 데이터 번들 생성
-    const obj = {
-      userId: stateId,
-      userName: stateName,
-      title,
-      content,
-      contact,
-      address,
-      price,
-      openingHours,
-      openingPeriod,
-      openingDays,
-    };
-    setTextData(obj);
-    setNeedToSendImg(true);
-
-    // // 텍스트 데이터 전송
-    // try {
-    //   await fetch("http://localhost:4000/rental/article", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(textData),
-    //   });
-    //   alert("게시글 생성 완료");
-    //   router.push("/gym");
-    // } catch (err: any) {
-    //   console.log("텍스트 데이터 post 실패", err);
-    // }
-
-    // 이미지 데이터 전송
-    // await setIsLoading(true);
-  };
-
-  // if (isLoading) return <Loading />;
-  // else
-  const btnClick = () => {
-    alert(needToSendImg);
+    // 텍스트 데이터 폼
+    const FD = new FormData();
+    FD.append("userId", stateId);
+    FD.append("userName", stateName);
+    FD.append("title", title);
+    FD.append("content", content);
+    FD.append("contact", contact);
+    FD.append("userImg", JSON.stringify(inputImgs));
+    FD.append("address", JSON.stringify(address));
+    FD.append("price", price);
+    FD.append("openingHours", JSON.stringify(openingHours));
+    FD.append("openingPeriod", JSON.stringify(openingPeriod));
+    FD.append("openingDays", JSON.stringify(openingDays));
+    
+    // 이미지 데이터 폼과 병합
+    for (const pair of imgFormData.entries()) {
+      FD.append(pair[0], pair[1]);
+    }
+    
+    // 전송
+    try {
+      await fetch("http://localhost:4000/rental/article", {
+        method: "POST",
+        body: FD,
+      });
+      router.push("/gym");
+      console.log("이미지 데이터 post 성공 : ");
+    } catch (error: any) {
+      console.log("이미지 데이터 post 실패 : ", error);
+    }
   };
 
   return (
     <div className={cls.GymRentalPostLayout}>
       <h2 className={cls.formTitle}>글쓰기</h2>
-      <button onClick={btnClick}>테스트</button>
       <GymImages
-        isLoading={isLoading}
-        // setIsLoading={setIsLoading}
-        setNeedToSendImg={setNeedToSendImg}
-        needToSendImg={needToSendImg}
-        textData={textData}
+        imgFormData={imgFormData}
+        setImgFormData={setImgFormData}
+        inputImgs={inputImgs}
+        setInputImgs={setInputImgs}
       />
       <form>
         <GymTitle title={title} setTitle={setTitle} />
