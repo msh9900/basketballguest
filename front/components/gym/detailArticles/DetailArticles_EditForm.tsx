@@ -61,7 +61,6 @@ const DetailArticles_EditForm = (props: Props) => {
       const data = await response.json();
       await props.setIsFetchingArticles(true);
       await props.setIsArticleEditing(false);
-
       alert("게시글 수정 성공");
     } catch (err: any) {
       alert("게시글 수정 실패");

@@ -91,7 +91,6 @@ const GymRentalPost = () => {
         body: FD,
       });
       router.push("/gym");
-      console.log("이미지 데이터 post 성공 : ");
     } catch (error: any) {
       console.log("이미지 데이터 post 실패 : ", error);
     }

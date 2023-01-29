@@ -42,7 +42,6 @@ const DetailArticles = () => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      alert("게시글 DELETE 성공");
       router.push("/gym");
     } catch (err: any) {
       alert("게시글 DELETE 실패");

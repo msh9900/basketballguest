@@ -45,7 +45,6 @@ const PostReply = (props: Props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      alert("답글 작성 성공");
       await props.setIsFetching(true);
     } catch (err: any) {
       alert("답글 작성 실패");

@@ -19,7 +19,7 @@ const GymContent = (props:Props) => {
         <div></div>
         <div>
           <textarea 
-            placeholder='ex : 자세한 사항은 연락주세요!'
+            placeholder='ex : 많은 이용 부탁드립니다'
             value={props.content}
             onChange={onChange}
           />

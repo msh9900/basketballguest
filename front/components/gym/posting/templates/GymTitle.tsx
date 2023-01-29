@@ -16,7 +16,7 @@ const GymTitle = (props:Props) => {
         <div><p>*</p></div>
         <input
           type='text'
-          placeholder='ex : 강동 다이나믹짐 오픈했습니다.'
+          placeholder='ex : 새로 오픈했습니다.'
           value={props.title}
           onChange={onChange}
         />
