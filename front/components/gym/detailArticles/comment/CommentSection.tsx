@@ -38,8 +38,8 @@ const CommentSection = () => {
       alert("로그인이 필요합니다.");
       return;
     }
-    if(isCommentWriting) setIsCommentWriting(false);
-    if(!isCommentWriting) setIsCommentWriting(true);
+    if (isCommentWriting) setIsCommentWriting(false);
+    if (!isCommentWriting) setIsCommentWriting(true);
   };
 
   return (

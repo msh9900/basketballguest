@@ -51,7 +51,6 @@ const DetailArticles_EditForm = (props: Props) => {
   };
 
   const updateArticle = async () => {
-    
     try {
       const response = await fetch("http://localhost:4000/rental/article", {
         method: "PUT",
