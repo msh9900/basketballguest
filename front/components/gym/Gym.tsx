@@ -9,9 +9,11 @@ import AllArticles from "./mainArticles/AllArticles";
 import Filter from "./mainArticles/filter/Filter";
 import Order from "./mainArticles/order/Order";
 import Search from "./mainArticles/search/Search";
+import { useSelector } from "react-redux";
 
 const Rental = () => {
   const router = useRouter();
+  const stateId = useSelector((state: any) => state.login.userId);
   const [searchRes, setSearchRes] = useState("");
   const [needToSearch, setNeedToSearch] = useState(true);
   const [orderStatus, setOrderStatus] = useState({
