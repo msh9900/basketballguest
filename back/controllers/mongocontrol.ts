@@ -96,8 +96,6 @@ const mongoDB = {
   },
   //특정 게시글 목록 찾기
   searchArticles: async (data: any) => {
-    console.log('db 보내기전', data);
-
     const user = await _user;
     const col = user.db('basket').collection('article');
 
@@ -139,7 +137,6 @@ const mongoDB = {
         .toArray();
       temp.push(resWithoutArea);
     }
-    console.log('필터링 결과', temp);
     return temp;
   },
 
