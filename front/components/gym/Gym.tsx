@@ -1,5 +1,5 @@
 // library
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 // style
@@ -15,6 +15,7 @@ const Rental = () => {
   const stateId = useSelector((state: any) => state.login.userId);
   const router = useRouter();
   const [searchRes, setSearchRes] = useState("");
+  const [needToSearch, setNeedToSearch] = useState(true);
   const [orderStatus, setOrderStatus] = useState({
     ispriceOrderOn: false,
     isdistanceOrderOn: false,
@@ -27,14 +28,13 @@ const Rental = () => {
     isperiodActive: false,
   });
 
-  const goToPosting = useCallback(() => {
-    // 로그인 확인
+  const goToPosting = () => {
     if (stateId == "") {
       alert("로그인이 필요합니다.");
       return;
     }
     router.push("/gym/post");
-  }, []);
+  };
 
   return (
     <>
@@ -51,8 +51,15 @@ const Rental = () => {
           setFilterStatus={setFilterStatus}
           searchRes={searchRes}
           setSearchRes={setSearchRes}
+          setNeedToSearch={setNeedToSearch}
         />
-        <AllArticles />
+        <AllArticles
+          orderStatus={orderStatus}
+          filterStatus={filterStatus}
+          searchRes={searchRes}
+          needToSearch={needToSearch}
+          setNeedToSearch={setNeedToSearch}
+        />
       </div>
     </>
   );

@@ -24,6 +24,7 @@ server.use('/register', registerRouter);
 server.use('/board', boardRouter);
 server.use('/profile', profileRouter);
 server.use('/rental', rentalRouter);
+
 // ERROR 처리
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err.stack);

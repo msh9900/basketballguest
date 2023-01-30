@@ -1,14 +1,14 @@
 // style
-import cls from './Filter.module.scss';
+import cls from "./Filter.module.scss";
 // library
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // component
-import FilterArea from './Filter_Area';
-import FilterPrice from './Filter_Price';
-import FilterPeriod from './Filter_Period';
-import SelectedValues from './SelectedValues';
+import FilterArea from "./Filter_Area";
+import FilterPrice from "./Filter_Price";
+import FilterPeriod from "./Filter_Period";
+import SelectedValues from "./SelectedValues";
 // interface
-import filterProps from './interface_filterStatus';
+import filterProps from "./interface_filterStatus";
 
 interface Props {
   filterStatus: filterProps;
@@ -23,7 +23,7 @@ const Filter = (props: Props): React.ReactElement => {
 
   // filters
   const [areas, setAreas] = useState<string[]>([]);
-  const [price, setPrice] = useState<string[]>(['0', '0']);
+  const [price, setPrice] = useState<string[]>(["0", "99999999999999"]);
   const [period, setPeriod] = useState<string[]>([]);
   const [priceActive, setPriceActive] = useState(false);
   const [periodActive, setPeriodActive] = useState(false);
@@ -56,7 +56,7 @@ const Filter = (props: Props): React.ReactElement => {
   };
   const filterReset = () => {
     setAreas([]);
-    setPrice(['0', '0']);
+    setPrice(["0", "0"]);
     setPriceActive(false);
     setPeriodActive(false);
   };
@@ -113,29 +113,27 @@ const Filter = (props: Props): React.ReactElement => {
       </div>
 
       {/* 필터 생성기 */}
-      {(areaFilter || priceFilter || periodFilter) &&
+      {(areaFilter || priceFilter || periodFilter) && (
         <div className={cls.filterGenerators}>
-        {areaFilter && 
-          <FilterArea areas={areas} setAreas={setAreas} />
-        }
-        {priceFilter && (
-          <FilterPrice
-            price={price}
-            setPrice={setPrice}
-            priceActive={priceActive}
-            setPriceActive={setPriceActive}
-          />
-        )}
-        {periodFilter && (
-          <FilterPeriod
-            period={period}
-            setPeriod={setPeriod}
-            periodActive={periodActive}
-            setPeriodActive={setPeriodActive}
-          />
-        )}
-      </div>}
-
+          {areaFilter && <FilterArea areas={areas} setAreas={setAreas} />}
+          {priceFilter && (
+            <FilterPrice
+              price={price}
+              setPrice={setPrice}
+              priceActive={priceActive}
+              setPriceActive={setPriceActive}
+            />
+          )}
+          {periodFilter && (
+            <FilterPeriod
+              period={period}
+              setPeriod={setPeriod}
+              periodActive={periodActive}
+              setPeriodActive={setPeriodActive}
+            />
+          )}
+        </div>
+      )}
 
       {/* active filters */}
       <SelectedValues
