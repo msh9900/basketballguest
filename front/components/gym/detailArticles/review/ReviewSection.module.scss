@@ -21,6 +21,7 @@
     }
   }
   .postReviewBtn {
+    // background-color:red;
     text-align: right;
     button {
       width: 70px;
@@ -29,31 +30,19 @@
       height: 35px;
       width:60px;
       border-radius:5px;
-      cursor:pointer;
-      border:1px solid bisque;
-      background-color: ivory;
-      &:hover{
-        background-color: bisque;
-      }
-    }
+      border:1px solid gray;
+      cursor: pointer;
 
+    }
   }
 
   .moreReviewBtn {
     button {
-      margin-left: 10px;
-      margin-bottom:20px;
-      font-weight: bold;
-      height: 35px;
-      border-radius:5px;
-      cursor:pointer;
-      border:1px solid bisque;
-      background-color: ivory;
-      &:hover{
-        background-color: bisque;
-      }
+      width: 100px;
+      margin-left: 20px;
+      margin-bottom:10px;
+      height: 30px;
+      cursor: pointer;
     }
   }
 }
-
-

@@ -73,7 +73,7 @@ const LoginForm = (props: any) => {
     const data = await response.json();
     try {
       if (data.msg === "회원가입 완료") {
-        alert("회원 가입 성공");
+        alert("회원 가입성공");
         dispatch(IsLogin(data));
         router.push("/login");
       } else {

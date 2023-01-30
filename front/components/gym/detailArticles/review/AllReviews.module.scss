@@ -3,14 +3,13 @@
 
   button{
     cursor:pointer;
-    border:1px solid gainsboro;
-    background-color: ivory;
+    border:1px solid gray;
     border-radius:5px;
   }
 
   .reviewContents{
     display: flex;
-    // min-height: 227px;
+    min-height: 227px;
     border:1px solid gray;
     border-radius:3px;
     margin-top:15px;
@@ -20,52 +19,26 @@
       padding:10px;
       width:100%;
 
-      .top{
+      .topSection{
         display: flex;
         margin-bottom:5px;
         
-        .titleSection{
-          margin-top:10px;
-          display: flex;
-          justify-content: space-between;
-          // padding:10px;
+        .title{
+          padding:10px;
           font-weight: bold;
-          font-size:15px;
+          font-size:14px;
           width:100%;
-        }
-        .controlBtns{
-          button{
-            margin:3px;
-            width:35px;
-            height:35px;
-            border: 1px solid burlywood;
-          }
-        }
-      }
-      .otherInfos{
-        width:100%;
-        font-size:12px;
-
-        .s1{
-          b{color:blue;}
-        }
-        .s2{
-          color:#1D1D1D;
-        }
-        .s3{
-          color:#1D1D1D;
-        }
-        .partition{
-          margin-left:7px;
-          margin-right:7px;
+          border: 1px solid burlywood;
         }
       }
 
       .contents{
         margin-top:10px;
-        // padding:10px;
+        padding:10px;
+        border:1px solid black;
         min-height:120px;
         font-size:12px;
+        border: 1px solid burlywood;
       }
 
       .bottomSection{
@@ -98,10 +71,6 @@
     border:1px solid black;
     margin-top:15px;
 
-    .rangeValue{
-      margin:5px;
-    }
-
     input[type=text]{
       padding:10px;
       margin:5px;
@@ -111,7 +80,7 @@
     textarea{
       padding:10px;
       width:98%;
-      min-height:78px;
+      height:120px;
       resize:none;
       margin:5px;
     }

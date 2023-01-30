@@ -3,12 +3,12 @@ import cls from "./AllReviews.module.scss";
 import { useState } from "react";
 import Image from "next/image";
 // type
-import reviewType from "components/gym/posting/utils/reviewType";
+import reviewType from 'components/gym/posting/utils/reviewType';
 // comp
-import EditReview from "./EditReview";
+import ReviewEditForm from './ReviewEditForm';
 // util
-import deleteReview from "./reviewUtils/deleteReview";
-import renderStars from "./reviewUtils/renderStars";
+import deleteReview from './reviewUtils/deleteReview';
+import renderStars from './reviewUtils/renderStars';
 
 interface Props {
   eachReview: reviewType;
@@ -19,30 +19,34 @@ interface Props {
 const EachReviews = (props: Props) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  // DELETE Review
+  // DELETE Review API Loader
   const loadDeleteReview = async (eachReview: any) => {
     const reviewId = eachReview.reviewId;
-    await props.setIsFetching(false);
-    try {
-      deleteReview(reviewId);
-    } catch (err: any) {}
-    await props.setIsFetching(true);
-  };
+    await props.setIsFetching(false)
+    try{deleteReview(reviewId)}
+    catch(err:any){}
+    await props.setIsFetching(true)
+  }
 
   return (
     <>
       {/* 기본 모드 */}
       {!isEditing && (
-        <div
-          key={JSON.stringify(props.eachReview)}
-          className={cls.reviewContents}
-        >
+        <div key={JSON.stringify(props.eachReview)} className={cls.reviewContents}>
           <div className={cls.detailInfos}>
-            <div className={cls.top}>
-              <div className={cls.titleSection}> 
-                <div>{props.eachReview.title} </div>
-                <div className={cls.controlBtns}>
-              <button
+            <div className={cls.topSection}>
+              <div className={cls.title}> {props.eachReview.title}</div>
+            </div>
+            <div className={cls.contents}>
+              <div> {props.eachReview.content} </div>
+            </div>
+            <div className={cls.bottomSection}>
+              <div className={cls.left}>
+                <span>{props.eachReview.userName}</span> &nbsp;
+                <span>{renderStars(props.eachReview.rating)}</span> &nbsp;
+              </div>
+              <div className={cls.right}>
+                <button
                   onClick={() => {
                     setIsEditing(true);
                   }}
@@ -67,35 +71,17 @@ const EachReviews = (props: Props) => {
                   />
                 </button>
               </div>
-              </div>
-              
-
             </div>
-
-            <div className={cls.otherInfos}>
-              <span className={cls.s1}> 평가 : <b>{renderStars(props.eachReview.rating)}</b></span>
-              <span className={cls.partition}>|</span>
-              <span className={cls.s2}>{props.eachReview.userName}</span>
-              <span className={cls.partition}>|</span>
-              <span className={cls.s3}>{props.eachReview.createdAt}</span>
-            </div>
-
-
-            <div className={cls.contents}>
-              <div> {props.eachReview.content} </div>
-            </div>
-
-
           </div>
         </div>
       )}
       {/* 수정 모드 */}
       {isEditing && (
-        <EditReview
-          eachReview={props.eachReview}
-          i={props.i}
-          setIsEditing={setIsEditing}
-          setIsFetching={props.setIsFetching}
+        <ReviewEditForm
+          eachReview = {props.eachReview}
+          i = {props.i}
+          setIsEditing = {setIsEditing}
+          setIsFetching = {props.setIsFetching}
         />
       )}
     </>

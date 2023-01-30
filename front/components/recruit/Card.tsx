@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import classes from "./Card.module.scss";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -12,12 +12,12 @@ import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
 
 export default function RecipeReviewCard(props: any) {
-  const [commentMore, setCommentMore] = React.useState(false);
-  const [expanded, setExpanded] = React.useState(false);
-  const [writeComment, setWriteComment] = React.useState("");
-  const [cardClick, setCardClick] = React.useState(false);
+  const [commentMore, setCommentMore] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [writeComment, setWriteComment] = useState("");
+  const [cardClick, setCardClick] = useState(false);
   // 줄 수를 계산해서 저장할 변수
-  const [textareaHeight, setTextareaHeight] = React.useState(0);
+  const [textareaHeight, setTextareaHeight] = useState(0);
 
   // 사용자 입력 값이 변경될 때마다 checkItemContent에 저장하고
   // 엔터('\n') 개수를 세서 textareaHeight에 저장
