@@ -1,0 +1,59 @@
+.ReviewSectionLayout {
+
+  margin: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: white;
+  button{
+    &:hover{
+      background-color: blanchedalmond;
+    }
+  }
+
+  .reviewInfo{
+    margin:10px;
+    padding:10px;
+    border:solid 1px black;
+    p{
+      font-size:14px;
+      font-weight: bold;
+    }
+  }
+  .postReviewBtn {
+    text-align: right;
+    button {
+      width: 70px;
+      margin-right: 10px;
+      margin-top:20px;
+      height: 35px;
+      width:60px;
+      border-radius:5px;
+      cursor:pointer;
+      border:1px solid bisque;
+      background-color: ivory;
+      &:hover{
+        background-color: bisque;
+      }
+    }
+
+  }
+
+  .moreReviewBtn {
+    button {
+      margin-left: 10px;
+      margin-bottom:20px;
+      font-weight: bold;
+      height: 35px;
+      border-radius:5px;
+      cursor:pointer;
+      border:1px solid bisque;
+      background-color: ivory;
+      &:hover{
+        background-color: bisque;
+      }
+    }
+  }
+}
+
+

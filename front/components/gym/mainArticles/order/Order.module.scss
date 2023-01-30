@@ -1,0 +1,89 @@
+.OrderLayout {
+  // size
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  max-width: 280px;
+  // style
+  border: solid 1px black;
+  border-radius: 3px;
+  background-color: bisque;
+  button{cursor:pointer;}
+
+  .topSection {
+    display: flex;
+    justify-content: center;
+    h3 {
+      font-size: 20px;
+      margin-top:0px;
+      margin-right: 5px;
+      margin-bottom: 15px;
+    }
+    img {
+      margin-top: 5px;
+    }
+  }
+
+  .orderBtns {
+    display: flex;
+    margin: 5px;
+
+    .on {
+      color: black;
+      background-color: orange;
+      border: solid 2px black;
+      font-weight: bold;
+    }
+    
+    button {
+      margin: 2.5px;
+      height: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .resetButton {
+      width:40px;
+      img{
+        padding-top:3px;
+        width:20px;
+      }
+    }
+  }
+
+  .asdf{
+    // display:flex;
+    margin:10px;
+    background-color:rgb(233, 199, 155);
+    border:solid 1px black;
+    padding:10px;
+    
+    button{
+      margin:0 auto;
+      padding:3px;
+      border-radius:3px;
+      border:2px solid gray; 
+      font-size:13px;
+      font-weight:normal;
+      width:100px;
+      &:hover{
+        border:solid 2px black;
+      }
+    }
+    .on{
+      border:solid 2px black;
+      font-weight:bold;
+    }
+    input{
+      margin-left:10px;
+      margin-top:10px;
+      width:220px;
+      height:25px;
+    }
+    .flexbox{
+      display:flex;
+    }
+  }
+}

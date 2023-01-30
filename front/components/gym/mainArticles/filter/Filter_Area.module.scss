@@ -1,0 +1,43 @@
+.Filter_Area_Layout{
+  border-radius: 10px;
+  justify-content: center;
+
+  >div{
+    display: flex;
+    justify-content: center;
+  }
+  >div>div{
+    text-align:center;
+    width:90px;
+    border-radius: 10px;
+    font-size:14px;
+    h4{
+      font-size:17px;
+    }
+  }
+
+  ul{
+    padding:10px;
+    li{
+      padding:5px;
+      border:1px solid black;
+      border-collapse: collapse;
+      margin-top:-1px;
+      list-style-type: none;
+      &:hover{
+        background-color: red;
+        color:white;
+        font-weight: bold;
+        cursor:pointer;
+      }
+    }
+  }
+}
+
+.on{
+  background-color: orange;
+  font-weight: bold;
+}
+.off{
+  background-color: white;
+}

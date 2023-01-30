@@ -1,0 +1,36 @@
+.postReplyFormLayout{
+  border:1px solid black;
+  width:100%;
+  margin-top:-1px;
+  min-height: 150px;
+  padding:15px;
+
+  .textareaDiv{
+    width:100%;
+    height:100px;
+    padding-bottom:5px;
+    
+    .toInfo{
+      color:green;
+      font-size:13px;
+      font-weight: bold;
+    }
+    .toText{
+      color:gray;
+      font-size:12px;
+    }
+  }
+  textarea{
+    width:100%;
+    height:100%;
+    resize: none;
+    border:3px solid red;
+    &:focus{
+      outline-color: red;
+    }
+  }
+  .buttons{
+    margin-top:25px;
+    text-align: right;
+  }
+}
