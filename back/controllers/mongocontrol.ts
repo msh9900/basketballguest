@@ -1,7 +1,7 @@
 const mongoClient = require('../routes/mongoconnet')!;
+const ISODate = require('../routes/mongoconnet')!;
 const _user = mongoClient.connect();
 import crypto from 'crypto';
-import { Db } from 'mongodb';
 
 // 해시 암호화
 const createHashPassword = (password: string) => {
@@ -95,42 +95,81 @@ const mongoDB = {
       return updateData;
     }
   },
-  //게시글 이미지 보내기
-  // imgArticle: async (data: any) => {
-  //   const user = await _user;
-  //   const col = user.db('basket').collection('article');
-  //   const findArticle = await col.findOne({
-  //     'data.articleId': data.article.Id,
-  //   });
-  //   if (findArticle) {
-  //     await col.updateOne(
-  //       {
-  //         'data.articleId': data.articleId,
-  //       },
-  //       {
-  //         $set: {
-  //           userImg: data.files,
-  //         },
-  //       }
-  //     );
-  //   }
-  // },
-  // 게시글 작성
-  insertArticle: async (data: any) => {
-    console.log(data);
+  //특정 게시글 목록 찾기
+  searchArticles: async (data: any) => {
+    console.log('db 보내기전', data);
+    data.MaxPeriod = new Date().toLocaleString();
     const user = await _user;
     const col = user.db('basket').collection('article');
-    const insertArticle = await col.insertOne({ data });
-    if (insertArticle.acknowledged) {
-      return { msg: '게시글 작성 완료' };
+
+    let temp: any = [];
+
+    // 지역별 필터로 검색... 서울, 부산...
+    for (let i = 0; i < data.activeAreas.length; i++) {
+      const eachFiltered = await col
+        .find({
+          $and: [
+            { 'data.areaTag': data.activeAreas[i] }, // a b
+            { 'data.price': { $gte: data.MinPrice, $lte: data.MaxPrice } }, // b c
+            { 'data.openingPeriod[0]': { $gte: data.MinPeriod } },
+            { 'data.openingPeriod[1]': { $lte: data.MaxPeriod } },
+          ],
+        })
+        .toArray();
+
+      // 2000-00-00
+      // db.cakeSales.find( { orderDate: { $lt: ISODate("2021-02-25T10:03:46.000Z") } } )
+
+      console.log('eachFiltered', eachFiltered);
+      temp.push(eachFiltered[i]);
+
+      // allFiltered 바탕으로 colection 생성
+      // for (let i = 0; i < eachFiltered.length; i++) {
+      //   temp.push(eachFiltered[i]);
+      // }
     }
+
+    console.log('필터링 결과', temp);
+
+    // 동시에 적용하기 시도
+    // const foundArticlesMinPrice = await col
+    //   .find({
+    //     'data.areaTag': data.activeAreas,
+    //     'data.price': { $gte: data.MinPrice },
+    //     // 'data.price[1]': { $lte: data.MaxPrice },
+    //     // 'data.openingPeriod[0]': data.MinPeriod,
+    //     // 'data.openingPeriod[1]': data.MaxPeriod,
+    //   })
+    //   .toArray();
+    // const foundArticlesMaxPrice = await col
+    //   .find({
+    //     // 'data.areaTag': data.activeAreas,
+    //     // 'data.price': { $gte: data.MinPrice },
+    //     'data.price': { $lte: data.MaxPrice },
+    //     'data.openingPeriod[0]': { $gte: data.MinPeriod },
+    //     'data.openingPeriod[1]': { $lte: data.MaxPeriod },
+    //   })
+    //   .toArray();
+    // console.log(foundArticlesMinPrice);
+    // console.log(foundArticlesMaxPrice);
+
+    // if (foundArticlesMinPrice && foundArticlesMaxPrice) {
+    //   return { msg: '검색완료' };
+    // } else {
+    //   return { msg: '검색 실패' };
+    // }
+    // let result: any = [];
+    // foundArticles.map((val: any) => {
+    //   result.push(val.data);
+    // });
+    // return result;
   },
 
   // 게시글 목록
   findArticles: async () => {
     const user = await _user;
-    const db = user.db('basket').collection('article');
-    const foundArticles = await db.find({}).toArray();
+    const col = user.db('basket').collection('article');
+    const foundArticles = await col.find({}).toArray();
     let result: any = [];
     foundArticles.map((val: any) => {
       result.push(val.data);
@@ -144,6 +183,15 @@ const mongoDB = {
     const foundArticle = await db.findOne({ 'data.articleId': pid });
     const result = foundArticle.data;
     return result;
+  },
+  // 게시글 작성
+  insertArticle: async (data: any) => {
+    const user = await _user;
+    const col = user.db('basket').collection('article');
+    const insertArticle = await col.insertOne({ data });
+    if (insertArticle.acknowledged) {
+      return { msg: '게시글 작성 완료' };
+    }
   },
   //게시글 수정
   updateArticle: async (data: any) => {
