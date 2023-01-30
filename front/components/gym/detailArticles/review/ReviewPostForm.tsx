@@ -1,4 +1,4 @@
-import cls from "./PostReview.module.scss";
+import cls from "./ReviewPostForm.module.scss";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -10,7 +10,7 @@ interface Props {
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PostReview = (props: Props) => {
+const ReviewPostForm = (props: Props) => {
   const router = useRouter();
   const userName = useSelector((state: any) => state.login.userName);
   const userId = useSelector((state: any) => state.login.userId);
@@ -113,4 +113,4 @@ const PostReview = (props: Props) => {
   );
 };
 
-export default PostReview;
+export default ReviewPostForm;

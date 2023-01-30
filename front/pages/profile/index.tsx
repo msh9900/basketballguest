@@ -64,11 +64,9 @@ const Profile = () => {
   const imgHandler = async (event: any) => {
     formData.append("img", event.target.files[0]);
     setUserImg(URL.createObjectURL(event.target.files[0]));
-    console.log(event.target.files[0]);
   };
 
   async function profileSumbit(event: any) {
-    console.log('formData.get("img")', formData.get("img"));
     event.preventDefault();
     setIsRecentSubmitted(true);
 

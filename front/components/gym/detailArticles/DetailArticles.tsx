@@ -4,8 +4,7 @@ import ReviewSection from "./review/ReviewSection";
 import CommentSection from "./comment/CommentSection";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import DetailArticles_EditForm from "./DetailArticles_EditForm";
-import Image from "next/image";
+import DetailArticles_EditForm from './DetailArticles_EditForm';
 
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
@@ -15,7 +14,7 @@ const DetailArticles = () => {
   const [gymInfo, setGymInfo] =
     useState<gymArticleDataType>(gymArticleDataBase);
   const [isArticleEditing, setIsArticleEditing] = useState(false);
-  const [isFetchingArticles, setIsFetchingArticles] = useState(true);
+  const [isFetchingArticles, setIsFetchingArticles] = useState(true)
   const [openingDays, setOpeningDays] = useState<string[]>([]);
   const router = useRouter();
 
@@ -23,32 +22,34 @@ const DetailArticles = () => {
     getGymData(router.query.articles as string);
     setOpeningDays(getOpeningDaysFromData());
   }, [isFetchingArticles]);
-
-  // GET
+  
   const getGymData = async (pId: string) => {
     const response = await fetch(
       `http://localhost:4000/rental/article?pid=${pId}`
     );
     const data = await response.json();
-    await setGymInfo(data);
-    await setIsFetchingArticles(false);
+    await setGymInfo(data.data);
+    await setIsFetchingArticles(false)
   };
 
-  // DELETE
   const deleteArticle = async () => {
     const pId = router.query.articles as string;
     try {
-      await fetch(`http://localhost:4000/rental/article?pid=${pId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `http://localhost:4000/rental/article?pid=${pId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      alert("게시글 DELETE 성공");
       router.push("/gym");
     } catch (err: any) {
       alert("게시글 DELETE 실패");
     }
   };
 
-  // etc utils...
   const getOpeningDaysFromData = () => {
     let temp: string[] = [];
     gymInfo.openingDays.forEach((ele) => {
@@ -57,117 +58,87 @@ const DetailArticles = () => {
     return temp;
   };
 
-  // review, comment 섹션쪽 react.memo 처리할 것
+  // review, comment 섹션쪽은 react.memo 처리할 것
 
-  // isFetchingArticles
   return (
     <>
       <div className={cls.DetailArticlesLayout}>
-        {!isFetchingArticles && (
+        {!isArticleEditing && (
           <>
-            {!isArticleEditing && (
-              <>
-                <h1>체육관 정보</h1>
-                <div className={cls.contentBox}>
-                  <div className={cls.mainContent}>
-                    <div className={cls.eachContent}>
-                      <div className={cls.gym_Article_title}>
-                        <h2>{gymInfo.title}</h2>
-                      </div>
-                      <div className={cls.gym_Article_controlBtns}>
-                        <button
-                          onClick={() => {
-                            setIsArticleEditing(true);
-                          }}
-                        >
-                          <Image
-                            src="/images/rental/pencil.png"
-                            alt="수정 버튼"
-                            width="25"
-                            height="25"
-                          />
-                        </button>
-                        <button onClick={deleteArticle}>
-                          <Image
-                            src="/images/rental/bin.png"
-                            alt="삭제 버튼"
-                            width="25"
-                            height="25"
-                          />
-                        </button>
-                      </div>
-                    </div>
+            <h1>체육관 정보</h1>
+            <div className={cls.contentBox}>
+              <div className={cls.mainContent}>
+                <h2>제목</h2>
+                <div className={cls.eachContent}>{gymInfo.title}</div>
+                <button onClick={()=>{setIsArticleEditing(true)}}>글 수정</button>
+                <button onClick={deleteArticle}>글 삭제</button>
+                {/* <div>작성자 : {gymInfo.userId} | {gymInfo.userName}</div> */}
+              </div>
 
-                    <div className={cls.eachContent}>
-                      {gymInfo.userName} | {gymInfo.createdAt}
-                    </div>
-                  </div>
+              <div className={cls.imgContent}>
+                <SlickSlider />
+              </div>
 
-                  <div className={cls.imgContent}>
-                    <SlickSlider />
-                  </div>
+              <div className={cls.mainContent}>
+                <h2>내용</h2>
+                <div className={cls.eachContent}>{gymInfo.content}</div>
+              </div>
 
-                  <div className={cls.mainContent}>
-                    <div className={cls.eachContent}>{gymInfo.content}</div>
-                  </div>
+              <div className={cls.mainContent}>
+                <h2>연락처</h2>
+                <div className={cls.eachContent}>{gymInfo.contact}</div>
+              </div>
 
-                  <div className={cls.mainContent}>
-                    <div className={cls.eachContent}>{gymInfo.contact}</div>
-                  </div>
-
-                  <div className={cls.mainContent}>
-                    <h4>주소</h4>
-                    <div className={cls.eachContent}>
-                      우편번호 : {gymInfo.address[0].val} <br />
-                      도로명주소 : {gymInfo.address[1].val} <br />
-                      지번주소 : {gymInfo.address[2].val} <br />
-                      상세주소 : {gymInfo.address[3].val} <br />
-                      참고정보 : {gymInfo.address[4].val} <br />
-                    </div>
-                  </div>
-
-                  <div className={cls.mainContent}>
-                    <h4>가격</h4>
-                    <div className={cls.eachContent}>
-                      {gymInfo.price} 원/시간
-                    </div>
-                  </div>
-
-                  <div className={cls.mainContent}>
-                    <h4>오픈시간</h4>
-                    <div className={cls.eachContent}>
-                      {gymInfo.openingHours}
-                    </div>
-                  </div>
-
-                  <div className={cls.mainContent}>
-                    <h4>오픈기간</h4>
-                    <div className={cls.eachContent}>
-                      {gymInfo.openingPeriod[0]}~{gymInfo.openingPeriod[1]}
-                    </div>
-                  </div>
-
-                  <div className={cls.mainContent}>
-                    <h4>영업일</h4>
-                    <div className={cls.eachContent}>
-                      {getOpeningDaysFromData()}
-                    </div>
-                  </div>
+              <div className={cls.mainContent}>
+                <h2>주소</h2>
+                <div className={cls.eachContent}>
+                  우편번호 : {gymInfo.address[0].val} <br />
+                  도로명주소 : {gymInfo.address[1].val} <br />
+                  지번주소 : {gymInfo.address[2].val} <br />
+                  상세주소 : {gymInfo.address[3].val} <br />
+                  참고정보 : {gymInfo.address[4].val} <br />
                 </div>
-              </>
-            )}
+              </div>
 
-            {isArticleEditing && (
-              <>
-                <DetailArticles_EditForm
-                  gymInfo={gymInfo}
-                  setIsArticleEditing={setIsArticleEditing}
-                  setIsFetchingArticles={setIsFetchingArticles}
-                />
-              </>
-            )}
+              <div className={cls.mainContent}>
+                <h2>가격</h2>
+                <div className={cls.eachContent}>{gymInfo.price}원/시간</div>
+              </div>
+
+              <div className={cls.mainContent}>
+                <h2>오픈시간</h2>
+                <div className={cls.eachContent}>
+                  {gymInfo.openingHours}
+                </div>
+              </div>
+
+              <div className={cls.mainContent}>
+                <h2>오픈기간</h2>
+                <div className={cls.eachContent}>
+                  {gymInfo.openingPeriod[0]}~{gymInfo.openingPeriod[1]}
+                </div>
+              </div>
+
+              <div className={cls.mainContent}>
+                <h2>영업일</h2>
+                <div className={cls.eachContent}>
+                  {openingDays.map((ele, i) => (
+                    <li key={"openingDays" + i}>{ele}</li>
+                  ))}
+                </div>
+              </div>
+            </div>
           </>
         )}
+
+        {isArticleEditing && (<>
+          <DetailArticles_EditForm
+            gymInfo={gymInfo}
+            setIsArticleEditing={setIsArticleEditing}
+            setIsFetchingArticles={setIsFetchingArticles}
+          />
+        </>)}
+
         <h1>리뷰</h1>
         <div className={cls.contentBox}>
           <ReviewSection />

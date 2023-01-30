@@ -6,7 +6,6 @@ interface reviewType {
   title: string;
   content: string;
   rating: string;
-  createdAt: string;
 }
 
 export default reviewType;
