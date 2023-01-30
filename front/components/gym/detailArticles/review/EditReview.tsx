@@ -11,7 +11,7 @@ interface Props {
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReviewEditForm = (props: Props) => {
+const EditReview = (props: Props) => {
   const userId = useSelector((state: any) => state.login.userId);
   const userName = useSelector((state: any) => state.login.userName);
 
@@ -57,16 +57,19 @@ const ReviewEditForm = (props: Props) => {
     <>
       <div className={cls.reviewEditForm}>
         <input type="text" onChange={titleChangeHandler} value={fixedTitle} />
+        <div className={cls.rangeValue}>
+          <input
+            type="range"
+            min="0"
+            max="5"
+            step="0.5"
+            value={fixedRatings}
+            onChange={fixRatings}
+          /> &nbsp;
+          <span>{fixedRatings}점</span>
+        </div>
+
         <textarea onChange={contentChangeHandler} value={fixedContent} />
-        <input
-          type="range"
-          min="0"
-          max="5"
-          step="0.5"
-          value={fixedRatings}
-          onChange={fixRatings}
-        />
-        <span>{fixedRatings}점</span>
         <div className={cls.editControlBtns}>
           <button
             onClick={() => {
@@ -98,4 +101,4 @@ const ReviewEditForm = (props: Props) => {
   );
 };
 
-export default ReviewEditForm;
+export default EditReview;

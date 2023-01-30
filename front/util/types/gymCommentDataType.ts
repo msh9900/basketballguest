@@ -4,10 +4,10 @@ interface replyType {
   to: string;
   userId: string;
   userName: string;
-  date: string;
+  createdAt: string;
   contents: string;
   isCreater: boolean;
-  indentLevel:number;
+  indentLevel: number;
 }
 
 interface commentType {
@@ -15,7 +15,7 @@ interface commentType {
   commentId: string;
   userId: string;
   userName: string;
-  date: string;
+  createdAt: string;
   contents: string;
   isCreater: boolean;
   replys: replyType[];

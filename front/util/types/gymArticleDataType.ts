@@ -8,8 +8,8 @@ interface openingDaysType {
 }
 interface gymArticleDataType {
   articleId: string;
-  userId:string;
-  userName:string;
+  userId: string;
+  userName: string;
   title: string;
   content: string;
   contact: string;
@@ -18,6 +18,8 @@ interface gymArticleDataType {
   openingPeriod: string[];
   openingDays: openingDaysType[];
   address: addressType[];
+  createdAt: string;
+  gymImg: string[];
 }
 
 export default gymArticleDataType;

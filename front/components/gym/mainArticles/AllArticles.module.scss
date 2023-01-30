@@ -1,41 +1,44 @@
-
-.boxContainer{
-  margin:0 auto;
+.boxContainer {
+  margin: 0 auto;
   display: flex;
-  
+
   flex-direction: row;
   flex-wrap: wrap;
-  max-width : 1200px;
+  max-width: 1200px;
   justify-content: center;
-  li{
+  li {
     list-style-type: none;
   }
 }
 
-.boxItem{
-  cursor:pointer;
-  border : 1px solid brown;
+.boxItem {
+  cursor: pointer;
+  border: 1px solid brown;
   background-color: white;
-  width:380px;
-  height:350px;
-  margin:10px;
+  width: 380px;
+  height: 350px;
+  margin: 10px;
 }
 
-.imgBox{
-  height:210px;
+.imgBox {
+  height: 210px;
   background-color: green;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-.title{
-  font-size:20px;
+.title {
+  font-size: 20px;
   font-weight: bold;
 }
 
-.place{
-
+.place {
 }
 
-.content{
-  overflow:hidden;
-  max-height:80px;
+.content {
+  overflow: hidden;
+  max-height: 80px;
 }

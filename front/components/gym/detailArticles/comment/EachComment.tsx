@@ -5,33 +5,51 @@ import { useState } from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
-import PostReplyForm from "components/gym/detailArticles/reply/PostReplyForm";
-import EditComment from './EditComment';
+import PostReply from "components/gym/detailArticles/reply/PostReply";
+import EditComment from "./EditComment";
 // Type
-import replyType from 'components/gym/posting/utils/replyType';
+import replyType from "util/types/gymReplyType";
+import { useSelector } from "react-redux";
 
 interface Props {
+  // value for post
   articleId: string;
   commentId: string;
   userId: string;
   userName: string;
-  date: string;
+  createdAt: string;
   contents: string;
   isCreater: boolean;
   isFetching: boolean;
-  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
   replys: replyType[];
+
+  // activate rerender
+  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+
+  // toggle
+  setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EachComment = (props: Props) => {
   const [isReplyWriting, setIsReplyWriting] = useState(false);
   const [toInfo, setToInfo] = useState("");
+  const [indent, setIndent] = useState(1);
+  const stateId = useSelector((state: any) => state.login.userId);
+
+  //  toInfo : string, 상위요소의 userId, 필요하면 사용
+  //  indent : number, 상위요소에 대한 자신의 들여쓰기 정도
+  // ㄴ 상위요소가 comment => indentLevel = 1 (default)
+  // ㄴ 상위요소가 reply   => indentLevel = 대상의 indentLevel + 1
+
   const [isCommentEditing, setIsCommentEditing] = useState(false); // comment
 
-  const ReplyPostFormToggle = (userName: string) => {
-    setToInfo(userName);
+  const ReplyPostFormToggle = (userName: string, contents: string) => {
+    setToInfo(userName + "_" + contents);
     if (isReplyWriting == false) {
+      if(stateId == ''){
+        alert('로그인이 필요합니다.')
+        return
+      }
       setIsReplyWriting(true);
       return;
     }
@@ -41,18 +59,16 @@ const EachComment = (props: Props) => {
   };
 
   const deleteComment = async (e: any) => {
-    await props.setIsFetching(true);
     const commentId = e.target.id;
     try {
-      const response = await fetch(
+      await fetch(
         `http://localhost:4000/rental/comment?commentId=${commentId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         }
       );
-      const data = await response.json();
-      await props.setIsFetching(false);
+      await props.setIsFetching(true);
     } catch (err: any) {
       console.log("댓글 삭제 실패", err);
     }
@@ -75,8 +91,13 @@ const EachComment = (props: Props) => {
               replys={props.replys}
             />
           )}
+          {/* 댓글 평상시 */}
           {!isCommentEditing && (
             <div className={cls.originalComment} id={props.commentId}>
+              <div className={props.isCreater === true ? cls.creater : "vvv"}>
+                <button className={cls.userName}>{props.userName}</button>
+              </div>
+
               <div className={cls.topSection}>
                 <div className={cls.topLeft}>{props.contents}</div>
                 <div className={cls.topRight}></div>
@@ -84,12 +105,7 @@ const EachComment = (props: Props) => {
 
               <div className={cls.bottomSection}>
                 <div className={cls.bottomLeft}>
-                  <div
-                    className={props.isCreater === true ? cls.creater : "vvv"}
-                  >
-                    <button className={cls.userName}>{props.userName}</button>
-                    <span className={cls.time}>{props.date}</span>
-                  </div>
+                  <span className={cls.time}>{props.createdAt}</span>
                 </div>
 
                 <div className={cls.bottomRight}>
@@ -117,7 +133,7 @@ const EachComment = (props: Props) => {
                   </button>
                   <button
                     onClick={() => {
-                      ReplyPostFormToggle(props.userName);
+                      ReplyPostFormToggle(props.userName, props.contents);
                     }}
                   >
                     <Image
@@ -132,27 +148,32 @@ const EachComment = (props: Props) => {
             </div>
           )}
 
-          {props.replys && props.replys.map((item, idx) => {
-            return (
-              <div key={Math.random()}>
-                <EachReply
-                  replys={item}
-                  idx={idx}
-                  isReplyWriting={isReplyWriting}
-                  setIsReplyWriting={setIsReplyWriting}
-                  toInfo={toInfo}
-                  setToInfo={setToInfo}
-                  setIsFetching={props.setIsFetching}
-                />
-              </div>
-            );
-          })}
-
+          {props.replys &&
+            props.replys.map((item, idx) => {
+              return (
+                <div key={Math.random()}>
+                  <EachReply
+                    replys={item}
+                    commentId={props.commentId}
+                    setIndent={setIndent}
+                    indent={indent}
+                    idx={idx}
+                    isReplyWriting={isReplyWriting}
+                    setIsReplyWriting={setIsReplyWriting}
+                    toInfo={toInfo}
+                    setToInfo={setToInfo}
+                    setIsFetching={props.setIsFetching}
+                  />
+                </div>
+              );
+            })}
           {isReplyWriting && (
-            <PostReplyForm
+            <PostReply
               setIsReplyWriting={setIsReplyWriting}
               setIsFetching={props.setIsFetching}
               toInfo={toInfo}
+              commentId={props.commentId}
+              indent={indent}
             />
           )}
         </div>

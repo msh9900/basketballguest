@@ -1,6 +1,8 @@
-# componet structure
+
+componet structure
+
 ReviewSection
-  ReviewPostForm
+  PostReview
   AllReviews
     EachReviews
-      ReviewEditForm
+      EditReview

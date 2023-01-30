@@ -11,7 +11,7 @@ interface Props{
 const FilterPrice = (props:Props) => {
 
   const [stt, setStt] = useState('0')
-  const [end, setEnd] = useState('0')
+  const [end, setEnd] = useState('20000')
   
   // <<가격 변경>>
   const onChangePrice = (e: React.FormEvent<HTMLInputElement>) => {

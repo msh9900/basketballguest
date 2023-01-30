@@ -1,18 +1,14 @@
 import cls from "./AllReviews.module.scss";
 import EachReviews from './EachReviews';
 import reviewType from 'components/gym/posting/utils/reviewType';
-interface data{
-  data:reviewType
-}
+import {useEffect} from 'react'
+
 interface Props {
-  allReviewData: data[];
+  allReviewData: reviewType[];
   setIsFetching:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const AllReviews = (props: Props) => {
-  // useEffect(() => {
-  //   console.log("props.reviewData", props.reviewData);
-  // });
 
   return (
     <div className={cls.AllReviewsLayout}>
@@ -20,7 +16,7 @@ const AllReviews = (props: Props) => {
         props.allReviewData.map((eachReview, idx) => (
           <EachReviews
             key={Date.now() + Math.random()} 
-            eachReview={eachReview.data} 
+            eachReview={eachReview} 
             i={idx}
             setIsFetching={props.setIsFetching}
           />

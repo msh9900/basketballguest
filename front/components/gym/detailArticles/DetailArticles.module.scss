@@ -1,6 +1,9 @@
 .DetailArticlesLayout{
   background-color: burlywood;
   padding:30px;
+  button{
+    cursor:pointer;
+  }
 
   @media screen and (max-width:900px) {
     padding:10px;
@@ -25,14 +28,37 @@
   background-color:white;
   padding:5px;
 }
+
 .eachContent{
-  margin:10px auto;
+  display:flex;
+  justify-content: space-between;
+  
   background-color:white;
-  padding:10px;
+  padding:5px;
+
+  .gym_Article_title{
+    margin-left:10px;
+  }
+  .gym_Article_controlBtns{
+    margin-top:10px;
+    button {
+      margin-right:10px;
+      font-weight: bold;
+      height: 35px;
+      border-radius:5px;
+      cursor:pointer;
+      border:1px solid bisque;
+      background-color: ivory;
+      &:hover{
+        background-color: bisque;
+      }
+    }
+  }
 }
+
 .imgContent{
   margin:5px auto;
-  background-color:lightgray;
+  background-color:white;
   padding:5px;
   height:300px;
 }
