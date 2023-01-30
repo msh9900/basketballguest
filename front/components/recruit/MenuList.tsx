@@ -1,8 +1,8 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function BasicMenu(props: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -27,7 +27,7 @@ export default function BasicMenu(props: any) {
   return (
     <div>
       <Button id="basic-button" aria-haspopup="true" onClick={handleClick}>
-        <MoreVertIcon style={{ color: "black" }} />
+        <MoreVertIcon style={{ color: 'black' }} />
       </Button>
       <Menu
         id="basic-menu"
@@ -35,12 +35,12 @@ export default function BasicMenu(props: any) {
         open={open}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
       >
         <MenuItem onClick={updateHandler}>수정</MenuItem>

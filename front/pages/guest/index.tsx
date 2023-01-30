@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import path from "path";
 import fs from "fs/promises";
@@ -9,13 +9,14 @@ import Modal from "@mui/material/Modal";
 import WriteModal from "../../components/recruit/WriteModal";
 export default function GuestRecruitmentPage(props: any) {
   const { data } = props;
+
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const fetchMoreData = () => {
-    if (contentList < data.length) {
+    if (contentList < 150) {
       setTimeout(() => {
         setContentList(contentList + 10);
       }, 500);
@@ -23,7 +24,6 @@ export default function GuestRecruitmentPage(props: any) {
       setHasMore(false);
     }
   };
-
   return (
     <>
       <div className={classes.writeButton} onClick={handleOpen}>
