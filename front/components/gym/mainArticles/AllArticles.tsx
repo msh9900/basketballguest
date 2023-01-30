@@ -5,22 +5,64 @@ import gymArticleDataType from "util/types/gymArticleDataType";
 import Image from "next/image";
 // import gymArticleDataBase from 'util/types/gymArticleDataBase';
 
-const AllArticles = () => {
+interface Props {
+  orderStatus: any;
+  filterStatus: any;
+  searchRes: any;
+  needToSearch: any;
+  setNeedToSearch: any;
+}
+const AllArticles = (props: Props) => {
   const [articles, setArticles] = useState<gymArticleDataType[]>([]);
 
   useEffect(() => {
-    getArticleData();
-  }, []);
+    // console.log("props.needToSearch", props.needToSearch);
+    if (props.needToSearch) {
+      const keyWord = props.searchRes;
+      getArticleData(keyWord);
+    }
+  }, [props.needToSearch]);
 
-  const getArticleData = async () => {
-    const response = await fetch("http://localhost:4000/rental/articles");
-    const data = await response.json()!;
-    setArticles(data);
+  const getArticleData = async (keyWord: string) => {
+    let res: any;
+
+    // 필터링한 검색
+    if (keyWord !== "") {
+      const body = {
+        filter: props.filterStatus,
+        order: props.orderStatus,
+        keyWord: keyWord,
+      };
+
+      try {
+        const response = await fetch("http://localhost:4000/rental/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        res = await response.json();
+        console.log("검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("필터,정렬 적용한 검색 실패 : ", err);
+      }
+    }
+
+    // 전체 검색
+    else {
+      try {
+        const response = await fetch("http://localhost:4000/rental/articles");
+        res = await response.json();
+        console.log("검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("기본 검색 실패 : ", err);
+      }
+    }
+    props.setNeedToSearch(false);
+    setArticles(res);
   };
 
   const router = useRouter();
   const moveToDetailPage = (num: string) => {
-
     router.push(`/gym/${num}/`);
   };
 

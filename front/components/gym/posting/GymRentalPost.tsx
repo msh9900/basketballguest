@@ -57,7 +57,6 @@ const GymRentalPost = () => {
   const [inputImgs, setInputImgs] = useState<string[]>([]);
 
   const post = async () => {
-
     // 유효성 체크
     // const isValid = await isFormValid(title, address, openingHours, openingPeriod,);
     // if (!isValid) {
@@ -78,12 +77,12 @@ const GymRentalPost = () => {
     FD.append("openingHours", JSON.stringify(openingHours));
     FD.append("openingPeriod", JSON.stringify(openingPeriod));
     FD.append("openingDays", JSON.stringify(openingDays));
-    
+
     // 이미지 데이터 폼과 병합
     for (const pair of imgFormData.entries()) {
       FD.append(pair[0], pair[1]);
     }
-    
+
     // 전송
     try {
       await fetch("http://localhost:4000/rental/article", {
