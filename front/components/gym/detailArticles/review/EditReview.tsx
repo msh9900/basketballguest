@@ -43,8 +43,9 @@ const EditReview = (props: Props) => {
       content: fixedContent,
       rating: fixedRatings,
     };
-    props.setIsFetching(true);
+    
     try {
+      await updateReview(reviewId, updateReviewObj);
       await fetch(
         `http://localhost:4000/rental/review?reviewId=${reviewId}`,
         {
@@ -53,10 +54,11 @@ const EditReview = (props: Props) => {
           body: JSON.stringify(updateReviewObj),
         }
       );
+      await props.setIsFetching(true);
+      await props.setIsEditing(false)
     } catch (err: any) {
       alert("리뷰 UPDATE 실패");
     }
-    props.setIsFetching(false);
   };
 
   return (
