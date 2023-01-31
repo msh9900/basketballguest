@@ -27,7 +27,7 @@ const CommentSection = () => {
         `http://localhost:4000/rental/comment?pid=${pId}`
       );
       const res = await response.json();
-      // console.log('res', res);
+      console.log('res', res);
       await setCommentData(res);
       await setIsFetching(false);
     } catch (err: any) {}

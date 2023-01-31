@@ -1,7 +1,7 @@
 // style
 import cls from "./EachComment.module.scss";
 // library
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
@@ -42,6 +42,9 @@ const EachComment = (props: Props) => {
   // ㄴ 상위요소가 reply   => indentLevel = 대상의 indentLevel + 1
 
   const [isCommentEditing, setIsCommentEditing] = useState(false); // comment
+  useEffect(()=>{
+    console.log('props',props)
+  }, [])
 
   const ReplyPostFormToggle = (userName: string, contents: string) => {
     setToInfo(userName + "_" + contents);
