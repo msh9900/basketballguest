@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import Image from "next/image";
 
 interface Props {
-  isFetching: boolean;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
   setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
 }

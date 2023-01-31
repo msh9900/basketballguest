@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import { useRouter } from "next/router";
 import Image from "next/image";
-import getReview from './reviewUtils/getReview';
+import getReview from "./reviewUtils/getReview";
 
 const ReviewSection = () => {
   const [isWriting, setIsWriting] = useState(false);
@@ -17,82 +17,94 @@ const ReviewSection = () => {
   const stateId = useSelector((state: any) => state.login.userId);
   const router = useRouter();
 
-  // 패치마다 새로 GET REVIEW 호출
   useEffect(() => {
-    getallReviewData();
+    if (isFetching) getReviewData();
   }, [isFetching]);
 
-  // 리뷰 포스트 폼 토글
   const writeReview = () => {
     if (!isWriting) {
-      if(stateId == ''){
-        alert('로그인이 필요합니다.')
-        return
+      if (stateId == "") {
+        alert("로그인이 필요합니다.");
+        return;
       }
       setIsWriting(true);
-      return
-    } 
+      return;
+    }
     setIsWriting(false);
   };
 
-  // GET REVIEW API LOADER
-  const getallReviewData = async () => {
+  const getReviewData = async () => {
     try {
       const pId = router.query.articles as string;
-      const dataArray = await getReview(pId)
-      setAllReviewData(dataArray);
+      const response = await fetch(`http://localhost:4000/rental/review?pid=${pId}`);
+      const res = await response.json();
+      await setAllReviewData(res);
+      await setIsFetching(false);
 
-      // 평균 리뷰 점수 계산
+      // 평점
       let ratingsArr: number[] = [];
-      allReviewData.forEach((item:any) => {
+      res.forEach((item: any) => {
         const eachRatings = item.rating.toString();
         const ratingvalue = parseInt(eachRatings);
         ratingsArr.push(ratingvalue);
       });
-
       const ratingsSum = ratingsArr.reduce((acc, cur) => acc + cur, 0);
-      const avgValue = (ratingsSum / allReviewData.length) as number;
+      const avgValue = (ratingsSum / res.length) as number;
       setAvgRatings(Number(avgValue.toFixed(2)));
 
-      // 전체 리뷰 개수
-      setAllReviewCount(allReviewData.length);
+      // 개수
+      setAllReviewCount(res.length);
     } catch (err: any) {
       console.log("err", err);
     }
-    setIsFetching(false);
+    
   };
 
   return (
     <>
-      {!isFetching && (
-        <div className={cls.ReviewSectionLayout}>
-          <div className={cls.postReviewBtn}>
-            <button onClick={writeReview}>
-              <Image
-                src="/images/rental/posting.png"
-                alt="리뷰 작성"
-                width="25"
-                height="25"
-              />
-            </button>
-            {isWriting && (
-              <PostReview
-                setIsWriting={setIsWriting}
-                setIsFetching={setIsFetching}
-              />
-            )}
-          </div>
-          <div className={cls.reviewInfo}>
-            <p>
-              평균 점수 : {avgRatings} &nbsp;|&nbsp; 리뷰 개수 : {allReviewCount}
-            </p>
-          </div>
-          <AllReviews allReviewData={allReviewData} setIsFetching={setIsFetching}/>
-          <div className={cls.moreReviewBtn}>
-            <button>더 불러오기...</button>
-          </div>
+      <div className={cls.ReviewSectionLayout}>
+        <div className={cls.postReviewBtn}>
+          <button onClick={writeReview}>
+            <Image
+              src="/images/rental/posting.png"
+              alt="리뷰 작성"
+              width="25"
+              height="25"
+            />
+          </button>
+          {isWriting && (
+            <PostReview
+              setIsWriting={setIsWriting}
+              setIsFetching={setIsFetching}
+            />
+          )}
         </div>
-      )}
+
+        {!isFetching && (
+          <>
+            <div className={cls.reviewInfo}>
+              <p>
+                평균 점수 : {avgRatings} &nbsp; | &nbsp; 리뷰 개수 :{" "}
+                {allReviewCount}
+              </p>
+            </div>
+            <AllReviews
+              allReviewData={allReviewData}
+              setIsFetching={setIsFetching}
+            />
+          </>
+        )}
+        {isFetching && <>
+          <div>
+            리뷰 로딩중
+          </div>
+        </>
+        }
+
+        <div className={cls.moreReviewBtn}>
+          <button>더 불러오기...</button>
+        </div>
+      </div>
     </>
   );
 };

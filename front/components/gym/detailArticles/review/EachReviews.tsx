@@ -19,14 +19,19 @@ interface Props {
 const EachReviews = (props: Props) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  // DELETE Review
+  // DELETE
   const loadDeleteReview = async (eachReview: any) => {
     const reviewId = eachReview.reviewId;
-    await props.setIsFetching(false);
     try {
-      deleteReview(reviewId);
+      await fetch(
+        `http://localhost:4000/rental/review?reviewId=${reviewId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      await props.setIsFetching(true);
     } catch (err: any) {}
-    await props.setIsFetching(true);
   };
 
   return (

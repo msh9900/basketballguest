@@ -71,10 +71,6 @@ const DetailArticles = () => {
             {!isArticleEditing && (
               <>
                 <h1>체육관 정보</h1>
-                {/* <classCompTest
-                data='a'
-                children='data'
-                /> */}
                 <div className={cls.contentBox}>
                   <div className={cls.mainContent}>
                     <div className={cls.eachContent}>

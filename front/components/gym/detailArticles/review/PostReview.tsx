@@ -23,8 +23,7 @@ const PostReview = (props: Props) => {
   const [rating, setRating] = useState("3.0");
 
   // load POST REVIEW API
-  const loadReviewPostApi = async () => {
-    await props.setIsFetching(false)
+  const loadPostReviewAPI = async () => {
     const reviewObj = {
       articleId: router.query.articles as string,
       reviewId: (Date.now() + Math.random()).toFixed(13),
@@ -35,15 +34,18 @@ const PostReview = (props: Props) => {
       rating,
     };
     try{
-      await postReview(reviewObj)
+      await fetch("http://localhost:4000/rental/review", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reviewObj),
+      });
+      await props.setIsFetching(true)
     }
     catch (err:any){
       console.log('REVIEW 생성 실패')
     }
-    await props.setIsFetching(true)
     await props.setIsWriting(false);
   }
-
 
   const onChangeTitle = (e: any) => {
     setTitle(e.target.value);
@@ -91,7 +93,7 @@ const PostReview = (props: Props) => {
           </div>
         </div>
         <div className={cls.ReviewPostFormBtns}>
-          <button onClick={loadReviewPostApi}>
+          <button onClick={loadPostReviewAPI}>
             <Image
               src="/images/rental/checked.png"
               alt="완료"

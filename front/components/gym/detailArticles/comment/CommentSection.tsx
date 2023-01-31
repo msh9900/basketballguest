@@ -17,7 +17,7 @@ const CommentSection = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isFetching == true) getCommentData();
+    if (isFetching) getCommentData();
   }, [isFetching]);
 
   const getCommentData = async () => {
@@ -27,7 +27,6 @@ const CommentSection = () => {
         `http://localhost:4000/rental/comment?pid=${pId}`
       );
       const res = await response.json();
-      console.log('res', res);
       await setCommentData(res);
       await setIsFetching(false);
     } catch (err: any) {}
@@ -60,9 +59,8 @@ const CommentSection = () => {
 
             {isCommentWriting && (
               <PostComment
-                isFetching={isFetching}
-                setIsFetching={setIsFetching}
                 setIsCommentWriting={setIsCommentWriting}
+                setIsFetching={setIsFetching}
               />
             )}
 

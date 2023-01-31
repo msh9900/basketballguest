@@ -45,8 +45,14 @@ const EditReview = (props: Props) => {
     };
     props.setIsFetching(true);
     try {
-      await updateReview(reviewId, updateReviewObj);
-      alert("리뷰 UPDATE 성공");
+      await fetch(
+        `http://localhost:4000/rental/review?reviewId=${reviewId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updateReviewObj),
+        }
+      );
     } catch (err: any) {
       alert("리뷰 UPDATE 실패");
     }
