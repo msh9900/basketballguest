@@ -2,7 +2,6 @@ import cls from "./SlickSlider.module.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { useEffect } from "react";
 // import Image from 'next/image'
 
 const slickStyle = `
@@ -15,9 +14,7 @@ interface Props {
   gymImg: string[];
 }
 const SlickSlider = (props: Props) => {
-  useEffect(() => {
-    console.log("props.gymImg", props.gymImg[0]);
-  });
+
   const settings = {
     dots: true,
     infinite: true,

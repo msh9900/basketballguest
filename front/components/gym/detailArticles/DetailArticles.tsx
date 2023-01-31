@@ -31,7 +31,6 @@ const DetailArticles = () => {
       `http://localhost:4000/rental/article?pid=${pId}`
     );
     const data = await response.json();
-    console.log('data',data);
     await setGymInfo(data);
     await setIsFetchingArticles(false);
   };

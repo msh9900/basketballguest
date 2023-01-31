@@ -1,0 +1,57 @@
+.GymImagesLayout{
+  input[type=file]{
+    display: none;
+  }
+  margin:5px auto;
+  padding:10px;
+  
+  text-align: center;
+
+  button{
+    margin-top:10px;
+    border-radius:10px;
+    padding:7px;
+    background-color: aliceblue;
+  }
+}
+
+.explanation{
+  margin-bottom:15px;
+  height:10px;
+  font-size:15px;
+  padding:0px;
+}
+
+.maxImgCnt{
+  text-align: right;
+  border:1px solid black;
+  background-color: white;
+  margin-top:20px;
+  margin-bottom:20px;
+  width:210px;
+  
+  padding:13px;
+  border-radius: 13px;
+  text-align: center;
+  font-size:13px;
+  span{
+    margin-left:5px;
+    font-size:13px;
+    color:gray;
+  }
+  &:hover{
+    cursor:pointer;
+  }
+}
+
+.imgBox{
+  margin-top:10px;
+  border:1px solid black;
+  min-height:25px;
+  padding:5px;
+  img{
+    width:50px;
+    height:50px;
+    object-fit: cover;
+  }
+}

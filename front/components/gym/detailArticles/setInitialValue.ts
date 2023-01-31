@@ -1,17 +1,19 @@
 const setInitialValue = (gymInfo:any) => {
-  const field1 = document.querySelector('#article_title') as HTMLInputElement 
-  const field2 = document.querySelector('#article_content')as HTMLTextAreaElement 
-  const field3 = document.querySelector('#article_contact')as HTMLInputElement 
-  const field_addr_1 = document.querySelector('#article_address_1') as HTMLInputElement 
-  const field_addr_2 = document.querySelector('#article_address_2') as HTMLInputElement 
-  const field_addr_3 = document.querySelector('#article_address_3') as HTMLInputElement 
-  const field_addr_4 = document.querySelector('#article_address_4') as HTMLInputElement 
-  const field_addr_5 = document.querySelector('#article_address_5') as HTMLInputElement 
-  const field4 = document.querySelector('#article_price')as HTMLInputElement 
-  const field5 = document.querySelector('#article_openingHours')as HTMLInputElement 
-  const field7 = document.querySelector('#article_openingPeriod_1')as HTMLInputElement 
-  const field8 = document.querySelector('#article_openingPeriod_2')as HTMLInputElement 
+  // 위치
+  const field1 = document.querySelector('#art_title') as HTMLInputElement 
+  const field2 = document.querySelector('#art_content')as HTMLTextAreaElement 
+  const field3 = document.querySelector('#art_contact')as HTMLInputElement 
+  const field_addr_1 = document.querySelector('#art_address_1') as HTMLInputElement 
+  const field_addr_2 = document.querySelector('#art_address_2') as HTMLInputElement 
+  const field_addr_3 = document.querySelector('#art_address_3') as HTMLInputElement 
+  const field_addr_4 = document.querySelector('#art_address_4') as HTMLInputElement 
+  const field_addr_5 = document.querySelector('#art_address_5') as HTMLInputElement 
+  const field4 = document.querySelector('#art_price')as HTMLInputElement 
+  const field5 = document.querySelector('#art_openingHours')as HTMLInputElement 
+  const field7 = document.querySelector('#art_openingPeriod_1')as HTMLInputElement 
+  const field8 = document.querySelector('#art_openingPeriod_2')as HTMLInputElement 
 
+  // 값 입력
   field1.value = gymInfo.title
   field2.value = gymInfo.content
   field3.value = gymInfo.contact
