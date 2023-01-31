@@ -1,66 +1,45 @@
 import cls from "./SlickSlider.module.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import React, { Component } from "react";
 import Slider from "react-slick";
+import { useEffect } from "react";
+// import Image from 'next/image'
 
 const slickStyle = `
-.container {
-  margin: 0 auto;
-  padding: 0px 40px 40px 40px;
-  width: 400px;
-}
-h3 {
-  background: #5f9ea0;
-  color: #fff;
-  font-size: 36px;
-  line-height: 100px;
-  margin: 10px;
-  padding: 2%;
-  position: relative;
-  text-align: center;
-}
-.slick-next:before, .slick-prev:before {
-    color: #000;
-}
-.center .slick-center h3 {
-  color: #e67e22;
-  opacity: 1;
-  -ms-transform: scale(1.08);
-  transform: scale(1.08);
-}
-.center h3 {
-  transition: all .3s ease;
-}
+  .slick-next:before, .slick-prev:before {
+      color: #000;
+  }
 `;
 
-export default class MultipleItems extends Component {
-  render() {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    };
-    return (
-      <div className={cls.outerCarousel}>
-        <style>{slickStyle}</style>
-        <Slider {...settings}>
-          <div className={cls.imgBox}>
-            <img
-              src="https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?201812022340"
-              alt=""
-            />
-          </div>
-          <div className={cls.imgBox}>
-            <img
-              src="https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?201812022340"
-              alt=""
-            />
-          </div>
-        </Slider>
-      </div>
-    );
-  }
+interface Props {
+  gymImg: string[];
 }
+const SlickSlider = (props: Props) => {
+  useEffect(() => {
+    console.log("props.gymImg", props.gymImg[0]);
+  });
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  return (
+    <div className={cls.outerCarousel}>
+      <style>{slickStyle}</style>
+      <Slider {...settings}>
+        {props.gymImg.map((ele, idx) => (
+          <div className={cls.outerImg} key={'gymImg'+idx}>
+            <div className={cls.innerImg}>
+              <img src={ele} alt="체육관 이미지 | 확장자 문제로 이미지가 보이지 않을 수 있습니다." />
+            </div>
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
+};
+
+export default SlickSlider;

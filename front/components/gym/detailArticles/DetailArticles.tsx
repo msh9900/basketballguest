@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import DetailArticles_EditForm from "./DetailArticles_EditForm";
 import Image from "next/image";
+// import classCompTest
 
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
@@ -30,6 +31,7 @@ const DetailArticles = () => {
       `http://localhost:4000/rental/article?pid=${pId}`
     );
     const data = await response.json();
+    console.log('data',data);
     await setGymInfo(data);
     await setIsFetchingArticles(false);
   };
@@ -56,9 +58,11 @@ const DetailArticles = () => {
     });
     return temp;
   };
+  
+  const a = 'a'
+  const b = 'b'
 
   // review, comment 섹션쪽 react.memo 처리할 것
-
   // isFetchingArticles
   return (
     <>
@@ -68,6 +72,10 @@ const DetailArticles = () => {
             {!isArticleEditing && (
               <>
                 <h1>체육관 정보</h1>
+                {/* <classCompTest
+                data='a'
+                children='data'
+                /> */}
                 <div className={cls.contentBox}>
                   <div className={cls.mainContent}>
                     <div className={cls.eachContent}>
@@ -104,7 +112,9 @@ const DetailArticles = () => {
                   </div>
 
                   <div className={cls.imgContent}>
-                    <SlickSlider />
+                    <SlickSlider 
+                      gymImg = {gymInfo.gymImg}
+                    />
                   </div>
 
                   <div className={cls.mainContent}>
@@ -143,7 +153,7 @@ const DetailArticles = () => {
                   <div className={cls.mainContent}>
                     <h4>오픈기간</h4>
                     <div className={cls.eachContent}>
-                      {gymInfo.openingPeriod[0]}~{gymInfo.openingPeriod[1]}
+                      {gymInfo.openingPeriod[0].slice(0,10)} ~ {gymInfo.openingPeriod[1].slice(0,10)}
                     </div>
                   </div>
 
