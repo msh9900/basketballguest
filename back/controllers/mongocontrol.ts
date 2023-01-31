@@ -304,12 +304,12 @@ const mongoDB = {
   // 댓글 수정
   updateComment: async (data: any) => {
     const user = await _user;
-    const db = user.db('basket').collection('comment');
-    const updatedComment = await db.findOne({
+    const col = user.db('basket').collection('comment');
+    const updatedComment = await col.findOne({
       'data.commentId': data.commentId,
     });
     if (updatedComment) {
-      await db.updateOne(
+      await col.updateOne(
         { 'data.commentId': data.commentId },
         {
           $set: {
@@ -318,7 +318,7 @@ const mongoDB = {
           },
         }
       );
-      const updateCommentData = await db.findOne({
+      const updateCommentData = await col.findOne({
         'data.commentId': data.commentId,
       });
       return updateCommentData;
@@ -334,7 +334,7 @@ const mongoDB = {
       return { msg: '댓글 삭제 완료' };
     }
   },
-  //댓글 추가 POST
+  //답글 추가 POST
   addInsertComment: async (data: any) => {
     const user = await _user;
     const commentCol = user.db('basket').collection('comment');
@@ -376,20 +376,6 @@ const mongoDB = {
       return { msg: '댓글 작성 완료' };
     }
   },
-  // 게스트 글 GET
-  guestfindArticle: async () => {
-    const user = await _user;
-    const col = user.db('basket').collection('guestarticle');
-    const findArticle = await col.find().toArray();
-    return findArticle;
-  },
-  // // 게스트 글 POST
-  // guestfindArticle: async () => {
-  //   const user = await _user;
-  //   const col = user.db('basket').collection('guestarticle');
-  //   const findArticle = await col.find().toArray();
-  //   return findArticle;
-  // },
 };
 
 module.exports = { mongoDB };

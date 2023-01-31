@@ -1,11 +1,14 @@
 import classes from "./MainComment.module.scss";
 import Avatar from "@mui/material/Avatar";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
 export default function MainComment(props: any) {
+  const userId = useSelector((state: any) => state.login?.userId);
+  const userImg = useSelector((state: any) => state.login?.userImg);
   const [textareaHeight, setTextareaHeight] = useState(0);
   const [replyClick, setReplyClick] = useState<Boolean>(false);
   const [writeComment, setWriteComment] = useState("");
-
   const replyHandler = () => {
     setReplyClick(true);
   };

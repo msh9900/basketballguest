@@ -7,11 +7,14 @@ import CardContent from "@mui/material/CardContent";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-
+import { useSelector } from "react-redux";
 import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
 
 export default function RecipeReviewCard(props: any) {
+  const userId = useSelector((state: any) => state.login?.userId);
+  const userImg = useSelector((state: any) => state.login?.userImg);
+
   const [commentMore, setCommentMore] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [writeComment, setWriteComment] = useState("");
@@ -25,10 +28,22 @@ export default function RecipeReviewCard(props: any) {
     setTextareaHeight(event.target.value.split("\n").length - 1);
     setWriteComment(event.target.value);
   };
-  const commentSubmitHandler = () => {
+  const commentSubmitHandler = async () => {
     //댓글 입력 post 구현
-    console.log(writeComment);
-    console.log(props.data.contentidx);
+    console.log(props.data.contentidx, writeComment, userId, userImg);
+    const data = {
+      contentidx: props.data.contentidx,
+      id: userId,
+      content: writeComment,
+      userImg: userImg,
+    };
+    const response = await fetch("http://localhost:4000/board/comment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    console.log(res);
   };
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -37,7 +52,6 @@ export default function RecipeReviewCard(props: any) {
   const cardClickHandler = () => {
     setCardClick(!cardClick);
   };
-
   return (
     <>
       <Card
@@ -51,7 +65,7 @@ export default function RecipeReviewCard(props: any) {
         <Card className={classes.textContent} variant="outlined">
           <CardHeader
             avatar={
-              <Avatar aria-label="recipe" src="">
+              <Avatar aria-label="recipe" src={props.data.userImg}>
                 R
               </Avatar>
             }
@@ -66,16 +80,16 @@ export default function RecipeReviewCard(props: any) {
             </Typography>
           </CardContent>
 
-          {props.data.image && (
+          {props.data.imgsrc[0] && (
             <CardMedia
               component="img"
               height="194"
-              image=""
+              src={props.data.imgsrc[0]}
               alt="사진 이미지"
             />
           )}
           <div className={classes.comment}>
-            <Avatar aria-label="recipe" src="">
+            <Avatar aria-label="recipe" src={userImg}>
               R
             </Avatar>
             <textarea
@@ -91,30 +105,39 @@ export default function RecipeReviewCard(props: any) {
               전송
             </div>
           </div>
-          <div className={classes.firstComment}>
-            <MainComment
-              key={props.data.comment[0].commentidx}
-              data={props.data.comment[0]}
-            />
-          </div>
-          <div>
-            {!commentMore && (
-              <div className={classes.commentMore} onClick={handleExpandClick}>
-                댓글 더보기
+          {props.data.comment[0]?.commentidx && (
+            <div className={classes.firstComment}>
+              <MainComment
+                key={props.data.comment[0].commentidx}
+                data={props.data.comment[0]}
+              />
+            </div>
+          )}
+          {props.data.comment[1]?.commentidx && (
+            <div>
+              <div>
+                {!commentMore && (
+                  <div
+                    className={classes.commentMore}
+                    onClick={handleExpandClick}
+                  >
+                    댓글 더보기
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              {props.data.comment.map((val: any) => {
-                if (val.commentidx !== 1) {
-                  return <MainComment key={val.commentidx} data={val} />;
-                } else {
-                  return "";
-                }
-              })}
-            </CardContent>
-          </Collapse>
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                  {props.data.comment.map((val: any) => {
+                    if (val.commentidx !== 1) {
+                      return <MainComment key={val.commentidx} data={val} />;
+                    } else {
+                      return "";
+                    }
+                  })}
+                </CardContent>
+              </Collapse>
+            </div>
+          )}
         </Card>
       )}
     </>
