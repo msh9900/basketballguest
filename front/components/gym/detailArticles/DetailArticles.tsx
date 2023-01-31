@@ -31,6 +31,9 @@ const DetailArticles = () => {
       `http://localhost:4000/rental/article?pid=${pId}`
     );
     const data = await response.json();
+    const bf = data.openingPeriod[0].slice(0,10)
+    const af = data.openingPeriod[1].slice(0,10)
+    data.openingPeriod = [bf, af]
     await setGymInfo(data);
     await setIsFetchingArticles(false);
   };
