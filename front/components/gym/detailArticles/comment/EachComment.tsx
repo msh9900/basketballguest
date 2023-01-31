@@ -87,6 +87,7 @@ const EachComment = (props: Props) => {
               commentId={props.commentId}
               userId={props.userId}
               userName={props.userName}
+              contents={props.contents}
               isCreater={props.isCreater}
               setIsFetching={props.setIsFetching}
               setIsCommentWriting={props.setIsCommentWriting}

@@ -3,13 +3,15 @@ import cls from "./EachComment.module.scss";
 // library
 import Image from "next/image";
 import replyType from 'util/types/gymReplyType';
+import {useState} from 'react'
+
 interface Props {
   articleId: string;
   commentId: string;
   userId: string;
   userName: string;
   isCreater: boolean;
-
+  contents:string;
   // date: string;
   // contents: string;
   
@@ -20,18 +22,17 @@ interface Props {
 }
 
 const EditComment = (props: Props) => {
-  const updateComment = async (e: any) => {
-    const ele = document.querySelector("#fixingComment") as HTMLTextAreaElement;
-    const changedValue = ele.value;
 
-    props.setIsFetching(true);
+  const [editedComment, setEditedComment] = useState(props.contents)
+  const updateComment = async (e: any) => {
+    
     const commentId = e.target.id;
     const updateCommentObj = {
       articleId: props.articleId,
       commentId: props.commentId,
       userId: props.userId,
       userName: props.userName,
-      contents: changedValue,
+      contents: editedComment,
       isCreater: props.isCreater,
       replys: props.replys,
     };
@@ -45,16 +46,21 @@ const EditComment = (props: Props) => {
           body: JSON.stringify(updateCommentObj),
         }
       );
-      await props.setIsFetching(false);
+      await props.setIsFetching(true);
       await props.setIsCommentWriting(false);
     } catch (err: any) {}
   };
+
+  const onChangeText = (e:any) => {
+    setEditedComment(e.target.value)
+  }
+  
 
   return (
     <>
       <div className={cls.originCommentEditForm}>
         <div>
-          <textarea id="fixingComment"></textarea>
+          <textarea id="fixingComment" onChange={onChangeText} value={editedComment}></textarea>
         </div>
         <div className={cls.btnArea}>
           <button className={cls.submitBtn} onClick={updateComment}>
