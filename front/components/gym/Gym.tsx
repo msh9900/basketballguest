@@ -8,13 +8,15 @@ import cls from "./Gym.module.scss";
 import AllArticles from "./mainArticles/AllArticles";
 import Filter from "./mainArticles/filter/Filter";
 import Order from "./mainArticles/order/Order";
-import Search from "./mainArticles/search/Search";
+import SearchSection from "./mainArticles/search/Search";
 import { useSelector } from "react-redux";
 
 const Rental = () => {
   const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const [searchRes, setSearchRes] = useState("");
+  const [searchVal, setSearchVal] = useState("");
+
   const [needToSearch, setNeedToSearch] = useState(true);
   const [orderStatus, setOrderStatus] = useState({
     ispriceOrderOn: false,
@@ -44,7 +46,7 @@ const Rental = () => {
         </button>
         <Order orderStatus={orderStatus} setOrderStatus={setOrderStatus} />
         <Filter filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
-        <Search
+        <SearchSection
           orderStatus={orderStatus}
           setOrderStatus={setOrderStatus}
           filterStatus={filterStatus}
@@ -52,14 +54,16 @@ const Rental = () => {
           searchRes={searchRes}
           setSearchRes={setSearchRes}
           setNeedToSearch={setNeedToSearch}
+          searchVal={searchVal}
+          setSearchVal={setSearchVal}
         />
-        <AllArticles
-          orderStatus={orderStatus}
-          filterStatus={filterStatus}
-          searchRes={searchRes}
-          needToSearch={needToSearch}
-          setNeedToSearch={setNeedToSearch}
-        />
+          <AllArticles
+            order={orderStatus}
+            filter={filterStatus}
+            searchVal={searchVal}
+            needToSearch={needToSearch}
+            setNeedToSearch={setNeedToSearch}
+          />
       </div>
     </>
   );

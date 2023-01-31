@@ -11,27 +11,29 @@ interface Props {
   searchRes: string;
   setSearchRes: React.Dispatch<React.SetStateAction<string>>;
   setNeedToSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  searchVal:string
+  setSearchVal: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Search = (props: Props) => {
-  const [searchVal, setSearchVal] = useState("");
 
   const onChange = (e: any) => {
-    setSearchVal(e.target.value);
+    props.setSearchVal(e.target.value);
   };
 
-  const serachClicked = (e: any) => {
-    props.setSearchRes(searchVal);
+  const magnifierClicked = (e: any) => {
+    props.setSearchRes(props.searchVal);
     props.setNeedToSearch(true);
+    activateSearch();
   };
 
   const serachPressed = (e: any) => {
     if (e.key === "Enter") {
-      props.setSearchRes(searchVal);
-      getSearch();
+      props.setSearchRes(props.searchVal);
+      activateSearch();
     }
   };
-  const getSearch = () => {
+  const activateSearch = () => {
     props.setNeedToSearch(true);
   };
 
@@ -44,11 +46,11 @@ const Search = (props: Props) => {
         <div>
           <input
             type="text"
-            value={searchVal}
+            value={props.searchVal}
             onChange={onChange}
             onKeyDown={serachPressed}
           />
-          <button className={cls.serarchBtn} onClick={serachClicked} />
+          <button className={cls.serarchBtn} onClick={magnifierClicked} />
         </div>
       </div>
 

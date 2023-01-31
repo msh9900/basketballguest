@@ -9,15 +9,21 @@ interface Props {
 const Order = (props: Props) => {
   const [priceOrderOn, setPriceOrderOn] = useState(false);
   const [distanceOrderOn, setDistanceOrderOn] = useState(false);
-  const [locValue, setLocValue] = useState("");
-  const [locInputStatus, setLocInputStatus] = useState("none");
+  const [locInputStatus, setLocInputStatus] = useState("R");
+  const [isAsc, setIsAsc] = useState(false)
+  // asc desc
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
 
   useEffect(() => {
     props.setOrderStatus({
       ispriceOrderOn: priceOrderOn,
       isdistanceOrderOn: distanceOrderOn,
+      lat: lat,
+      lng: lng,
+      isAsc : isAsc,
     });
-  }, [priceOrderOn, distanceOrderOn]);
+  }, [priceOrderOn, distanceOrderOn, lat, lng, isAsc]);
 
   const priceOrderActivate = () => {
     if (priceOrderOn) setPriceOrderOn(false);
@@ -25,6 +31,9 @@ const Order = (props: Props) => {
     setDistanceOrderOn(false);
   };
   const distanceOrderActivate = () => {
+    if(locInputStatus == 'L'){
+      browserLocSearch()
+    }
     if (distanceOrderOn) setDistanceOrderOn(false);
     else setDistanceOrderOn(true);
     setPriceOrderOn(false);
@@ -34,39 +43,50 @@ const Order = (props: Props) => {
     setDistanceOrderOn(false);
   };
 
-  // 현위치 찾기
-  const giveCurrentLoaction = () => {
+  // 장치로 현위치 찾기
+  const giveDeviceLocation = () => {
+    browserLocSearch()
+    setLocInputStatus("L");
+  };
+
+  const browserLocSearch = () => {
     function onGeoOk(position: any) {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-      setLocValue(`${lat}, ${lng}`);
+      setLat(position.coords.latitude.toString());
+      setLng(position.coords.longitude.toString());
     }
     function onGeoError() {
-      alert("Can't find you. No weather for you.");
+      alert("Can't find device Location.");
     }
     const value = navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
-    setLocInputStatus("byDeviceLoc");
-  };
+  }
 
   // 직접 입력
   const giveValueDirectly = () => {
-    setLocInputStatus("byUserInput");
-    setLocValue("");
+    setLng('')
+    setLat('')
+    setLocInputStatus("R");
     function focusElement() {
-      const ele = document.getElementById("locInput") as HTMLInputElement;
+      const ele = document.getElementById("latitude") as HTMLInputElement;
       ele.focus();
     }
     setTimeout(focusElement, 1);
-    
   };
 
-  const onChangeLocInput = (e: any) => {
-    setLocValue(e.target.value);
+  // input 처리
+  const onDirectChangeLat = (e: any) => {
+    setLat(e.target.value); 
   };
-  const getinputSubject = (locInputStatus: string) => {
-    if (locInputStatus == "byUserInput") {return false;}
-    if (locInputStatus == "byDeviceLoc") {return true;}
+  const onDirectChangeLng = (e: any) => {
+    setLng(e.target.value); 
   };
+  const setAsc = () => {
+    setIsAsc(true)
+    setLocInputStatus("L");
+  }
+  const setDesc = () => {
+    setIsAsc(false)
+    setLocInputStatus("R");
+  }
 
   return (
     <>
@@ -98,7 +118,6 @@ const Order = (props: Props) => {
           </div>
 
           <div>
-            {/* RESET */}
             {(priceOrderOn || distanceOrderOn) && (
               <button className={cls.resetButton} onClick={orderReset}>
                 <img src="images/rental/reset.png" alt="resetButton"></img>
@@ -107,25 +126,62 @@ const Order = (props: Props) => {
           </div>
         </div>
 
+        {priceOrderOn && (<>
+          <div className={cls.asdf}>
+              <div className={cls.flexbox}>
+                <button
+                  className={locInputStatus == "L" ? cls.on : cls.off}
+                  // onClick={()=>{setLocInputStatus("L")}}
+                  onClick={setAsc}
+                >
+                  낮은가격순
+                </button>
+                <button
+                  className={locInputStatus == "R" ? cls.on : cls.off}
+                  // onClick={()=>{setLocInputStatus("R")}}
+                  onClick={setDesc}
+                >
+                  높은가격순
+                </button>
+              </div>
+            </div>
+        </>) }
         {distanceOrderOn && (
           <>
             <div className={cls.asdf}>
               <div className={cls.flexbox}>
-                <button className={(locInputStatus == 'byDeviceLoc') ? cls.on : cls.off} onClick={giveCurrentLoaction}>
+                <button
+                  className={locInputStatus == "L" ? cls.on : cls.off}
+                  onClick={giveDeviceLocation}
+                >
                   현위치
                 </button>
-                <button className={(locInputStatus == 'byUserInput') ? cls.on : cls.off} onClick={giveValueDirectly}>
+                <button
+                  className={locInputStatus == "R" ? cls.on : cls.off}
+                  onClick={giveValueDirectly}
+                >
                   직접 입력
                 </button>
               </div>
-              <label htmlFor="locInput"></label>
+              <label htmlFor="latitude"></label>
               <input
                 autoComplete="off"
-                id="locInput"
+                placeholder="위도"
+                id="latitude"
                 type="text"
-                disabled={getinputSubject(locInputStatus)}
-                onChange={onChangeLocInput}
-                value={locValue}
+                disabled={locInputStatus == "L"}
+                onChange={onDirectChangeLat}
+                value={lat}
+              />
+              <label htmlFor="longitude"></label>
+              <input
+                autoComplete="off"
+                id="longitude"
+                placeholder="경도"
+                type="text"
+                disabled={locInputStatus == "L"}
+                onChange={onDirectChangeLng}
+                value={lng}
               />
             </div>
           </>

@@ -20,6 +20,7 @@ interface gymArticleDataType {
   address: addressType[];
   createdAt: string;
   gymImg: string[];
+  areaTag:string;
 }
 
 export default gymArticleDataType;
