@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import postReview from './reviewUtils/postReview';
 
 interface Props {
   setIsWriting: React.Dispatch<React.SetStateAction<boolean>>;
