@@ -10,11 +10,13 @@ import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
 export default function WriteModal() {
   const router = useRouter();
-  const userId = useSelector((state: any) => state.islogin.userId);
-  const userImg = useSelector((state: any) => state.islogin.userImg);
+  const userId = useSelector((state: any) => state.login?.userId);
+  const userImg = useSelector((state: any) => state.login?.userImg);
   const [imgFile, setImgFile] = useState("");
   const [contentText, setContentText] = useState("");
+  const [titleText, setTitleText] = useState("");
   const imgRef: any = useRef();
+  const titleRef: any = useRef();
   const readImage = () => {
     const file = imgRef.current.files[0];
     const reader: any = new FileReader();
@@ -29,33 +31,45 @@ export default function WriteModal() {
   const textChange = (e: any) => {
     setContentText(e.target.value);
   };
-  const contentSubmitHandler = (e: any) => {
+  const titleChange = (e: any) => {
+    setTitleText(e.target.value);
+  };
+  const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
-    // const FD = new FormData();
+    const FD = new FormData();
 
-    // FD.append("userId", userId);
-    // FD.append("title", title);
-    // FD.append("userImg", userImg);
-    // FD.append("content", content);
-    // FD.append("articleImg", articleImg)
-    // FD.append("articleImg", comment)
+    FD.append("userId", userId);
+    FD.append("title", titleText);
+    FD.append("userImg", userImg);
+    FD.append("content", contentText);
+    for (let i = 0; i < imgRef.current.files.length; i++) {
+      FD.append("articleImg", imgRef.current.files[i]);
+    }
 
+    FD.get("articleImg");
     //글쓰기 fetch 구현
-    // const response = await fetch("http://localhost:4000/board/article", {
-    //   method: "POST",
-    //   body: formData,
-    // });
-    console.log(imgFile, contentText);
+    const response = await fetch("http://localhost:4000/board/article", {
+      method: "POST",
+      body: FD,
+    });
     // router.reload();
   };
   return (
     <>
-      <form onSubmit={contentSubmitHandler} className={classes.container}>
+      <form
+        onSubmit={contentSubmitHandler}
+        className={classes.container}
+        encType="multipart/form-data"
+      >
         <div className={classes.title}>게시물만들기</div>
         <div className={classes.content}>
           <div className={classes.userBox}>
-            <Avatar alt="Remy Sharp" src="/" />
-            <div>아이디</div>
+            <Avatar alt="Remy Sharp" src={userImg} />
+            <div>{userId}</div>
+          </div>
+          <div>
+            <div>제목</div>
+            <input type="test" onChange={titleChange}></input>
           </div>
           <div>
             <TextField
@@ -89,6 +103,7 @@ export default function WriteModal() {
                 type="file"
                 onChange={readImage}
                 ref={imgRef}
+                multiple
               />
               <AddPhotoAlternateIcon sx={{ fontSize: 40 }} />
             </IconButton>

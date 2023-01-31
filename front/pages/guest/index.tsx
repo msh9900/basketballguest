@@ -7,12 +7,22 @@ import classes from "./guest.module.scss";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from "@mui/material/Modal";
 import WriteModal from "../../components/recruit/WriteModal";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 export default function GuestRecruitmentPage(props: any) {
+  const router = useRouter();
+  const isLogin = useSelector((state: any) => state.login?.isLogin);
   const { data } = props;
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    if (isLogin) {
+      setOpen(true);
+    } else {
+      router.push("/login");
+    }
+  };
   const handleClose = () => setOpen(false);
   const fetchMoreData = () => {
     if (contentList < data.length) {
@@ -61,7 +71,6 @@ export async function getServerSideProps() {
   //여기서 글데이터 다 받아야됨.
   const response = await fetch("http://localhost:4000/board/article");
   const res = await response.json();
-  console.log(res);
 
   // Pass data to the page via props
   return { props: { data: res } };
