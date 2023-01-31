@@ -7,10 +7,11 @@ import Button from "@mui/material/Button";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SendIcon from "@mui/icons-material/Send";
 import Avatar from "@mui/material/Avatar";
-
+import { useSelector } from "react-redux";
 export default function WriteModal() {
   const router = useRouter();
-
+  const userId = useSelector((state: any) => state.islogin.userId);
+  const userImg = useSelector((state: any) => state.islogin.userImg);
   const [imgFile, setImgFile] = useState("");
   const [contentText, setContentText] = useState("");
   const imgRef: any = useRef();
@@ -29,8 +30,21 @@ export default function WriteModal() {
     setContentText(e.target.value);
   };
   const contentSubmitHandler = (e: any) => {
-    //fetch 구현
     e.preventDefault();
+    // const FD = new FormData();
+
+    // FD.append("userId", userId);
+    // FD.append("title", title);
+    // FD.append("userImg", userImg);
+    // FD.append("content", content);
+    // FD.append("articleImg", articleImg)
+    // FD.append("articleImg", comment)
+
+    //글쓰기 fetch 구현
+    // const response = await fetch("http://localhost:4000/board/article", {
+    //   method: "POST",
+    //   body: formData,
+    // });
     console.log(imgFile, contentText);
     // router.reload();
   };

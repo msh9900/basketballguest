@@ -58,11 +58,11 @@ export default function GuestRecruitmentPage(props: any) {
   );
 }
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const filePath = path.join(process.cwd(), "data", "guest-data.json");
-  const jsonData: any = await fs.readFile(filePath);
-  const data = JSON.parse(jsonData);
+  //여기서 글데이터 다 받아야됨.
+  const response = await fetch("http://localhost:4000/board/article");
+  const res = await response.json();
+  console.log(res);
 
   // Pass data to the page via props
-  return { props: { data: data.data } };
+  return { props: { data: res } };
 }

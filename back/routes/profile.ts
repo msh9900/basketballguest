@@ -34,7 +34,6 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log(req.file);
     let imgpath = req.file?.filename;
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
