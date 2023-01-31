@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 // import Image from 'next/image'
+import ImgPop from 'util/ImgPop';
 
 const slickStyle = `
   .slick-next:before, .slick-prev:before {
@@ -30,7 +31,7 @@ const SlickSlider = (props: Props) => {
         {props.gymImg.map((ele, idx) => (
           <div className={cls.outerImg} key={'gymImg'+idx}>
             <div className={cls.innerImg}>
-              <img src={ele} alt="체육관 이미지 | 확장자 문제로 이미지가 보이지 않을 수 있습니다." />
+              <img onClick={()=>{ImgPop(ele)}} src={ele} alt="체육관 이미지 | 확장자 문제로 이미지가 보이지 않을 수 있습니다." />
             </div>
           </div>
         ))}

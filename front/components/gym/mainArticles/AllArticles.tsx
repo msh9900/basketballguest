@@ -72,14 +72,19 @@ const AllArticles = (props: Props) => {
           articles.map((item, idx) => {
             return (
               <div
-                key={Date.now() + idx}
+                key={Date.now() + '게시글' +idx}
                 className={cls.boxItem}
                 onClick={() => {
                   moveToDetailPage(item.articleId);
                 }}
               >
                 <li className={cls.li}>
-                  <div className={cls.imgBox}></div>
+                  <div className={cls.imgBox}>
+                    <img
+                      src={item.gymImg[0]}
+                      alt='체육관 이미지'
+                    />
+                  </div>
                   <div className={cls.title}>제목 : {item.title}</div>
                   <div className={cls.price}>대관료 : {item.price}원/시간</div>
                   <div className={cls.content}>내용 : {item.content}</div>
