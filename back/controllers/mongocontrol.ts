@@ -164,7 +164,6 @@ const mongoDB = {
     const user = await _user;
     const col = user.db('basket').collection('article');
     const insertArticle = await col.insertOne({ data });
-
     if (insertArticle.acknowledged) {
       return { msg: '게시글 작성 완료' };
     }
@@ -247,7 +246,11 @@ const mongoDB = {
     const user = await _user;
     const db = user.db('basket').collection('review');
     const foundReview = await db.find({ 'data.articleId': pid }).toArray();
-    return foundReview;
+    let result: any = [];
+    foundReview.map((val: any) => {
+      result.push(val.data);
+    });
+    return result;
   },
 
   // 게시글 별 리뷰 Delete
@@ -292,7 +295,11 @@ const mongoDB = {
     const user = await _user;
     const db = user.db('basket').collection('comment');
     const foundComment = await db.find({ 'data.articleId': pid }).toArray();
-    return foundComment;
+    let result: any = [];
+    foundComment.map((val: any) => {
+      result.push(val.data);
+    });
+    return result;
   },
   // 댓글 수정
   updateComment: async (data: any) => {
@@ -327,6 +334,62 @@ const mongoDB = {
       return { msg: '댓글 삭제 완료' };
     }
   },
+  //댓글 추가 POST
+  addInsertComment: async (data: any) => {
+    const user = await _user;
+    const commentCol = user.db('basket').collection('comment');
+    const articleCol = user.db('basket').collection('article');
+    const foundCommentuserId = await commentCol.findOne({
+      'data.userId': data.userId,
+    });
+    const foundArticleuserId = await articleCol.findOne({
+      'data.userId': data.userId,
+    });
+    const foundCommentcommentId = await commentCol.findOne({
+      'data.commentId': data.commentId,
+    });
+
+    if (
+      foundArticleuserId?.data.userId === foundCommentuserId?.data.userId &&
+      foundCommentcommentId
+    ) {
+      data.isCreater = true;
+
+      await commentCol.updateOne(
+        { 'data.commentId': data.commentId },
+        {
+          $push: {
+            'data.replys': data,
+          },
+        }
+      );
+      return { msg: '작성자 일치' };
+    } else {
+      await commentCol.updateOne(
+        { 'data.commentId': data.commentId },
+        {
+          $push: {
+            'data.replys': data,
+          },
+        }
+      );
+      return { msg: '댓글 작성 완료' };
+    }
+  },
+  // 게스트 글 GET
+  guestfindArticle: async () => {
+    const user = await _user;
+    const col = user.db('basket').collection('guestarticle');
+    const findArticle = await col.find().toArray();
+    return findArticle;
+  },
+  // // 게스트 글 POST
+  // guestfindArticle: async () => {
+  //   const user = await _user;
+  //   const col = user.db('basket').collection('guestarticle');
+  //   const findArticle = await col.find().toArray();
+  //   return findArticle;
+  // },
 };
 
 module.exports = { mongoDB };
