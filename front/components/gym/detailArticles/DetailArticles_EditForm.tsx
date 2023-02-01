@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 // util
 import gymArticleDataType from "util/types/gymArticleDataType";
 import setInitialValue from "./setInitialValue";
-import DetailArticles_EditImg from './DetailArticles_EditImg';
+import DetailArticles_EditImg from "./DetailArticles_EditImg";
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -15,7 +15,6 @@ interface Props {
 }
 
 const DetailArticles_EditForm = (props: Props) => {
-
   const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
@@ -30,12 +29,12 @@ const DetailArticles_EditForm = (props: Props) => {
   ]);
   const [imgFormData, setImgFormData] = useState<any>();
   const [inputImgs, setInputImgs] = useState<string[]>([]);
-  
+
   useEffect(() => {
-    setInitialValue(props.gymInfo)
-    setOpeningDays(props.gymInfo.openingDays)
-    setImgFormData(props.gymInfo.gymImg)
-    setInputImgs(props.gymInfo.gymImg)
+    setInitialValue(props.gymInfo);
+    setOpeningDays(props.gymInfo.openingDays);
+    setImgFormData(props.gymInfo.gymImg);
+    setInputImgs(props.gymInfo.gymImg);
   }, []);
 
   // css style 처리
@@ -59,32 +58,31 @@ const DetailArticles_EditForm = (props: Props) => {
 
   // update
   const updateArticle = async () => {
+    const bodyForUpdate = getArticleEditFormData();
+    alert("ddd");
 
-    const bodyForUpdate = getArticleEditFormData()
     // 폼데이타 확인
-    console.log('------------ formdata key ------------')
-    for (var key of bodyForUpdate.keys()) {
-      console.log(key);
-    }
-    console.log('------------ formdata value ------------')
-    for (var value of bodyForUpdate.values()) {
-      console.log(value);
-    }
-  
-
-    // try {
-    //   const response = await fetch("http://localhost:4000/rental/article", {
-    //     method: "PUT",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(bodyForUpdate),
-    //   });
-    //   const data = await response.json();
-    //   await props.setIsFetchingArticles(true);
-    //   await props.setIsArticleEditing(false);
-    //   alert("게시글 수정 성공");
-    // } catch (err: any) {
-    //   alert("게시글 수정 실패");
+    // console.log("------------ formdata key ------------");
+    // for (var key of bodyForUpdate.keys()) {
+    //   console.log(key);
     // }
+    // console.log("------------ formdata value ------------");
+    // for (var value of bodyForUpdate.values()) {
+    //   console.log(value);
+    // }
+
+    try {
+      const response = await fetch("http://localhost:4000/rental/article", {
+        method: "PUT",
+        body: bodyForUpdate,
+      });
+      const data = await response.json();
+      await props.setIsFetchingArticles(true);
+      await props.setIsArticleEditing(false);
+      alert("게시글 수정 성공");
+    } catch (err: any) {
+      alert("게시글 수정 실패");
+    }
   };
 
   // make Form data
@@ -94,15 +92,25 @@ const DetailArticles_EditForm = (props: Props) => {
     const x3 = document.querySelector("#art_contact") as HTMLInputElement;
     const x4 = document.querySelector("#art_price") as HTMLInputElement;
     const x5 = document.querySelector("#art_openingHours") as HTMLInputElement;
-    const x6 = document.querySelector("#art_openingPeriod_1") as HTMLInputElement;
-    const x7 = document.querySelector("#art_openingPeriod_2") as HTMLInputElement;
+    const x6 = document.querySelector(
+      "#art_openingPeriod_1"
+    ) as HTMLInputElement;
+    const x7 = document.querySelector(
+      "#art_openingPeriod_2"
+    ) as HTMLInputElement;
 
     // values
-    const [title, content, contact, price, openingHours, openingPeriod] 
-    = [x1.value, x2.value, x3.value, x4.value, x5.value, [x6.value, x7.value]];
+    const [title, content, contact, price, openingHours, openingPeriod] = [
+      x1.value,
+      x2.value,
+      x3.value,
+      x4.value,
+      x5.value,
+      [x6.value, x7.value],
+    ];
 
     const FD = new FormData();
-    FD.append('articleId', router.query.articles as string)
+    FD.append("articleId", router.query.articles as string);
     FD.append("userId", stateId);
     FD.append("userName", stateName);
     FD.append("title", title);
@@ -119,7 +127,7 @@ const DetailArticles_EditForm = (props: Props) => {
     for (const pair of imgFormData.entries()) {
       FD.append(pair[0], pair[1]);
     }
-    return FD
+    return FD;
   };
 
   const days = ["일", "월", "화", "수", "목", "금", "토"];

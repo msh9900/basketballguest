@@ -173,10 +173,6 @@ const mongoDB = {
     const user = await _user;
     const db = user.db('basket').collection('article');
     const foundArticle = await db.findOne({ 'data.articleId': data.articleId });
-
-    data.PeriodStart = new Date(new Date(data.openingDays[0]).toISOString());
-    data.PeriodEnd = new Date(new Date(data.openingDays[1]).toISOString());
-
     if (foundArticle) {
       await db.updateOne(
         { 'data.articleId': data.articleId },
@@ -191,7 +187,7 @@ const mongoDB = {
             'data.openingDays': data.openingDays,
             'data.periodStart': data.PeriodStart,
             'data.PeriodEnd': data.PeriodEnd,
-            'data.userImg': data.userImg,
+            'data.userImg': data.gymImg,
           },
         }
       );
@@ -334,8 +330,8 @@ const mongoDB = {
       return { msg: '댓글 삭제 완료' };
     }
   },
-  //답글 추가 POST
-  addInsertComment: async (data: any) => {
+  //답글 POST
+  addInsertReply: async (data: any) => {
     const user = await _user;
     const commentCol = user.db('basket').collection('comment');
     const articleCol = user.db('basket').collection('article');
@@ -374,6 +370,57 @@ const mongoDB = {
         }
       );
       return { msg: '댓글 작성 완료' };
+    }
+  },
+  //수정 Delete
+  updateReply: async (data: any) => {
+    console.log('몽고 수정 진입 data', data);
+    const user = await _user;
+    const col = user.db('basket').collection('comment');
+
+    // REPLY ID
+
+    //db에 있던 replyId와 프론트에서 보내준 replyId 비교
+
+    const replyFound = await col.findOne({
+      'data.replys.replyId': data.replyId,
+    });
+
+    let idx: any;
+    replyFound.data.replys.map((ele: any, i: any) => {
+      if (ele.replyId == data.replyId) {
+        idx = i;
+      }
+    });
+
+    const contentsKey = `data.replys.${idx}.contents`;
+    const createdAtKey = `data.replys.${idx}.createdAt`;
+
+    const Foundreply = await col.updateOne(
+      {
+        'data.replys.replyId': data.replyId,
+      },
+      {
+        $set: {
+          [contentsKey]: data.contents,
+          [createdAtKey]: data.createdAt,
+        },
+      }
+    );
+  },
+
+  // 답글 Delete
+  deleteReply: async (data: any) => {
+    const user = await _user;
+    const col = user.db('basket').collection('comment');
+    const Foundreply = await col.updateOne(
+      { 'data.replys.commentId': data.commentId },
+      {
+        $pull: { 'data.replys': { replyId: data.replyId } },
+      }
+    );
+    if (Foundreply) {
+      return { msg: '답글 삭제 완료' };
     }
   },
 };
