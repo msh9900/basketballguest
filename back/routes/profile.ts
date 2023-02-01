@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 });
 
 const limits = {
-  fileSize: 1024 * 1024 * 2,
+  fileSize: 2048 * 2048 * 2,
 };
 const upload = multer({ storage, limits });
 // 헤더에서 이미지 가져오기

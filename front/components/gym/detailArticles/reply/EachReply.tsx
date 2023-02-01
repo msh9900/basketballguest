@@ -52,34 +52,39 @@ const EachReply = (props: Props) => {
   };
   const separateBack = (text: string) => {
     const wholeText = text.split("_")[1];
-    if (wholeText?.length > 10) return wholeText.slice(0, 10)+'...';
+    if (wholeText?.length > 10) return wholeText.slice(0, 10) + "...";
     return wholeText;
   };
 
-  // DELETE REPLY
+  // DELETE REPLY !!
   const deleteReply = async () => {
     const replyId = props.replys.replyId;
+    const commentId = props.commentId;
+
+    console.log("삭제 실행중");
     try {
       await fetch(
-        `http://localhost:4000/rental/comments?replyId=${replyId}`,
+        `http://localhost:4000/rental/reply?replyId=${replyId}&commentId=${commentId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         }
       );
+      await console.log("REPLY DELETE SUCESS");
     } catch (err: any) {
-      console.log('REPLY DELETE FAIL',err);
+      await console.log("REPLY DELETE FAIL", err);
     }
     await props.setIsFetching(true);
-  }
+  };
 
   // EDIT MODE
   if (isReplyEditing) {
     return (
-      <EditReply 
-      replys={props.replys} 
-      setIsReplyEditing={setIsReplyEditing} 
-      setIsFetching={props.setIsFetching} />
+      <EditReply
+        replys={props.replys}
+        setIsReplyEditing={setIsReplyEditing}
+        setIsFetching={props.setIsFetching}
+      />
     );
   }
 
@@ -109,7 +114,7 @@ const EachReply = (props: Props) => {
                 <div className={cls.bottomLeft}>
                   <span className={cls.time}>{props.replys.createdAt}</span>
                 </div>
-                
+
                 <div className={cls.bottomRight}>
                   <button
                     onClick={() => {

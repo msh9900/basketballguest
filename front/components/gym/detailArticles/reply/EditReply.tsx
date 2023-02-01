@@ -27,28 +27,32 @@ const EditReply = (props: Props) => {
   };
 
   const editReply = async () => {
-    const replyObj = {
-      commentId: props.replys.commentId,
-      replyId: props.replys.replyId,
-      createdAt: props.replys.createdAt,
-      userId: props.replys.userId,
-      userName: props.replys.userName,
-      to: props.replys.to,
-      contents: fixedContent,
-      isCreater: props.replys.isCreater,
-      indentLevel: props.replys.indentLevel,
-    };
-
     const replyId = props.replys.replyId;
+    const commentId = props.replys.commentId;
+    const replyObj = {
+      // commentId,
+      // replyId,
+      // createdAt: props.replys.createdAt,
+      // userId: props.replys.userId,
+      // userName: props.replys.userName,
+      // to: props.replys.to,
+      contents: fixedContent,
+      // isCreater: props.replys.isCreater,
+      // indentLevel: props.replys.indentLevel,
+    };
     try {
-      await fetch(`http://localhost:4000/rental/comment?replyId=${replyId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(replyObj),
-      });
-      await props.setIsFetching(true);
-      await props.setIsReplyEditing(false);
+      await fetch(
+        `http://localhost:4000/rental/reply?replyId=${replyId}&commentId=${commentId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(replyObj),
+        }
+      );
     } catch (err: any) {}
+
+    await props.setIsFetching(true);
+    await props.setIsReplyEditing(false);
   };
 
   return (

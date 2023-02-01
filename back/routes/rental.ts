@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import fs from 'fs';
+import fs, { lutimes } from 'fs';
 import multer from 'multer';
 import path from 'path';
 // import puppeteer from 'puppeteer';
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 });
 
 const limits = {
-  fileSize: 1024 * 1024 * 2,
+  fileSize: 2048 * 2048 * 2,
 };
 const upload = multer({ storage, limits });
 
@@ -126,6 +126,8 @@ router.put(
   upload.array('img', 10),
   async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+    console.log('req.body', req.body);
+    console.log('req.body', req.files);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
@@ -133,7 +135,7 @@ router.put(
       fileNameArray.push(eachFilename);
     });
 
-    const data = {
+    let data = {
       articleId: req.body.articleId,
       userId: req.body.userId,
       userName: req.body.userName,
@@ -141,21 +143,25 @@ router.put(
       content: req.body.content,
       contact: req.body.contact,
       createdAt: new Date().toLocaleString('ko-kr'),
-      address: req.body.address,
+      address: JSON.parse(req.body.address),
       price: parseInt(req.body.price),
       openingHours: req.body.openingHours,
-      openingPeriod: req.body.openingPeriod,
-      PeriodStart: JSON.parse(req.body.openingPeriod)[0],
-      PeriodEnd: JSON.parse(req.body.openingPeriod)[1],
-      openingDays: req.body.openingDays,
+      openingPeriod: JSON.parse(req.body.openingPeriod),
+      openingDays: JSON.parse(req.body.openingDays),
       gymImg: fileNameArray,
     };
+
+    // post : 2000-01-01 => 2000-01-01TO1111111111
+    // get  : 2000-01-01 <= 2000-01-01TO1111111111
+    // put  : 2000-01-01 => 2000-01-01TO1111111111
+
     data.openingPeriod[0] = new Date(
       new Date(data.openingPeriod[0]).toISOString()
     );
     data.openingPeriod[1] = new Date(
       new Date(data.openingPeriod[1]).toISOString()
     );
+    console.log('변형된data', data);
     const result = await mongoClient.updateArticle(data);
     res.send(JSON.stringify(result));
   }
@@ -260,9 +266,30 @@ router.post('/reply', async (req: Request, res: Response) => {
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
     isCreater: false,
-    replys: req.body.replys,
+    // replys: req.body.replys,
   };
-  const result = await mongoClient.addInsertComment(data);
+  const result = await mongoClient.addInsertReply(data);
+  res.send(JSON.stringify(result));
+});
+
+router.put('/reply', async (req: Request, res: Response) => {
+  console.log('reply 수정 data', req.body);
+  const data = {
+    replyId: req.query.replyId,
+    commentId: req.query.commentId,
+    createdAt: new Date().toLocaleString('ko-kr'),
+    contents: req.body.contents,
+  };
+  const result = await mongoClient.updateReply(data);
+  console.log('나가기전 data', result);
+  res.send(JSON.stringify(result));
+});
+router.delete('/reply', async (req: Request, res: Response) => {
+  const data = {
+    replyId: req.query.replyId,
+    commentId: req.query.commentId,
+  };
+  const result = await mongoClient.deleteReply(data);
   res.send(JSON.stringify(result));
 });
 
