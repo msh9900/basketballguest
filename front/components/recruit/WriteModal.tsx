@@ -52,7 +52,7 @@ export default function WriteModal() {
       method: "POST",
       body: FD,
     });
-    // router.reload();
+    router.reload();
   };
   return (
     <>

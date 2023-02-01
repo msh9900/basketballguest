@@ -10,9 +10,18 @@ export default function BasicMenu(props: any) {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const updateHandler = () => {
+  const updateHandler = async () => {
     //props.idx 해당되는 값 수정 post
-    console.log(props.idx);
+    const data = {
+      contentidx: props.idx,
+
+    };
+    const response = await fetch("http://localhost:4000/board/삭제될 라우터 주소", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
     setAnchorEl(null);
   };
   const deleteHandler = () => {
