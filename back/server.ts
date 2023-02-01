@@ -6,7 +6,9 @@ const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(cors());
-server.use('/images', express.static('./images'));
+server.use('/images', express.static('images'));
+server.use('/rental', express.static('rental'));
+server.use('/guest', express.static('guest'));
 
 // dotenv
 require('dotenv').config();
@@ -18,7 +20,6 @@ const boardRouter = require('./routes/board');
 const profileRouter = require('./routes/profile');
 const rentalRouter = require('./routes/rental');
 
-server.use('/rental', express.static('rental'));
 server.use('/login', loginRouter);
 server.use('/register', registerRouter);
 server.use('/board', boardRouter);
