@@ -1,7 +1,7 @@
 // style
 import cls from "./EachComment.module.scss";
 // library
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
@@ -14,12 +14,12 @@ import { useSelector } from "react-redux";
 interface Props {
   // value for post
   articleId: string;
+  articleUserId: string;
   commentId: string;
   userId: string;
   userName: string;
   createdAt: string;
   contents: string;
-  isCreater: boolean;
   isFetching: boolean;
   replys: replyType[];
 
@@ -42,16 +42,13 @@ const EachComment = (props: Props) => {
   // ㄴ 상위요소가 reply   => indentLevel = 대상의 indentLevel + 1
 
   const [isCommentEditing, setIsCommentEditing] = useState(false); // comment
-  // useEffect(()=>{
-  //   console.log('props',props)
-  // }, [])
 
   const ReplyPostFormToggle = (userName: string, contents: string) => {
     setToInfo(userName + "_" + contents);
     if (isReplyWriting == false) {
-      if(stateId == ''){
-        alert('로그인이 필요합니다.')
-        return
+      if (stateId == "") {
+        alert("로그인이 필요합니다.");
+        return;
       }
       setIsReplyWriting(true);
       return;
@@ -84,11 +81,11 @@ const EachComment = (props: Props) => {
           {isCommentEditing && (
             <EditComment
               articleId={props.articleId}
+              articleUserId={props.articleUserId}
               commentId={props.commentId}
               userId={props.userId}
               userName={props.userName}
               contents={props.contents}
-              isCreater={props.isCreater}
               setIsFetching={props.setIsFetching}
               setIsCommentWriting={props.setIsCommentWriting}
               setIsCommentEditing={setIsCommentEditing}
@@ -98,7 +95,8 @@ const EachComment = (props: Props) => {
           {/* 댓글 평상시 */}
           {!isCommentEditing && (
             <div className={cls.originalComment} id={props.commentId}>
-              <div className={props.isCreater === true ? cls.creater : "vvv"}>
+              <div>
+                {/* 이즈크리에이터 처리했던부분 */}
                 <button className={cls.userName}>{props.userName}</button>
               </div>
 
@@ -159,6 +157,7 @@ const EachComment = (props: Props) => {
                   <EachReply
                     replys={item}
                     commentId={props.commentId}
+                    articleUserId={props.articleUserId}
                     setIndent={setIndent}
                     indent={indent}
                     idx={idx}

@@ -14,7 +14,9 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    let newFileName = new Date().valueOf() + path.extname(file.originalname);
+    // 로직 찾기
+    let newFileName = file.originalname;
+    // let newFileName = new Date().valueOf() + path.extname(file.originalname);
     cb(null, newFileName);
   },
 });
@@ -73,6 +75,7 @@ router.post(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log('들어오는 파일', req.files);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
@@ -93,6 +96,7 @@ router.post(
 
     let data = {
       articleId: (Date.now() + Math.random()).toFixed(13),
+      articleUserId: req.body.userId,
       userId: req.body.userId,
       userName: req.body.userName,
       title: req.body.title,
@@ -137,6 +141,7 @@ router.put(
 
     let data = {
       articleId: req.body.articleId,
+      articleUserId: req.body.userId,
       userId: req.body.userId,
       userName: req.body.userName,
       title: req.body.title,
@@ -221,27 +226,28 @@ router.get('/comment', async (req: Request, res: Response) => {
 router.post('/comment', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
+    articleUserId: req.body.userId,
     commentId: (Date.now() + Math.random()).toFixed(13),
     userId: req.body.userId,
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    isCreater: false,
     replys: req.body.replys,
   };
   const result = await mongoClient.insertComment(data);
+  console.log(result);
   res.send(JSON.stringify(result));
 });
 
 router.put('/comment', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
+    articleUserId: req.body.userId,
     commentId: req.body.commentId,
     userId: req.body.userId,
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    isCreater: false,
     replys: req.body.replys,
   };
   const result = await mongoClient.updateComment(data);
@@ -257,6 +263,7 @@ router.delete('/comment', async (req: Request, res: Response) => {
 router.post('/reply', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
+    articleUserId: req.body.userId,
     commentId: req.body.commentId,
     replyId: (Date.now() + Math.random()).toFixed(13),
     indentLevel: req.body.indentLevel,
@@ -265,7 +272,6 @@ router.post('/reply', async (req: Request, res: Response) => {
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    isCreater: false,
     // replys: req.body.replys,
   };
   const result = await mongoClient.addInsertReply(data);

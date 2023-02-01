@@ -37,8 +37,8 @@ const CommentSection = () => {
       alert("로그인이 필요합니다.");
       return;
     }
-    if(isCommentWriting) setIsCommentWriting(false);
-    if(!isCommentWriting) setIsCommentWriting(true);
+    if (isCommentWriting) setIsCommentWriting(false);
+    if (!isCommentWriting) setIsCommentWriting(true);
   };
 
   return (
@@ -71,12 +71,12 @@ const CommentSection = () => {
                   <EachComment
                     key={"comment:" + idx.toString() + Math.random().toString()}
                     articleId={item.articleId}
+                    articleUserId={item.articleUserId}
                     commentId={item.commentId}
                     userId={item.userId}
                     userName={item.userName}
                     createdAt={item.createdAt}
                     contents={item.contents}
-                    isCreater={item.isCreater}
                     replys={item.replys}
                     isFetching={isFetching}
                     setIsFetching={setIsFetching}

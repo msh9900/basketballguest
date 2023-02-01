@@ -6,7 +6,6 @@ interface replyType {
   userName: string;
   to: string;
   contents: string;
-  isCreater: boolean;
   indentLevel: number;
 }
 
