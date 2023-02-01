@@ -8,6 +8,9 @@
 }
 .textContent {
   width: 100%;
+  .cardImgContainer {
+    display: flex;
+  }
   .firstComment {
     padding: 16px 16px 0px;
   }

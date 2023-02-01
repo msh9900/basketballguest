@@ -80,14 +80,20 @@ export default function RecipeReviewCard(props: any) {
             </Typography>
           </CardContent>
 
-          {props.data.imgsrc[0] && (
-            <CardMedia
-              component="img"
-              height="194"
-              src={props.data.imgsrc[0]}
-              alt="사진 이미지"
-            />
-          )}
+          <div className={classes.cardImgContainer}>
+            {props.data.imgsrc[0] &&
+              props.data.imgsrc.map((val: string, idx: number) => (
+                <CardMedia
+                  key={idx}
+                  component="img"
+                  width="300"
+                  height="194"
+                  src={val}
+                  alt="사진 이미지"
+                  sx={{ objectFit: "contain" }}
+                />
+              ))}
+          </div>
           <div className={classes.comment}>
             <Avatar aria-label="recipe" src={userImg}>
               R
