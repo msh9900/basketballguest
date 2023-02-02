@@ -121,9 +121,9 @@ const mongoDB = {
             ],
           })
           .toArray();
-        // console.log('resWithArea', resWithArea);
+        console.log('resWithArea', resWithArea);
         // temp.push(resWithArea);
-        for (let j = 0; resWithArea.length; j++) {
+        for (let j = 0; j < resWithArea.length; j++) {
           temp.push(resWithArea[j]);
         }
       }
