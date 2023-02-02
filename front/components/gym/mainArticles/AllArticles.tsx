@@ -22,14 +22,15 @@ const AllArticles = (props: Props) => {
 
   const getArticleData = async (keyWord: string) => {
     let res: any;
-
     // console.log('props.order', props.order)
     // console.log('props.filter', props.filter)
 
     const check = {
+      // filter
       isAreaFilterOn: props.filter.activeAreas.length > 0,
       isPeriodFilterOn : props.filter.isperiodActive,
       isPriceFilterOn : props.filter.ispriceActive,
+      // order
       isDistanceOrderOn : props.order.isDistanceOrderOn,
       isPriceOrderOn : props.order.isPriceOrderOn
     };
@@ -48,33 +49,33 @@ const AllArticles = (props: Props) => {
     }
     console.log('전체 검색 ?? ', defaultSearch)
 
-    // // 필터링한 검색
-    // if (!defaultSearch) {
-    //   try {
-    //     const response = await fetch("http://localhost:4000/rental/search", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(body),
-    //     });
-    //     res = await response.json();
-    //     await setArticles(res);
-    //     console.log("필터 검색 결과 : ", res);
-    //   } catch (err: any) {
-    //     console.log("필터 검색 실패 : ", err);
-    //   }
-    // }
+    // 필터링한 검색
+    if (!defaultSearch) {
+      try {
+        const response = await fetch("http://localhost:4000/rental/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        res = await response.json();
+        await setArticles(res);
+        console.log("필터 검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("필터 검색 실패 : ", err);
+      }
+    }
 
-    // // 전체 검색
-    // else {
-    //   try {
-    //     const response = await fetch("http://localhost:4000/rental/articles");
-    //     res = await response.json();
-    //     await setArticles(res);
-    //     console.log("기본 검색 결과 : ", res);
-    //   } catch (err: any) {
-    //     console.log("기본 검색 실패 : ", err);
-    //   }
-    // }
+    // 전체 검색
+    else {
+      try {
+        const response = await fetch("http://localhost:4000/rental/articles");
+        res = await response.json();
+        await setArticles(res);
+        console.log("기본 검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("기본 검색 실패 : ", err);
+      }
+    }
 
 
     try {

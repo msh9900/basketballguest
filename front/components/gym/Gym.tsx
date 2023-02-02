@@ -10,17 +10,20 @@ import Filter from "./mainArticles/filter/Filter";
 import Order from "./mainArticles/order/Order";
 import SearchSection from "./mainArticles/search/Search";
 import { useSelector } from "react-redux";
+import orderStatusType from './mainArticles/order/interface_orderStatus';
 
 const Rental = () => {
   const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const [searchRes, setSearchRes] = useState("");
   const [searchVal, setSearchVal] = useState("");
-
   const [needToSearch, setNeedToSearch] = useState(true);
-  const [orderStatus, setOrderStatus] = useState({
-    ispriceOrderOn: false,
-    isdistanceOrderOn: false,
+  const [orderStatus, setOrderStatus] = useState<orderStatusType>({
+    isPriceOrderOn: false,
+    isAsc : false,
+    isDistanceOrderOn: false,
+    lat: '',
+    lng: '',
   });
   const [filterStatus, setFilterStatus] = useState({
     activeAreas: [],
@@ -44,11 +47,12 @@ const Rental = () => {
         <button className={cls.postButton} onClick={goToPosting}>
           글쓰기
         </button>
-        <Order orderStatus={orderStatus} setOrderStatus={setOrderStatus} />
+        <Order 
+        setOrderStatus={setOrderStatus} 
+        />
         <Filter filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
         <SearchSection
           orderStatus={orderStatus}
-          setOrderStatus={setOrderStatus}
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
           searchRes={searchRes}
