@@ -10,6 +10,9 @@
   width: 100%;
   .cardImgContainer {
     display: flex;
+    .cardImg {
+      object-fit: contain;
+    }
   }
   .firstComment {
     padding: 16px 16px 0px;
