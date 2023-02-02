@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
     // 로직 찾기
-    let newFileName = file.originalname;
+    let newFileName = new Date().valueOf() + file.originalname;
     // let newFileName = new Date().valueOf() + path.extname(file.originalname);
 
     cb(null, newFileName);
