@@ -42,7 +42,7 @@ const mongoDB = {
   guestDeleteArticle: async (contentidx: string) => {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
-    const successMsg = await col.deleteOne({ 'data.commentidx': contentidx });
+    const successMsg = await col.deleteOne({ contentidx: contentidx });
     if (successMsg.acknowledged) {
       return { msg: '게시글 삭제 완료' };
     }
