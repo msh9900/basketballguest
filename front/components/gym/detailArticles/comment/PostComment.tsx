@@ -24,10 +24,9 @@ const CommentPostForm = (props: Props) => {
       userId: stateId,
       userName: stateUserName,
       contents: writingText,
-      isCreater: false,
       replys: [],
     };
-    
+
     try {
       await fetch("http://localhost:4000/rental/comment", {
         method: "POST",

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import path from "path";
-import fs from "fs/promises";
 import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
 import InfiniteScroll from "react-infinite-scroll-component";

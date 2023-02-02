@@ -12,6 +12,7 @@ interface Props {
   idx: number;
   toInfo: string;
   isReplyWriting: boolean;
+  articleUserId: string;
   setIsReplyWriting: React.Dispatch<React.SetStateAction<boolean>>;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
   setToInfo: React.Dispatch<React.SetStateAction<string>>;
@@ -94,7 +95,8 @@ const EachReply = (props: Props) => {
       <>
         <div className={cls.replyLayout} key={Math.random()}>
           <div style={{ marginLeft: calcMargin(props.replys.indentLevel) }}>
-            <div className={props.replys.isCreater ? cls.creater : "xxx"}>
+            <div>
+              {/* 이즈크리에이터 처리했던부분 */}
               <button className={cls.userName}>{props.replys.userName}</button>
             </div>
             <div>

@@ -14,7 +14,9 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    let newFileName = new Date().valueOf() + path.extname(file.originalname);
+    // 로직 찾기
+    let newFileName = new Date().valueOf() + file.originalname;
+    // let newFileName = new Date().valueOf() + path.extname(file.originalname);
     cb(null, newFileName);
   },
 });
@@ -26,6 +28,7 @@ const upload = multer({ storage, limits });
 
 // 게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
+  console.log('진입데이터', req.body);
   let data = {
     activeAreas: req.body.filter.activeAreas,
     MinPrice: req.body.filter.priceRange[0],
@@ -53,6 +56,7 @@ router.post('/search', async (req: Request, res: Response) => {
   data.MaxPeriod = new Date(new Date(data.MaxPeriod).toISOString());
 
   const result = await mongoClient.searchArticles(data);
+  console.log('filter', result);
   res.send(JSON.stringify(result));
 });
 
@@ -93,6 +97,7 @@ router.post(
 
     let data = {
       articleId: (Date.now() + Math.random()).toFixed(13),
+      articleUserId: req.body.userId,
       userId: req.body.userId,
       userName: req.body.userName,
       title: req.body.title,
@@ -126,8 +131,6 @@ router.put(
   upload.array('img', 10),
   async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    console.log('req.body', req.body);
-    console.log('req.body', req.files);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
@@ -137,6 +140,7 @@ router.put(
 
     let data = {
       articleId: req.body.articleId,
+      articleUserId: req.body.userId,
       userId: req.body.userId,
       userName: req.body.userName,
       title: req.body.title,
@@ -151,17 +155,12 @@ router.put(
       gymImg: fileNameArray,
     };
 
-    // post : 2000-01-01 => 2000-01-01TO1111111111
-    // get  : 2000-01-01 <= 2000-01-01TO1111111111
-    // put  : 2000-01-01 => 2000-01-01TO1111111111
-
     data.openingPeriod[0] = new Date(
       new Date(data.openingPeriod[0]).toISOString()
     );
     data.openingPeriod[1] = new Date(
       new Date(data.openingPeriod[1]).toISOString()
     );
-    console.log('변형된data', data);
     const result = await mongoClient.updateArticle(data);
     res.send(JSON.stringify(result));
   }
@@ -221,12 +220,12 @@ router.get('/comment', async (req: Request, res: Response) => {
 router.post('/comment', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
+    articleUserId: req.body.userId,
     commentId: (Date.now() + Math.random()).toFixed(13),
     userId: req.body.userId,
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    isCreater: false,
     replys: req.body.replys,
   };
   const result = await mongoClient.insertComment(data);
@@ -236,12 +235,12 @@ router.post('/comment', async (req: Request, res: Response) => {
 router.put('/comment', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
+    articleUserId: req.body.userId,
     commentId: req.body.commentId,
     userId: req.body.userId,
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    isCreater: false,
     replys: req.body.replys,
   };
   const result = await mongoClient.updateComment(data);
@@ -257,6 +256,7 @@ router.delete('/comment', async (req: Request, res: Response) => {
 router.post('/reply', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
+    articleUserId: req.body.userId,
     commentId: req.body.commentId,
     replyId: (Date.now() + Math.random()).toFixed(13),
     indentLevel: req.body.indentLevel,
@@ -265,7 +265,6 @@ router.post('/reply', async (req: Request, res: Response) => {
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    isCreater: false,
     // replys: req.body.replys,
   };
   const result = await mongoClient.addInsertReply(data);
@@ -273,7 +272,6 @@ router.post('/reply', async (req: Request, res: Response) => {
 });
 
 router.put('/reply', async (req: Request, res: Response) => {
-  console.log('reply 수정 data', req.body);
   const data = {
     replyId: req.query.replyId,
     commentId: req.query.commentId,
@@ -281,7 +279,6 @@ router.put('/reply', async (req: Request, res: Response) => {
     contents: req.body.contents,
   };
   const result = await mongoClient.updateReply(data);
-  console.log('나가기전 data', result);
   res.send(JSON.stringify(result));
 });
 router.delete('/reply', async (req: Request, res: Response) => {

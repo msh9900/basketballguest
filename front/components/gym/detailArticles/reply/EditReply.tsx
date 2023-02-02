@@ -37,7 +37,6 @@ const EditReply = (props: Props) => {
       // userName: props.replys.userName,
       // to: props.replys.to,
       contents: fixedContent,
-      // isCreater: props.replys.isCreater,
       // indentLevel: props.replys.indentLevel,
     };
     try {
