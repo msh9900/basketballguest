@@ -28,6 +28,7 @@ const upload = multer({ storage, limits });
 
 // 게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
+  console.log('진입데이터', req.body);
   let data = {
     activeAreas: req.body.filter.activeAreas,
     MinPrice: req.body.filter.priceRange[0],
@@ -55,6 +56,7 @@ router.post('/search', async (req: Request, res: Response) => {
   data.MaxPeriod = new Date(new Date(data.MaxPeriod).toISOString());
 
   const result = await mongoClient.searchArticles(data);
+  console.log('filter', result);
   res.send(JSON.stringify(result));
 });
 

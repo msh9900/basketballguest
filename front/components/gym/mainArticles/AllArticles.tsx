@@ -23,73 +23,72 @@ const AllArticles = (props: Props) => {
   const getArticleData = async (keyWord: string) => {
     let res: any;
 
-    // console.log('props.order', props.order)
-    // console.log('props.filter', props.filter)
+    console.log("props.order", props.order);
+    console.log("props.filter", props.filter);
 
     const check = {
       isAreaFilterOn: props.filter.activeAreas.length > 0,
-      isPeriodFilterOn : props.filter.isperiodActive,
-      isPriceFilterOn : props.filter.ispriceActive,
-      isDistanceOrderOn : props.order.isDistanceOrderOn,
-      isPriceOrderOn : props.order.isPriceOrderOn
+      isPeriodFilterOn: props.filter.isperiodActive,
+      isPriceFilterOn: props.filter.ispriceActive,
+      isDistanceOrderOn: props.order.isDistanceOrderOn,
+      isPriceOrderOn: props.order.isPriceOrderOn,
     };
 
-    let defaultSearch = 
-      !(check.isAreaFilterOn 
-      || check.isPeriodFilterOn 
-      || check.isPriceFilterOn 
-      || check.isDistanceOrderOn 
-      || check.isPriceOrderOn)
+    let defaultSearch = !(
+      check.isAreaFilterOn ||
+      check.isPeriodFilterOn ||
+      check.isPriceFilterOn ||
+      check.isDistanceOrderOn ||
+      check.isPriceOrderOn
+    );
 
     const body = {
-      order:props.order,
-      filter:props.filter,
-      keyWord
+      order: props.order,
+      filter: props.filter,
+      keyWord,
+    };
+    console.log("전체 검색 ?? ", defaultSearch);
+
+    // 필터링한 검색
+    if (!defaultSearch) {
+      try {
+        const response = await fetch("http://localhost:4000/rental/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        res = await response.json();
+        await setArticles(res);
+        console.log("필터 검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("필터 검색 실패 : ", err);
+      }
     }
-    console.log('전체 검색 ?? ', defaultSearch)
 
-    // // 필터링한 검색
-    // if (!defaultSearch) {
-    //   try {
-    //     const response = await fetch("http://localhost:4000/rental/search", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(body),
-    //     });
-    //     res = await response.json();
-    //     await setArticles(res);
-    //     console.log("필터 검색 결과 : ", res);
-    //   } catch (err: any) {
-    //     console.log("필터 검색 실패 : ", err);
-    //   }
-    // }
-
-    // // 전체 검색
-    // else {
-    //   try {
-    //     const response = await fetch("http://localhost:4000/rental/articles");
-    //     res = await response.json();
-    //     await setArticles(res);
-    //     console.log("기본 검색 결과 : ", res);
-    //   } catch (err: any) {
-    //     console.log("기본 검색 실패 : ", err);
-    //   }
-    // }
-
-
-    try {
-      const response = await fetch("http://localhost:4000/rental/articles");
-      res = await response.json();
-      await setArticles(res);
-      console.log("기본 검색 결과 : ", res);
-    } catch (err: any) {
-      console.log("기본 검색 실패 : ", err);
+    // 전체 검색
+    else {
+      try {
+        const response = await fetch("http://localhost:4000/rental/articles");
+        res = await response.json();
+        await setArticles(res);
+        console.log("기본 검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("기본 검색 실패 : ", err);
+      }
     }
+
+    // try {
+    //   const response = await fetch("http://localhost:4000/rental/articles");
+    //   res = await response.json();
+    //   await setArticles(res);
+    //   console.log("기본 검색 결과 : ", res);
+    // } catch (err: any) {
+    //   console.log("기본 검색 실패 : ", err);
+    // }
 
     await props.setNeedToSearch(false);
   };
 
-  
   const router = useRouter();
   const moveToDetailPage = (num: string) => {
     router.push(`/gym/${num}/`);
@@ -99,7 +98,8 @@ const AllArticles = (props: Props) => {
     <>
       {!props.needToSearch && (
         <div className={cls.boxContainer}>
-          {articles && articles.length>0 && 
+          {articles &&
+            articles.length > 0 &&
             articles.map((item, idx) => {
               return (
                 <div
@@ -114,20 +114,22 @@ const AllArticles = (props: Props) => {
                       <img src={item.gymImg[0]} alt="체육관 이미지" />
                     </div>
                     <div className={cls.title}>제목 : {item.title}</div>
-                    <div className={cls.price}>
-                      비용 : {item.price} 원/시간
+                    <div className={cls.price}>비용 : {item.price} 원/시간</div>
+                    <div className={cls.content}>
+                      내용 : {item.content.slice(0, 15)}
                     </div>
-                    <div className={cls.content}>내용 : {(item.content).slice(0,15)}</div>
                     <div className={cls.content}>장소 : {item.areaTag}</div>
                   </li>
                 </div>
               );
             })}
-          {articles && articles.length==0 && <>
-          <div>
-            <p>검색된 결과가 없습니다.</p>
-            </div>
-            </>}
+          {articles && articles.length == 0 && (
+            <>
+              <div>
+                <p>검색된 결과가 없습니다.</p>
+              </div>
+            </>
+          )}
         </div>
       )}
     </>

@@ -101,6 +101,9 @@ const mongoDB = {
 
     let temp: any = [];
 
+    // [서울,]
+    // 서울, 서울, 서울, 광주
+
     if (data.activeAreas.length > 0) {
       for (let i = 0; i < data.activeAreas.length; i++) {
         const resWithArea = await col
@@ -118,9 +121,14 @@ const mongoDB = {
             ],
           })
           .toArray();
-        temp.push(resWithArea[i]);
+        // console.log('resWithArea', resWithArea);
+        // temp.push(resWithArea);
+        for (let j = 0; resWithArea.length; j++) {
+          temp.push(resWithArea[j]);
+        }
       }
     } else {
+      console.log('지역없이 진입');
       const resWithoutArea = await col
         .find({
           $and: [
@@ -138,6 +146,7 @@ const mongoDB = {
       temp.push(resWithoutArea);
     }
     console.log('temp', temp);
+
     return temp;
   },
   // 게시글 목록

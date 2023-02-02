@@ -61,7 +61,10 @@ router.put('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.guestInsertArticle(data);
   return result;
 });
-router.delete('/article', async (req: Request, res: Response) => {});
+router.delete('/article', async (req: Request, res: Response) => {
+  const result = await mongoClient.guestDeleteArticle(req.body.contentidx);
+  return result;
+});
 
 router.post('/comment', async (req: Request, res: Response) => {
   const data = {
