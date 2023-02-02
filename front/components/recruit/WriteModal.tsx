@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
 import classes from "./WriteModal.module.scss";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -8,12 +9,14 @@ import SendIcon from "@mui/icons-material/Send";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
 export default function WriteModal() {
+  const router = useRouter();
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const [imgFile, setImgFile] = useState("");
   const [contentText, setContentText] = useState("");
   const [titleText, setTitleText] = useState("");
   const imgRef: any = useRef();
+  const titleRef: any = useRef();
   const readImage = () => {
     const file = imgRef.current.files[0];
     const reader: any = new FileReader();
@@ -32,6 +35,8 @@ export default function WriteModal() {
     setTitleText(e.target.value);
   };
   const contentSubmitHandler = async (e: any) => {
+    e.preventDefault();
+    router.reload();
     const FD = new FormData();
 
     FD.append("userId", userId);
@@ -45,7 +50,7 @@ export default function WriteModal() {
 
     FD.get("articleImg");
     //글쓰기 fetch 구현
-    await fetch("http://localhost:4000/board/article", {
+    const response = await fetch("http://localhost:4000/board/article", {
       method: "POST",
       body: FD,
     });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";

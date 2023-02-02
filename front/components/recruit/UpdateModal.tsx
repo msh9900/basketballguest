@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import classes from "./UpdateModal.module.scss";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -8,6 +9,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
 export default function UpdateModal() {
+  const router = useRouter();
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const [imgFile, setImgFile] = useState("");
@@ -33,6 +35,7 @@ export default function UpdateModal() {
   };
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
+    router.reload();
     const FD = new FormData();
 
     FD.append("userId", userId);
@@ -58,6 +61,7 @@ export default function UpdateModal() {
     const response = await fetch(`http://localhost:4000/board/라우터주소`);
     const res = await response.json();
   };
+
   return (
     <>
       <form
