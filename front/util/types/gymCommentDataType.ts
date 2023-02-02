@@ -6,18 +6,17 @@ interface replyType {
   userName: string;
   createdAt: string;
   contents: string;
-  isCreater: boolean;
   indentLevel: number;
 }
 
 interface commentType {
   articleId: string;
+  articleUserId: string;
   commentId: string;
   userId: string;
   userName: string;
   createdAt: string;
   contents: string;
-  isCreater: boolean;
   replys: replyType[];
 }
 

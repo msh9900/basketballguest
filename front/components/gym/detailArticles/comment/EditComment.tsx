@@ -2,19 +2,16 @@
 import cls from "./EachComment.module.scss";
 // library
 import Image from "next/image";
-import replyType from 'util/types/gymReplyType';
-import {useState} from 'react'
+import replyType from "util/types/gymReplyType";
+import { useState } from "react";
 
 interface Props {
   articleId: string;
+  articleUserId: string;
   commentId: string;
   userId: string;
   userName: string;
-  isCreater: boolean;
-  contents:string;
-  // date: string;
-  // contents: string;
-  
+  contents: string;
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
   setIsCommentWriting: React.Dispatch<React.SetStateAction<boolean>>;
   setIsCommentEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,10 +19,8 @@ interface Props {
 }
 
 const EditComment = (props: Props) => {
-
-  const [editedComment, setEditedComment] = useState(props.contents)
+  const [editedComment, setEditedComment] = useState(props.contents);
   const updateComment = async (e: any) => {
-    
     const commentId = e.target.id;
     const updateCommentObj = {
       articleId: props.articleId,
@@ -33,7 +28,6 @@ const EditComment = (props: Props) => {
       userId: props.userId,
       userName: props.userName,
       contents: editedComment,
-      isCreater: props.isCreater,
       replys: props.replys,
     };
 
@@ -51,16 +45,19 @@ const EditComment = (props: Props) => {
     } catch (err: any) {}
   };
 
-  const onChangeText = (e:any) => {
-    setEditedComment(e.target.value)
-  }
-  
+  const onChangeText = (e: any) => {
+    setEditedComment(e.target.value);
+  };
 
   return (
     <>
       <div className={cls.originCommentEditForm}>
         <div>
-          <textarea id="fixingComment" onChange={onChangeText} value={editedComment}></textarea>
+          <textarea
+            id="fixingComment"
+            onChange={onChangeText}
+            value={editedComment}
+          ></textarea>
         </div>
         <div className={cls.btnArea}>
           <button className={cls.submitBtn} onClick={updateComment}>

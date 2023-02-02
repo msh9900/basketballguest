@@ -12,26 +12,31 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    let newFileName = new Date().valueOf() + path.extname(file.originalname);
+    // 로직 찾기
+    let newFileName = new Date().valueOf() + file.originalname;
+    // let newFileName = new Date().valueOf() + path.extname(file.originalname);
+
     cb(null, newFileName);
   },
 });
 const limits = {
-  fileSize: 1024 * 1024 * 2,
+  fileSize: 2048 * 2048 * 2,
 };
 const upload = multer({ storage, limits });
 
 router.get('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.guestfindArticle();
-  console.log(result);
   res.send(JSON.stringify(result));
 });
 router.post(
   '/article',
   upload.array('articleImg', 10),
   async (req: Request, res: Response) => {
+    console.log('들어오는파일', req.files);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+
     const resultFiles = req.files as any;
+
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
       const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
@@ -59,7 +64,6 @@ router.put('/article', async (req: Request, res: Response) => {
 router.delete('/article', async (req: Request, res: Response) => {});
 
 router.post('/comment', async (req: Request, res: Response) => {
-  console.log('comment', req.body);
   const data = {
     contentidx: req.body.contentidx,
     commentidx: (Date.now() + Math.random()).toFixed(13),
