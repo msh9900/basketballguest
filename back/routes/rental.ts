@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import fs, { lutimes } from 'fs';
 import multer from 'multer';
 import path from 'path';
-// import puppeteer from 'puppeteer';
 
 const router = express.Router();
 const mongoClient = require('../controllers/mongocontrol').mongoDB;
@@ -16,7 +15,6 @@ const storage = multer.diskStorage({
   filename: (req: Request, file: Express.Multer.File, cb) => {
     // 로직 찾기
     let newFileName = new Date().valueOf() + file.originalname;
-    // let newFileName = new Date().valueOf() + path.extname(file.originalname);
     cb(null, newFileName);
   },
 });
@@ -37,11 +35,18 @@ router.post('/search', async (req: Request, res: Response) => {
     MaxPeriod: req.body.filter.periodRange[1],
     keyWord: req.body.keyWord,
   };
+  let order = {
+    isPriceOrderOn: req.body.order.isPriceOrderOn,
+    isAsc: req.body.order.isAsc,
+    isDistanceOrderOn: req.body.order.isDistanceOrderOn,
+    lat: req.body.order.lat,
+    lng: req.body.order.lng,
+  };
 
   if (req.body.filter.priceRange[0] === '0') {
     data.MinPrice = 0;
   }
-  if (req.body.filter.priceRange[0] === '0') {
+  if (req.body.filter.priceRange[1] === '0') {
     data.MaxPrice = 10000000;
   }
   if (req.body.filter.periodRange[0] === undefined) {
@@ -55,8 +60,7 @@ router.post('/search', async (req: Request, res: Response) => {
   data.MinPeriod = new Date(new Date(data.MinPeriod).toISOString());
   data.MaxPeriod = new Date(new Date(data.MaxPeriod).toISOString());
 
-  const result = await mongoClient.searchArticles(data);
-  console.log('filter', result);
+  const result = await mongoClient.searchArticles(data, order);
   res.send(JSON.stringify(result));
 });
 
@@ -105,8 +109,8 @@ router.post(
       contact: req.body.contact,
       createdAt: new Date().toLocaleString('ko-kr'),
       address: JSON.parse(req.body.address),
-      offsetX: parseInt(offsetX),
-      offsetY: parseInt(offsetY),
+      offsetX: parseFloat(offsetX),
+      offsetY: parseFloat(offsetY),
       areaTag: areaTag,
       price: parseInt(req.body.price),
       openingHours: req.body.openingHours,

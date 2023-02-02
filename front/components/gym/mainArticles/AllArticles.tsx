@@ -22,17 +22,18 @@ const AllArticles = (props: Props) => {
 
   const getArticleData = async (keyWord: string) => {
     let res: any;
-    // console.log('props.order', props.order)
-    // console.log('props.filter', props.filter)
+
+    console.log("props.order", props.order);
+    console.log("props.filter", props.filter);
 
     const check = {
       // filter
       isAreaFilterOn: props.filter.activeAreas.length > 0,
-      isPeriodFilterOn : props.filter.isperiodActive,
-      isPriceFilterOn : props.filter.ispriceActive,
+      isPeriodFilterOn: props.filter.isperiodActive,
+      isPriceFilterOn: props.filter.ispriceActive,
       // order
-      isDistanceOrderOn : props.order.isDistanceOrderOn,
-      isPriceOrderOn : props.order.isPriceOrderOn
+      isDistanceOrderOn: props.order.isDistanceOrderOn,
+      isPriceOrderOn: props.order.isPriceOrderOn,
     };
 
     let defaultSearch = !(

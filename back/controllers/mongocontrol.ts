@@ -95,21 +95,54 @@ const mongoDB = {
     }
   },
   //특정 게시글 목록 찾기
-  searchArticles: async (data: any) => {
+  searchArticles: async (data: any, order: any) => {
     const user = await _user;
     const col = user.db('basket').collection('article');
 
     let temp: any = [];
+    const isAsc = order.isAsc ? 1 : -1;
 
-    // [서울,]
-    // 서울, 서울, 서울, 광주
+    //   order
+    // isPriceOrderOn: true,
+    //   isAsc: false,
+    // isDistanceOrderOn: false,
+    //     lat: '',
+    //     lng: ''
 
-    if (data.activeAreas.length > 0) {
-      for (let i = 0; i < data.activeAreas.length; i++) {
-        const resWithArea = await col
+    // <1. 정렬 - 가격>
+    if (order.isPriceOrderOn) {
+      // 가격 정렬 + 지역 필터
+      if (data.activeAreas.length > 0) {
+        for (let i = 0; i < data.activeAreas.length; i++) {
+          const resWithArea = await col
+            .find({
+              $and: [
+                { 'data.areaTag': data.activeAreas[i] },
+                {
+                  'data.price': {
+                    $gte: data.MinPrice,
+                    $lte: data.MaxPrice,
+                  },
+                },
+                { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
+                { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+              ],
+              $or: [
+                { 'data.title': { $regex: data.keyWord } },
+                { 'data.contents': { $regex: data.keyWord } },
+              ],
+            })
+            .sort({ 'data.price': isAsc })
+            .toArray();
+          for (let j = 0; j < resWithArea.length; j++) {
+            temp.push(resWithArea[j]);
+          }
+        }
+      } else {
+        // 가격 정렬 + 지역 노필터
+        const resWithoutArea = await col
           .find({
             $and: [
-              { 'data.areaTag': data.activeAreas[i] },
               {
                 'data.price': {
                   $gte: data.MinPrice,
@@ -119,36 +152,100 @@ const mongoDB = {
               { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
               { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
             ],
+            $or: [
+              { 'data.title': { $regex: data.keyWord } },
+              { 'data.contents': { $regex: data.keyWord } },
+            ],
+          })
+          .sort({ 'data.price': isAsc })
+          .toArray();
+        temp.push(resWithoutArea);
+      }
+    }
+
+    // <2. 기본 검색>
+    else {
+      if (data.activeAreas.length > 0) {
+        for (let i = 0; i < data.activeAreas.length; i++) {
+          const resWithArea = await col
+            .find({
+              $and: [
+                { 'data.areaTag': data.activeAreas[i] },
+                {
+                  'data.price': {
+                    $gte: data.MinPrice,
+                    $lte: data.MaxPrice,
+                  },
+                },
+                { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
+                { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+              ],
+              $or: [
+                { 'data.title': { $regex: data.keyWord } },
+                { 'data.contents': { $regex: data.keyWord } },
+              ],
+            })
+            .toArray();
+          for (let j = 0; j < resWithArea.length; j++) {
+            temp.push(resWithArea[j]);
+          }
+        }
+      } else {
+        const resWithoutArea = await col
+          .find({
+            $and: [
+              {
+                'data.price': {
+                  $gte: data.MinPrice,
+                  $lte: data.MaxPrice,
+                },
+              },
+              { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
+              { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+            ],
+            $or: [
+              { 'data.title': { $regex: data.keyWord } },
+              { 'data.contents': { $regex: data.keyWord } },
+            ],
           })
           .toArray();
-        console.log('resWithArea', resWithArea);
-        // temp.push(resWithArea);
-        for (let j = 0; j < resWithArea.length; j++) {
-          temp.push(resWithArea[j]);
-        }
+        temp.push(resWithoutArea);
       }
-    } else {
-      console.log('지역없이 진입');
-      const resWithoutArea = await col
-        .find({
-          $and: [
-            {
-              'data.price': {
-                $gte: data.MinPrice,
-                $lte: data.MaxPrice,
-              },
-            },
-            { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-            { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
-          ],
-        })
-        .toArray();
-      temp.push(resWithoutArea);
     }
-    console.log('temp', temp);
 
-    return temp;
+    // <3. 정렬 - 거리순>
+    if (order.isDistanceOrderOn) {
+      const flated = temp.flat();
+
+      const standardX = parseFloat(order.lng);
+      const standardY = parseFloat(order.lat);
+
+      const getDistanceSort = flated.sort(function (a: any, b: any) {
+        const ax = Math.pow(standardX - parseFloat(a.data.offsetX), 2);
+        const ay = Math.pow(standardY - parseFloat(a.data.offsetY), 2);
+        const bx = Math.pow(standardX - parseFloat(b.data.offsetX), 2);
+        const by = Math.pow(standardY - parseFloat(b.data.offsetY), 2);
+
+        const aVal = Math.pow(ax + ay, 0.5);
+        const bVal = Math.pow(bx + by, 0.5);
+        return aVal - bVal;
+      });
+
+      const result: any = [];
+      getDistanceSort.map((val: any) => {
+        result.push(val.data);
+      });
+      return result;
+    }
+
+    const tempFlated = temp.flat();
+    let result: any = [];
+    tempFlated.map((val: any) => {
+      result.push(val.data);
+    });
+    return result;
   },
+
   // 게시글 목록
   findArticles: async () => {
     const user = await _user;
