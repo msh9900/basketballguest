@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import classes from "./WriteModal.module.scss";
+import React, { useEffect, useRef, useState } from "react";
+import classes from "./UpdateModal.module.scss";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
@@ -7,7 +7,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SendIcon from "@mui/icons-material/Send";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
-export default function WriteModal() {
+export default function UpdateModal() {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const [imgFile, setImgFile] = useState("");
@@ -32,6 +32,7 @@ export default function WriteModal() {
     setTitleText(e.target.value);
   };
   const contentSubmitHandler = async (e: any) => {
+    e.preventDefault();
     const FD = new FormData();
 
     FD.append("userId", userId);
@@ -43,11 +44,19 @@ export default function WriteModal() {
     }
 
     FD.get("articleImg");
-    //글쓰기 fetch 구현
-    await fetch("http://localhost:4000/board/article", {
+    //글 업데이트 fetch 구현
+    const response = await fetch("http://localhost:4000/board/article", {
       method: "POST",
       body: FD,
     });
+  };
+  useEffect(() => {
+    //글 정보 가지고 오기.
+    // getData();
+  }, []);
+  const getData = async () => {
+    const response = await fetch(`http://localhost:4000/board/라우터주소`);
+    const res = await response.json();
   };
   return (
     <>
@@ -56,7 +65,7 @@ export default function WriteModal() {
         className={classes.container}
         encType="multipart/form-data"
       >
-        <div className={classes.title}>게시물만들기</div>
+        <div className={classes.title}>게시물 수정</div>
         <div className={classes.content}>
           <div className={classes.userBox}>
             <Avatar alt="Remy Sharp" src={userImg} />
@@ -64,7 +73,7 @@ export default function WriteModal() {
           </div>
           <div>
             <div>제목</div>
-            <input type="test" onChange={titleChange}></input>
+            <input type="test" onChange={titleChange} value={titleText}></input>
           </div>
           <div>
             <TextField

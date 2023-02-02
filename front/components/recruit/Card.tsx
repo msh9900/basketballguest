@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
+import ImgPop from "util/ImgPop";
 
 export default function RecipeReviewCard(props: any) {
   const userId = useSelector((state: any) => state.login?.userId);
@@ -91,6 +92,9 @@ export default function RecipeReviewCard(props: any) {
                   src={val}
                   alt="사진 이미지"
                   sx={{ objectFit: "contain" }}
+                  onClick={() => {
+                    ImgPop(val);
+                  }}
                 />
               ))}
           </div>
