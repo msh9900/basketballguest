@@ -4,7 +4,7 @@ import multer from 'multer';
 import path from 'path';
 
 const router = express.Router();
-const mongoClient = require('../controllers/mongocontrol').mongoDB;
+const mongoClient = require('../controllers/mongoControl').mongoDB;
 const crawlingTest = require('../module/crawler').crawler;
 
 const dir = './rental';
@@ -26,7 +26,6 @@ const upload = multer({ storage, limits });
 
 // 게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
-  console.log('진입데이터', req.body);
   let data = {
     activeAreas: req.body.filter.activeAreas,
     MinPrice: req.body.filter.priceRange[0],

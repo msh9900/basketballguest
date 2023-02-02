@@ -3,7 +3,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 
-const mongoDB = require('../controllers/mongocontrol').mongoDB;
+const mongoClient = require('../controllers/mongoControl').mongoDB;
 const router = express.Router();
 
 router.use('/images', express.static('images'));
@@ -23,7 +23,6 @@ const limits = {
   fileSize: 2048 * 2048 * 2,
 };
 const upload = multer({ storage, limits });
-// 헤더에서 이미지 가져오기
 
 // 이미지 가져오기
 router.get('/', (req: Request, res: Response) => {
@@ -42,7 +41,7 @@ router.post(
       email: req.body.email.replaceAll('"', ''),
       userImg: `http://localhost:4000/images/${imgpath}`,
     };
-    const result = await mongoDB.userData(logindata);
+    const result = await mongoClient.userData(logindata);
 
     res.send(JSON.stringify(result));
   }
