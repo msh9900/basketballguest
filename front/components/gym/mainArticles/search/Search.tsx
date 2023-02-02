@@ -1,11 +1,9 @@
 import cls from "./Search.module.scss";
-import { useState } from "react";
-import OrderStatusProps from "../order/interface_orderStatus";
+// import orderStatusType from "../order/interface_orderStatus";
 import filterProps from "../filter/interface_filterStatus";
 
 interface Props {
-  orderStatus: OrderStatusProps;
-  setOrderStatus: React.Dispatch<React.SetStateAction<OrderStatusProps>>;
+  orderStatus: any;
   filterStatus: filterProps;
   setFilterStatus: React.Dispatch<React.SetStateAction<filterProps>>;
   searchRes: string;

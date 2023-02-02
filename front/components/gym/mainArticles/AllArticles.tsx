@@ -22,16 +22,30 @@ const AllArticles = (props: Props) => {
 
   const getArticleData = async (keyWord: string) => {
     let res: any;
+<<<<<<< HEAD
+    // console.log('props.order', props.order)
+    // console.log('props.filter', props.filter)
+=======
 
     console.log("props.order", props.order);
     console.log("props.filter", props.filter);
+>>>>>>> 2023fd5f502ce7e393abfa7f398723307a83f45f
 
     const check = {
+      // filter
       isAreaFilterOn: props.filter.activeAreas.length > 0,
+<<<<<<< HEAD
+      isPeriodFilterOn : props.filter.isperiodActive,
+      isPriceFilterOn : props.filter.ispriceActive,
+      // order
+      isDistanceOrderOn : props.order.isDistanceOrderOn,
+      isPriceOrderOn : props.order.isPriceOrderOn
+=======
       isPeriodFilterOn: props.filter.isperiodActive,
       isPriceFilterOn: props.filter.ispriceActive,
       isDistanceOrderOn: props.order.isDistanceOrderOn,
       isPriceOrderOn: props.order.isPriceOrderOn,
+>>>>>>> 2023fd5f502ce7e393abfa7f398723307a83f45f
     };
 
     let defaultSearch = !(
@@ -65,6 +79,25 @@ const AllArticles = (props: Props) => {
       }
     }
 
+<<<<<<< HEAD
+    // 필터링한 검색
+    if (!defaultSearch) {
+      try {
+        const response = await fetch("http://localhost:4000/rental/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        res = await response.json();
+        await setArticles(res);
+        console.log("필터 검색 결과 : ", res);
+      } catch (err: any) {
+        console.log("필터 검색 실패 : ", err);
+      }
+    }
+
+=======
+>>>>>>> 2023fd5f502ce7e393abfa7f398723307a83f45f
     // 전체 검색
     else {
       try {
@@ -75,6 +108,19 @@ const AllArticles = (props: Props) => {
       } catch (err: any) {
         console.log("기본 검색 실패 : ", err);
       }
+<<<<<<< HEAD
+    }
+
+
+    try {
+      const response = await fetch("http://localhost:4000/rental/articles");
+      res = await response.json();
+      await setArticles(res);
+      console.log("기본 검색 결과 : ", res);
+    } catch (err: any) {
+      console.log("기본 검색 실패 : ", err);
+=======
+>>>>>>> 2023fd5f502ce7e393abfa7f398723307a83f45f
     }
 
     // try {

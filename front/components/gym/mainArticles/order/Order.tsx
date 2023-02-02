@@ -1,27 +1,26 @@
 import cls from "./Order.module.scss";
 import { useState, useEffect } from "react";
-import OrderStatusProps from "./interface_orderStatus";
+import orderStatusType from "./interface_orderStatus";
 interface Props {
-  orderStatus: OrderStatusProps;
-  setOrderStatus: React.Dispatch<React.SetStateAction<OrderStatusProps>>;
+  setOrderStatus: React.Dispatch<React.SetStateAction<orderStatusType>>;
 }
 
 const Order = (props: Props) => {
-  const [priceOrderOn, setPriceOrderOn] = useState(false);
-  const [distanceOrderOn, setDistanceOrderOn] = useState(false);
   const [locInputStatus, setLocInputStatus] = useState("R");
-  const [isAsc, setIsAsc] = useState(false)
-  // asc desc
-  const [lat, setLat] = useState('');
-  const [lng, setLng] = useState('');
-
+  
+  // orderStatus
+  const [priceOrderOn, setPriceOrderOn] = useState<boolean>(false);
+  const [isAsc, setIsAsc] = useState<boolean>(false)
+  const [distanceOrderOn, setDistanceOrderOn] = useState<boolean>(false);
+  const [lat, setLat] = useState<string>('');
+  const [lng, setLng] = useState<string>('');
   useEffect(() => {
     props.setOrderStatus({
-      ispriceOrderOn: priceOrderOn,
-      isdistanceOrderOn: distanceOrderOn,
+      isPriceOrderOn: priceOrderOn,
+      isAsc : isAsc,
+      isDistanceOrderOn: distanceOrderOn,
       lat: lat,
       lng: lng,
-      isAsc : isAsc,
     });
   }, [priceOrderOn, distanceOrderOn, lat, lng, isAsc]);
 
@@ -43,7 +42,7 @@ const Order = (props: Props) => {
     setDistanceOrderOn(false);
   };
 
-  // 장치로 현위치 찾기
+  // 위경도 입력 (기기 위치)
   const giveDeviceLocation = () => {
     browserLocSearch()
     setLocInputStatus("L");
@@ -60,7 +59,7 @@ const Order = (props: Props) => {
     const value = navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
   }
 
-  // 직접 입력
+  // 위경도 입력 (직접 입력)
   const giveValueDirectly = () => {
     setLng('')
     setLat('')

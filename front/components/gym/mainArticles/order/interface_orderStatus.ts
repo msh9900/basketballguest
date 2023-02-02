@@ -1,9 +1,9 @@
-interface OrderStatusProps {
-  ispriceOrderOn: boolean,
-  isdistanceOrderOn: boolean,
+interface orderStatusType {
+  isPriceOrderOn: boolean,
+  isAsc:boolean
+  isDistanceOrderOn: boolean,
   lat:string,
   lng:string,
-  isAsc:boolean
 }
 
-export default OrderStatusProps
+export default orderStatusType
