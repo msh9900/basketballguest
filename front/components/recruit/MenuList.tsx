@@ -20,17 +20,17 @@ export default function BasicMenu(props: any) {
     setAnchorEl(null);
   };
   const deleteHandler = async () => {
+    console.log(props.idx);
     //props.idx 해당되는 값 삭제 post
     const data = {
       contentidx: props.idx,
     };
     const response = await fetch("http://localhost:4000/board/article", {
-      method: "POST",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
     const res = await response.json();
-    console.log(props.idx);
 
     setAnchorEl(null);
   };
