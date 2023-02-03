@@ -23,7 +23,7 @@ const Filter = (props: Props): React.ReactElement => {
 
   // filters
   const [areas, setAreas] = useState<string[]>([]);
-  const [price, setPrice] = useState<string[]>(['0', '0']);
+  const [price, setPrice] = useState<string[]>([]);
   const [period, setPeriod] = useState<string[]>([]);
   const [priceActive, setPriceActive] = useState(false);
   const [periodActive, setPeriodActive] = useState(false);
@@ -34,8 +34,8 @@ const Filter = (props: Props): React.ReactElement => {
       activeAreas: [...areas] as string[],
       priceRange: [...price] as string[],
       periodRange: [...period] as string[],
-      ispriceActive: priceActive as boolean,
-      isperiodActive: periodActive as boolean,
+      isPriceActive: priceActive as boolean,
+      isPeriodActive: periodActive as boolean,
     });
   }, [areas, price, period, priceActive, periodActive]);
 

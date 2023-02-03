@@ -22,26 +22,31 @@ const AllArticles = (props: Props) => {
 
   const getArticleData = async (keyWord: string) => {
     let res: any;
+    console.log("-----------------------------");
+    console.log("order", props.order);
+    console.log("filter", props.filter);
+    console.log('keyWord', keyWord)
 
-    console.log("props.order", props.order);
-    console.log("props.filter", props.filter);
+    // const check = {
+    //   // filter
+    //   isAreaFilterOn: props.filter.activeAreas.length > 0,
+    //   isPeriodFilterOn: props.filter.isPeriodActive,
+    //   isPriceFilterOn: props.filter.isPriceActive,
+    //   // order
+    //   isDistanceOrderOn: props.order.isDistanceOrderOn,
+    //   isPriceOrderOn: props.order.isPriceOrderOn,
+    // }; 
 
-    const check = {
+    const defaultSearch = !(
       // filter
-      isAreaFilterOn: props.filter.activeAreas.length > 0,
-      isPeriodFilterOn: props.filter.isperiodActive,
-      isPriceFilterOn: props.filter.ispriceActive,
+      props.filter.activeAreas.length > 0 ||
+      props.filter.isPeriodActive ||
+      props.filter.isPriceActive ||
       // order
-      isDistanceOrderOn: props.order.isDistanceOrderOn,
-      isPriceOrderOn: props.order.isPriceOrderOn,
-    };
-
-    let defaultSearch = !(
-      check.isAreaFilterOn ||
-      check.isPeriodFilterOn ||
-      check.isPriceFilterOn ||
-      check.isDistanceOrderOn ||
-      check.isPriceOrderOn
+      props.order.isDistanceOrderOn ||
+      props.order.isPriceOrderOn ||
+      // keyWord
+      keyWord.length>0
     );
 
     const body = {
@@ -49,9 +54,7 @@ const AllArticles = (props: Props) => {
       filter: props.filter,
       keyWord,
     };
-    console.log("전체 검색 ?? ", defaultSearch);
-
-    // 필터링한 검색
+    // 특정 목록
     if (!defaultSearch) {
       try {
         const response = await fetch("http://localhost:4000/rental/search", {
@@ -61,12 +64,12 @@ const AllArticles = (props: Props) => {
         });
         res = await response.json();
         await setArticles(res);
-        console.log("필터 검색 결과 : ", res);
+        console.log("도구 검색 결과 : ", res);
       } catch (err: any) {
-        console.log("필터 검색 실패 : ", err);
+        console.log("도구 검색 실패 : ", err);
       }
     }
-    // 전체 검색
+    // 전체 목록
     else {
       try {
         const response = await fetch("http://localhost:4000/rental/articles");

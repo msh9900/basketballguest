@@ -26,8 +26,10 @@ const upload = multer({ storage, limits });
 
 // 게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
-  console.log('진입데이터', req.body);
-  let data = {
+  
+  console.log('rental.ts 진입데이터', req.body);
+  
+  let filter = {
     activeAreas: req.body.filter.activeAreas,
     MinPrice: req.body.filter.priceRange[0],
     MaxPrice: req.body.filter.priceRange[1],
@@ -35,7 +37,24 @@ router.post('/search', async (req: Request, res: Response) => {
     MaxPeriod: req.body.filter.periodRange[1],
     keyWord: req.body.keyWord,
   };
-  let order = {
+  const keyWord = req.body.keyWord
+
+  if (filter.MinPrice === '0' || isNaN(filter.MinPrice)) {
+    filter.MinPrice = 0;
+  }
+  if (filter.MaxPrice === '0' || isNaN(filter.MaxPrice)) {
+    filter.MaxPrice = 10000000;
+  }
+  if (filter.MinPeriod === undefined) filter.MinPeriod = '2023-01-01';
+  if (filter.MaxPeriod === undefined) filter.MaxPeriod = '2050-12-31';
+
+  filter.MinPrice = parseInt(filter.MinPrice);
+  filter.MaxPrice = parseInt(filter.MaxPrice);
+
+  filter.MinPeriod = new Date(new Date(filter.MinPeriod).toISOString());
+  filter.MaxPeriod = new Date(new Date(filter.MaxPeriod).toISOString());
+
+  const order = {
     isPriceOrderOn: req.body.order.isPriceOrderOn,
     isAsc: req.body.order.isAsc,
     isDistanceOrderOn: req.body.order.isDistanceOrderOn,
@@ -43,24 +62,7 @@ router.post('/search', async (req: Request, res: Response) => {
     lng: req.body.order.lng,
   };
 
-  if (req.body.filter.priceRange[0] === '0') {
-    data.MinPrice = 0;
-  }
-  if (req.body.filter.priceRange[1] === '0') {
-    data.MaxPrice = 10000000;
-  }
-  if (req.body.filter.periodRange[0] === undefined) {
-    data.MinPeriod = '2023-01-01';
-  }
-  if (req.body.filter.periodRange[1] === undefined) {
-    data.MaxPeriod = '2050-12-31';
-  }
-  data.MinPrice = parseInt(data.MinPrice);
-  data.MaxPrice = parseInt(data.MaxPrice);
-  data.MinPeriod = new Date(new Date(data.MinPeriod).toISOString());
-  data.MaxPeriod = new Date(new Date(data.MaxPeriod).toISOString());
-
-  const result = await mongoClient.searchArticles(data, order);
+  const result = await mongoClient.searchArticles(filter, order, keyWord);
   res.send(JSON.stringify(result));
 });
 

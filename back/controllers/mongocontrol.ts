@@ -94,42 +94,38 @@ const mongoDB = {
       return updateData;
     }
   },
-  //특정 게시글 목록 찾기
-  searchArticles: async (data: any, order: any) => {
+
+  // ----------- <게시글 목록 찾기 (정렬, 필터)> -----------
+  searchArticles: async (filter: any, order: any, keyWord:string) => {
     const user = await _user;
-    const col = user.db('basket').collection('article');
+    const articleCollection = user.db('basket').collection('article');
 
     let temp: any = [];
     const isAsc = order.isAsc ? 1 : -1;
 
-    //   order
-    // isPriceOrderOn: true,
-    //   isAsc: false,
-    // isDistanceOrderOn: false,
-    //     lat: '',
-    //     lng: ''
-
-    // <1. 정렬 - 가격>
+    // <1. 가격 정렬 O >
     if (order.isPriceOrderOn) {
-      // 가격 정렬 + 지역 필터
-      if (data.activeAreas.length > 0) {
-        for (let i = 0; i < data.activeAreas.length; i++) {
-          const resWithArea = await col
+
+      // 가격 정렬 O + 지역 필터 O
+      if (filter.activeAreas.length > 0) {
+
+        for (let i = 0; i < filter.activeAreas.length; i++) {
+          const resWithArea = await articleCollection
             .find({
               $and: [
-                { 'data.areaTag': data.activeAreas[i] },
+                { 'data.areaTag': filter.activeAreas[i] },
                 {
                   'data.price': {
-                    $gte: data.MinPrice,
-                    $lte: data.MaxPrice,
+                    $gte: filter.MinPrice,
+                    $lte: filter.MaxPrice,
                   },
                 },
-                { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-                { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+                { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+                { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
               ],
               $or: [
-                { 'data.title': { $regex: data.keyWord } },
-                { 'data.contents': { $regex: data.keyWord } },
+                { 'data.title': { $regex: keyWord } },
+                { 'data.contents': { $regex: keyWord } },
               ],
             })
             .sort({ 'data.price': isAsc })
@@ -137,24 +133,27 @@ const mongoDB = {
           for (let j = 0; j < resWithArea.length; j++) {
             temp.push(resWithArea[j]);
           }
+          
         }
-      } else {
-        // 가격 정렬 + 지역 노필터
-        const resWithoutArea = await col
+      } 
+      
+      // 가격 정렬 O + 지역 필터 X
+      else {
+        const resWithoutArea = await articleCollection
           .find({
             $and: [
               {
                 'data.price': {
-                  $gte: data.MinPrice,
-                  $lte: data.MaxPrice,
+                  $gte: filter.MinPrice,
+                  $lte: filter.MaxPrice,
                 },
               },
-              { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-              { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+              { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+              { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
             ],
             $or: [
-              { 'data.title': { $regex: data.keyWord } },
-              { 'data.contents': { $regex: data.keyWord } },
+              { 'data.title': { $regex: keyWord } },
+              { 'data.contents': { $regex: keyWord } },
             ],
           })
           .sort({ 'data.price': isAsc })
@@ -163,26 +162,27 @@ const mongoDB = {
       }
     }
 
-    // <2. 기본 검색>
+    // <2. 가격 정렬 X>
     else {
-      if (data.activeAreas.length > 0) {
-        for (let i = 0; i < data.activeAreas.length; i++) {
-          const resWithArea = await col
+      // 가격 정렬 X + 지역 필터 O
+      if (filter.activeAreas.length > 0) {
+        for (let i = 0; i < filter.activeAreas.length; i++) {
+          const resWithArea = await articleCollection
             .find({
               $and: [
-                { 'data.areaTag': data.activeAreas[i] },
+                { 'data.areaTag': filter.activeAreas[i] },
                 {
                   'data.price': {
-                    $gte: data.MinPrice,
-                    $lte: data.MaxPrice,
+                    $gte: filter.MinPrice,
+                    $lte: filter.MaxPrice,
                   },
                 },
-                { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-                { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+                { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+                { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
               ],
               $or: [
-                { 'data.title': { $regex: data.keyWord } },
-                { 'data.contents': { $regex: data.keyWord } },
+                { 'data.title': { $regex: keyWord } },
+                { 'data.contents': { $regex: keyWord } },
               ],
             })
             .toArray();
@@ -190,52 +190,72 @@ const mongoDB = {
             temp.push(resWithArea[j]);
           }
         }
-      } else {
-        const resWithoutArea = await col
+
+        // 추가적인 거리순 정렬 바닐라 JS처리
+        if (order.isDistanceOrderOn) {
+          const flated = temp.flat();
+          const standardX = parseFloat(order.lng);
+          const standardY = parseFloat(order.lat);
+          const getDistanceSort = flated.sort(function (a: any, b: any) {
+            const ax = Math.pow(standardX - parseFloat(a.data.offsetX), 2);
+            const ay = Math.pow(standardY - parseFloat(a.data.offsetY), 2);
+            const bx = Math.pow(standardX - parseFloat(b.data.offsetX), 2);
+            const by = Math.pow(standardY - parseFloat(b.data.offsetY), 2);
+            const aVal = Math.pow(ax + ay, 0.5);
+            const bVal = Math.pow(bx + by, 0.5);
+            return aVal - bVal;
+          });
+          const result: any = [];
+          getDistanceSort.map((val: any) => {
+            result.push(val.data);
+          });
+          return result;
+        }
+      }
+
+      // 가격 정렬 X + 지역 필터 X
+      else {
+        const resWithoutArea = await articleCollection
           .find({
             $and: [
               {
                 'data.price': {
-                  $gte: data.MinPrice,
-                  $lte: data.MaxPrice,
+                  $gte: filter.MinPrice,
+                  $lte: filter.MaxPrice,
                 },
               },
-              { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-              { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+              { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+              { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
             ],
             $or: [
-              { 'data.title': { $regex: data.keyWord } },
-              { 'data.contents': { $regex: data.keyWord } },
+              { 'data.title': { $regex: keyWord } },
+              { 'data.contents': { $regex: keyWord } },
             ],
           })
           .toArray();
         temp.push(resWithoutArea);
       }
-    }
 
-    // <3. 정렬 - 거리순>
-    if (order.isDistanceOrderOn) {
-      const flated = temp.flat();
-
-      const standardX = parseFloat(order.lng);
-      const standardY = parseFloat(order.lat);
-
-      const getDistanceSort = flated.sort(function (a: any, b: any) {
-        const ax = Math.pow(standardX - parseFloat(a.data.offsetX), 2);
-        const ay = Math.pow(standardY - parseFloat(a.data.offsetY), 2);
-        const bx = Math.pow(standardX - parseFloat(b.data.offsetX), 2);
-        const by = Math.pow(standardY - parseFloat(b.data.offsetY), 2);
-
-        const aVal = Math.pow(ax + ay, 0.5);
-        const bVal = Math.pow(bx + by, 0.5);
-        return aVal - bVal;
-      });
-
-      const result: any = [];
-      getDistanceSort.map((val: any) => {
-        result.push(val.data);
-      });
-      return result;
+      // 거리순 정렬 있을 때 바닐라 JS처리
+      if (order.isDistanceOrderOn) {
+        const flated = temp.flat();
+        const standardX = parseFloat(order.lng);
+        const standardY = parseFloat(order.lat);
+        const getDistanceSort = flated.sort(function (a: any, b: any) {
+          const ax = Math.pow(standardX - parseFloat(a.data.offsetX), 2);
+          const ay = Math.pow(standardY - parseFloat(a.data.offsetY), 2);
+          const bx = Math.pow(standardX - parseFloat(b.data.offsetX), 2);
+          const by = Math.pow(standardY - parseFloat(b.data.offsetY), 2);
+          const aVal = Math.pow(ax + ay, 0.5);
+          const bVal = Math.pow(bx + by, 0.5);
+          return aVal - bVal;
+        });
+        const result: any = [];
+        getDistanceSort.map((val: any) => {
+          result.push(val.data);
+        });
+        return result;
+      }
     }
 
     const tempFlated = temp.flat();
@@ -243,10 +263,11 @@ const mongoDB = {
     tempFlated.map((val: any) => {
       result.push(val.data);
     });
+
     return result;
   },
 
-  // 게시글 목록
+  // 게시글 목록 전체
   findArticles: async () => {
     const user = await _user;
     const db = user.db('basket').collection('article');
