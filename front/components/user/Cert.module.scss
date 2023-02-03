@@ -1,0 +1,32 @@
+.CertLayout {
+  text-align: center;
+  .center {
+    margin: 0 auto;
+    margin-top: 100px;
+    max-width: 400px;
+    background-color: beige;
+    border: 1px solid burlywood;
+    padding: 30px;
+
+    input {
+      padding: 10px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 185px;
+      font-weight: bold;
+    }
+    .showResult {
+      margin: 0 auto;
+      margin-top: 20px;
+      width: 90%;
+      background-color: bisque;
+      border: 1px solid rosybrown;
+      padding: 10px;
+    }
+    .flex {
+      display: flex;
+    }
+  }
+}

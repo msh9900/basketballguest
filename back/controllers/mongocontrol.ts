@@ -21,11 +21,36 @@ const verfiyPassword = (password: string, salt: any, userPassword: any) => {
 };
 
 const mongoDB = {
+  // 회원가입
+  incId: async (id: string, pw: string, email: string, userName: string) => {
+    const user = await _user;
+    const db = user.db('basket').collection('login');
+    const duplicated = await db.findOne({ id, email });
+    const hashPw = createHashPassword(pw);
+    if (duplicated === null) {
+      await db.insertOne({
+        id,
+        pw: hashPw.hashedPasssword,
+        email,
+        userName,
+        userImg: '',
+        salt: hashPw.salt,
+      });
+      return { msg: '회원가입 완료' };
+    }
+    if (duplicated) {
+      return {
+        msg: '중복 회원 존재',
+      };
+    } else {
+      throw new Error('통신 이상');
+    }
+  },
   // 로그인
   setId: async (id: string, pw: string) => {
     const user = await _user;
-    const db = user.db('basket').collection('login');
-    const result = await db.findOne({ id });
+    const col = user.db('basket').collection('login');
+    const result = await col.findOne({ id });
     const decodePw = verfiyPassword(pw, result.salt, result.pw);
     if (decodePw && result) {
       return {
@@ -38,33 +63,113 @@ const mongoDB = {
       return { msg: '로그인 실패' };
     }
   },
-  // 회원가입
-  incId: async (id: string, pw: string, email: string, userName: string) => {
+  //이메일로 부합 확인
+  foundId: async (userInput: string, AuthNumber: Number) => {
     const user = await _user;
-    const db = user.db('basket').collection('login');
-    const duplicated = await db.findOne({ id, email });
-    const hashPw = createHashPassword(pw);
-    if (duplicated === null) {
-      const result = await db.insertOne({
-        id,
-        pw: hashPw.hashedPasssword,
-        email,
-        userName,
-        userImg: '',
-        salt: hashPw.salt,
-      });
-      if (result) {
-        return { msg: '회원가입 완료' };
-      }
-    }
-    if (duplicated) {
+    const loginCol = user.db('basket').collection('login');
+    const authCol = user.db('basket').collection('authBook');
+    const foundId = await loginCol.findOne({ email: userInput });
+    const id = foundId.id;
+    const idBook = { id, userInput, AuthNumber };
+    const auth = await authCol.insertOne({ idBook });
+
+    // authBook
+    // key 아이디를 찾는 홍길동
+    // hong999, hong999@gmail.com : 1234
+
+    const result = await loginCol.findOne({ email: userInput });
+    if (result) {
       return {
-        msg: '중복 회원 존재',
+        msg: '이메일 확인 완료',
       };
     } else {
-      throw new Error('통신 이상');
+      return { msg: '이메일 확인 불가' };
     }
   },
+  //이메일을 통해 인증 번호 확인
+  AuthMatchEmail: async (number: number) => {
+    const user = await _user;
+    const col = user.db('basket').collection('authBook');
+    const foundId = await col.findOne({ 'idBook.AuthNumber': number });
+
+    if (foundId) {
+      setTimeout(() => {
+        col.deleteOne({
+          'idBook.AuthNumber': number,
+        });
+      }, 1000 * 180);
+
+      return { id: foundId.idBook.id, msg: '이메일 인증 완료' };
+    } else {
+      return { msg: '인증번호 틀림' };
+    }
+  },
+  //비밀번호를 찾기 위해 ID를 통해 해당 이메일 찾기
+  findEmail: async (id: string) => {
+    const user = await _user;
+    const col = user.db('basket').collection('login');
+    const foundEmail = await col.findOne({ id });
+    const email = foundEmail.email;
+    if (foundEmail) {
+      return email;
+    } else {
+      return { msg: '해당 아이디를 찾을 수 없음' };
+    }
+  },
+
+  // // 아이디에 등록된 이메일을 통해 인증 번호
+  // AuthMatchId: async (number: number) => {
+  //   const user = await _user;
+  //   const col = user.db('basket').collection('authBook');
+  //   const foundId = await col.findOne({ 'idBook.AuthNumber': number });
+
+  //   if (foundId) {
+  //     setTimeout(() => {
+  //       col.deleteOne({
+  //         'idBook.AuthNumber': number,
+  //       });
+  //     }, 1000 * 180);
+
+  //     return { msg: '이메일 인증 완료' };
+  //   } else {
+  //     return { msg: '인증번호 틀림' };
+  //   }
+  // },
+  //새로운 패스워드 갱신
+  updatePw: async (pw: string, certificationNumber: number) => {
+    const user = await _user;
+    const authCol = user.db('basket').collection('authBook');
+    const loginCol = user.db('basket').collection('login');
+    const extractId = await authCol.findOne({
+      'idBook.AuthNumber': certificationNumber,
+    });
+    console.log('extractId', extractId);
+    //  idBook: { id: '1111', userInput: 'qazxwd44@hanmail.net', AuthNumber: 742110 }
+
+    const foundId = await loginCol.findOne({ id: extractId.idBook.id });
+    console.log('foundId', foundId);
+    const hashPw = createHashPassword(pw);
+    if (foundId) {
+      await loginCol.updateOne(
+        {
+          id: foundId.id,
+        },
+        {
+          $set: {
+            pw: hashPw.hashedPasssword,
+            salt: hashPw.salt,
+          },
+        }
+      );
+      setTimeout(() => {
+        authCol.deleteOne({
+          'idBook.AuthNumber': certificationNumber,
+        });
+      }, 1000 * 180);
+      return { msg: '새로운 비밀번호 설정 완료' };
+    }
+  },
+
   // 프로필 페이지
   userData: async (logindata: any) => {
     const user = await _user;
@@ -96,7 +201,7 @@ const mongoDB = {
   },
 
   // ----------- <게시글 목록 찾기 (정렬, 필터)> -----------
-  searchArticles: async (filter: any, order: any, keyWord:any) => {
+  searchArticles: async (filter: any, order: any, keyWord: any) => {
     const user = await _user;
     const articleCollection = user.db('basket').collection('article');
 
@@ -105,10 +210,8 @@ const mongoDB = {
 
     // <1. 가격 정렬 O >
     if (order.isPriceOrderOn) {
-
       // 가격 정렬 O + 지역 필터 O
       if (filter.activeAreas.length > 0) {
-
         for (let i = 0; i < filter.activeAreas.length; i++) {
           const resWithArea = await articleCollection
             .find({
@@ -133,10 +236,9 @@ const mongoDB = {
           for (let j = 0; j < resWithArea.length; j++) {
             temp.push(resWithArea[j]);
           }
-          
         }
-      } 
-      
+      }
+
       // 가격 정렬 O + 지역 필터 X
       else {
         const resWithoutArea = await articleCollection
