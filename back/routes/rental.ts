@@ -4,7 +4,7 @@ import multer from 'multer';
 import path from 'path';
 
 const router = express.Router();
-const mongoClient = require('../controllers/mongocontrol').mongoDB;
+const mongoClient = require('../controllers/mongoControl').mongoDB;
 const crawlingTest = require('../module/crawler').crawler;
 
 const dir = './rental';

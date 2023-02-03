@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const router = express.Router();
-const mongoClient = require('../controllers/guestmongocontrol').mongoDB;
+const mongoClient = require('../controllers/guestMongoControl').mongoDB;
 
 const dir = './guest';
 const storage = multer.diskStorage({
