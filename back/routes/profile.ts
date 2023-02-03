@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    let newFileName = new Date().valueOf() + path.extname(file.originalname);
+    let newFileName = new Date().valueOf() + file.originalname;
     cb(null, newFileName);
   },
 });
@@ -33,7 +33,9 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
+    console.log(req.file);
     let imgpath = req.file?.filename;
+    console.log(imgpath);
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
       pw: req.body.pw.replaceAll('"', ''),

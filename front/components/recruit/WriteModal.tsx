@@ -40,7 +40,7 @@ export default function WriteModal() {
     FD.append("content", contentText);
     for (let i = 0; i < imgRef.current.files.length; i++) {
       console.log(imgRef.current.files[i]);
-      FD.append("articleImg", imgRef.current.files[i]);
+      FD.append("img", imgRef.current.files[i]);
     }
 
     FD.get("articleImg");

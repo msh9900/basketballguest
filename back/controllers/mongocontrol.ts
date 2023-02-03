@@ -117,24 +117,6 @@ const mongoDB = {
     }
   },
 
-  // // 아이디에 등록된 이메일을 통해 인증 번호
-  // AuthMatchId: async (number: number) => {
-  //   const user = await _user;
-  //   const col = user.db('basket').collection('authBook');
-  //   const foundId = await col.findOne({ 'idBook.AuthNumber': number });
-
-  //   if (foundId) {
-  //     setTimeout(() => {
-  //       col.deleteOne({
-  //         'idBook.AuthNumber': number,
-  //       });
-  //     }, 1000 * 180);
-
-  //     return { msg: '이메일 인증 완료' };
-  //   } else {
-  //     return { msg: '인증번호 틀림' };
-  //   }
-  // },
   //새로운 패스워드 갱신
   updatePw: async (pw: string, certificationNumber: number) => {
     const user = await _user;
@@ -177,7 +159,7 @@ const mongoDB = {
     const data = await db.findOne({ id: logindata.id });
     const hashPw = createHashPassword(logindata.pw);
     if (data) {
-      const result = await db.updateOne(
+      await db.updateOne(
         { id: logindata.id },
         {
           $set: {
@@ -416,7 +398,7 @@ const mongoDB = {
             'data.openingDays': data.openingDays,
             'data.periodStart': data.PeriodStart,
             'data.PeriodEnd': data.PeriodEnd,
-            'data.userImg': data.gymImg,
+            'data.gymImg': data.gymImg,
           },
         }
       );

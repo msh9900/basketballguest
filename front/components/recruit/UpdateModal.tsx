@@ -40,10 +40,10 @@ export default function UpdateModal() {
     FD.append("userImg", userImg);
     FD.append("content", contentText);
     for (let i = 0; i < imgRef.current.files.length; i++) {
-      FD.append("articleImg", imgRef.current.files[i]);
+      FD.append("img", imgRef.current.files[i]);
     }
 
-    FD.get("articleImg");
+    console.log(FD.get("articleImg"));
     //글 업데이트 fetch 구현
     const response = await fetch("http://localhost:4000/board/article", {
       method: "POST",

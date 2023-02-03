@@ -26,9 +26,8 @@ const upload = multer({ storage, limits });
 
 // 게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
-  
   console.log('rental.ts 진입데이터', req.body);
-  
+
   let filter = {
     activeAreas: req.body.filter.activeAreas,
     MinPrice: req.body.filter.priceRange[0],
@@ -37,7 +36,7 @@ router.post('/search', async (req: Request, res: Response) => {
     MaxPeriod: req.body.filter.periodRange[1],
     keyWord: req.body.keyWord,
   };
-  const keyWord = req.body.keyWord
+  const keyWord = req.body.keyWord;
 
   if (filter.MinPrice === '0' || isNaN(filter.MinPrice)) {
     filter.MinPrice = 0;
@@ -136,6 +135,7 @@ router.put(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response) => {
+    console.log(req.files);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
