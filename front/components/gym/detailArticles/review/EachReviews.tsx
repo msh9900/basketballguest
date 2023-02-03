@@ -1,13 +1,14 @@
+// style
 import cls from "./AllReviews.module.scss";
-
-import { useState } from "react";
+// react next
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 // type
 import reviewType from "components/gym/posting/utils/reviewType";
 // comp
 import EditReview from "./EditReview";
 // util
-import deleteReview from "./reviewUtils/deleteReview";
 import renderStars from "./reviewUtils/renderStars";
 
 interface Props {
@@ -18,6 +19,11 @@ interface Props {
 
 const EachReviews = (props: Props) => {
   const [isEditing, setIsEditing] = useState(false);
+  const stateId = useSelector((state: any) => state.login.userId);
+  useEffect(() => {
+    console.log('stateId', stateId)
+    console.log('reviewId', props.eachReview.userId)
+  }, []);
 
   // DELETE
   const loadDeleteReview = async (eachReview: any) => {
@@ -48,6 +54,7 @@ const EachReviews = (props: Props) => {
                 <div>{props.eachReview.title} </div>
                 <div className={cls.controlBtns}>
               <button
+                  className={props.eachReview.userId === stateId ? cls.block : cls.none}
                   onClick={() => {
                     setIsEditing(true);
                   }}
@@ -60,6 +67,7 @@ const EachReviews = (props: Props) => {
                   />
                 </button>
                 <button
+                  className={props.eachReview.userId === stateId ? cls.block : cls.none}
                   onClick={() => {
                     loadDeleteReview(props.eachReview);
                   }}
@@ -73,8 +81,6 @@ const EachReviews = (props: Props) => {
                 </button>
               </div>
               </div>
-              
-
             </div>
 
             <div className={cls.otherInfos}>

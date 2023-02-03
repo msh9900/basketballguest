@@ -3,10 +3,8 @@ import cls from "./ReviewSection.module.scss";
 import PostReview from "./PostReview";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-
 import { useRouter } from "next/router";
 import Image from "next/image";
-import getReview from "./reviewUtils/getReview";
 
 const ReviewSection = () => {
   const [isWriting, setIsWriting] = useState(false);
@@ -84,7 +82,7 @@ const ReviewSection = () => {
           <>
             <div className={cls.reviewInfo}>
               <p>
-                평균 점수 : {avgRatings} &nbsp; | &nbsp; 리뷰 개수 :{" "}
+                평균 점수 : {avgRatings} &nbsp; | &nbsp; 리뷰 개수 :
                 {allReviewCount}
               </p>
             </div>

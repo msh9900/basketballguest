@@ -176,7 +176,7 @@ const DetailArticles = () => {
         )}
         <h1>리뷰</h1>
         <div className={cls.contentBox}>
-          <ReviewSection />
+          <ReviewSection/>
         </div>
 
         <h1>댓글</h1>

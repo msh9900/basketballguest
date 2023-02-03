@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import EditReply from "./EditReply";
 import replyType from "util/types/gymReplyType";
-
+import { useSelector } from "react-redux";
 interface Props {
   indent: number;
   setIndent: React.Dispatch<React.SetStateAction<number>>;
@@ -24,12 +24,11 @@ const calcMargin = (idx: number) => {
   return (idx % maxDepth) * 10;
 };
 
+
+
 const EachReply = (props: Props) => {
-  useEffect(() => {
-    console.log('articleUserId', props.articleUserId)
-    console.log('replys.userId', props.replys.userId)
-  }, []);
   const [isReplyEditing, setIsReplyEditing] = useState(false);
+  const stateId = useSelector((state: any) => state.login.userId);
   const replyFormToggler = (
     userName: string,
     indentValue: number,
@@ -123,6 +122,7 @@ const EachReply = (props: Props) => {
 
                 <div className={cls.bottomRight}>
                   <button
+                    className={props.replys.userId === stateId ? cls.block : cls.none}
                     onClick={() => {
                       setIsReplyEditing(true);
                     }}
@@ -134,7 +134,10 @@ const EachReply = (props: Props) => {
                       height="20"
                     />
                   </button>
-                  <button onClick={deleteReply}>
+                  <button 
+                    className={props.replys.userId === stateId ? cls.block : cls.none}
+                    onClick={deleteReply}>
+
                     <Image
                       src="/images/rental/comment/bin.png"
                       alt="bin"

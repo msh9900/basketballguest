@@ -1,7 +1,7 @@
 // style
 import cls from "./EachComment.module.scss";
 // library
-import { useState } from "react";
+import { useState} from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
@@ -107,6 +107,7 @@ const EachComment = (props: Props) => {
 
                 <div className={cls.bottomRight}>
                   <button
+                    className={props.userId === stateId ? cls.block : cls.none}
                     onClick={() => {
                       setIsCommentEditing(true);
                     }}
@@ -118,7 +119,8 @@ const EachComment = (props: Props) => {
                       height="20"
                     />
                   </button>
-                  <button>
+                  <button
+                    className={props.userId === stateId ? cls.block : cls.none}>
                     <Image
                       id={props.commentId}
                       src="/images/rental/comment/bin.png"
