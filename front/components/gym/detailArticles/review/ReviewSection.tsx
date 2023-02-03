@@ -6,7 +6,11 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const ReviewSection = () => {
+interface Props {
+  articleUserId:string
+}
+const ReviewSection = (props:Props) => {
+
   const [isWriting, setIsWriting] = useState(false);
   const [avgRatings, setAvgRatings] = useState(0);
   const [allReviewCount, setAllReviewCount] = useState(0);
@@ -20,14 +24,27 @@ const ReviewSection = () => {
   }, [isFetching]);
 
   const writeReview = () => {
+    
+    // 글쓰기 창 닫혀있을 때
     if (!isWriting) {
+
+      // 로그인 X :
       if (stateId == "") {
         alert("로그인이 필요합니다.");
         return;
       }
+
+      // 게시글 작성자는 리뷰 작성 금지 :
+      if(stateId === props.articleUserId){
+        alert("게시글 작성인은 리뷰를 작성할 수 없습니다.");
+        return;
+      }
+
       setIsWriting(true);
       return;
     }
+
+    // 글쓰기 창 열려있을 때
     setIsWriting(false);
   };
 
