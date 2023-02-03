@@ -22,20 +22,6 @@ const AllArticles = (props: Props) => {
 
   const getArticleData = async (keyWord: string) => {
     let res: any;
-    console.log("-----------------------------");
-    console.log("order", props.order);
-    console.log("filter", props.filter);
-    console.log('keyWord', keyWord)
-
-    // const check = {
-    //   // filter
-    //   isAreaFilterOn: props.filter.activeAreas.length > 0,
-    //   isPeriodFilterOn: props.filter.isPeriodActive,
-    //   isPriceFilterOn: props.filter.isPriceActive,
-    //   // order
-    //   isDistanceOrderOn: props.order.isDistanceOrderOn,
-    //   isPriceOrderOn: props.order.isPriceOrderOn,
-    // }; 
 
     const defaultSearch = !(
       // filter
@@ -64,9 +50,9 @@ const AllArticles = (props: Props) => {
         });
         res = await response.json();
         await setArticles(res);
-        console.log("도구 검색 결과 : ", res);
+        // console.log("도구 검색 결과 : ", res);
       } catch (err: any) {
-        console.log("도구 검색 실패 : ", err);
+        // console.log("도구 검색 실패 : ", err);
       }
     }
     // 전체 목록
@@ -75,9 +61,9 @@ const AllArticles = (props: Props) => {
         const response = await fetch("http://localhost:4000/rental/articles");
         res = await response.json();
         await setArticles(res);
-        console.log("기본 검색 결과 : ", res);
+        // console.log("기본 검색 결과 : ", res);
       } catch (err: any) {
-        console.log("기본 검색 실패 : ", err);
+        // console.log("기본 검색 실패 : ", err);
       }
     }
     await props.setNeedToSearch(false);
@@ -119,7 +105,7 @@ const AllArticles = (props: Props) => {
             })}
           {articles && articles.length == 0 && (
             <>
-              <div>
+              <div>  
                 <p>검색된 결과가 없습니다.</p>
               </div>
             </>

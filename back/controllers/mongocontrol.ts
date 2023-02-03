@@ -96,7 +96,7 @@ const mongoDB = {
   },
 
   // ----------- <게시글 목록 찾기 (정렬, 필터)> -----------
-  searchArticles: async (filter: any, order: any, keyWord:string) => {
+  searchArticles: async (filter: any, order: any, keyWord:any) => {
     const user = await _user;
     const articleCollection = user.db('basket').collection('article');
 
