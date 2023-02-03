@@ -25,6 +25,10 @@ const calcMargin = (idx: number) => {
 };
 
 const EachReply = (props: Props) => {
+  useEffect(() => {
+    console.log('articleUserId', props.articleUserId)
+    console.log('replys.userId', props.replys.userId)
+  }, []);
   const [isReplyEditing, setIsReplyEditing] = useState(false);
   const replyFormToggler = (
     userName: string,
@@ -71,7 +75,6 @@ const EachReply = (props: Props) => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      await console.log("REPLY DELETE SUCESS");
     } catch (err: any) {
       await console.log("REPLY DELETE FAIL", err);
     }
@@ -96,14 +99,15 @@ const EachReply = (props: Props) => {
         <div className={cls.replyLayout} key={Math.random()}>
           <div style={{ marginLeft: calcMargin(props.replys.indentLevel) }}>
             <div>
-              {/* 이즈크리에이터 처리했던부분 */}
-              <button className={cls.userName}>{props.replys.userName}</button>
+              <button className={props.articleUserId === props.replys.userId ? cls.creater : cls.userName}>
+                {props.replys.userName}
+              </button>
             </div>
             <div>
               <div className={cls.contents}>
                 <div>
                   <span className={cls.to}>
-                    @{separateFront(props.replys.to)} :{" "}
+                    @{separateFront(props.replys.to)} :
                   </span>
                   <span className={cls.toText}>
                     {separateBack(props.replys.to)}

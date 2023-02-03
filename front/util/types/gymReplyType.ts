@@ -1,4 +1,5 @@
 interface replyType {
+  articleUserId:string,
   commentId: string;
   replyId: string;
   createdAt: string;

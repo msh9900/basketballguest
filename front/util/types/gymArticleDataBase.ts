@@ -1,6 +1,7 @@
 const gymArticleDataBase = {
   createdAt: "",
   articleId: "",
+  articleUserId: "",
   userId: "",
   userName: "",
   title: "",

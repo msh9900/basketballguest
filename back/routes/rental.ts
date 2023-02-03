@@ -146,7 +146,6 @@ router.put(
 
     let data = {
       articleId: req.body.articleId,
-      articleUserId: req.body.userId,
       userId: req.body.userId,
       userName: req.body.userName,
       title: req.body.title,
@@ -226,7 +225,6 @@ router.get('/comment', async (req: Request, res: Response) => {
 router.post('/comment', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
-    articleUserId: req.body.userId,
     commentId: (Date.now() + Math.random()).toFixed(13),
     userId: req.body.userId,
     userName: req.body.userName,
@@ -241,7 +239,6 @@ router.post('/comment', async (req: Request, res: Response) => {
 router.put('/comment', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
-    articleUserId: req.body.userId,
     commentId: req.body.commentId,
     userId: req.body.userId,
     userName: req.body.userName,
@@ -262,7 +259,6 @@ router.delete('/comment', async (req: Request, res: Response) => {
 router.post('/reply', async (req: Request, res: Response) => {
   const data = {
     articleId: req.body.articleId,
-    articleUserId: req.body.userId,
     commentId: req.body.commentId,
     replyId: (Date.now() + Math.random()).toFixed(13),
     indentLevel: req.body.indentLevel,

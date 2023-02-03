@@ -9,7 +9,12 @@ import EachComment from "./EachComment";
 // types
 import commentType from "util/types/gymCommentDataType";
 
-const CommentSection = () => {
+interface Props {
+  articleUserId : string
+}
+
+const CommentSection = (props:Props) => {
+
   const [commentData, setCommentData] = useState<commentType[]>([]);
   const [isCommentWriting, setIsCommentWriting] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
@@ -71,7 +76,7 @@ const CommentSection = () => {
                   <EachComment
                     key={"comment:" + idx.toString() + Math.random().toString()}
                     articleId={item.articleId}
-                    articleUserId={item.articleUserId}
+                    articleUserId={props.articleUserId}
                     commentId={item.commentId}
                     userId={item.userId}
                     userName={item.userName}

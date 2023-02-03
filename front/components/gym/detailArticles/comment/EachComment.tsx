@@ -1,7 +1,7 @@
 // style
 import cls from "./EachComment.module.scss";
 // library
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 // component
 import EachReply from "components/gym/detailArticles/reply/EachReply";
@@ -35,14 +35,8 @@ const EachComment = (props: Props) => {
   const [toInfo, setToInfo] = useState("");
   const [indent, setIndent] = useState(1);
   const stateId = useSelector((state: any) => state.login.userId);
-
-  //  toInfo : string, 상위요소의 userId, 필요하면 사용
-  //  indent : number, 상위요소에 대한 자신의 들여쓰기 정도
-  // ㄴ 상위요소가 comment => indentLevel = 1 (default)
-  // ㄴ 상위요소가 reply   => indentLevel = 대상의 indentLevel + 1
-
   const [isCommentEditing, setIsCommentEditing] = useState(false); // comment
-
+  
   const ReplyPostFormToggle = (userName: string, contents: string) => {
     setToInfo(userName + "_" + contents);
     if (isReplyWriting == false) {
@@ -96,8 +90,9 @@ const EachComment = (props: Props) => {
           {!isCommentEditing && (
             <div className={cls.originalComment} id={props.commentId}>
               <div>
-                {/* 이즈크리에이터 처리했던부분 */}
-                <button className={cls.userName}>{props.userName}</button>
+                <button className={props.articleUserId === props.userId ? cls.creater : cls.userName}>
+                  {props.userName}
+                </button>
               </div>
 
               <div className={cls.topSection}>
