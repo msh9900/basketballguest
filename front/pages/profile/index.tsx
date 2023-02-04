@@ -5,10 +5,8 @@ import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
-let formData: any = new FormData();
-// let formData = require("form-data");
-
 const Profile = () => {
+  let formData: any = new FormData();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -46,7 +44,7 @@ const Profile = () => {
     setEmail(stateUserEmail);
     setUserImg(stateUserImg);
     formData = new FormData();
-  }, [formData]);
+  }, []);
 
   const InputPasswordHandler = (e: any) => {
     setPw(e.target.value);
