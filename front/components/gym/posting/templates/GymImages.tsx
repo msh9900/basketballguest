@@ -6,6 +6,7 @@ interface Props {
   setImgFormData: any;
   inputImgs: any;
   setInputImgs: any;
+  setImgNum:any
 }
 
 const GymImages = (props: Props) => {
@@ -15,6 +16,7 @@ const GymImages = (props: Props) => {
     const fileArr = event.target.files;
     len = 0;
     len = fileArr.length > 10 ? 10 : fileArr.length;
+    props.setImgNum(len)
     let urlArr = [];
     const FD = new FormData();
     for (let i = 0; i < len; i++) {
@@ -41,6 +43,7 @@ const GymImages = (props: Props) => {
     inputEle.addEventListener("change", function (e) {
       handleImageUpload(e);
     });
+    props.setImgNum(0)
     loc.append(inputEle);
 
     // 썸네일 삭제
@@ -52,7 +55,11 @@ const GymImages = (props: Props) => {
       <form id="imgForm" encType="multipart/form-data">
         <div id="imgFormLoc" className={cls.inputDiv}>
           <h3 className={cls.explanation}>체육관 사진</h3>
-          <label htmlFor="file">
+          
+          
+          <div className={cls.TextInputLayout}>
+            <div><p>*</p></div>
+            <label htmlFor="file">
             <div className={cls.btnUpload}>
               <span>(최대 10장)</span>
             </div>
@@ -65,6 +72,9 @@ const GymImages = (props: Props) => {
             accept="image/*"
             onChange={handleImageUpload}
           />
+          </div>
+          
+          
         </div>
       </form>
 

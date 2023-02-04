@@ -8,7 +8,14 @@ const isFormValid = (
   address:addr[],
   openingHours:string,
   openingPeriod:string[],
+  imgNum:any
 ) => {
+  console.log('imgNum', imgNum)
+  // 이미지 없음
+  if(imgNum == 0){
+    alert('이미지가 하나 이상 필요합니다.')
+    return
+  }
   if(title===''){
     alert('제목을 입력해주세요')
     // 포커스 주기
@@ -24,6 +31,7 @@ const isFormValid = (
     // 포커스 주기
     return false
   }
+  // if(imgFormData)
   const stt = openingPeriod[0]
   const end = openingPeriod[1]
   const regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);

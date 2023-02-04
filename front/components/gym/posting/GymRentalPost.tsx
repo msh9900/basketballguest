@@ -55,16 +55,24 @@ const GymRentalPost = () => {
   // images
   const [imgFormData, setImgFormData] = useState<any>();
   const [inputImgs, setInputImgs] = useState<string[]>([]);
+  const [imgNum, setImgNum] = useState<number>(0)
+  const [isCreating, setIsCreating] = useState(false);
 
   const post = async () => {
-
+    
+    
+    // imgFormData
+    
     // 유효성 체크
-    // const isValid = await isFormValid(title, address, openingHours, openingPeriod,);
+    const isValid = await isFormValid(title, address, openingHours, openingPeriod, imgNum);
     // if (!isValid) {
     //   console.log('post : not valid form');
     //   return;
     // }
 
+    return;
+
+    await setIsCreating(true);
     // 텍스트 데이터 폼
     const FD = new FormData();
     FD.append("userId", stateId);
@@ -75,22 +83,23 @@ const GymRentalPost = () => {
     FD.append("userImg", JSON.stringify(inputImgs));
     FD.append("address", JSON.stringify(address));
     FD.append("price", price);
-    FD.append("openingHours", JSON.stringify(openingHours));
+    FD.append("openingHours", openingHours);
     FD.append("openingPeriod", JSON.stringify(openingPeriod));
     FD.append("openingDays", JSON.stringify(openingDays));
-    
+
     // 이미지 데이터 폼과 병합
     for (const pair of imgFormData.entries()) {
       FD.append(pair[0], pair[1]);
     }
-    
+
     // 전송
     try {
       await fetch("http://localhost:4000/rental/article", {
         method: "POST",
         body: FD,
       });
-      router.push("/gym");
+      await setIsCreating(false);
+      await router.push("/gym");
     } catch (error: any) {
       console.log("이미지 데이터 post 실패 : ", error);
     }
@@ -98,36 +107,48 @@ const GymRentalPost = () => {
 
   return (
     <div className={cls.GymRentalPostLayout}>
-      <h2 className={cls.formTitle}>글쓰기</h2>
-      <GymImages
-        imgFormData={imgFormData}
-        setImgFormData={setImgFormData}
-        inputImgs={inputImgs}
-        setInputImgs={setInputImgs}
-      />
-      <form>
-        <GymTitle title={title} setTitle={setTitle} />
-        <GymContent content={content} setContent={setContent} />
-        <GymContact contact={contact} setContact={setContact} />
-        <GymAddress address={address} setAddress={setAddress} />
-        <GymPrice price={price} setPrice={setPrice} />
-        <GymOpeningHours
-          openingHours={openingHours}
-          setOpeningHours={setOpeningHours}
-        />
-        <GymOpeningPeriod
-          openingPeriod={openingPeriod}
-          setOpeningPeriod={setOpeningPeriod}
-        />
-        <GymOpeningDays
-          openingDays={openingDays}
-          setOpeningDays={setOpeningDays}
-        />
-      </form>
-      <div className={cls.bottomBtns}>
-        <button onClick={cancelPost}>취소</button>
-        <button onClick={post}>글생성</button>
-      </div>
+      {isCreating && (
+        <>
+          <p>글 작성중...</p>
+          <p>입력한 주소를 위경도로 변환하고 있습니다.</p>
+          <p>위경도 값은 거리순 정렬에 활용하실 수 있습니다</p>
+        </>
+      )}
+      {!isCreating && (
+        <>
+          <h2 className={cls.formTitle}>글쓰기</h2>
+          <GymImages
+            imgFormData={imgFormData}
+            setImgFormData={setImgFormData}
+            inputImgs={inputImgs}
+            setInputImgs={setInputImgs}
+            setImgNum={setImgNum}
+          />
+          <form>
+            <GymTitle title={title} setTitle={setTitle} />
+            <GymContent content={content} setContent={setContent} />
+            <GymContact contact={contact} setContact={setContact} />
+            <GymAddress address={address} setAddress={setAddress} />
+            <GymPrice price={price} setPrice={setPrice} />
+            <GymOpeningHours
+              openingHours={openingHours}
+              setOpeningHours={setOpeningHours}
+            />
+            <GymOpeningPeriod
+              openingPeriod={openingPeriod}
+              setOpeningPeriod={setOpeningPeriod}
+            />
+            <GymOpeningDays
+              openingDays={openingDays}
+              setOpeningDays={setOpeningDays}
+            />
+          </form>
+          <div className={cls.bottomBtns}>
+            <button onClick={cancelPost}>취소</button>
+            <button onClick={post}>글생성</button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

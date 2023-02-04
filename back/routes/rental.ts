@@ -98,7 +98,10 @@ router.post(
     const [offsetX, offsetY] = [v[0].slice(2), v[1].slice(2)];
 
     // 지역 태그
-    const areaTag = roadAddress.split(' ')[0];
+    console.log('roadAddress', roadAddress)
+
+    const splitted = roadAddress.split(' ')[0];
+    const areaTag = splitted.slice(0,2);
 
     let data = {
       articleId: (Date.now() + Math.random()).toFixed(13),

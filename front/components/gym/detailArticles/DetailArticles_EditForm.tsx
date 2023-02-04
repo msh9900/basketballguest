@@ -59,18 +59,6 @@ const DetailArticles_EditForm = (props: Props) => {
   // update
   const updateArticle = async () => {
     const bodyForUpdate = getArticleEditFormData();
-    alert("ddd");
-
-    // 폼데이타 확인
-    // console.log("------------ formdata key ------------");
-    // for (var key of bodyForUpdate.keys()) {
-    //   console.log(key);
-    // }
-    // console.log("------------ formdata value ------------");
-    // for (var value of bodyForUpdate.values()) {
-    //   console.log(value);
-    // }
-
     try {
       const response = await fetch("http://localhost:4000/rental/article", {
         method: "PUT",
@@ -119,7 +107,7 @@ const DetailArticles_EditForm = (props: Props) => {
     FD.append("gymImg", JSON.stringify(inputImgs));
     FD.append("address", JSON.stringify(props.gymInfo.address));
     FD.append("price", price);
-    FD.append("openingHours", JSON.stringify(openingHours));
+    FD.append("openingHours", openingHours);
     FD.append("openingPeriod", JSON.stringify(openingPeriod));
     FD.append("openingDays", JSON.stringify(openingDays));
 
