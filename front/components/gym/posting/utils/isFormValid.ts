@@ -14,7 +14,7 @@ const isFormValid = (
   // 이미지 없음
   if(imgNum == 0){
     alert('이미지가 하나 이상 필요합니다.')
-    return
+    return false
   }
   if(title===''){
     alert('제목을 입력해주세요')

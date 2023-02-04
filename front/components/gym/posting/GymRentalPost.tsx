@@ -55,22 +55,21 @@ const GymRentalPost = () => {
   // images
   const [imgFormData, setImgFormData] = useState<any>();
   const [inputImgs, setInputImgs] = useState<string[]>([]);
-  const [imgNum, setImgNum] = useState<number>(0)
+  const [imgNum, setImgNum] = useState<number>(0);
   const [isCreating, setIsCreating] = useState(false);
+  const [lastRender, setLastRender] = useState(false);
 
   const post = async () => {
-    
-    
-    // imgFormData
-    
-    // 유효성 체크
-    const isValid = await isFormValid(title, address, openingHours, openingPeriod, imgNum);
-    // if (!isValid) {
-    //   console.log('post : not valid form');
-    //   return;
-    // }
 
-    return;
+    // 유효성 체크
+    const isValid = await isFormValid(
+      title,
+      address,
+      openingHours,
+      openingPeriod,
+      imgNum
+    );
+    if (!isValid) return;
 
     await setIsCreating(true);
     // 텍스트 데이터 폼
@@ -99,6 +98,7 @@ const GymRentalPost = () => {
         body: FD,
       });
       await setIsCreating(false);
+      await setLastRender(true)
       await router.push("/gym");
     } catch (error: any) {
       console.log("이미지 데이터 post 실패 : ", error);
@@ -106,16 +106,21 @@ const GymRentalPost = () => {
   };
 
   return (
-    <div className={cls.GymRentalPostLayout}>
+    <>
       {isCreating && (
-        <>
-          <p>글 작성중...</p>
-          <p>입력한 주소를 위경도로 변환하고 있습니다.</p>
-          <p>위경도 값은 거리순 정렬에 활용하실 수 있습니다</p>
-        </>
+        <div className={cls.isLoading}>
+          <h3>글 작성중...</h3>
+          <p>
+            입력받은 주소를 <span>위경도</span>로 변환하고 있습니다.
+          </p>
+          <p>
+            <span>위경도</span> 값은 거리순 정렬에 활용됩니다.
+          </p>
+        </div>
       )}
-      {!isCreating && (
-        <>
+
+      {!isCreating && !lastRender && (
+        <div className={cls.GymRentalPostLayout}>
           <h2 className={cls.formTitle}>글쓰기</h2>
           <GymImages
             imgFormData={imgFormData}
@@ -147,9 +152,9 @@ const GymRentalPost = () => {
             <button onClick={cancelPost}>취소</button>
             <button onClick={post}>글생성</button>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
