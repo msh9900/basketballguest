@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import gymArticleDataType from "util/types/gymArticleDataType";
 import setInitialValue from "./setInitialValue";
 import DetailArticles_EditImg from "./DetailArticles_EditImg";
+import { CLOSING } from 'ws';
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -27,14 +28,15 @@ const DetailArticles_EditForm = (props: Props) => {
     { name: "금", open: false },
     { name: "토", open: false },
   ]);
-  const [imgFormData, setImgFormData] = useState<any>();
-  const [inputImgs, setInputImgs] = useState<string[]>([]);
+  const [imgFormData, setImgFormData] = useState<any>(props.gymInfo.gymImg);
+  const [inputImgs, setInputImgs] = useState<any>(props.gymInfo.gymImg);
+  const [imgUrls, setImgUrls] = useState<any>(props.gymInfo.gymImg);
 
   useEffect(() => {
     setInitialValue(props.gymInfo);
     setOpeningDays(props.gymInfo.openingDays);
-    setImgFormData(props.gymInfo.gymImg);
     setInputImgs(props.gymInfo.gymImg);
+    setImgUrls(props.gymInfo.gymImg);
   }, []);
 
   // css style 처리
@@ -58,11 +60,18 @@ const DetailArticles_EditForm = (props: Props) => {
 
   // update
   const updateArticle = async () => {
-    const bodyForUpdate = getArticleEditFormData();
+    const formBody = getArticleEditFormData();
+    const data = {
+      formBody,
+      // url...
+    }
+
+    // return;
+
     try {
-      const response = await fetch("http://localhost:4000/rental/article", {
+      const response = await fetch("http://localhost:4000/rental/article",  {
         method: "PUT",
-        body: bodyForUpdate,
+        body: formBody,
       });
       const data = await response.json();
       await props.setIsFetchingArticles(true);
@@ -110,11 +119,17 @@ const DetailArticles_EditForm = (props: Props) => {
     FD.append("openingHours", openingHours);
     FD.append("openingPeriod", JSON.stringify(openingPeriod));
     FD.append("openingDays", JSON.stringify(openingDays));
+    FD.append("imgUrls", JSON.stringify(imgUrls))
 
     // 이미지 데이터 폼과 병합
     for (const pair of imgFormData.entries()) {
       FD.append(pair[0], pair[1]);
     }
+
+    /* value 확인하기 */
+    console.log('폼 이미지 데이터 확인')
+    console.log(FD.get('img'))
+
     return FD;
   };
 

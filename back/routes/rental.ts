@@ -138,7 +138,9 @@ router.put(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response) => {
-    console.log(req.files);
+    console.log('req.files', req.files);
+    console.log('req.body', req.body)
+
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
@@ -162,6 +164,10 @@ router.put(
       openingDays: JSON.parse(req.body.openingDays),
       gymImg: fileNameArray,
     };
+
+    if(req.body.imgUrls.length>0){
+      data.gymImg= JSON.parse(req.body.imgUrls)
+    }
 
     data.openingPeriod[0] = new Date(
       new Date(data.openingPeriod[0]).toISOString()
