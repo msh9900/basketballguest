@@ -164,8 +164,9 @@ router.put(
       gymImg: fileNameArray,
     };
     console.log('data', data);
+    
     if (req.files?.length === 0) {
-      data.gymImg = JSON.parse(req.body.imgUrls);
+      data.gymImg = JSON.parse(req.body.gymImg);
     }
 
     data.openingPeriod[0] = new Date(
