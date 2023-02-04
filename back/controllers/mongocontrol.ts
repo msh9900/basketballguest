@@ -193,7 +193,9 @@ const mongoDB = {
     // <1. 가격 정렬 O >
     if (order.isPriceOrderOn) {
       // 가격 정렬 O + 지역 필터 O
+      
       if (filter.activeAreas.length > 0) {
+        console.log('가격 정렬 O + 지역 필터 O')
         for (let i = 0; i < filter.activeAreas.length; i++) {
           const resWithArea = await articleCollection
             .find({
@@ -213,11 +215,34 @@ const mongoDB = {
                 { 'data.contents': { $regex: keyWord } },
               ],
             })
-            .sort({ 'data.price': isAsc })
+            // .sort({ 'data.price': isAsc })
             .toArray();
           for (let j = 0; j < resWithArea.length; j++) {
             temp.push(resWithArea[j]);
           }
+        }
+
+        if(isAsc){
+          const result: any = [];
+          const priceAscSort = temp.sort(function (a: any, b: any) {
+            return a-b;
+          });
+          priceAscSort.map((val: any) => {
+            result.push(val.data);
+          });
+          // console.log('priceAscSort')
+          return result
+        }
+        else{
+          const result: any = [];
+          const priceDescSort = temp.sort(function (a: any, b: any) {
+            return b-a;
+          });
+          priceDescSort.map((val: any) => {
+            result.push(val.data);
+          });
+          // console.log('priceDescSort')
+          return result
         }
       }
 
