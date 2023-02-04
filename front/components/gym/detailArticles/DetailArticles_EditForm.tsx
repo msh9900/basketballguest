@@ -30,13 +30,11 @@ const DetailArticles_EditForm = (props: Props) => {
   ]);
   const [imgFormData, setImgFormData] = useState<any>(props.gymInfo.gymImg);
   const [inputImgs, setInputImgs] = useState<any>(props.gymInfo.gymImg);
-  const [imgUrls, setImgUrls] = useState<any>(props.gymInfo.gymImg);
 
   useEffect(() => {
     setInitialValue(props.gymInfo);
     setOpeningDays(props.gymInfo.openingDays);
     setInputImgs(props.gymInfo.gymImg);
-    setImgUrls(props.gymInfo.gymImg);
   }, []);
 
   // css style 처리
@@ -119,7 +117,6 @@ const DetailArticles_EditForm = (props: Props) => {
     FD.append("openingHours", openingHours);
     FD.append("openingPeriod", JSON.stringify(openingPeriod));
     FD.append("openingDays", JSON.stringify(openingDays));
-    FD.append("imgUrls", JSON.stringify(imgUrls))
 
     // 이미지 데이터 폼과 병합
     for (const pair of imgFormData.entries()) {
