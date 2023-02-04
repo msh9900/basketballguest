@@ -98,10 +98,10 @@ router.post(
     const [offsetX, offsetY] = [v[0].slice(2), v[1].slice(2)];
 
     // 지역 태그
-    console.log('roadAddress', roadAddress)
+    console.log('roadAddress', roadAddress);
 
     const splitted = roadAddress.split(' ')[0];
-    const areaTag = splitted.slice(0,2);
+    const areaTag = splitted.slice(0, 2);
 
     let data = {
       articleId: (Date.now() + Math.random()).toFixed(13),
@@ -139,7 +139,7 @@ router.put(
   upload.array('img', 10),
   async (req: Request, res: Response) => {
     console.log('req.files', req.files);
-    console.log('req.body', req.body)
+    console.log('req.body', req.body);
 
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
@@ -148,7 +148,6 @@ router.put(
       const eachFilename = 'http://localhost:4000/rental/' + ele.filename;
       fileNameArray.push(eachFilename);
     });
-
     let data = {
       articleId: req.body.articleId,
       userId: req.body.userId,
@@ -164,9 +163,9 @@ router.put(
       openingDays: JSON.parse(req.body.openingDays),
       gymImg: fileNameArray,
     };
-
-    if(req.body.imgUrls.length>0){
-      data.gymImg= JSON.parse(req.body.imgUrls)
+    console.log('data', data);
+    if (req.files?.length === 0) {
+      data.gymImg = JSON.parse(req.body.imgUrls);
     }
 
     data.openingPeriod[0] = new Date(
