@@ -29,7 +29,11 @@ const mongoDB = {
       await col.updateOne(
         { contentidx: data.contentidx },
         {
-          $set: {},
+          $set: {
+            'data.title': data.title,
+            'data.content': data.content,
+            'data.imgSrc': data.imgSrc,
+          },
         }
       );
       const updateArticleData = await col.findOne({
