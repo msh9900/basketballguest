@@ -8,7 +8,13 @@
   justify-content: center;
   li {
     list-style-type: none;
-  }
+    .textBox{
+      padding:10px;
+    }
+    .content{
+      color:gray;
+    }
+  } 
 }
 
 .boxItem {

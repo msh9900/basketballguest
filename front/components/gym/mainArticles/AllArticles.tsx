@@ -93,12 +93,17 @@ const AllArticles = (props: Props) => {
                     <div className={cls.imgBox}>
                       <img src={item.gymImg[0]} alt="체육관 이미지" />
                     </div>
-                    <div className={cls.title}>제목 : {item.title}</div>
-                    <div className={cls.price}>비용 : {item.price} 원/시간</div>
-                    <div className={cls.content}>
-                      내용 : {item.content.slice(0, 15)}
+                    <div className={cls.textBox}>
+                      <div className={cls.title}>{item.title}</div>
+                      <div className={cls.price}>{item.price} 원/시간</div>
+                      <div className={cls.content}>{item.areaTag}</div>
+                      {
+                        item.content.length > 50 && <>{item.content.slice(0, 50)} ... </>
+                      }
+                      {
+                        item.content.length < 50 && <>{item.content}</>
+                      }
                     </div>
-                    <div className={cls.content}>장소 : {item.areaTag}</div>
                   </li>
                 </div>
               );
