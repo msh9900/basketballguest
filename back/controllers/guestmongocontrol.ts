@@ -37,7 +37,7 @@ const mongoDB = {
         }
       );
       const updateArticleData = await col.findOne({
-        articleId: data.articleId,
+        contentidx: data.contentidx,
       });
       return updateArticleData;
     }
