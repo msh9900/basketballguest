@@ -43,6 +43,7 @@ router.post(
       email: req.body.email.replaceAll('"', ''),
       userImg: `http://localhost:4000/images/${imgpath}`,
     };
+
     const result = await mongoClient.userData(logindata);
 
     res.send(JSON.stringify(result));
