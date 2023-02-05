@@ -1,5 +1,11 @@
 .rentalCompLayout {
   margin:0 auto;
+  background-color: burlywood;
+
+  .emptyBox{
+    background-color: burlywood;
+    height:40px;
+  }
 
   .postButton{
     position:fixed;

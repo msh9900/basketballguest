@@ -44,6 +44,8 @@ const Rental = () => {
   return (
     <>
       <div className={cls.rentalCompLayout}>
+
+        <div className={cls.emptyBox}></div>
         <button className={cls.postButton} onClick={goToPosting}>
           글쓰기
         </button>

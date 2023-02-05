@@ -6,10 +6,13 @@
   flex-wrap: wrap;
   max-width: 1200px;
   justify-content: center;
+
   li {
     list-style-type: none;
+
     .textBox{
       padding:10px;
+      cursor:pointer;
     }
     .content{
       color:gray;
@@ -19,11 +22,14 @@
 
 .boxItem {
   cursor: pointer;
-  border: 1px solid brown;
+  border: 2px solid beige;
   background-color: white;
   width: 380px;
   height: 350px;
   margin: 10px;
+  &:hover{
+    border:2px solid black;
+  }
 }
 
 .imgBox {

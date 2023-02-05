@@ -20,7 +20,6 @@ const DetailArticles = () => {
   const [isArticleEditing, setIsArticleEditing] = useState(false);
   const [isFetchingArticles, setIsFetchingArticles] = useState(true);
   const router = useRouter();
-  
 
   useEffect(() => {
     getGymData(router.query.articles as string);

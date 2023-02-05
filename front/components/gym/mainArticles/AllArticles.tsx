@@ -25,14 +25,16 @@ const AllArticles = (props: Props) => {
 
     const defaultSearch = !(
       // filter
-      props.filter.activeAreas.length > 0 ||
-      props.filter.isPeriodActive ||
-      props.filter.isPriceActive ||
-      // order
-      props.order.isDistanceOrderOn ||
-      props.order.isPriceOrderOn ||
-      // keyWord
-      keyWord.length>0
+      (
+        props.filter.activeAreas.length > 0 ||
+        props.filter.isPeriodActive ||
+        props.filter.isPriceActive ||
+        // order
+        props.order.isDistanceOrderOn ||
+        props.order.isPriceOrderOn ||
+        // keyWord
+        keyWord.length > 0
+      )
     );
 
     const body = {
@@ -96,13 +98,15 @@ const AllArticles = (props: Props) => {
                     <div className={cls.textBox}>
                       <div className={cls.title}>{item.title}</div>
                       <div className={cls.price}>{item.price} 원/시간</div>
-                      <div className={cls.content}>{item.areaTag}</div>
-                      {
-                        item.content.length > 50 && <>{item.content.slice(0, 50)} ... </>
-                      }
-                      {
-                        item.content.length < 50 && <>{item.content}</>
-                      }
+                      <div className={cls.areatag}>{item.areaTag}</div>
+                      {item.content.length > 60 && (
+                        <div className={cls.content}>
+                          {item.content.slice(0, 60)} ...{" "}
+                        </div>
+                      )}
+                      {item.content.length < 60 && (
+                        <div className={cls.content}>{item.content}</div>
+                      )}
                     </div>
                   </li>
                 </div>
@@ -110,7 +114,7 @@ const AllArticles = (props: Props) => {
             })}
           {articles && articles.length == 0 && (
             <>
-              <div>  
+              <div>
                 <p>검색된 결과가 없습니다.</p>
               </div>
             </>
