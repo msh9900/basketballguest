@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import classes from "./Card.module.scss";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -15,7 +16,10 @@ import ImgPop from "util/ImgPop";
 export default function RecipeReviewCard(props: any) {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
-
+  const isLogin = useSelector((state: any) => state.login?.isLogin);
+  const [getcomment, setGetcomment] = useState(false);
+  const router = useRouter();
+  console.log(props.data);
   const [commentMore, setCommentMore] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [writeComment, setWriteComment] = useState("");
@@ -31,20 +35,25 @@ export default function RecipeReviewCard(props: any) {
   };
   const commentSubmitHandler = async () => {
     //댓글 입력 post 구현
-    console.log(props.data.contentidx, writeComment, userId, userImg);
-    const data = {
-      contentidx: props.data.contentidx,
-      id: userId,
-      content: writeComment,
-      userImg: userImg,
-    };
-    const response = await fetch("http://localhost:4000/board/comment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const res = await response.json();
-    console.log(res);
+    if (isLogin) {
+      console.log(props.data.contentidx, writeComment, userId, userImg);
+      const data = {
+        contentidx: props.data.contentidx,
+        id: userId,
+        content: writeComment,
+        userImg: userImg,
+      };
+      const response = await fetch("http://localhost:4000/board/comment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      console.log(res);
+      setGetcomment(true);
+    } else {
+      router.replace("/login");
+    }
   };
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -53,6 +62,22 @@ export default function RecipeReviewCard(props: any) {
   const cardClickHandler = () => {
     setCardClick(!cardClick);
   };
+  const getData = async () => {
+    const data = {
+      contentidx: props.data.contentidx,
+    };
+    //카드에 해당되는 댓글 가져오기
+    const response = await fetch("http://localhost:4000/board/comment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+  };
+  useEffect(() => {
+    // getData();
+    console.log("최신하");
+  }, [getcomment]);
   return (
     <>
       <Card
@@ -70,7 +95,13 @@ export default function RecipeReviewCard(props: any) {
                 R
               </Avatar>
             }
-            action={<MenuList idx={props.data.contentidx} />}
+            action={
+              props.data.id === userId ? (
+                <MenuList idx={props.data.contentidx} />
+              ) : (
+                ""
+              )
+            }
             title={props.data.id}
             subheader={props.data.date}
           />
@@ -82,8 +113,8 @@ export default function RecipeReviewCard(props: any) {
           </CardContent>
 
           <div className={classes.cardImgContainer}>
-            {props.data.imgsrc[0] &&
-              props.data.imgsrc.map((val: string, idx: number) => (
+            {props.data.imgSrc[0] &&
+              props.data.imgSrc.map((val: string, idx: number) => (
                 <CardMedia
                   key={idx}
                   component="img"

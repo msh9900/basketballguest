@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import classes from "./MenuList.module.scss";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -8,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import UpdateModal from "./UpdateModal";
 
 export default function BasicMenu(props: any) {
+  const router = useRouter();
   const [updateContent, setUpdateContent] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -20,6 +22,7 @@ export default function BasicMenu(props: any) {
     setAnchorEl(null);
   };
   const deleteHandler = async () => {
+    router.reload();
     //props.idx 해당되는 값 삭제 post
     const data = {
       contentidx: props.idx,
@@ -30,8 +33,6 @@ export default function BasicMenu(props: any) {
       body: JSON.stringify(data),
     });
     const res = await response.json();
-    console.log(props.idx);
-
     setAnchorEl(null);
   };
   const handleClose = () => {

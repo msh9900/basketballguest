@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
@@ -18,7 +18,7 @@ export default function GuestRecruitmentPage(props: any) {
     if (isLogin) {
       setOpen(true);
     } else {
-      router.push("/login");
+      router.replace("/login");
     }
   };
   const handleClose = () => setOpen(false);

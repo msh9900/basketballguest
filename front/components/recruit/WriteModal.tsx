@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
 import classes from "./WriteModal.module.scss";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -8,20 +9,31 @@ import SendIcon from "@mui/icons-material/Send";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
 export default function WriteModal() {
+  const router = useRouter();
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
-  const [imgFile, setImgFile] = useState("");
+  const [imgFile, setImgFile] = useState<string[]>([]);
   const [contentText, setContentText] = useState("");
   const [titleText, setTitleText] = useState("");
   const imgRef: any = useRef();
+  const titleRef: any = useRef();
   const readImage = () => {
-    const file = imgRef.current.files[0];
-    const reader: any = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImgFile(reader.result);
-      };
+    if (imgRef.current.files.length > 6) {
+      alert("이미지는 최대 6장 입니다.");
+      imgRef.current.value = "";
+    } else {
+      const data: string[] = [];
+      for (let i = 0; i < imgRef.current.files.length; i++) {
+        const file = imgRef.current.files[i];
+        const reader: any = new FileReader();
+        if (file) {
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            data.push(reader.result);
+            setImgFile(data);
+          };
+        }
+      }
     }
   };
 
@@ -32,6 +44,9 @@ export default function WriteModal() {
     setTitleText(e.target.value);
   };
   const contentSubmitHandler = async (e: any) => {
+    e.preventDefault();
+    setTimeout(() => router.reload(), 1000);
+
     const FD = new FormData();
 
     FD.append("userId", userId);
@@ -45,7 +60,7 @@ export default function WriteModal() {
 
     FD.get("articleImg");
     //글쓰기 fetch 구현
-    await fetch("http://localhost:4000/board/article", {
+    const response = await fetch("http://localhost:4000/board/article", {
       method: "POST",
       body: FD,
     });
@@ -83,13 +98,22 @@ export default function WriteModal() {
             />
           </div>
           <div className={classes.contentImgBox}>
-            {imgFile && (
+            {imgFile &&
+              imgFile.map((val, idx) => (
+                <img
+                  key={idx}
+                  src={val}
+                  alt="들어갈 이미지"
+                  className={classes.contentImg}
+                />
+              ))}
+            {/* {imgFile && (
               <img
                 src={imgFile}
                 alt="들어갈 이미지"
                 className={classes.contentImg}
               />
-            )}
+            )} */}
           </div>
           <div className={classes.submitImgBox}>
             <IconButton color="primary" component="label">
