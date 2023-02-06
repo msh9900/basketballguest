@@ -36,7 +36,8 @@ export default function WriteModal() {
   };
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
-    router.reload();
+    setTimeout(() => router.reload(), 1000);
+
     const FD = new FormData();
 
     FD.append("userId", userId);

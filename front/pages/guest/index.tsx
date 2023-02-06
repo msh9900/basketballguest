@@ -18,7 +18,7 @@ export default function GuestRecruitmentPage(props: any) {
     if (isLogin) {
       setOpen(true);
     } else {
-      router.push("/login");
+      router.replace("/login");
     }
   };
   const handleClose = () => setOpen(false);
