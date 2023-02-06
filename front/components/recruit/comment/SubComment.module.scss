@@ -4,14 +4,9 @@
   margin-top: 20px;
   .container {
     display: flex;
-    .id {
-      font-family: "Roboto", sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-    }
     .content_container {
       margin-left: 10px;
-      background-color: #f2f3f5;
+      background-color: #b7b7b9;
       border-radius: 10px;
       .reply_container {
         display: flex;
@@ -26,6 +21,11 @@
           cursor: pointer;
         }
       }
+    }
+    .id {
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      font-weight: bold;
     }
     .content {
       font-family: "Noto Sans KR", sans-serif;

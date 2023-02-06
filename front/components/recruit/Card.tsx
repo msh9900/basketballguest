@@ -19,7 +19,7 @@ export default function RecipeReviewCard(props: any) {
   const isLogin = useSelector((state: any) => state.login?.isLogin);
   const [getcomment, setGetcomment] = useState(false);
   const router = useRouter();
-
+  console.log(props.data);
   const [commentMore, setCommentMore] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [writeComment, setWriteComment] = useState("");
@@ -113,8 +113,8 @@ export default function RecipeReviewCard(props: any) {
           </CardContent>
 
           <div className={classes.cardImgContainer}>
-            {props.data.imgsrc[0] &&
-              props.data.imgsrc.map((val: string, idx: number) => (
+            {props.data.imgSrc[0] &&
+              props.data.imgSrc.map((val: string, idx: number) => (
                 <CardMedia
                   key={idx}
                   component="img"

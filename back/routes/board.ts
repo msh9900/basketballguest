@@ -30,7 +30,7 @@ router.get('/article', async (req: Request, res: Response) => {
 });
 router.post(
   '/article',
-  upload.array('articleImg', 10),
+  upload.array('img', 10),
   async (req: Request, res: Response) => {
     console.log('들어오는파일', req.files);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
