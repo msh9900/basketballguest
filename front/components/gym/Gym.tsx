@@ -29,8 +29,8 @@ const Rental = () => {
     activeAreas: [],
     priceRange: [],
     periodRange: [],
-    ispriceActive: false,
-    isperiodActive: false,
+    isPriceActive: false,
+    isPeriodActive: false,
   });
 
   const goToPosting = () => {

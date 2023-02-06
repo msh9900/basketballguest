@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from 'express';
-
 const mongoClient = require('../controllers/mongocontrol').mongoDB;
 const router = express.Router();
 

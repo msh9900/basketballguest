@@ -7,6 +7,7 @@ interface openingDaysType {
   open: boolean;
 }
 interface gymArticleDataType {
+  articleUserId:string
   articleId: string;
   userId: string;
   userName: string;

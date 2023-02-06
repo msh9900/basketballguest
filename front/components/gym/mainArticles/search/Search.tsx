@@ -1,6 +1,7 @@
 import cls from "./Search.module.scss";
 // import orderStatusType from "../order/interface_orderStatus";
 import filterProps from "../filter/interface_filterStatus";
+import {useState} from 'react'
 
 interface Props {
   orderStatus: any;
@@ -13,7 +14,10 @@ interface Props {
   setSearchVal: React.Dispatch<React.SetStateAction<string>>;
 }
 
+
 const Search = (props: Props) => {
+
+  const [showSearchRes, setShowSearchRes] = useState(false)
 
   const onChange = (e: any) => {
     props.setSearchVal(e.target.value);
@@ -33,6 +37,7 @@ const Search = (props: Props) => {
   };
   const activateSearch = () => {
     props.setNeedToSearch(true);
+    setShowSearchRes(true)
   };
 
   return (
@@ -52,7 +57,7 @@ const Search = (props: Props) => {
         </div>
       </div>
 
-      {props.searchRes.length > 0 && (
+      {showSearchRes && (
         <div className={cls.SearchRes}>
           <div>'{props.searchRes}'</div>
           <div>검색결과</div>

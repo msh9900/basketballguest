@@ -1,10 +1,13 @@
 .EachCommentLayout {
   span{margin-left:5px;}
-  button {cursor: pointer;
+
+  button {
+    cursor: pointer;
     font-weight: bold;
-    border:1px solid lightgray;
-    border-radius: 3px;
     margin:3px;
+    border:1px solid gainsboro;
+    background-color: ivory;
+    border-radius:5px;
   }
 
   .originalComment {
@@ -31,12 +34,6 @@
       }
     }
 
-    .creater{
-      button{
-        color:red; 
-      }
-    }
-
     .bottomSection{
       display:flex;
 
@@ -44,9 +41,6 @@
         display:flex;
         width:50%;
         justify-content: flex-start;
-        .userName{
-          font-weight: bold;
-        }
       }
       .bottomRight{
         display:flex;
@@ -97,4 +91,14 @@
       height:40px;
       }
     }
+}
+
+.creater{
+  color:red; 
+}
+.block{
+  display:block;
+}
+.none{
+  display:none;
 }

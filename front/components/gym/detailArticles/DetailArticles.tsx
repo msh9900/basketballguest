@@ -1,28 +1,29 @@
+
+// component 
 import cls from "./DetailArticles.module.scss";
 import SlickSlider from "./SlickSlider";
 import ReviewSection from "./review/ReviewSection";
 import CommentSection from "./comment/CommentSection";
+import DetailArticles_EditForm from "./DetailArticles_EditForm";
+// react & next
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import DetailArticles_EditForm from "./DetailArticles_EditForm";
 import Image from "next/image";
-// import classCompTest
-
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
 import gymArticleDataBase from "util/types/gymArticleDataBase";
+// ------------------------------------
 
 const DetailArticles = () => {
-  const [gymInfo, setGymInfo] =
-    useState<gymArticleDataType>(gymArticleDataBase);
+  const [gymInfo, setGymInfo] = useState<gymArticleDataType>(gymArticleDataBase);
+  const [articleUserId, setArticleUserId] = useState('')
   const [isArticleEditing, setIsArticleEditing] = useState(false);
   const [isFetchingArticles, setIsFetchingArticles] = useState(true);
-  const [openingDays, setOpeningDays] = useState<string[]>([]);
   const router = useRouter();
+  
 
   useEffect(() => {
     getGymData(router.query.articles as string);
-    setOpeningDays(getOpeningDaysFromData());
   }, [isFetchingArticles]);
 
   // GET
@@ -34,6 +35,7 @@ const DetailArticles = () => {
     const bf = data.openingPeriod[0].slice(0,10)
     const af = data.openingPeriod[1].slice(0,10)
     data.openingPeriod = [bf, af]
+    await setArticleUserId(data.articleUserId)
     await setGymInfo(data);
     await setIsFetchingArticles(false);
   };
@@ -55,17 +57,13 @@ const DetailArticles = () => {
   // etc utils...
   const getOpeningDaysFromData = () => {
     let temp: string[] = [];
-    gymInfo.openingDays.forEach((ele) => {
+    gymInfo.openingDays.forEach((ele:any) => {
       if (ele.open === true) temp.push(ele.name);
     });
     return temp;
   };
-  
-  const a = 'a'
-  const b = 'b'
 
   // review, comment 섹션쪽 react.memo 처리할 것
-  // isFetchingArticles
   return (
     <>
       <div className={cls.DetailArticlesLayout}>
@@ -178,12 +176,15 @@ const DetailArticles = () => {
         )}
         <h1>리뷰</h1>
         <div className={cls.contentBox}>
-          <ReviewSection />
+          <ReviewSection
+          articleUserId={articleUserId}/>
         </div>
 
         <h1>댓글</h1>
         <div className={cls.contentBox}>
-          <CommentSection />
+          <CommentSection 
+            articleUserId={articleUserId}
+          />
         </div>
       </div>
     </>

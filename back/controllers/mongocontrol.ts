@@ -21,11 +21,36 @@ const verfiyPassword = (password: string, salt: any, userPassword: any) => {
 };
 
 const mongoDB = {
+  // 회원가입
+  incId: async (id: string, pw: string, email: string, userName: string) => {
+    const user = await _user;
+    const db = user.db('basket').collection('login');
+    const duplicated = await db.findOne({ id, email });
+    const hashPw = createHashPassword(pw);
+    if (duplicated === null) {
+      await db.insertOne({
+        id,
+        pw: hashPw.hashedPasssword,
+        email,
+        userName,
+        userImg: '',
+        salt: hashPw.salt,
+      });
+      return { msg: '회원가입 완료' };
+    }
+    if (duplicated) {
+      return {
+        msg: '중복 회원 존재',
+      };
+    } else {
+      throw new Error('통신 이상');
+    }
+  },
   // 로그인
   setId: async (id: string, pw: string) => {
     const user = await _user;
-    const db = user.db('basket').collection('login');
-    const result = await db.findOne({ id });
+    const col = user.db('basket').collection('login');
+    const result = await col.findOne({ id });
     const decodePw = verfiyPassword(pw, result.salt, result.pw);
     if (decodePw && result) {
       return {
@@ -38,33 +63,95 @@ const mongoDB = {
       return { msg: '로그인 실패' };
     }
   },
-  // 회원가입
-  incId: async (id: string, pw: string, email: string, userName: string) => {
+  //이메일로 부합 확인
+  foundId: async (userInput: string, AuthNumber: Number) => {
     const user = await _user;
-    const db = user.db('basket').collection('login');
-    const duplicated = await db.findOne({ id, email });
-    const hashPw = createHashPassword(pw);
-    if (duplicated === null) {
-      const result = await db.insertOne({
-        id,
-        pw: hashPw.hashedPasssword,
-        email,
-        userName,
-        userImg: '',
-        salt: hashPw.salt,
-      });
-      if (result) {
-        return { msg: '회원가입 완료' };
-      }
-    }
-    if (duplicated) {
+    const loginCol = user.db('basket').collection('login');
+    const authCol = user.db('basket').collection('authBook');
+    const foundId = await loginCol.findOne({ email: userInput });
+    const id = foundId.id;
+    const idBook = { id, userInput, AuthNumber };
+    const auth = await authCol.insertOne({ idBook });
+
+    // authBook
+    // key 아이디를 찾는 홍길동
+    // hong999, hong999@gmail.com : 1234
+
+    const result = await loginCol.findOne({ email: userInput });
+    if (result) {
       return {
-        msg: '중복 회원 존재',
+        msg: '이메일 확인 완료',
       };
     } else {
-      throw new Error('통신 이상');
+      return { msg: '이메일 확인 불가' };
     }
   },
+  //이메일을 통해 인증 번호 확인
+  AuthMatchEmail: async (number: number) => {
+    const user = await _user;
+    const col = user.db('basket').collection('authBook');
+    const foundId = await col.findOne({ 'idBook.AuthNumber': number });
+
+    if (foundId) {
+      setTimeout(() => {
+        col.deleteOne({
+          'idBook.AuthNumber': number,
+        });
+      }, 1000 * 180);
+
+      return { id: foundId.idBook.id, msg: '이메일 인증 완료' };
+    } else {
+      return { msg: '인증번호 틀림' };
+    }
+  },
+  //비밀번호를 찾기 위해 ID를 통해 해당 이메일 찾기
+  findEmail: async (id: string) => {
+    const user = await _user;
+    const col = user.db('basket').collection('login');
+    const foundEmail = await col.findOne({ id });
+    const email = foundEmail.email;
+    if (foundEmail) {
+      return email;
+    } else {
+      return { msg: '해당 아이디를 찾을 수 없음' };
+    }
+  },
+
+  //새로운 패스워드 갱신
+  updatePw: async (pw: string, certificationNumber: number) => {
+    const user = await _user;
+    const authCol = user.db('basket').collection('authBook');
+    const loginCol = user.db('basket').collection('login');
+    const extractId = await authCol.findOne({
+      'idBook.AuthNumber': certificationNumber,
+    });
+    console.log('extractId', extractId);
+    //  idBook: { id: '1111', userInput: 'qazxwd44@hanmail.net', AuthNumber: 742110 }
+
+    const foundId = await loginCol.findOne({ id: extractId.idBook.id });
+    console.log('foundId', foundId);
+    const hashPw = createHashPassword(pw);
+    if (foundId) {
+      await loginCol.updateOne(
+        {
+          id: foundId.id,
+        },
+        {
+          $set: {
+            pw: hashPw.hashedPasssword,
+            salt: hashPw.salt,
+          },
+        }
+      );
+      setTimeout(() => {
+        authCol.deleteOne({
+          'idBook.AuthNumber': certificationNumber,
+        });
+      }, 1000 * 180);
+      return { msg: '새로운 비밀번호 설정 완료' };
+    }
+  },
+
   // 프로필 페이지
   userData: async (logindata: any) => {
     const user = await _user;
@@ -72,7 +159,7 @@ const mongoDB = {
     const data = await db.findOne({ id: logindata.id });
     const hashPw = createHashPassword(logindata.pw);
     if (data) {
-      const result = await db.updateOne(
+      await db.updateOne(
         { id: logindata.id },
         {
           $set: {
@@ -94,62 +181,202 @@ const mongoDB = {
       return updateData;
     }
   },
-  //특정 게시글 목록 찾기
-  searchArticles: async (data: any) => {
+
+  // ----------- <게시글 목록 찾기 (정렬, 필터)> -----------
+  searchArticles: async (filter: any, order: any, keyWord: any) => {
     const user = await _user;
-    const col = user.db('basket').collection('article');
+    const articleCollection = user.db('basket').collection('article');
 
     let temp: any = [];
+    const isAsc = order.isAsc ? 1 : -1;
 
-    // [서울,]
-    // 서울, 서울, 서울, 광주
+    // <1. 가격 정렬 O >
+    if (order.isPriceOrderOn) {
+      // 가격 정렬 O + 지역 필터 O
+      
+      if (filter.activeAreas.length > 0) {
+        console.log('가격 정렬 O + 지역 필터 O')
+        for (let i = 0; i < filter.activeAreas.length; i++) {
+          const resWithArea = await articleCollection
+            .find({
+              $and: [
+                { 'data.areaTag': filter.activeAreas[i] },
+                {
+                  'data.price': {
+                    $gte: filter.MinPrice,
+                    $lte: filter.MaxPrice,
+                  },
+                },
+                { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+                { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
+              ],
+              $or: [
+                { 'data.title': { $regex: keyWord } },
+                { 'data.contents': { $regex: keyWord } },
+              ],
+            })
+            // .sort({ 'data.price': isAsc })
+            .toArray();
+          for (let j = 0; j < resWithArea.length; j++) {
+            temp.push(resWithArea[j]);
+          }
+        }
 
-    if (data.activeAreas.length > 0) {
-      for (let i = 0; i < data.activeAreas.length; i++) {
-        const resWithArea = await col
+        if(isAsc){
+          const result: any = [];
+          const priceAscSort = temp.sort(function (a: any, b: any) {
+            return a-b;
+          });
+          priceAscSort.map((val: any) => {
+            result.push(val.data);
+          });
+          // console.log('priceAscSort')
+          return result
+        }
+        else{
+          const result: any = [];
+          const priceDescSort = temp.sort(function (a: any, b: any) {
+            return b-a;
+          });
+          priceDescSort.map((val: any) => {
+            result.push(val.data);
+          });
+          // console.log('priceDescSort')
+          return result
+        }
+      }
+
+      // 가격 정렬 O + 지역 필터 X
+      else {
+        const resWithoutArea = await articleCollection
           .find({
             $and: [
-              { 'data.areaTag': data.activeAreas[i] },
               {
                 'data.price': {
-                  $gte: data.MinPrice,
-                  $lte: data.MaxPrice,
+                  $gte: filter.MinPrice,
+                  $lte: filter.MaxPrice,
                 },
               },
-              { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-              { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
+              { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+              { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
+            ],
+            $or: [
+              { 'data.title': { $regex: keyWord } },
+              { 'data.contents': { $regex: keyWord } },
+            ],
+          })
+          .sort({ 'data.price': isAsc })
+          .toArray();
+        temp.push(resWithoutArea);
+      }
+    }
+
+    // <2. 가격 정렬 X>
+    else {
+      // 가격 정렬 X + 지역 필터 O
+      if (filter.activeAreas.length > 0) {
+        for (let i = 0; i < filter.activeAreas.length; i++) {
+          const resWithArea = await articleCollection
+            .find({
+              $and: [
+                { 'data.areaTag': filter.activeAreas[i] },
+                {
+                  'data.price': {
+                    $gte: filter.MinPrice,
+                    $lte: filter.MaxPrice,
+                  },
+                },
+                { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+                { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
+              ],
+              $or: [
+                { 'data.title': { $regex: keyWord } },
+                { 'data.contents': { $regex: keyWord } },
+              ],
+            })
+            .toArray();
+          for (let j = 0; j < resWithArea.length; j++) {
+            temp.push(resWithArea[j]);
+          }
+        }
+
+        // 추가적인 거리순 정렬 바닐라 JS처리
+        if (order.isDistanceOrderOn) {
+          const flated = temp.flat();
+          const standardX = parseFloat(order.lng);
+          const standardY = parseFloat(order.lat);
+          const getDistanceSort = flated.sort(function (a: any, b: any) {
+            const ax = Math.pow(standardX - parseFloat(a.data.offsetX), 2);
+            const ay = Math.pow(standardY - parseFloat(a.data.offsetY), 2);
+            const bx = Math.pow(standardX - parseFloat(b.data.offsetX), 2);
+            const by = Math.pow(standardY - parseFloat(b.data.offsetY), 2);
+            const aVal = Math.pow(ax + ay, 0.5);
+            const bVal = Math.pow(bx + by, 0.5);
+            return aVal - bVal;
+          });
+          const result: any = [];
+          getDistanceSort.map((val: any) => {
+            result.push(val.data);
+          });
+          return result;
+        }
+      }
+
+      // 가격 정렬 X + 지역 필터 X
+      else {
+        const resWithoutArea = await articleCollection
+          .find({
+            $and: [
+              {
+                'data.price': {
+                  $gte: filter.MinPrice,
+                  $lte: filter.MaxPrice,
+                },
+              },
+              { 'data.openingPeriod.0': { $gte: filter.MinPeriod } },
+              { 'data.openingPeriod.1': { $lte: filter.MaxPeriod } },
+            ],
+            $or: [
+              { 'data.title': { $regex: keyWord } },
+              { 'data.contents': { $regex: keyWord } },
             ],
           })
           .toArray();
-        console.log('resWithArea', resWithArea);
-        // temp.push(resWithArea);
-        for (let j = 0; j < resWithArea.length; j++) {
-          temp.push(resWithArea[j]);
-        }
+        temp.push(resWithoutArea);
       }
-    } else {
-      console.log('지역없이 진입');
-      const resWithoutArea = await col
-        .find({
-          $and: [
-            {
-              'data.price': {
-                $gte: data.MinPrice,
-                $lte: data.MaxPrice,
-              },
-            },
-            { 'data.openingPeriod.0': { $gte: data.MinPeriod } },
-            { 'data.openingPeriod.1': { $lte: data.MaxPeriod } },
-          ],
-        })
-        .toArray();
-      temp.push(resWithoutArea);
-    }
-    console.log('temp', temp);
 
-    return temp;
+      // 거리순 정렬 있을 때 바닐라 JS처리
+      if (order.isDistanceOrderOn) {
+        const flated = temp.flat();
+        const standardX = parseFloat(order.lng);
+        const standardY = parseFloat(order.lat);
+        const getDistanceSort = flated.sort(function (a: any, b: any) {
+          const ax = Math.pow(standardX - parseFloat(a.data.offsetX), 2);
+          const ay = Math.pow(standardY - parseFloat(a.data.offsetY), 2);
+          const bx = Math.pow(standardX - parseFloat(b.data.offsetX), 2);
+          const by = Math.pow(standardY - parseFloat(b.data.offsetY), 2);
+          const aVal = Math.pow(ax + ay, 0.5);
+          const bVal = Math.pow(bx + by, 0.5);
+          return aVal - bVal;
+        });
+        const result: any = [];
+        getDistanceSort.map((val: any) => {
+          result.push(val.data);
+        });
+        return result;
+      }
+    }
+
+    const tempFlated = temp.flat();
+    let result: any = [];
+    tempFlated.map((val: any) => {
+      result.push(val.data);
+    });
+
+    return result;
   },
-  // 게시글 목록
+
+  // 게시글 목록 전체
   findArticles: async () => {
     const user = await _user;
     const db = user.db('basket').collection('article');
@@ -196,7 +423,7 @@ const mongoDB = {
             'data.openingDays': data.openingDays,
             'data.periodStart': data.PeriodStart,
             'data.PeriodEnd': data.PeriodEnd,
-            'data.userImg': data.gymImg,
+            'data.gymImg': data.gymImg,
           },
         }
       );

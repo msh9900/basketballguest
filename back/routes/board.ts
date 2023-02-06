@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const router = express.Router();
-const mongoClient = require('../controllers/guestmongocontrol').mongoDB;
+const mongoClient = require('../controllers/guestMongoControl').mongoDB;
 
 const dir = './guest';
 const storage = multer.diskStorage({
@@ -49,16 +49,37 @@ router.post(
       userImg: req.body.userImg,
       content: req.body.content,
       date: new Date().toLocaleString('ko-kr'),
-      imgsrc: fileNameArray,
+      imgSrc: fileNameArray,
       comment: [],
     };
+
     const result = await mongoClient.guestInsertArticle(data);
     return result;
   }
 );
 router.put('/article', async (req: Request, res: Response) => {
-  const data = {};
-  const result = await mongoClient.guestInsertArticle(data);
+  const resultFiles = req.files as any;
+
+  let fileNameArray: any = [];
+  resultFiles.map((ele: any) => {
+    const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
+    fileNameArray.push(eachFilename);
+  });
+  let data = {
+    contentidx: req.body.contentidx,
+    id: req.body.userId,
+    title: req.body.title,
+    userImg: req.body.userImg,
+    content: req.body.content,
+    // date: new Date().toLocaleString('ko-kr'),
+    imgSrc: fileNameArray,
+    comment: [],
+  };
+
+  if (req.files?.length === 0) {
+    data.imgSrc = JSON.parse(req.body.imgSrc);
+  }
+  const result = await mongoClient.guestUpdateArticle(data);
   return result;
 });
 router.delete('/article', async (req: Request, res: Response) => {

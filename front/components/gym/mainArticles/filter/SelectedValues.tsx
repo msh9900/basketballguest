@@ -21,6 +21,15 @@ const SelectedValues = (props:Props) => {
     const val = e.target.id
     props.setAreas(prev => prev.filter(v=>v!==val))
   }
+
+  const deletePeriodFilter = () => {
+    props.setPeriod([])
+    props.setPeriodActive(false)
+  }
+  const deletePriceFilter  = () => {
+    props.setPrice([])
+    props.setPriceActive(false)
+  }
   
   return (
     <>
@@ -33,13 +42,13 @@ const SelectedValues = (props:Props) => {
         })} 
 
         {props.priceActive && (
-          <div className={cls.common} onClick={()=>{props.setPriceActive(false)}}>
+          <div className={cls.common} onClick={deletePriceFilter}>
             {props.price[0]}원  ~ {props.price[1]}원 <span>X</span>
           </div>
         )}
 
         {props.periodActive && (
-          <div className={cls.common} onClick={()=>{props.setPeriodActive(false)}}>
+          <div className={cls.common} onClick={deletePeriodFilter}>
             {props.period[0]} ~ {props.period[1]} <span>X</span>
           </div>
         )}

@@ -2,8 +2,8 @@ interface filterProps {
   activeAreas: any,
   priceRange: any,
   periodRange: any,
-  ispriceActive: boolean,
-  isperiodActive: boolean
+  isPriceActive: boolean,
+  isPeriodActive: boolean
 }
 
 export default filterProps

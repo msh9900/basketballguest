@@ -45,19 +45,24 @@ const FilterPrice = (props:Props) => {
 
   // <<설정 ON>>
   const setOn = () => {
-    const sttNum = parseInt(stt)
-    const endNum = parseInt(end)
-
-    if(sttNum > endNum){
-      alert('시작값이 더 큽니다.')
-      return
-    } 
-    if(endNum === 0){
-      alert('값을 채워주세요')
-      return
+    if(!props.priceActive){
+      const sttNum = parseInt(stt)
+      const endNum = parseInt(end)
+  
+      if(sttNum > endNum){
+        alert('시작값이 더 큽니다.')
+        return
+      } 
+      if(endNum === 0){
+        alert('값을 채워주세요')
+        return
+      }
+      props.setPrice([stt, end])
+      props.setPriceActive(true)
     }
-    props.setPrice([stt, end])
-    props.setPriceActive(true)
+    else{
+      props.setPriceActive(false)
+    }
   }
 
   return (
@@ -73,7 +78,7 @@ const FilterPrice = (props:Props) => {
             <span>종료값</span>
             <input id='end' className='' autoComplete="off" value={end} onChange={onChangePrice}/>원
           </div>
-          <button onClick={setOn}> 가격설정 ON </button>
+          <button onClick={setOn}> 가격설정 </button>
         </div>
       </div>
     </>

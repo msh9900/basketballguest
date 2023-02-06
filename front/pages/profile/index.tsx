@@ -1,13 +1,12 @@
 import classes from "./Profile.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
-let formData: any = new FormData();
-// let formData = require("form-data");
-
 const Profile = () => {
+  let formData: any = new FormData();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -15,6 +14,7 @@ const Profile = () => {
   const defaultStateImg = useSelector(
     (state: any) => state.login.defaultImgUrl
   );
+  const [cookie, setCookie] = useCookies(["login"]);
   const [pw, setPw] = useState<string>("");
   const [pw2, setPw2] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -90,8 +90,9 @@ const Profile = () => {
       throw new Error("데이터 통신 오류");
     }
     if (data) {
-      alert("프로필 변경 완료");
+      setCookie("login", JSON.stringify(data));
       dispatch(IsLogin(data));
+      alert("프로필 변경 완료");
       router.push("/");
 
       // return data;

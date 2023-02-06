@@ -22,25 +22,17 @@ const AllArticles = (props: Props) => {
 
   const getArticleData = async (keyWord: string) => {
     let res: any;
-    // console.log('props.order', props.order)
-    // console.log('props.filter', props.filter)
 
-    const check = {
+    const defaultSearch = !(
       // filter
-      isAreaFilterOn: props.filter.activeAreas.length > 0,
-      isPeriodFilterOn : props.filter.isperiodActive,
-      isPriceFilterOn : props.filter.ispriceActive,
+      props.filter.activeAreas.length > 0 ||
+      props.filter.isPeriodActive ||
+      props.filter.isPriceActive ||
       // order
-      isDistanceOrderOn : props.order.isDistanceOrderOn,
-      isPriceOrderOn : props.order.isPriceOrderOn
-    };
-
-    let defaultSearch = !(
-      check.isAreaFilterOn ||
-      check.isPeriodFilterOn ||
-      check.isPriceFilterOn ||
-      check.isDistanceOrderOn ||
-      check.isPriceOrderOn
+      props.order.isDistanceOrderOn ||
+      props.order.isPriceOrderOn ||
+      // keyWord
+      keyWord.length>0
     );
 
     const body = {
@@ -48,9 +40,7 @@ const AllArticles = (props: Props) => {
       filter: props.filter,
       keyWord,
     };
-    console.log("전체 검색 ?? ", defaultSearch);
-
-    // 필터링한 검색
+    // 특정 목록
     if (!defaultSearch) {
       try {
         const response = await fetch("http://localhost:4000/rental/search", {
@@ -60,20 +50,20 @@ const AllArticles = (props: Props) => {
         });
         res = await response.json();
         await setArticles(res);
-        console.log("필터 검색 결과 : ", res);
+        // console.log("도구 검색 결과 : ", res);
       } catch (err: any) {
-        console.log("필터 검색 실패 : ", err);
+        // console.log("도구 검색 실패 : ", err);
       }
     }
-    // 전체 검색
+    // 전체 목록
     else {
       try {
         const response = await fetch("http://localhost:4000/rental/articles");
         res = await response.json();
         await setArticles(res);
-        console.log("기본 검색 결과 : ", res);
+        // console.log("기본 검색 결과 : ", res);
       } catch (err: any) {
-        console.log("기본 검색 실패 : ", err);
+        // console.log("기본 검색 실패 : ", err);
       }
     }
     await props.setNeedToSearch(false);
@@ -103,19 +93,24 @@ const AllArticles = (props: Props) => {
                     <div className={cls.imgBox}>
                       <img src={item.gymImg[0]} alt="체육관 이미지" />
                     </div>
-                    <div className={cls.title}>제목 : {item.title}</div>
-                    <div className={cls.price}>비용 : {item.price} 원/시간</div>
-                    <div className={cls.content}>
-                      내용 : {item.content.slice(0, 15)}
+                    <div className={cls.textBox}>
+                      <div className={cls.title}>{item.title}</div>
+                      <div className={cls.price}>{item.price} 원/시간</div>
+                      <div className={cls.content}>{item.areaTag}</div>
+                      {
+                        item.content.length > 50 && <>{item.content.slice(0, 50)} ... </>
+                      }
+                      {
+                        item.content.length < 50 && <>{item.content}</>
+                      }
                     </div>
-                    <div className={cls.content}>장소 : {item.areaTag}</div>
                   </li>
                 </div>
               );
             })}
           {articles && articles.length == 0 && (
             <>
-              <div>
+              <div>  
                 <p>검색된 결과가 없습니다.</p>
               </div>
             </>
