@@ -18,21 +18,16 @@ export default function WriteModal() {
   const imgRef: any = useRef();
   const titleRef: any = useRef();
   const readImage = () => {
+    console.log(imgRef.current.files);
     if (imgRef.current.files.length > 6) {
+      setImgFile([]);
       alert("이미지는 최대 6장 입니다.");
-      imgRef.current.value = "";
     } else {
       const data: string[] = [];
       for (let i = 0; i < imgRef.current.files.length; i++) {
-        const file = imgRef.current.files[i];
-        const reader: any = new FileReader();
-        if (file) {
-          reader.readAsDataURL(file);
-          reader.onloadend = () => {
-            data.push(reader.result);
-            setImgFile(data);
-          };
-        }
+        const file = URL.createObjectURL(imgRef.current.files[i]);
+        data.push(file);
+        setImgFile(data);
       }
     }
   };

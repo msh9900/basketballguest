@@ -17,9 +17,9 @@ export default function RecipeReviewCard(props: any) {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const isLogin = useSelector((state: any) => state.login?.isLogin);
-  const [getcomment, setGetcomment] = useState(false);
+  const [getDataClick,setGetDataClick] = useState(false);
+  
   const router = useRouter();
-  console.log(props.data);
   const [commentMore, setCommentMore] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [writeComment, setWriteComment] = useState("");
@@ -50,7 +50,7 @@ export default function RecipeReviewCard(props: any) {
       });
       const res = await response.json();
       console.log(res);
-      setGetcomment(true);
+      setGetDataClick(true);
     } else {
       router.replace("/login");
     }
@@ -76,8 +76,9 @@ export default function RecipeReviewCard(props: any) {
   };
   useEffect(() => {
     // getData();
+    setGetDataClick(false);
     console.log("최신하");
-  }, [getcomment]);
+  }, [getDataClick]);
   return (
     <>
       <Card
@@ -118,7 +119,7 @@ export default function RecipeReviewCard(props: any) {
                 <CardMedia
                   key={idx}
                   component="img"
-                  width="300"
+                  width="200"
                   height="194"
                   src={val}
                   alt="사진 이미지"
