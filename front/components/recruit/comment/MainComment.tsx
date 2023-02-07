@@ -13,7 +13,6 @@ export default function MainComment(props: any) {
   const [writeReplyClick, setWriteReplyClick] = useState<Boolean>(false);
   const [updateReplyClick, setUpdateReplyClick] = useState<Boolean>(false);
   const [writeComment, setWriteComment] = useState("");
-  const [getData, setGetData] = useState(false);
 
   const replyWriteHandler = () => {
     if (isLogin) {
@@ -23,9 +22,16 @@ export default function MainComment(props: any) {
       router.replace("/login");
     }
   };
-  const replyDeleteHandler = () => {
-    console.log(props.data);
-    console.log(props.data.commentidx); //이 맨트를 지운다
+  const replyDeleteHandler = async () => {
+    const response = await fetch(
+      `http://localhost:4000/board/comment?commentidx=${props.data.commentidx}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const res = await response.json();
+    console.log(res);
+    props.setGetDataClick(true);
   };
   const replyUpdateHandler = () => {
     setWriteReplyClick(false);
@@ -37,16 +43,26 @@ export default function MainComment(props: any) {
     console.log(writeComment);
     console.log(props.data);
   };
-  const commentUpdateHandler = () => {
+  const commentUpdateHandler = async () => {
     //댓글 update 구현.
-    console.log("댓글 수정");
+    const data = {
+      commentidx: props.data.commentidx,
+      content: writeComment,
+    };
+
+    const response = await fetch("http://localhost:4000/board/comment", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+
+    props.setGetDataClick(true);
   };
   const checkItemChangeHandler = (event: any) => {
     setTextareaHeight(event.target.value.split("\n").length - 1);
-    setWriteComment(event.target.value); //시준이형꺼 처럼 구현하기 db 전송
-    //답글 남기기 fetch 구현
+    setWriteComment(event.target.value);
   };
-  useEffect(() => {}, []);
   return (
     <div className={classes.maincontainer}>
       <div className={classes.container}>
@@ -71,7 +87,6 @@ export default function MainComment(props: any) {
           </div>
         </div>
       </div>
-      <SubComment />
       {writeReplyClick && (
         <div className={classes.comment}>
           <Avatar aria-label="recipe" src={userImg}>
@@ -111,6 +126,7 @@ export default function MainComment(props: any) {
           </div>
         </div>
       )}
+      <SubComment />
     </div>
   );
 }
