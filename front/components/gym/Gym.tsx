@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 // style
 import cls from "./Gym.module.scss";
 // component
-import AllArticles from "./mainArticles/AllArticles";
-import Filter from "./mainArticles/filter/Filter";
-import Order from "./mainArticles/order/Order";
-import SearchSection from "./mainArticles/search/Search";
+import AllArticles from "./allArticles/AllArticles";
+import Filter from "./allArticles/filter/Filter";
+import Order from "./allArticles/order/Order";
+import SearchSection from "./allArticles/search/Search";
 import { useSelector } from "react-redux";
-import orderStatusType from './mainArticles/order/interface_orderStatus';
+import orderStatusType from './allArticles/order/interface_orderStatus';
 
 const Rental = () => {
   const router = useRouter();
@@ -18,6 +18,7 @@ const Rental = () => {
   const [searchRes, setSearchRes] = useState("");
   const [searchVal, setSearchVal] = useState("");
   const [needToSearch, setNeedToSearch] = useState(true);
+  const [showSearchRes, setShowSearchRes] = useState(false)
   const [orderStatus, setOrderStatus] = useState<orderStatusType>({
     isPriceOrderOn: false,
     isAsc : false,
@@ -62,6 +63,8 @@ const Rental = () => {
           setNeedToSearch={setNeedToSearch}
           searchVal={searchVal}
           setSearchVal={setSearchVal}
+          showSearchRes={showSearchRes}
+          setShowSearchRes={setShowSearchRes}
         />
           <AllArticles
             order={orderStatus}
@@ -69,6 +72,8 @@ const Rental = () => {
             searchVal={searchVal}
             needToSearch={needToSearch}
             setNeedToSearch={setNeedToSearch}
+            setSearchRes={setSearchRes}
+            setShowSearchRes={setShowSearchRes}
           />
       </div>
     </>

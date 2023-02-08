@@ -2,6 +2,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
+import { useState} from 'react'
 // style
 import classes from "./Header.module.scss";
 // mui
@@ -47,6 +48,8 @@ export default function Header() {
     router.push(RouteMap[text]);
     setAnchorElNav(null);
   };
+  
+  const [searchValue, setSearchValue] = useState('')
 
   const UserMenuClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.textContent === "프로필") {
@@ -96,6 +99,8 @@ export default function Header() {
           <PcSearchbar
             selectValue={selectValue}
             selectChangeHanlder={selectChangeHanlder}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
           />
           <UserMenu
             handleOpenUserMenu={handleOpenUserMenu}
@@ -105,8 +110,10 @@ export default function Header() {
           />
         </Toolbar>
         <MbSearchbar
-          selectChangeHanlder={selectChangeHanlder}
           selectValue={selectValue}
+          selectChangeHanlder={selectChangeHanlder}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
         />
       </div>
     </AppBar>

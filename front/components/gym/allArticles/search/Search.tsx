@@ -12,13 +12,11 @@ interface Props {
   setNeedToSearch: React.Dispatch<React.SetStateAction<boolean>>;
   searchVal:string
   setSearchVal: React.Dispatch<React.SetStateAction<string>>;
+  showSearchRes:boolean
+  setShowSearchRes: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
 const Search = (props: Props) => {
-
-  const [showSearchRes, setShowSearchRes] = useState(false)
-
   const onChange = (e: any) => {
     props.setSearchVal(e.target.value);
   };
@@ -37,7 +35,7 @@ const Search = (props: Props) => {
   };
   const activateSearch = () => {
     props.setNeedToSearch(true);
-    setShowSearchRes(true)
+    props.setShowSearchRes(true)
   };
 
   return (
@@ -57,7 +55,7 @@ const Search = (props: Props) => {
         </div>
       </div>
 
-      {showSearchRes && (
+      {props.showSearchRes && (
         <div className={cls.SearchRes}>
           <div>'{props.searchRes}'</div>
           <div>검색결과</div>
