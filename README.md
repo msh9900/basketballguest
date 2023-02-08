@@ -10,9 +10,9 @@
 
 **모승환**
 <br />
-딤당 부분: 웹페이지 기획, 
+딤당 부분: 웹페이지 기획,메인페이지,헤더 및 푸터 ,게스트 모집 페이지 구현
 <br />
--Github: [@msh9000](https://github.com/msh9000)
+-Github: [@msh9900](https://github.com/msh9000)
 
 **윤시준**
 <br />
