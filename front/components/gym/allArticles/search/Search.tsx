@@ -57,7 +57,9 @@ const Search = (props: Props) => {
 
       {props.showSearchRes && (
         <div className={cls.SearchRes}>
-          <div>'{props.searchRes}'</div>
+          <div>
+            "&nbsp;{props.searchRes} &nbsp;"
+          </div>
           <div>검색결과</div>
         </div>
       )}
