@@ -13,7 +13,6 @@ export default function MainComment(props: any) {
   const [writeReplyClick, setWriteReplyClick] = useState<Boolean>(false);
   const [updateReplyClick, setUpdateReplyClick] = useState<Boolean>(false);
   const [writeComment, setWriteComment] = useState("");
-
   const replyWriteHandler = () => {
     if (isLogin) {
       setUpdateReplyClick(false);
@@ -24,7 +23,7 @@ export default function MainComment(props: any) {
   };
   const replyDeleteHandler = async () => {
     const response = await fetch(
-      `http://localhost:4000/board/comment?commentidx=${props.data.commentidx}`,
+      `http://localhost:4000/board/comment?commentIdx=${props.data.commentIdx}`,
       {
         method: "DELETE",
       }
@@ -38,15 +37,27 @@ export default function MainComment(props: any) {
     setUpdateReplyClick(true);
     setWriteComment(props.data.content);
   };
-  const commentSubmitHandler = () => {
+  const commentSubmitHandler = async () => {
     //댓글 입력 post 구현
-    console.log(writeComment);
-    console.log(props.data);
+    const data = {
+      commentIdx: props.data.commentIdx,
+      content: writeComment,
+      userId,
+      userImg,
+    };
+
+    const response = await fetch("http://localhost:4000/board/reply", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    props.setGetDataClick(true);
   };
   const commentUpdateHandler = async () => {
     //댓글 update 구현.
     const data = {
-      commentidx: props.data.commentidx,
+      commentIdx: props.data.commentIdx,
       content: writeComment,
     };
 
@@ -126,7 +137,14 @@ export default function MainComment(props: any) {
           </div>
         </div>
       )}
-      <SubComment />
+      {props.data.replys.map((val: any, idx: any) => (
+        <SubComment
+          key={idx}
+          data={val}
+          commentIdx={props.data.commentIdx}
+          setGetDataClick={props.setGetDataClick}
+        />
+      ))}
     </div>
   );
 }

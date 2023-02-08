@@ -37,7 +37,7 @@ export default function RecipeReviewCard(props: any) {
     //댓글 입력 post 구현
     if (isLogin) {
       const data = {
-        contentidx: contentData.contentidx,
+        contentIdx: contentData.contentIdx,
         id: userId,
         content: writeComment,
         userImg: userImg,
@@ -64,17 +64,15 @@ export default function RecipeReviewCard(props: any) {
   const getData = async () => {
     //카드에 해당되는 댓글 가져오기
     const response = await fetch(
-      `http://localhost:4000/board/comment?contentidx=${props.data.contentidx}`
+      `http://localhost:4000/board/comment?contentIdx=${props.data.contentIdx}`
     );
     const res = await response.json();
-    console.log("res", res);
     setContentData(res);
     setGetDataClick(false);
   };
   useEffect(() => {
     if (getDataClick) {
       getData();
-      console.log("데이터 받기");
     }
   }, [getDataClick]);
 
@@ -102,7 +100,7 @@ export default function RecipeReviewCard(props: any) {
                 }
                 action={
                   contentData.id === userId ? (
-                    <MenuList idx={contentData.contentidx} />
+                    <MenuList idx={contentData.contentIdx} />
                   ) : (
                     ""
                   )
@@ -151,16 +149,16 @@ export default function RecipeReviewCard(props: any) {
                   전송
                 </div>
               </div>
-              {contentData.comment[0]?.commentidx && (
+              {contentData.comment[0]?.commentIdx && (
                 <div className={classes.firstComment}>
                   <MainComment
-                    key={contentData.comment[0].commentidx}
+                    key={contentData.comment[0].commentIdx}
                     data={contentData.comment[0]}
                     setGetDataClick={setGetDataClick}
                   />
                 </div>
               )}
-              {contentData.comment[1]?.commentidx && (
+              {contentData.comment[1]?.commentIdx && (
                 <div>
                   <div>
                     {!commentMore && (
@@ -178,7 +176,7 @@ export default function RecipeReviewCard(props: any) {
                         if (idx !== 0) {
                           return (
                             <MainComment
-                              key={val.commentidx}
+                              key={val.commentIdx}
                               data={val}
                               setGetDataClick={setGetDataClick}
                             />

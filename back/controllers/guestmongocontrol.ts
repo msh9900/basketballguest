@@ -23,11 +23,11 @@ const mongoDB = {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
     const findArticleId = await col.findOne({
-      contentidx: data.contentidx,
+      contentIdx: data.contentIdx,
     });
     if (findArticleId) {
       await col.updateOne(
-        { contentidx: data.contentidx },
+        { contentIdx: data.contentIdx },
         {
           $set: {
             'data.title': data.title,
@@ -37,16 +37,16 @@ const mongoDB = {
         }
       );
       const updateArticleData = await col.findOne({
-        contentidx: data.contentidx,
+        contentIdx: data.contentIdx,
       });
       return updateArticleData;
     }
   },
   //게스트 글 DELETE
-  guestDeleteArticle: async (contentidx: string) => {
+  guestDeleteArticle: async (contentIdx: string) => {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
-    const successMsg = await col.deleteOne({ contentidx: contentidx });
+    const successMsg = await col.deleteOne({ contentIdx: contentIdx });
     if (successMsg.acknowledged) {
       return { msg: '게시글 삭제 완료' };
     }
@@ -55,7 +55,7 @@ const mongoDB = {
   findComment: async (data: any) => {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
-    const commentFindOne = await col.findOne({ contentidx: data });
+    const commentFindOne = await col.findOne({ contentIdx: data });
     if (commentFindOne) {
       return commentFindOne;
     }
@@ -66,15 +66,15 @@ const mongoDB = {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
     const articleFindOne = await col.findOne({
-      contentidx: data.contentidx,
+      contentIdx: data.contentIdx,
     });
     if (articleFindOne) {
       await col.updateOne(
-        { contentidx: data.contentidx },
+        { contentIdx: data.contentIdx },
         {
           $push: {
             comment: {
-              commentidx: data.commentidx,
+              commentIdx: data.commentIdx,
               id: data.id,
               content: data.content,
               userImg: data.userImg,
@@ -94,23 +94,20 @@ const mongoDB = {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
     const commentFound = await col.findOne({
-      'comment.commentidx': data.commentidx,
+      'comment.commentIdx': data.commentIdx,
     });
-
-    console.log('test', commentFound);
 
     let idx: any;
     commentFound.comment.map((ele: any, i: any) => {
-      if (ele.commentidx === data.commentidx) {
+      if (ele.commentIdx === data.commentIdx) {
         idx = i;
       }
     });
     const contentsKey = `comment.${idx}.content`;
-    console.log('test', contentsKey);
 
     const commentFindOne = await col.updateOne(
       {
-        'comment.commentidx': data.commentidx,
+        'comment.commentIdx': data.commentIdx,
       },
       {
         $set: {
@@ -123,15 +120,112 @@ const mongoDB = {
     }
   },
   //게스트 댓글 DELETE
-  deleteComment: async (commentidx: any) => {
+  deleteComment: async (commentIdx: any) => {
     const user = await _user;
     const col = user.db('basket').collection('guestarticle');
     const commentFindOne = await col.updateOne(
-      { 'comment.commentidx': commentidx },
-      { $pull: { comment: { commentidx } } }
+      { 'comment.commentIdx': commentIdx },
+      { $pull: { comment: { commentIdx } } }
     );
     if (commentFindOne.acknowledged) {
       return { msg: '댓글 삭제 완료' };
+    }
+  },
+  //게스트 답글 POST
+  insertReply: async (data: any, commentIdx: any) => {
+    const user = await _user;
+    const col = user.db('basket').collection('guestarticle');
+    const commentFind = await col.findOne({
+      'comment.commentIdx': commentIdx,
+    });
+    let idx: any;
+    commentFind.comment.map((ele: any, i: any) => {
+      if (ele.commentIdx === commentIdx) {
+        idx = i;
+      }
+    });
+    const commentidx = `comment.${idx}.replys`;
+
+    const commentFindOne = await col.updateOne(
+      {
+        'comment.commentIdx': commentIdx,
+      },
+      {
+        $push: {
+          [commentidx]: {
+            replyIdx: data.replyIdx,
+            content: data.content,
+            date: data.date,
+            userId: data.userId,
+            userImg: data.userImg,
+          },
+        },
+      }
+    );
+    if (commentFindOne) {
+      return { msg: '답글 작성 완료' };
+    }
+  },
+  //게스트 답글 UPDATE
+  updateReply: async (data: any) => {
+    const user = await _user;
+    const col = user.db('basket').collection('guestarticle');
+    const commentFound = await col.findOne({
+      'comment.commentIdx': data.commentIdx,
+    });
+    let commentIndex: any;
+    let replyIndex: any;
+    commentFound.comment.map((ele: any, i: any) => {
+      if (ele.commentIdx === data.commentIdx) {
+        commentIndex = i;
+      }
+    });
+    commentFound.comment[commentIndex].replys.map((ele: any, i: any) => {
+      if (ele.replyIdx === data.replyIdx) {
+        replyIndex = i;
+      }
+    });
+    const replyidx = `comment.${commentIndex}.replys.${replyIndex}.replyIdx`;
+    const replyUpdateOne = await col.updateOne(
+      { [replyidx]: data.replyIdx },
+      { $set: { [replyidx]: { content: data.content } } }
+    );
+    if (replyUpdateOne) {
+      return { msg: '답글 수정 완료' };
+    }
+  },
+
+  //게스트 답글 DELETE
+
+  deleteReply: async (commentIdx: any, replyIdx: any) => {
+    const user = await _user;
+    const col = user.db('basket').collection('guestarticle');
+
+    const commentFound = await col.findOne({
+      'comment.commentIdx': commentIdx,
+    });
+    let commentIndex: any;
+    let replyIndex: any;
+    commentFound.comment.map((ele: any, i: any) => {
+      if (ele.commentIdx === commentIdx) {
+        commentIndex = i;
+      }
+    });
+
+    commentFound.comment[commentIndex].replys.map((ele: any, i: any) => {
+      if (ele.replyIdx === replyIdx) {
+        replyIndex = i;
+      }
+    });
+
+    const replyidx = `comment.${commentIndex}.replys.${replyIndex}.replyIdx`;
+    const arrayresult = `comment.${commentIndex}.replys`;
+    const commentUpdateOne = await col.updateOne(
+      { [replyidx]: replyIdx },
+      { $pull: { [arrayresult]: { replyIdx } } }
+    );
+    if (commentUpdateOne) {
+      return { msg: '답글 삭제 완료' };
     }
   },
 };

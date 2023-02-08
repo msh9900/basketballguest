@@ -26,6 +26,7 @@ export default function GuestRecruitmentPage(props: any) {
     if (contentList < data.length) {
       setTimeout(() => {
         setContentList(contentList + 10);
+        setHasMore(true);
       }, 500);
     } else {
       setHasMore(false);
@@ -57,7 +58,7 @@ export default function GuestRecruitmentPage(props: any) {
         >
           <div className={classes.container}>
             {data.slice(0, contentList).map((val: any) => (
-              <Card key={val.contentidx} data={val} />
+              <Card key={val.contentIdx} data={val} />
             ))}
           </div>
         </InfiniteScroll>

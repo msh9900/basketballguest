@@ -32,7 +32,6 @@ router.post(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response) => {
-    console.log('들어오는파일', req.files);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
     const resultFiles = req.files as any;
@@ -43,7 +42,7 @@ router.post(
       fileNameArray.push(eachFilename);
     });
     const data = {
-      contentidx: (Date.now() + Math.random()).toFixed(13),
+      contentIdx: (Date.now() + Math.random()).toFixed(13),
       id: req.body.userId,
       title: req.body.title,
       userImg: req.body.userImg,
@@ -66,12 +65,11 @@ router.put('/article', async (req: Request, res: Response) => {
     fileNameArray.push(eachFilename);
   });
   let data = {
-    contentidx: req.body.contentidx,
+    contentIdx: req.body.contentIdx,
     id: req.body.userId,
     title: req.body.title,
     userImg: req.body.userImg,
     content: req.body.content,
-    // date: new Date().toLocaleString('ko-kr'),
     imgSrc: fileNameArray,
     comment: [],
   };
@@ -83,18 +81,18 @@ router.put('/article', async (req: Request, res: Response) => {
   return result;
 });
 router.delete('/article', async (req: Request, res: Response) => {
-  const result = await mongoClient.guestDeleteArticle(req.body.contentidx);
+  const result = await mongoClient.guestDeleteArticle(req.body.contentIdx);
   return result;
 });
 router.get('/comment', async (req: Request, res: Response) => {
-  const result = await mongoClient.findComment(req.query.contentidx);
+  const result = await mongoClient.findComment(req.query.contentIdx);
   res.send(JSON.stringify(result));
 });
 
 router.post('/comment', async (req: Request, res: Response) => {
   const data = {
-    contentidx: req.body.contentidx,
-    commentidx: (Date.now() + Math.random()).toFixed(13),
+    contentIdx: req.body.contentIdx,
+    commentIdx: (Date.now() + Math.random()).toFixed(13),
     id: req.body.id,
     userImg: req.body.userImg,
     content: req.body.content,
@@ -105,16 +103,43 @@ router.post('/comment', async (req: Request, res: Response) => {
   res.send(JSON.stringify(result));
 });
 router.put('/comment', async (req: Request, res: Response) => {
-  console.log(req.body);
   const data = {
-    commentidx: req.body.commentidx,
+    commentIdx: req.body.commentIdx,
     content: req.body.content,
   };
   const result = await mongoClient.updateComment(data);
   res.send(JSON.stringify(result));
 });
 router.delete('/comment', async (req: Request, res: Response) => {
-  const result = await mongoClient.deleteComment(req.query.commentidx);
+  const result = await mongoClient.deleteComment(req.query.commentIdx);
+  res.send(JSON.stringify(result));
+});
+
+router.post('/reply', async (req: Request, res: Response) => {
+  const data = {
+    replyIdx: (Date.now() + Math.random()).toFixed(13),
+    content: req.body.content,
+    date: new Date().toLocaleString('ko-kr'),
+    userId: req.body.userId,
+    userImg: req.body.userImg,
+  };
+  const result = await mongoClient.insertReply(data, req.body.commentIdx);
+  res.send(JSON.stringify(result));
+});
+router.put('/reply', async (req: Request, res: Response) => {
+  const data = {
+    commentIdx: req.body.commentIdx,
+    replyIdx: req.body.replyIdx,
+    content: req.body.content,
+  };
+  const result = await mongoClient.updateReply(data);
+  res.send(JSON.stringify(result));
+});
+router.delete('/reply', async (req: Request, res: Response) => {
+  const result = await mongoClient.deleteReply(
+    req.query.commentIdx,
+    req.query.replyIdx
+  );
   res.send(JSON.stringify(result));
 });
 
