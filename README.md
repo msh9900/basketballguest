@@ -30,7 +30,7 @@
 ### Front-end
 
 <div>
-<img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white" height="20px">
+<img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=SASS&logoColor=white" height="20px">
 <img src="https://img.shields.io/badge/SASS-Pink?style=for-the-badge&logo=next.js&logoColor=white" height="20px">
 
 </div>
