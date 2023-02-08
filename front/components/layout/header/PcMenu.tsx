@@ -1,7 +1,7 @@
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import Link from "next/link";
 import classes from "./Header.module.scss";
-import RouteMap from "./_RouteMap";
+import RouteMap from "./_routeMap";
 
 const PcMenu = () => {
   return (

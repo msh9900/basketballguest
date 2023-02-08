@@ -1,6 +1,6 @@
 import classes from "./Header.module.scss";
 import SearchIcon from "@mui/icons-material/Search";
-import triggerSearch from './triggerSearch';
+import triggerSearch from './_triggerSearch';
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
