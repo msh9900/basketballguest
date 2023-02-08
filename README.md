@@ -9,16 +9,18 @@
 ## 🫶 팀원 소개
 
 **모승환**
-딤당 부문: 메인페이지 UI,
+딤당 부문: 
+<br />
 -Github: [@msh9000](https://github.com/msh9000)
 
 **윤시준**
 담당 부문:
+<br />
 -Github: [@webcodur](https://github.com/webcodur)
 
 **천해성**
 담당 부분:  로그인 기능(Redux) 구현 및  로그인 쿠키 로직 구현, 회원가입 구현, 마이페이지 구현 및 각 컴포넌트에서 데이터를 전달하기 위한 API 구현 및 데이터베이스구축 (백엔드)
-<br />
+
 -Github: [@BoGusD](https://github.com/BoGusD)
 
 ## 기술 스택
