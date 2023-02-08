@@ -13,17 +13,17 @@
 **모승환**
 
 -Front-End
--Github: [@msh9000](htpps://github.com/msh9000)
+-Github: [@msh9000](https://github.com/msh9000)
 
 **윤시준**
 
 -Front-End
--Github: [@webcodur](htpps://github.com/webcodur)
+-Github: [@webcodur](https://github.com/webcodur)
 
 **천해성**
 
 --Back-End
--Github: [@BoGusD](htpps://github.com/BoGusD)
+-Github: [@BoGusD](https://github.com/BoGusD)
 
 ## 기술 스택
 
@@ -42,7 +42,7 @@
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/>
 <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white"/>
 <img src="https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=mongoDB&logoColor=white"/>
-<img src="https://img.shields.io/badge/nodemailer-686854?style=flat-square&logo=mongoDB&logoColor=white"/>
+<img src="https://img.shields.io/badge/nodemailer-686854?style=flat-square&logo=nodemailer&logoColor=white"/>
 </div>
 
 
