@@ -17,12 +17,6 @@ export default function RecipeReviewCard(props: any) {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const isLogin = useSelector((state: any) => state.login?.isLogin);
-  const globalSearchValue = useSelector(
-    (state: any) => state.search?.searchValue
-  );
-  const globalSearchNeeded = useSelector(
-    (state: any) => state.search?.globalSearchNeeded
-  );
   const [getDataClick, setGetDataClick] = useState(true);
   const [contentData, setContentData] = useState<any>();
   const router = useRouter();
@@ -68,25 +62,12 @@ export default function RecipeReviewCard(props: any) {
     setCardClick(!cardClick);
   };
   const getData = async () => {
-    console.log(globalSearchNeeded);
-    if (globalSearchNeeded && globalSearchValue === "") {
-      const data = {
-        keyWord: globalSearchValue,
-      };
-      const response = await fetch("http://localhost:4000/board/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
-      setContentData(res);
-    } else {
-      const response = await fetch(
-        `http://localhost:4000/board/comment?contentIdx=${props.data.contentIdx}`
-      );
-      const res = await response.json();
-      setContentData(res);
-    }
+    //카드에 해당되는 댓글 가져오기
+    const response = await fetch(
+      `http://localhost:4000/board/comment?contentIdx=${props.data.contentIdx}`
+    );
+    const res = await response.json();
+    setContentData(res);
     setGetDataClick(false);
   };
   useEffect(() => {
