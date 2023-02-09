@@ -17,7 +17,7 @@ import PcMenu from "./PcMenu";
 import PcSearchbar from "./PcSearchbar";
 import UserMenu from "./UserMenu";
 import MbSearchbar from "./MbSearchbar";
-import RouteMap from "./_routeMap";
+import RouteMap from "./_RouteMap";
 
 export default function Header() {
   const dispatch = useDispatch();
