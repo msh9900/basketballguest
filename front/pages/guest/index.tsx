@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
@@ -7,10 +7,17 @@ import Modal from "@mui/material/Modal";
 import WriteModal from "../../components/recruit/WriteModal";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import ModeIcon from "@mui/icons-material/Mode";
 export default function GuestRecruitmentPage(props: any) {
   const router = useRouter();
   const isLogin = useSelector((state: any) => state.login?.isLogin);
-  const { data } = props;
+  const globalSearchValue = useSelector(
+    (state: any) => state.search.searchValue
+  );
+  const globalSearchNeeded = useSelector(
+    (state: any) => state.search.globalSearchNeeded
+  );
+  const [guestdata, setGuestData] = useState([]);
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [open, setOpen] = useState(false);
@@ -23,7 +30,7 @@ export default function GuestRecruitmentPage(props: any) {
   };
   const handleClose = () => setOpen(false);
   const fetchMoreData = () => {
-    if (contentList < data.length) {
+    if (contentList < guestdata.length) {
       setTimeout(() => {
         setContentList(contentList + 10);
         setHasMore(true);
@@ -32,11 +39,29 @@ export default function GuestRecruitmentPage(props: any) {
       setHasMore(false);
     }
   };
-
+  const getData = async () => {
+    if (globalSearchNeeded && globalSearchValue !== "") {
+      const data = {
+        keyWord: globalSearchValue,
+      };
+      const response = await fetch("http://localhost:4000/board/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const res = await response.json();
+      setGuestData(res);
+    } else {
+      setGuestData(props.data);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <div className={classes.writeButton} onClick={handleOpen}>
-        글쓰기 버튼
+        <ModeIcon />
       </div>
       <Modal
         open={open}
@@ -57,7 +82,7 @@ export default function GuestRecruitmentPage(props: any) {
           scrollableTarget="parentScrollDiv"
         >
           <div className={classes.container}>
-            {data.slice(0, contentList).map((val: any) => (
+            {guestdata.slice(0, contentList).map((val: any) => (
               <Card key={val.contentIdx} data={val} />
             ))}
           </div>
