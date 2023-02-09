@@ -15,7 +15,6 @@ const mongoDB = {
       // 가격 정렬 O + 지역 필터 O
 
       if (filter.activeAreas.length > 0) {
-        console.log('가격 정렬 O + 지역 필터 O');
         for (let i = 0; i < filter.activeAreas.length; i++) {
           const resWithArea = await articleCollection
             .find({
