@@ -22,11 +22,7 @@ const limits = {
 const upload = multer({ storage, limits });
 //게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
-  console.log('req.body', req.body);
-  const result = await mongoClient.guestSerachArticle(
-    req.body.keyWord,
-    req.body.item
-  );
+  const result = await mongoClient.guestSerachArticle(req.body.keyWord);
   res.send(JSON.stringify(result));
 });
 
@@ -40,8 +36,6 @@ router.post(
   upload.array('img', 6),
   async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    console.log('진입 데이터', req.body);
-    console.log('진입 데이터', req.files);
 
     const resultFiles = req.files as any;
 
@@ -68,7 +62,6 @@ router.put(
   '/article',
   upload.array('img', 6),
   async (req: Request, res: Response) => {
-    console.log('진입 데이터', req.body);
     const resultFiles = req.files as any;
 
     let fileNameArray: any = [];
