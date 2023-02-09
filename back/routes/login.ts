@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-const mongoClient = require('../controllers/mongocontrol').mongoDB;
+const mongoClient = require('../controllers/authControl').mongoDB;
 const router = express.Router();
 
 //로그인

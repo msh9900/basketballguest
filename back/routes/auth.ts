@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 
-const mongoClient = require('../controllers/mongocontrol').mongoDB;
+const mongoClient = require('../controllers/authControl').mongoDB;
 const nodemailer = require('nodemailer');
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.post('/findid', async (req: Request, res: Response) => {
     // 비밀번호 초기화를 보내는 이메일의 Option
     from: process.env.GMAIL_ID, // 관리자 Email
     to: req.body.userInput, // 비밀번호 초기화 요청 유저 Email
-    subject: 'OMG 아이디 초기화 메일', //보내는 메일의 제목
+    subject: 'BPT 아이디 초기화 메일', //보내는 메일의 제목
     // 보내는 메일의 내용
     html: `
       <p>아이디를 찾기 위해 아래 url로 이동하여 다음 인증번호를 입력해주세요.</p> 
@@ -83,7 +83,7 @@ router.post(
         // 비밀번호 초기화를 보내는 이메일의 Option
         from: process.env.GMAIL_ID, // 관리자 Email
         to: foundemail, // 비밀번호 초기화 요청 유저 Email
-        subject: 'OMG 아이디 초기화 메일', //보내는 메일의 제목
+        subject: 'BPT 아이디 초기화 메일', //보내는 메일의 제목
         // 보내는 메일의 내용
         html: `
         <p>비밀번호를 찾기 위해 아래 url로 이동하여 다음 인증번호를 입력해주세요.</p> 
@@ -111,7 +111,6 @@ router.post(
 
   //새로운 비밀번호 입력
   router.post('/setpw', async (req: Request, res: Response) => {
-    console.log('새로운 비밀번호와 인증번호 부합 확인', req.body);
     const certificationNumber = parseInt(
       req.body.resetPwBody.certificationNumber
     );

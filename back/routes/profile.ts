@@ -3,7 +3,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 
-const mongoClient = require('../controllers/mongoControl').mongoDB;
+const mongoClient = require('../controllers/authControl').mongoDB;
 const router = express.Router();
 
 router.use('/images', express.static('images'));
