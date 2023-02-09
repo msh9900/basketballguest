@@ -26,8 +26,6 @@ const upload = multer({ storage, limits });
 
 // 게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
-  console.log('rental.ts 진입데이터', req.body);
-
   let filter = {
     activeAreas: req.body.filter.activeAreas,
     MinPrice: req.body.filter.priceRange[0],

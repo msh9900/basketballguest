@@ -62,7 +62,6 @@ export default function RecipeReviewCard(props: any) {
     setCardClick(!cardClick);
   };
   const getData = async () => {
-    //카드에 해당되는 댓글 가져오기
     const response = await fetch(
       `http://localhost:4000/board/comment?contentIdx=${props.data.contentIdx}`
     );

@@ -2,6 +2,17 @@ const mongoClient = require('../routes/mongoconnet')!;
 const _user = mongoClient.connect();
 
 const mongoDB = {
+  // 게스트 글 HEADER에서 찾기
+  guestSerachArticle: async (keyWord: string, item: string) => {
+    const user = await _user;
+    const col = user.db('basket').collection('guestarticle');
+    const findGuestArticle = await col
+      .find({
+        $or: [{ title: { $regex: keyWord } }, { content: { $regex: keyWord } }],
+      })
+      .toArray();
+    return findGuestArticle;
+  },
   // 게스트 글 GET
   guestfindArticle: async () => {
     const user = await _user;
