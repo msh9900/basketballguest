@@ -1,5 +1,5 @@
-const guestMongoClient = require('../routes/mongoconnet');
-const _guest = guestMongoClient.connect();
+const MongoClient = require('../routes/mongoconnet');
+const _guest = MongoClient.connect();
 
 const mongoDatabase = {
   // 게스트 글 HEADER에서 찾기
