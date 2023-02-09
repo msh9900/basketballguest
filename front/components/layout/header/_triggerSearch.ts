@@ -1,8 +1,12 @@
 // GLOBAL STATE
 
 import { search } from "redux/modules/search";
-const triggerSearch = (searchValue:string, selectValue:string, router:any , dispatch:any) => {
-
+const triggerSearch = (
+  searchValue: string,
+  selectValue: string,
+  router: any,
+  dispatch: any
+) => {
   // 1. CHANGE STATE
   const stateObj = {
     searchValue,
@@ -11,11 +15,11 @@ const triggerSearch = (searchValue:string, selectValue:string, router:any , disp
   dispatch(search(stateObj));
 
   // 2. MOVE TO TARGET PAGE
-  if (selectValue == "체육관대여") {
-    router.push("/recruit");
+  if (selectValue == "guest") {
+    router.push("/guest");
     return;
   }
   router.push("/gym");
 };
 
-export default triggerSearch
+export default triggerSearch;

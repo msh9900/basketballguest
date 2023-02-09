@@ -2,7 +2,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { useState} from 'react'
+import { useState } from "react";
 // style
 import classes from "./Header.module.scss";
 // mui
@@ -48,8 +48,8 @@ export default function Header() {
     router.push(RouteMap[text]);
     setAnchorElNav(null);
   };
-  
-  const [searchValue, setSearchValue] = useState('')
+
+  const [searchValue, setSearchValue] = useState("");
 
   const UserMenuClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.textContent === "프로필") {
