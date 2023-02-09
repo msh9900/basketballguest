@@ -1,4 +1,3 @@
-const serviceTitle = "BPT";
 type titleMapType = {
   [index: string]: string;
   "/": string;
@@ -8,7 +7,7 @@ type titleMapType = {
   "/service": string;
 };
 const titleMap: titleMapType = {
-  "/": serviceTitle,
+  "/": "BPT 홈",
   "/gym": "체육관 대관/홍보",
   "/gym/post": "체육관 홍보글 작성",
   "/gym/articles": "체육관 대관정보 조회",

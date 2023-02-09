@@ -1,7 +1,9 @@
+import cls from './Loading.module.scss'
+
 const Loading = () => {
   return (
     <>
-      <div>로딩 에니메이션</div>
+      <div className={cls.loading}></div>
     </>
   );
 };
