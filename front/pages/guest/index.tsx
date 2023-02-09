@@ -5,9 +5,9 @@ import classes from "./guest.module.scss";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from "@mui/material/Modal";
 import WriteModal from "../../components/recruit/WriteModal";
+import ModeIcon from "@mui/icons-material/Mode";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import ModeIcon from "@mui/icons-material/Mode";
 export default function GuestRecruitmentPage(props: any) {
   const router = useRouter();
   const isLogin = useSelector((state: any) => state.login?.isLogin);
@@ -39,6 +39,7 @@ export default function GuestRecruitmentPage(props: any) {
       setHasMore(false);
     }
   };
+
   const getData = async () => {
     if (globalSearchNeeded && globalSearchValue !== "") {
       const data = {
