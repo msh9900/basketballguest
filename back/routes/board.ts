@@ -37,9 +37,11 @@ router.get('/article', async (req: Request, res: Response) => {
 });
 router.post(
   '/article',
-  upload.array('img', 10),
+  upload.array('img', 6),
   async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+    console.log('진입 데이터', req.body);
+    console.log('진입 데이터', req.files);
 
     const resultFiles = req.files as any;
 
@@ -48,45 +50,50 @@ router.post(
       const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
       fileNameArray.push(eachFilename);
     });
-    const data = {
+    let data = {
       contentIdx: (Date.now() + Math.random()).toFixed(13),
       id: req.body.userId,
       title: req.body.title,
       userImg: req.body.userImg,
       content: req.body.content,
-      date: new Date().toLocaleString('ko-kr'),
+      date: new Date(),
       imgSrc: fileNameArray,
       comment: [],
     };
-
     const result = await mongoClient.guestInsertArticle(data);
     return result;
   }
 );
-router.put('/article', async (req: Request, res: Response) => {
-  const resultFiles = req.files as any;
+router.put(
+  '/article',
+  upload.array('img', 6),
+  async (req: Request, res: Response) => {
+    console.log('진입 데이터', req.body);
+    const resultFiles = req.files as any;
 
-  let fileNameArray: any = [];
-  resultFiles.map((ele: any) => {
-    const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
-    fileNameArray.push(eachFilename);
-  });
-  let data = {
-    contentIdx: req.body.contentIdx,
-    id: req.body.userId,
-    title: req.body.title,
-    userImg: req.body.userImg,
-    content: req.body.content,
-    imgSrc: fileNameArray,
-    comment: [],
-  };
+    let fileNameArray: any = [];
+    resultFiles.map((ele: any) => {
+      const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
+      fileNameArray.push(eachFilename);
+    });
+    let data = {
+      contentIdx: req.body.contentIdx,
+      id: req.body.userId,
+      title: req.body.title,
+      userImg: req.body.userImg,
+      content: req.body.content,
+      date: new Date(),
+      imgSrc: fileNameArray,
+      comment: [],
+    };
 
-  if (req.files?.length === 0) {
-    data.imgSrc = JSON.parse(req.body.imgSrc);
+    if (req.files?.length === 0) {
+      data.imgSrc = req.body.imgSrc;
+    }
+    const result = await mongoClient.guestUpdateArticle(data);
+    return result;
   }
-  const result = await mongoClient.guestUpdateArticle(data);
-  return result;
-});
+);
 router.delete('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.guestDeleteArticle(req.body.contentIdx);
   return result;

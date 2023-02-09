@@ -17,7 +17,7 @@ const mongoDatabase = {
   guestfindArticle: async () => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
-    const findArticle = await col.find().toArray();
+    const findArticle = await col.find().sort({ date: -1 }).toArray();
     return findArticle;
   },
   //게스트 글 POST
@@ -31,16 +31,19 @@ const mongoDatabase = {
   },
   //게스트 글 PUT
   guestUpdateArticle: async (data: any) => {
+    console.log('db 진입 데이터', data);
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleId = await col.findOne({
       contentIdx: data.contentIdx,
     });
+    console.log('찾은 데이터', findArticleId);
     if (findArticleId) {
       await col.updateOne(
         { contentIdx: data.contentIdx },
         {
           $set: {
+            date: data.date,
             title: data.title,
             content: data.content,
             imgSrc: data.imgSrc,

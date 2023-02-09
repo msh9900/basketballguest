@@ -67,6 +67,7 @@ export default function RecipeReviewCard(props: any) {
       `http://localhost:4000/board/comment?contentIdx=${props.data.contentIdx}`
     );
     const res = await response.json();
+    console.log(res);
     setContentData(res);
     setGetDataClick(false);
   };

@@ -12,13 +12,12 @@ export default function UpdateModal(props: any) {
   const router = useRouter();
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
-  const [imgFile, setImgFile] = useState<string[]>([]);
+  const [imgFile, setImgFile] = useState<any[]>([]);
   const [contentText, setContentText] = useState("");
   const [titleText, setTitleText] = useState("");
   const imgRef: any = useRef();
 
   const readImage = () => {
-    console.log(imgRef.current.files);
     if (imgRef.current.files.length > 6) {
       setImgFile([]);
       alert("이미지는 최대 6장 입니다.");
@@ -40,13 +39,15 @@ export default function UpdateModal(props: any) {
   };
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
+    console.log("모승환 이미지", imgFile);
     router.reload();
     const FD = new FormData();
-
     FD.append("userId", userId);
     FD.append("title", titleText);
     FD.append("userImg", userImg);
     FD.append("content", contentText);
+    FD.append("imgSrc", JSON.stringify(imgFile));
+    FD.append("contentIdx", props.data.contentIdx);
     for (let i = 0; i < imgRef.current.files.length; i++) {
       FD.append("img", imgRef.current.files[i]);
     }
@@ -54,7 +55,7 @@ export default function UpdateModal(props: any) {
     console.log(FD.get("articleImg"));
     //글 업데이트 fetch 구현
     const response = await fetch("http://localhost:4000/board/article", {
-      method: "POST",
+      method: "PUT",
       body: FD,
     });
   };
@@ -99,7 +100,7 @@ export default function UpdateModal(props: any) {
           </div>
           <div className={classes.contentImgBox}>
             {imgFile &&
-              imgFile.map((val, idx) => (
+              imgFile.map((val: any, idx: any) => (
                 <img
                   key={idx}
                   src={val}
