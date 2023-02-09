@@ -23,7 +23,16 @@ const limits = {
   fileSize: 2048 * 2048 * 2,
 };
 const upload = multer({ storage, limits });
+//게시판 특정 db 찾기
+router.post('/search', async (req: Request, res: Response) => {
+  const result = await mongoClient.guestSerachArticle(
+    req.body.keyWord,
+    req.body.item
+  );
+  res.send(JSON.stringify(result));
+});
 
+// 게시판 db 가져오기
 router.get('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.guestfindArticle();
   res.send(JSON.stringify(result));
