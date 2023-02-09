@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const router = express.Router();
-const mongoClient = require('../controllers/guestMongoControl').mongoDB;
+const mongoClient = require('../controllers/guestMongoControl').mongoDatabase;
 
 const dir = './guest';
 const storage = multer.diskStorage({
@@ -12,10 +12,7 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename: (req: Request, file: Express.Multer.File, cb) => {
-    // 로직 찾기
     let newFileName = new Date().valueOf() + file.originalname;
-    // let newFileName = new Date().valueOf() + path.extname(file.originalname);
-
     cb(null, newFileName);
   },
 });

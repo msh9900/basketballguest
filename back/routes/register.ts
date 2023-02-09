@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-const mongoDB = require('../controllers/mongocontrol').mongoDB;
+const mongoDB = require('../controllers/authControl').mongoDB;
 const router = express.Router();
 
 // 회원가입

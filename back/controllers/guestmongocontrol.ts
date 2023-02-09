@@ -1,10 +1,10 @@
-const mongoClient = require('../routes/mongoconnet')!;
-const _user = mongoClient.connect();
+const guestMongoClient = require('../routes/mongoconnet')!;
+const _guest = guestMongoClient.connect();
 
-const mongoDB = {
+const mongoDatabase = {
   // 게스트 글 HEADER에서 찾기
   guestSerachArticle: async (keyWord: string, item: string) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findGuestArticle = await col
       .find({
@@ -15,14 +15,14 @@ const mongoDB = {
   },
   // 게스트 글 GET
   guestfindArticle: async () => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticle = await col.find().toArray();
     return findArticle;
   },
   //게스트 글 POST
   guestInsertArticle: async (data: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const insertArticle = await col.insertOne(data);
     if (insertArticle.acknowledged) {
@@ -31,7 +31,7 @@ const mongoDB = {
   },
   //게스트 글 PUT
   guestUpdateArticle: async (data: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleId = await col.findOne({
       contentIdx: data.contentIdx,
@@ -55,7 +55,7 @@ const mongoDB = {
   },
   //게스트 글 DELETE
   guestDeleteArticle: async (contentIdx: string) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const successMsg = await col.deleteOne({ contentIdx: contentIdx });
     if (successMsg.acknowledged) {
@@ -64,7 +64,7 @@ const mongoDB = {
   },
   //게스트 댓글 GET
   findComment: async (data: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFindOne = await col.findOne({ contentIdx: data });
     if (commentFindOne) {
@@ -74,7 +74,7 @@ const mongoDB = {
 
   //게스트 댓글 POST
   insertComment: async (data: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const articleFindOne = await col.findOne({
       contentIdx: data.contentIdx,
@@ -102,7 +102,7 @@ const mongoDB = {
   // 게스트 댓글 PUT
   updateComment: async (data: any) => {
     console.log('게시글 수정 진입', data);
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFound = await col.findOne({
       'comment.commentIdx': data.commentIdx,
@@ -132,7 +132,7 @@ const mongoDB = {
   },
   //게스트 댓글 DELETE
   deleteComment: async (commentIdx: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFindOne = await col.updateOne(
       { 'comment.commentIdx': commentIdx },
@@ -144,7 +144,7 @@ const mongoDB = {
   },
   //게스트 답글 POST
   insertReply: async (data: any, commentIdx: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFind = await col.findOne({
       'comment.commentIdx': commentIdx,
@@ -179,7 +179,7 @@ const mongoDB = {
   },
   //게스트 답글 UPDATE
   updateReply: async (data: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFound = await col.findOne({
       'comment.commentIdx': data.commentIdx,
@@ -209,7 +209,7 @@ const mongoDB = {
   //게스트 답글 DELETE
 
   deleteReply: async (commentIdx: any, replyIdx: any) => {
-    const user = await _user;
+    const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
 
     const commentFound = await col.findOne({
@@ -240,4 +240,4 @@ const mongoDB = {
     }
   },
 };
-module.exports = { mongoDB };
+module.exports = { mongoDatabase };
