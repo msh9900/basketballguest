@@ -1,10 +1,18 @@
 .writeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
   height: 50px;
-  background-color: skyblue;
+  background-color: orange;
+  border-radius: 50px;
   right: 50px;
   bottom: 50px;
   position: fixed;
+  &:hover {
+    background-color: skyblue;
+    cursor: pointer;
+  }
 }
 .modal {
   position: absolute;

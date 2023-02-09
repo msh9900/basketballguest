@@ -73,9 +73,13 @@ export default function WriteModal() {
             <Avatar alt="Remy Sharp" src={userImg} />
             <div>{userId}</div>
           </div>
-          <div>
-            <div>제목</div>
-            <input type="test" onChange={titleChange}></input>
+          <div className={classes.contentTitle}>
+            <div>글제목:</div>
+            <input
+              className={classes.inputTitle}
+              type="text"
+              onChange={titleChange}
+            ></input>
           </div>
           <div>
             <TextField
@@ -102,13 +106,6 @@ export default function WriteModal() {
                   className={classes.contentImg}
                 />
               ))}
-            {/* {imgFile && (
-              <img
-                src={imgFile}
-                alt="들어갈 이미지"
-                className={classes.contentImg}
-              />
-            )} */}
           </div>
           <div className={classes.submitImgBox}>
             <IconButton color="primary" component="label">
