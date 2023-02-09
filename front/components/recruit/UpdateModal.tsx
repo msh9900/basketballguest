@@ -8,22 +8,27 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SendIcon from "@mui/icons-material/Send";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
-export default function UpdateModal() {
+export default function UpdateModal(props: any) {
   const router = useRouter();
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
-  const [imgFile, setImgFile] = useState("");
+  const [imgFile, setImgFile] = useState<string[]>([]);
   const [contentText, setContentText] = useState("");
   const [titleText, setTitleText] = useState("");
   const imgRef: any = useRef();
+
   const readImage = () => {
-    const file = imgRef.current.files[0];
-    const reader: any = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImgFile(reader.result);
-      };
+    console.log(imgRef.current.files);
+    if (imgRef.current.files.length > 6) {
+      setImgFile([]);
+      alert("이미지는 최대 6장 입니다.");
+    } else {
+      const data: string[] = [];
+      for (let i = 0; i < imgRef.current.files.length; i++) {
+        const file = URL.createObjectURL(imgRef.current.files[i]);
+        data.push(file);
+        setImgFile(data);
+      }
     }
   };
 
@@ -53,15 +58,13 @@ export default function UpdateModal() {
       body: FD,
     });
   };
-  useEffect(() => {
-    //글 정보 가지고 오기.
-    // getData();
-  }, []);
-  const getData = async () => {
-    const response = await fetch(`http://localhost:4000/board/라우터주소`);
-    const res = await response.json();
-  };
 
+  useEffect(() => {
+    console.log(props.data);
+    setTitleText(props.data.title);
+    setContentText(props.data.content);
+    setImgFile(props.data.imgSrc);
+  }, []);
   return (
     <>
       <form
@@ -95,13 +98,15 @@ export default function UpdateModal() {
             />
           </div>
           <div className={classes.contentImgBox}>
-            {imgFile && (
-              <img
-                src={imgFile}
-                alt="들어갈 이미지"
-                className={classes.contentImg}
-              />
-            )}
+            {imgFile &&
+              imgFile.map((val, idx) => (
+                <img
+                  key={idx}
+                  src={val}
+                  alt="들어갈 이미지"
+                  className={classes.contentImg}
+                />
+              ))}
           </div>
           <div className={classes.submitImgBox}>
             <IconButton color="primary" component="label">

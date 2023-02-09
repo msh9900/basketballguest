@@ -49,7 +49,7 @@ export default function BasicMenu(props: any) {
         aria-describedby="modal-modal-description"
       >
         <div className={classes.modal}>
-          <UpdateModal />
+          <UpdateModal data={props.data} />
         </div>
       </Modal>
       <Button id="basic-button" aria-haspopup="true" onClick={handleClick}>

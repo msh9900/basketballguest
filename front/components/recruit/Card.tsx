@@ -100,7 +100,7 @@ export default function RecipeReviewCard(props: any) {
                 }
                 action={
                   contentData.id === userId ? (
-                    <MenuList idx={contentData.contentIdx} />
+                    <MenuList idx={contentData.contentIdx} data={contentData} />
                   ) : (
                     ""
                   )

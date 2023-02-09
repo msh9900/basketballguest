@@ -8,6 +8,8 @@ import WriteModal from "../../components/recruit/WriteModal";
 import ModeIcon from "@mui/icons-material/Mode";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { search } from "redux/modules/search";
 export default function GuestRecruitmentPage(props: any) {
   const router = useRouter();
   const isLogin = useSelector((state: any) => state.login?.isLogin);
@@ -17,6 +19,7 @@ export default function GuestRecruitmentPage(props: any) {
   const globalSearchNeeded = useSelector(
     (state: any) => state.search.globalSearchNeeded
   );
+  const dispatch = useDispatch();
   const [guestdata, setGuestData] = useState([]);
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
@@ -41,23 +44,36 @@ export default function GuestRecruitmentPage(props: any) {
   };
 
   const getData = async () => {
-    if (globalSearchNeeded && globalSearchValue !== "") {
-      const data = {
-        keyWord: globalSearchValue,
-      };
-      const response = await fetch("http://localhost:4000/board/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
-      setGuestData(res);
-    } else {
-      setGuestData(props.data);
-    }
+    console.log("모든 데이터 들어옴");
+    setGuestData(props.data);
+  };
+  const globalGetData = async () => {
+    console.log("검색해서 들어옴");
+    const data = {
+      keyWord: globalSearchValue,
+    };
+    const response = await fetch("http://localhost:4000/board/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await response.json();
+    setGuestData(res);
+    const stateObj = {
+      searchValue: "",
+      globalSearchNeeded: false,
+    };
+    dispatch(search(stateObj));
   };
   useEffect(() => {
-    getData();
+    if (globalSearchNeeded) {
+      globalGetData();
+    }
+  }, [globalSearchNeeded]);
+  useEffect(() => {
+    if (!globalSearchNeeded) {
+      getData();
+    }
   }, []);
   return (
     <>
