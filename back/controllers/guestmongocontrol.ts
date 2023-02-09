@@ -41,16 +41,13 @@ const mongoDatabase = {
         { contentIdx: data.contentIdx },
         {
           $set: {
-            'data.title': data.title,
-            'data.content': data.content,
-            'data.imgSrc': data.imgSrc,
+            title: data.title,
+            content: data.content,
+            imgSrc: data.imgSrc,
           },
         }
       );
-      const updateArticleData = await col.findOne({
-        contentIdx: data.contentIdx,
-      });
-      return updateArticleData;
+      return { msg: '게시글 수정 완료' };
     }
   },
   //게스트 글 DELETE

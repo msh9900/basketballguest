@@ -10,34 +10,43 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 // types
-import gymArticleDataType from "util/types/gymArticleDataType";
-import gymArticleDataBase from "util/types/gymArticleDataBase";
+// import gymArticleDataType from "util/types/gymArticleDataType";
+// import gymArticleDataBase from "util/types/gymArticleDataBase";
 // ------------------------------------
 
-const DetailArticles = () => {
-  const [gymInfo, setGymInfo] = useState<gymArticleDataType>(gymArticleDataBase);
-  const [articleUserId, setArticleUserId] = useState('')
+interface Props{
+  gymInfo:any, 
+  setGymInfo:any, 
+  articleUserId:any, 
+  setArticleUserId:any, 
+  isFetchingArticles:any, 
+  setIsFetchingArticles:any, 
+}
+
+const DetailArticles = (props:Props) => {
+  // const [gymInfo, setGymInfo] = useState<gymArticleDataType>(gymArticleDataBase);
+  // const [articleUserId, setArticleUserId] = useState('')
   const [isArticleEditing, setIsArticleEditing] = useState(false);
-  const [isFetchingArticles, setIsFetchingArticles] = useState(true);
+  // const [isFetchingArticles, setIsFetchingArticles] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    getGymData(router.query.articles as string);
-  }, [isFetchingArticles]);
+  // useEffect(() => {
+  //   getGymData(router.query.articles as string);
+  // }, [isFetchingArticles]);
 
-  // GET
-  const getGymData = async (pId: string) => {
-    const response = await fetch(
-      `http://localhost:4000/rental/article?pid=${pId}`
-    );
-    const data = await response.json();
-    const bf = data.openingPeriod[0].slice(0,10)
-    const af = data.openingPeriod[1].slice(0,10)
-    data.openingPeriod = [bf, af]
-    await setArticleUserId(data.articleUserId)
-    await setGymInfo(data);
-    await setIsFetchingArticles(false);
-  };
+  // // GET
+  // const getGymData = async (pId: string) => {
+  //   const response = await fetch(
+  //     `http://localhost:4000/rental/article?pid=${pId}`
+  //   );
+  //   const data = await response.json();
+  //   const bf = data.openingPeriod[0].slice(0,10)
+  //   const af = data.openingPeriod[1].slice(0,10)
+  //   data.openingPeriod = [bf, af]
+  //   await setArticleUserId(data.articleUserId)
+  //   await setGymInfo(data);
+  //   await setIsFetchingArticles(false);
+  // };
 
   // DELETE
   const deleteArticle = async () => {
@@ -56,7 +65,7 @@ const DetailArticles = () => {
   // etc utils...
   const getOpeningDaysFromData = () => {
     let temp: string[] = [];
-    gymInfo.openingDays.forEach((ele:any) => {
+    props.gymInfo.openingDays.forEach((ele:any) => {
       if (ele.open === true) temp.push(ele.name);
     });
     return temp;
@@ -66,8 +75,8 @@ const DetailArticles = () => {
   return (
     <>
       <div className={cls.DetailArticlesLayout}>
-        {!isFetchingArticles && (
-          <>
+        {/* {!props.isFetchingArticles && ( */}
+          {/* <> */}
             {!isArticleEditing && (
               <>
                 <h1>체육관 정보</h1>
@@ -75,7 +84,7 @@ const DetailArticles = () => {
                   <div className={cls.mainContent}>
                     <div className={cls.eachContent}>
                       <div className={cls.gym_Article_title}>
-                        <h2>{gymInfo.title}</h2>
+                        <h2>{props.gymInfo.title}</h2>
                       </div>
                       <div className={cls.gym_Article_controlBtns}>
                         <button
@@ -102,53 +111,53 @@ const DetailArticles = () => {
                     </div>
 
                     <div className={cls.eachContent}>
-                      {gymInfo.userName} | {gymInfo.createdAt}
+                      {props.gymInfo.userName} | {props.gymInfo.createdAt}
                     </div>
                   </div>
 
                   <div className={cls.imgContent}>
                     <SlickSlider 
-                      gymImg = {gymInfo.gymImg}
+                      gymImg = {props.gymInfo.gymImg}
                     />
                   </div>
 
                   <div className={cls.mainContent}>
-                    <div className={cls.eachContent}>{gymInfo.content}</div>
+                    <div className={cls.eachContent}>{props.gymInfo.content}</div>
                   </div>
 
                   <div className={cls.mainContent}>
-                    <div className={cls.eachContent}>{gymInfo.contact}</div>
+                    <div className={cls.eachContent}>{props.gymInfo.contact}</div>
                   </div>
 
                   <div className={cls.mainContent}>
                     <h4>주소</h4>
                     <div className={cls.eachContent}>
-                      우편번호 : {gymInfo.address[0].val} <br />
-                      도로명주소 : {gymInfo.address[1].val} <br />
-                      지번주소 : {gymInfo.address[2].val} <br />
-                      상세주소 : {gymInfo.address[3].val} <br />
-                      참고정보 : {gymInfo.address[4].val} <br />
+                      우편번호 : {props.gymInfo.address[0].val} <br />
+                      도로명주소 : {props.gymInfo.address[1].val} <br />
+                      지번주소 : {props.gymInfo.address[2].val} <br />
+                      상세주소 : {props.gymInfo.address[3].val} <br />
+                      참고정보 : {props.gymInfo.address[4].val} <br />
                     </div>
                   </div>
 
                   <div className={cls.mainContent}>
                     <h4>가격</h4>
                     <div className={cls.eachContent}>
-                      {gymInfo.price} 원/시간
+                      {props.gymInfo.price} 원/시간
                     </div>
                   </div>
 
                   <div className={cls.mainContent}>
                     <h4>오픈시간</h4>
                     <div className={cls.eachContent}>
-                      {gymInfo.openingHours}
+                      {props.gymInfo.openingHours}
                     </div>
                   </div>
 
                   <div className={cls.mainContent}>
                     <h4>오픈기간</h4>
                     <div className={cls.eachContent}>
-                      {gymInfo.openingPeriod[0].slice(0,10)} ~ {gymInfo.openingPeriod[1].slice(0,10)}
+                      {props.gymInfo.openingPeriod[0].slice(0,10)} ~ {props.gymInfo.openingPeriod[1].slice(0,10)}
                     </div>
                   </div>
 
@@ -165,24 +174,24 @@ const DetailArticles = () => {
             {isArticleEditing && (
               <>
                 <DetailArticles_EditForm
-                  gymInfo={gymInfo}
+                  gymInfo={props.gymInfo}
                   setIsArticleEditing={setIsArticleEditing}
-                  setIsFetchingArticles={setIsFetchingArticles}
+                  setIsFetchingArticles={props.setIsFetchingArticles}
                 />
               </>
             )}
-          </>
-        )}
+          {/* </> */}
+        {/* )} */}
         <h1>리뷰</h1>
         <div className={cls.contentBox}>
           <ReviewSection
-          articleUserId={articleUserId}/>
+          articleUserId={props.articleUserId}/>
         </div>
 
         <h1>댓글</h1>
         <div className={cls.contentBox}>
           <CommentSection 
-            articleUserId={articleUserId}
+            articleUserId={props.articleUserId}
           />
         </div>
       </div>

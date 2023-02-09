@@ -112,6 +112,7 @@ export async function getServerSideProps() {
   //여기서 글데이터 다 받아야됨.
   const response = await fetch("http://localhost:4000/board/article");
   const res = await response.json();
+  console.log(res);
 
   // Pass data to the page via props
   return { props: { data: res } };
