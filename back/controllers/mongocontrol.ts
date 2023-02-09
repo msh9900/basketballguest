@@ -1,4 +1,4 @@
-const mongoClient = require('../routes/mongoconnet')!;
+const mongoClient = require('../routes/mongoconnet');
 const _user = mongoClient.connect();
 
 const mongoDB = {

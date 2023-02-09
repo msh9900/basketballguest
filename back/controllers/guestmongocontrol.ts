@@ -1,4 +1,4 @@
-const guestMongoClient = require('../routes/mongoconnet')!;
+const guestMongoClient = require('../routes/mongoconnet');
 const _guest = guestMongoClient.connect();
 
 const mongoDatabase = {
