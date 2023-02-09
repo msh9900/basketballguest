@@ -25,7 +25,7 @@ export default function BasicMenu(props: any) {
     router.reload();
     //props.idx 해당되는 값 삭제 post
     const data = {
-      contentidx: props.idx,
+      contentIdx: props.idx,
     };
     const response = await fetch("http://localhost:4000/board/article", {
       method: "DELETE",

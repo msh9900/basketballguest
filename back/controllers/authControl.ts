@@ -17,7 +17,7 @@ const verfiyPassword = (password: string, salt: any, userPassword: any) => {
     .pbkdf2Sync(password, salt, 10, 64, 'sha512')
     .toString('base64');
   if (hashed === userPassword) return true;
-  return false;
+  else return false;
 };
 
 const mongoDB = {
@@ -51,7 +51,11 @@ const mongoDB = {
     const user = await _user;
     const col = user.db('basket').collection('login');
     const result = await col.findOne({ id });
+    if (result == null) {
+      return { msg: '해당 아이디를 찾을 수 없습니다.' };
+    }
     const decodePw = verfiyPassword(pw, result.salt, result.pw);
+
     if (decodePw && result) {
       return {
         id: result.id,
@@ -59,8 +63,9 @@ const mongoDB = {
         userName: result.userName,
         userImg: result.userImg,
       };
-    } else {
-      return { msg: '로그인 실패' };
+    }
+    if (!decodePw) {
+      return { msg: '비밀번호 확인 필요' };
     }
   },
   //이메일로 부합 확인

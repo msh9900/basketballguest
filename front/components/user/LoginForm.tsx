@@ -52,10 +52,12 @@ const LoginForm = () => {
       }),
     });
     const data = await response.json();
-
+    console.log("login data", data);
     try {
-      if (data.msg === "로그인 실패") {
-        alert("아이디나 패스워드를 확인해주세요");
+      if (data.msg === "비밀번호 확인 필요") {
+        alert(" 패스워드를 확인해주세요");
+      } else if (data.msg === "해당 아이디를 찾을 수 없습니다.") {
+        alert(" 아이디를 확인해주세요");
       } else {
         setCookie("login", JSON.stringify(data));
         alert("로그인성공");

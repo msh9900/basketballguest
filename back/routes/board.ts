@@ -22,6 +22,7 @@ const limits = {
 const upload = multer({ storage, limits });
 //게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
+  console.log('req.body', req.body);
   const result = await mongoClient.guestSerachArticle(
     req.body.keyWord,
     req.body.item
