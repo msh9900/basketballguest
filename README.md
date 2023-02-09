@@ -26,7 +26,7 @@
 <br />
 -Github: [@BoGusD](https://github.com/BoGusD)
 
-## 기술 스택
+## 🔨기술 스택
 
 ### Front-end
 
