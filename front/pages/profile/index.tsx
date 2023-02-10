@@ -1,3 +1,4 @@
+import withGetServerSideProps from 'hocs/withServersideProps';
 import classes from "./Profile.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -200,3 +201,8 @@ const Profile = () => {
   );
 };
 export default Profile;
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+	return {
+		props: {},
+	};
+});

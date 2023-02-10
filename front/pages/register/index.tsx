@@ -1,3 +1,4 @@
+import withGetServerSideProps from 'hocs/withServersideProps';
 import React from "react";
 import RegisterForm from "../../components/user/RegisterForm";
 export default function Register() {
@@ -7,3 +8,8 @@ export default function Register() {
     </>
   );
 }
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+	return {
+		props: {},
+	};
+});

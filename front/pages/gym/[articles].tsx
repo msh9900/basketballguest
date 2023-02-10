@@ -18,10 +18,9 @@ const articles = (props:Props) => {
   
   const serviceTitle = 'BPT'
 	const pageTitle = '상세 정보'
-	const pageDesc = '게시글 상세 정보와 리뷰 댓글이 달리는 페이지입니다.'
-  const pageUrl = 'www.BPT.com' // 배포할 사이트 경로 
-
-  // const ogImageSrc =	'https://res.cloudinary.com/dtq075vja/image/upload/v1669879703/9gle/ogImage_uki29n.png';
+	const pageDesc = '게시글 상세 정보, 리뷰, 댓글 페이지.'
+  const pageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+  const ogImageSrc = `/images/basketball1.jpg`;
   return (
     <>
       <Head>
@@ -41,7 +40,7 @@ const articles = (props:Props) => {
         <meta property='og:locale' content='en_US' />
         <meta property='og:locale' content='ko_KR' />
         <meta property='og:type' content='website' />
-        {/* <meta property='og:image' content={ogImageSrc} /> */}
+        <meta property='og:image' content={ogImageSrc} />
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content='600' />
 
@@ -50,7 +49,7 @@ const articles = (props:Props) => {
         <meta name='twitter:title' content={pageTitle} />
         <meta name='twitter:description' content={pageDesc} />
         <meta name='twitter:url' content={pageUrl} />
-        {/* <meta name='twitter:image' content={ogImageSrc} /> */}
+        <meta name='twitter:image' content={ogImageSrc} />
         <title>{serviceTitle} : {pageTitle}</title>
       </Head>
 
@@ -69,10 +68,6 @@ const articles = (props:Props) => {
 export default articles;
 
 export async function getServerSideProps(context:any) {
-
-  // const [gymInfo, setGymInfo] = useState<gymArticleDataType>(gymArticleDataBase);
-  // const [articleUserId, setArticleUserId] = useState('')
-  // const [isFetchingArticles, setIsFetchingArticles] = useState(true);
   
   const pId = context.query.articles
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}/rental/article?pid=${pId}`
@@ -81,10 +76,6 @@ export async function getServerSideProps(context:any) {
   const bf = data.openingPeriod[0].slice(0,10)
   const af = data.openingPeriod[1].slice(0,10)
   data.openingPeriod = [bf, af]
-
-  // await setArticleUserId(data.articleUserId)
-  // await setGymInfo(data);
-  // await setIsFetchingArticles(false);
 
   return {
     props: {

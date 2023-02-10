@@ -1,3 +1,4 @@
+import withGetServerSideProps from 'hocs/withServersideProps';
 import Comp from 'components/user/findUserInfo'
 
 const findUserId = () => {
@@ -7,3 +8,8 @@ const findUserId = () => {
 };
 
 export default findUserId;
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+	return {
+		props: {},
+	};
+});

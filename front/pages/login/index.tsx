@@ -1,3 +1,4 @@
+import withGetServerSideProps from 'hocs/withServersideProps';
 import LoginForm from "../../components/user/LoginForm";
 
 export default function LoginPage() {
@@ -7,3 +8,8 @@ export default function LoginPage() {
     </>
   );
 }
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+	return {
+		props: {},
+	};
+});

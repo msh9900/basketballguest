@@ -1,3 +1,4 @@
+import withGetServerSideProps from 'hocs/withServersideProps';
 import CertID from "components/user/CertID";
 
 const lostID = () => {
@@ -5,3 +6,8 @@ const lostID = () => {
 };
 
 export default lostID;
+export const getServerSideProps = withGetServerSideProps(async (context:any) => {
+	return {
+		props: {},
+	};
+});

@@ -36,7 +36,7 @@ export default function HomePage() {
               <div className={classes.title}>BPT 이야기</div>
               <div className={classes.text}>
                 좋은 환경에서 좋은 사람들과 경기를 즐겨보세요 <br />
-                BPT가 도움 되어드리겠습니다.
+                BPT가 도와드리겠습니다.
               </div>
               <Button2 src="/intro" />
             </div>
