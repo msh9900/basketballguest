@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const crawler = async (address: any) => {
+const crawler = async (address) => {
   const browser = await puppeteer.launch({
     // headless: false,
     slowMo: 30,
@@ -13,7 +13,7 @@ const crawler = async (address: any) => {
     height: 1080,
   });
 
-  page.on('dialog', async (dialog: any) => {
+  page.on('dialog', async (dialog) => {
     await dialog.dismiss();
   });
 
@@ -34,8 +34,8 @@ const crawler = async (address: any) => {
   // 값 받아오기
   await page.waitForSelector('#insert_data_5');
   let coordinates = await page.evaluate(() => {
-    const val = document.querySelector('#insert_data_5')!.textContent;
-    return val;
+    const val = document.querySelector('#insert_data_5');
+    return val.textContent;
   });
 
   await browser.close();

@@ -60,7 +60,6 @@ const GymRentalPost = () => {
   const [lastRender, setLastRender] = useState(false);
 
   const post = async () => {
-
     // 유효성 체크
     const isValid = await isFormValid(
       title,
@@ -90,7 +89,7 @@ const GymRentalPost = () => {
     for (const pair of imgFormData.entries()) {
       FD.append(pair[0], pair[1]);
     }
-    
+
     // 전송
     try {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/article`, {
@@ -98,7 +97,7 @@ const GymRentalPost = () => {
         body: FD,
       });
       await setIsCreating(false);
-      await setLastRender(true)
+      await setLastRender(true);
       await router.push("/gym");
     } catch (error: any) {
       console.log("이미지 데이터 post 실패 : ", error);
