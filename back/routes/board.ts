@@ -5,6 +5,9 @@ import path from 'path';
 const mongoClient = require('../controllers/guestMongoControl').mongoDatabase;
 const router = express.Router();
 
+//env config
+require('dotenv').config();
+
 const dir = './guest';
 const storage = multer.diskStorage({
   destination: function (req: Request, file: Express.Multer.File, cb) {
@@ -40,7 +43,8 @@ router.post(
 
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
+      const eachFilename =
+        `http://${process.env.SERVICE_IP}:4000/guest/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
     let data = {
@@ -65,7 +69,8 @@ router.put(
 
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename = 'http://localhost:4000/guest/' + ele.filename;
+      const eachFilename =
+        `http://${process.env.SERVICE_IP}:4000/guest/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
     let data = {

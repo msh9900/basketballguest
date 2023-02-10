@@ -3,6 +3,9 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 
+//env config
+require('dotenv').config();
+
 const mongoClient = require('../controllers/authControl').mongoDB;
 const router = express.Router();
 
@@ -41,7 +44,7 @@ router.post(
       pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
       email: req.body.email.replaceAll('"', ''),
-      userImg: `http://localhost:4000/images/${imgpath}`,
+      userImg: `http://${process.env.SERVICE_IP}:4000/images/${imgpath}`,
     };
 
     const result = await mongoClient.userData(logindata);

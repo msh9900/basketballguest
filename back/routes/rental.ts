@@ -3,6 +3,9 @@ import fs, { lutimes } from 'fs';
 import multer from 'multer';
 import path from 'path';
 
+//env config
+require('dotenv').config();
+
 const router = express.Router();
 const mongoClient = require('../controllers/mongoControl').mongoDB;
 const crawlingTest = require('../module/crawler').crawler;
@@ -83,7 +86,8 @@ router.post(
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename = 'http://localhost:4000/rental/' + ele.filename;
+      const eachFilename =
+        `http://${process.env.SERVICE_IP}/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
 
@@ -139,7 +143,8 @@ router.put(
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename = 'http://localhost:4000/rental/' + ele.filename;
+      const eachFilename =
+        `http://${process.env.SERVICE_IP}:4000/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
     let data = {
