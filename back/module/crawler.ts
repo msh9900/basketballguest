@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const crawler = async (address) => {
+const crawler = async (address: any) => {
   const browser = await puppeteer.launch({
     // headless: false,
     slowMo: 30,
@@ -13,7 +13,7 @@ const crawler = async (address) => {
     height: 1080,
   });
 
-  page.on('dialog', async (dialog) => {
+  page.on('dialog', async (dialog: any) => {
     await dialog.dismiss();
   });
 
