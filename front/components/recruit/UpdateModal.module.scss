@@ -23,8 +23,8 @@
     }
     .contentImgBox {
       .contentImg {
-        width: 200px;
-        height: 200px;
+        width: 100px;
+        height: 100px;
         object-fit: fill;
       }
     }
@@ -32,6 +32,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .contentImgBox {
+    .contentImg {
+      width: 50px;
+      height: 50px;
+      object-fit: fill;
     }
   }
 }

@@ -22,10 +22,20 @@
       }
     }
     .contentImgBox {
+      display: flex;
+      flex-wrap: wrap;
       .contentImg {
-        width: 200px;
-        height: 200px;
+        width: 100px;
+        height: 100px;
         object-fit: fill;
+      }
+      .contentAddImg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 100px;
+        background-color: #777777;
       }
     }
     .submitImgBox {
@@ -33,5 +43,10 @@
       justify-content: center;
       align-items: center;
     }
+  }
+}
+@media (max-width: 900px) {
+  .modal {
+    width: 300px;
   }
 }
