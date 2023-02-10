@@ -4,14 +4,15 @@ const crawler = async (address) => {
   const browser = await puppeteer.launch({
     // headless: false,
     slowMo: 30,
-    args: ['--window-size=1920,1080'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // args: ['--window-size=1920,1080'],
   });
 
   const page = await browser.newPage();
-  await page.setViewport({
-    width: 1920,
-    height: 1080,
-  });
+  // await page.setViewport({
+  //   width: 1920,
+  //   height: 1080,
+  // });
 
   page.on('dialog', async (dialog) => {
     await dialog.dismiss();
