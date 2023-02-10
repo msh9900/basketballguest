@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
 const Profile = () => {
-  let formData: any = new FormData();
+  // let formData: any = new FormData();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -23,6 +23,7 @@ const Profile = () => {
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
+  const [imgData, setImgData] = useState()
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -43,7 +44,7 @@ const Profile = () => {
     setUserName(stateUserName);
     setEmail(stateUserEmail);
     setUserImg(stateUserImg);
-    formData = new FormData();
+    // formData = new FormData();
   }, []);
 
   const InputPasswordHandler = (e: any) => {
@@ -62,21 +63,22 @@ const Profile = () => {
   };
 
   const imgHandler = async (event: any) => {
-    formData.append("img", event.target.files[0]);
+    setImgData(event.target.files[0])
     setUserImg(URL.createObjectURL(event.target.files[0]));
-    console.log(event.target.files[0]);
   };
 
   async function profileSumbit(event: any) {
-    console.log('formData.get("img")', formData.get("img"));
+    // console.log('formData.get("img")', formData.get("img"));
     event.preventDefault();
     setIsRecentSubmitted(true);
-
+    const formData: any = new FormData();
+    formData.append("img", imgData);
     formData.append("id", JSON.stringify(stateId));
     formData.append("pw", JSON.stringify(pw));
     formData.append("email", JSON.stringify(email));
     formData.append("userName", JSON.stringify(userName));
     formData.append("userImg", JSON.stringify(userImg));
+
     if (isValid === false) {
       return;
     }
