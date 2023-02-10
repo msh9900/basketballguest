@@ -7,3 +7,8 @@
   background-color: azure;
   border: 2px solid black;
 }
+@media (max-width: 900px) {
+  .modal {
+    width: 300px;
+  }
+}

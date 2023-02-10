@@ -16,7 +16,7 @@ export default function WriteModal() {
   const [contentText, setContentText] = useState("");
   const [titleText, setTitleText] = useState("");
   const imgRef: any = useRef();
-  const titleRef: any = useRef();
+
   const readImage = () => {
     console.log(imgRef.current.files);
     if (imgRef.current.files.length > 6) {
@@ -98,14 +98,24 @@ export default function WriteModal() {
           </div>
           <div className={classes.contentImgBox}>
             {imgFile &&
-              imgFile.map((val, idx) => (
-                <img
-                  key={idx}
-                  src={val}
-                  alt="들어갈 이미지"
-                  className={classes.contentImg}
-                />
-              ))}
+              imgFile.map((val, idx) => {
+                if (idx <= 2) {
+                  return (
+                    <img
+                      key={idx}
+                      src={val}
+                      alt="들어갈 이미지"
+                      className={classes.contentImg}
+                    />
+                  );
+                } else if (idx === 3) {
+                  return (
+                    <div className={classes.contentAddImg}>
+                      +{imgFile.length - 4}장
+                    </div>
+                  );
+                }
+              })}
           </div>
           <div className={classes.submitImgBox}>
             <IconButton color="primary" component="label">

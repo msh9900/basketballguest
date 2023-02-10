@@ -50,6 +50,9 @@
   background-color: #797979;
 }
 @media (max-width: 900px) {
+  .modal {
+    width: 300px;
+  }
   .writeButton {
     top: 150px;
   }
