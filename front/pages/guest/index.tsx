@@ -52,12 +52,15 @@ export default function GuestRecruitmentPage(props: any) {
     const data = {
       keyWord: globalSearchValue,
     };
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/search`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/search`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
     const res = await response.json();
     setGuestData(res);
     const stateObj = {
@@ -111,10 +114,11 @@ export default function GuestRecruitmentPage(props: any) {
 }
 export async function getServerSideProps() {
   //여기서 글데이터 다 받아야됨.
-  
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/article`);
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/board/article`
+  );
   const res = await response.json();
-  console.log(res);
 
   // Pass data to the page via props
   return { props: { data: res } };
