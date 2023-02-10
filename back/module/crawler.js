@@ -3,7 +3,6 @@ const puppeteer = require('puppeteer');
 const crawler = async (address) => {
   const browser = await puppeteer.launch({
     // headless: false,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     slowMo: 30,
     args: ['--window-size=1920,1080'],
   });
@@ -19,10 +18,7 @@ const crawler = async (address) => {
   });
 
   await Promise.all([
-    page.goto('https://address.dawul.co.kr/', {
-      waitUntil: 'networkidle2',
-      timeout: 0,
-    }),
+    page.goto('https://address.dawul.co.kr/'),
     page.waitForNavigation(),
   ]);
 
