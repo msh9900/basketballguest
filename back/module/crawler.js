@@ -19,7 +19,10 @@ const crawler = async (address) => {
   });
 
   await Promise.all([
-    page.goto('https://address.dawul.co.kr/'),
+    page.goto('https://address.dawul.co.kr/', {
+      waitUntil: 'networkidle2',
+      timeout: 0,
+    }),
     page.waitForNavigation(),
   ]);
 
@@ -43,10 +46,4 @@ const crawler = async (address) => {
   return coordinates;
 };
 
-// const address = '서울 토성로 38-6';
-// const coordinates = await crawlingTest(address);
-// let trimmed = await coordinates!.replace(/ /g, '');
-// const v = await trimmed.split(',');
-// const [offsetX, offsetY] = [v[0].slice(2), v[1].slice(2)];
-// console.log(offsetX, offsetY);
 module.exports = { crawler };
