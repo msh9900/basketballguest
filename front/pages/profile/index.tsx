@@ -23,7 +23,7 @@ const Profile = () => {
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
 
-  const [imgData, setImgData] = useState()
+  const [imgData, setImgData] = useState();
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -63,7 +63,7 @@ const Profile = () => {
   };
 
   const imgHandler = async (event: any) => {
-    setImgData(event.target.files[0])
+    setImgData(event.target.files[0]);
     setUserImg(URL.createObjectURL(event.target.files[0]));
   };
 
@@ -82,11 +82,14 @@ const Profile = () => {
     if (isValid === false) {
       return;
     }
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/userdata`, {
-      method: "POST",
-      body: formData,
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/profile/userdata`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const data = await response.json();
 
     if (!response.ok) {
