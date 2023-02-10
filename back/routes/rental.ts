@@ -86,8 +86,7 @@ router.post(
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename =
-        `http://${process.env.SERVICE_IP}/rental/` + ele.filename;
+      const eachFilename = `${process.env.SERVER_URL}/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
 
@@ -143,8 +142,7 @@ router.put(
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename =
-        `http://${process.env.SERVICE_IP}:4000/rental/` + ele.filename;
+      const eachFilename = `${process.env.SERVER_URL}/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
     let data = {
@@ -274,7 +272,6 @@ router.post('/reply', async (req: Request, res: Response) => {
     userName: req.body.userName,
     createdAt: new Date().toLocaleString('ko-kr'),
     contents: req.body.contents,
-    // replys: req.body.replys,
   };
   const result = await mongoClient.addInsertReply(data);
   res.send(JSON.stringify(result));

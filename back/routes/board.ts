@@ -43,8 +43,7 @@ router.post(
 
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename =
-        `http://${process.env.SERVICE_IP}:4000/guest/` + ele.filename;
+      const eachFilename = `${process.env.SERVER_URL}/guest/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
     let data = {
@@ -69,8 +68,7 @@ router.put(
 
     let fileNameArray: any = [];
     resultFiles.map((ele: any) => {
-      const eachFilename =
-        `http://${process.env.SERVICE_IP}:4000/guest/` + ele.filename;
+      const eachFilename = `${process.env.SERVER_URL}/guest/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
     let data = {

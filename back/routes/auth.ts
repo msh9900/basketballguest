@@ -33,7 +33,7 @@ router.post('/findid', async (req: Request, res: Response) => {
     html: `
       <p>아이디를 찾기 위해 아래 url로 이동하여 다음 인증번호를 입력해주세요.</p> 
       ${AuthNumber} <br/> 
-      <a href="http://${process.env.SERVICE_IP}:3000/auth/lostId">여기를 클릭해주세요</a>`,
+      <a href="{${process.env.CLIENT_URL}/auth/lostId">여기를 클릭해주세요</a>`,
   };
 
   const result = await mongoClient.foundId(
@@ -88,7 +88,7 @@ router.post(
         html: `
         <p>비밀번호를 찾기 위해 아래 url로 이동하여 다음 인증번호를 입력해주세요.</p> 
         ${AuthNumber} <br/> 
-        <a href="http://${process.env.SERVICE_IP}:3000/auth/lostPw">여기를 클릭해주세요</a>`,
+        <a href="${process.env.CLIENT_URL}/auth/lostPw">여기를 클릭해주세요</a>`,
       };
       //추출된 이메일을 통해 인증번호 보낸 값 부합 확인
       const userInput = foundemail;

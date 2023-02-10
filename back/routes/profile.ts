@@ -44,7 +44,7 @@ router.post(
       pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
       email: req.body.email.replaceAll('"', ''),
-      userImg: `http://${process.env.SERVICE_IP}:4000/images/${imgpath}`,
+      userImg: `${process.env.SERVER_URL}/images/${imgpath}`,
     };
 
     const result = await mongoClient.userData(logindata);
