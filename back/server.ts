@@ -13,6 +13,8 @@ server.use('/guest', express.static('guest'));
 // dotenv
 require('dotenv').config();
 
+const PORT = process.env.PORT;
+
 //Router
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
@@ -34,6 +36,6 @@ server.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.status(err.statusCode || 500);
   res.send(err.message);
 });
-server.listen(4000, () => {
-  console.log('4000으로 연결완료');
+server.listen(PORT, () => {
+  console.log('서버 연결 완료');
 });
