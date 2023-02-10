@@ -34,7 +34,7 @@ const crawler = async (address) => {
   // 값 받아오기
   await page.waitForSelector('#insert_data_5');
   let coordinates = await page.evaluate(() => {
-    const val = document.querySelector('#insert_data_5').textContent;
+    const val = document.querySelector('#insert_data_5')!.textContent;
     return val;
   });
 
