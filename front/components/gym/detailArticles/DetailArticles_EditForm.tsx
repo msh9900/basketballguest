@@ -65,9 +65,8 @@ const DetailArticles_EditForm = (props: Props) => {
     }
 
     // return;
-
     try {
-      const response = await fetch("http://localhost:4000/rental/article",  {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/articles`,  {
         method: "PUT",
         body: formBody,
       });

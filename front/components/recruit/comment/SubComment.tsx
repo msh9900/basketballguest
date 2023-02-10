@@ -15,7 +15,7 @@ export default function SubComment(props: any) {
 
   const replyDeleteHandler = async () => {
     const response = await fetch(
-      `http://localhost:4000/board/reply?replyIdx=${props.data.replyIdx}&commentIdx=${props.commentIdx}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/reply?replyIdx=${props.data.replyIdx}&commentIdx=${props.commentIdx}`,
       {
         method: "DELETE",
       }
@@ -38,8 +38,8 @@ export default function SubComment(props: any) {
       replyIdx: props.data.replyIdx,
       content: writeComment,
     };
-
-    const response = await fetch("http://localhost:4000/board/reply", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

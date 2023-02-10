@@ -47,7 +47,7 @@ const EditReview = (props: Props) => {
     try {
       await updateReview(reviewId, updateReviewObj);
       await fetch(
-        `http://localhost:4000/rental/review?reviewId=${reviewId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/review?reviewId=${reviewId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

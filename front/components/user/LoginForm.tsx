@@ -42,8 +42,8 @@ const LoginForm = () => {
     if (isIdPwValid === false) {
       return;
     }
-
-    const response: any = await fetch("http://localhost:4000/login", {
+    
+    const response: any = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

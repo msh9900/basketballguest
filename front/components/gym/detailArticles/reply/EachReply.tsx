@@ -68,7 +68,7 @@ const EachReply = (props: Props) => {
     console.log("삭제 실행중");
     try {
       await fetch(
-        `http://localhost:4000/rental/reply?replyId=${replyId}&commentId=${commentId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/reply?replyId=${replyId}&commentId=${commentId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

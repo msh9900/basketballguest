@@ -1,6 +1,6 @@
 const updateReview = (reviewId:any, updateReviewObj:any) => {
   fetch(
-    `http://localhost:4000/rental/review?reviewId=${reviewId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/rental/review?reviewId=${reviewId}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

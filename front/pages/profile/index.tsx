@@ -80,7 +80,8 @@ const Profile = () => {
     if (isValid === false) {
       return;
     }
-    const response = await fetch("http://localhost:4000/profile/userdata", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/userdata`, {
       method: "POST",
       body: formData,
     });

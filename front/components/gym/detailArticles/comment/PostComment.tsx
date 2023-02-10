@@ -26,9 +26,9 @@ const CommentPostForm = (props: Props) => {
       contents: writingText,
       replys: [],
     };
-
+    
     try {
-      await fetch("http://localhost:4000/rental/comment", {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/comment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postDataforComment),

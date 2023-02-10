@@ -42,7 +42,8 @@ export default function RecipeReviewCard(props: any) {
         content: writeComment,
         userImg: userImg,
       };
-      const response = await fetch("http://localhost:4000/board/comment", {
+      
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/comment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -64,7 +65,7 @@ export default function RecipeReviewCard(props: any) {
   const getData = async () => {
     //카드에 해당되는 댓글 가져오기
     const response = await fetch(
-      `http://localhost:4000/board/comment?contentIdx=${props.data.contentIdx}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/comment?contentIdx=${props.data.contentIdx}`
     );
     const res = await response.json();
     console.log(res);

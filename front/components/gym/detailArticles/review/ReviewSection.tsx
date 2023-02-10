@@ -51,7 +51,7 @@ const ReviewSection = (props:Props) => {
   const getReviewData = async () => {
     try {
       const pId = router.query.articles as string;
-      const response = await fetch(`http://localhost:4000/rental/review?pid=${pId}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/review?pid=${pId}`);
       const res = await response.json();
       await setAllReviewData(res);
       await setIsFetching(false);

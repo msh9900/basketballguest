@@ -29,7 +29,7 @@ const CommentSection = (props:Props) => {
     try {
       const pId = router.query.articles as string;
       const response = await fetch(
-        `http://localhost:4000/rental/comment?pid=${pId}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/comment?pid=${pId}`
       );
       const res = await response.json();
       await setCommentData(res);

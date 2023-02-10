@@ -38,9 +38,9 @@ const PostReply = (props: Props) => {
       userName: stateName,
       indentLevel: props.indent,
     };
-
+    
     try {
-      await fetch("http://localhost:4000/rental/reply", {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/reply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

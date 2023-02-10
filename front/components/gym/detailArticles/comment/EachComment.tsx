@@ -56,7 +56,7 @@ const EachComment = (props: Props) => {
     const commentId = e.target.id;
     try {
       await fetch(
-        `http://localhost:4000/rental/comment?commentId=${commentId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/comment?commentId=${commentId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

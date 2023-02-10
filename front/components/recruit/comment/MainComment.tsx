@@ -23,7 +23,7 @@ export default function MainComment(props: any) {
   };
   const replyDeleteHandler = async () => {
     const response = await fetch(
-      `http://localhost:4000/board/comment?commentIdx=${props.data.commentIdx}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/comment?commentIdx=${props.data.commentIdx}`,
       {
         method: "DELETE",
       }
@@ -45,8 +45,8 @@ export default function MainComment(props: any) {
       userId,
       userImg,
     };
-
-    const response = await fetch("http://localhost:4000/board/reply", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -60,8 +60,8 @@ export default function MainComment(props: any) {
       commentIdx: props.data.commentIdx,
       content: writeComment,
     };
-
-    const response = await fetch("http://localhost:4000/board/comment", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/comment`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

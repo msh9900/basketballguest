@@ -30,7 +30,7 @@ const EachReviews = (props: Props) => {
     const reviewId = eachReview.reviewId;
     try {
       await fetch(
-        `http://localhost:4000/rental/review?reviewId=${reviewId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/review?reviewId=${reviewId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

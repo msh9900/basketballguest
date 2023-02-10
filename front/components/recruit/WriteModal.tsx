@@ -55,7 +55,8 @@ export default function WriteModal() {
 
     FD.get("articleImg");
     //글쓰기 fetch 구현
-    const response = await fetch("http://localhost:4000/board/article", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/article`, {
       method: "POST",
       body: FD,
     });

@@ -72,7 +72,7 @@ const AllArticles = (props: Props) => {
       };
 
       try {
-        const response = await fetch("http://localhost:4000/rental/search", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/search`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(fetchDataBody),
@@ -87,7 +87,7 @@ const AllArticles = (props: Props) => {
     // 전체 목록
     else {
       try {
-        const response = await fetch("http://localhost:4000/rental/articles");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/articles`);
         const res = await response.json();
         await setArticles(res);
         // console.log("기본 검색 성공 : ", res);

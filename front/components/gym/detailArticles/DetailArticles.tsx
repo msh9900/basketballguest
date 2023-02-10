@@ -24,35 +24,14 @@ interface Props{
 }
 
 const DetailArticles = (props:Props) => {
-  // const [gymInfo, setGymInfo] = useState<gymArticleDataType>(gymArticleDataBase);
-  // const [articleUserId, setArticleUserId] = useState('')
   const [isArticleEditing, setIsArticleEditing] = useState(false);
-  // const [isFetchingArticles, setIsFetchingArticles] = useState(true);
   const router = useRouter();
-
-  // useEffect(() => {
-  //   getGymData(router.query.articles as string);
-  // }, [isFetchingArticles]);
-
-  // // GET
-  // const getGymData = async (pId: string) => {
-  //   const response = await fetch(
-  //     `http://localhost:4000/rental/article?pid=${pId}`
-  //   );
-  //   const data = await response.json();
-  //   const bf = data.openingPeriod[0].slice(0,10)
-  //   const af = data.openingPeriod[1].slice(0,10)
-  //   data.openingPeriod = [bf, af]
-  //   await setArticleUserId(data.articleUserId)
-  //   await setGymInfo(data);
-  //   await setIsFetchingArticles(false);
-  // };
 
   // DELETE
   const deleteArticle = async () => {
     const pId = router.query.articles as string;
     try {
-      await fetch(`http://localhost:4000/rental/article?pid=${pId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/article?pid=${pId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });

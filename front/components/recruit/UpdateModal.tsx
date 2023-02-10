@@ -54,7 +54,9 @@ export default function UpdateModal(props: any) {
 
     console.log(FD.get("articleImg"));
     //글 업데이트 fetch 구현
-    const response = await fetch("http://localhost:4000/board/article", {
+
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/article`, {
       method: "PUT",
       body: FD,
     });

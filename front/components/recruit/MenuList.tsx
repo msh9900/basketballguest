@@ -27,7 +27,8 @@ export default function BasicMenu(props: any) {
     const data = {
       contentIdx: props.idx,
     };
-    const response = await fetch("http://localhost:4000/board/article", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/article`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

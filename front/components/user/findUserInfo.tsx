@@ -29,8 +29,7 @@ const findUserInfo = () => {
   };
 
   const fetchIdPw = async (routeValue: string, userInput: string) => {
-    // console.log('아이디 패치 경로', `http://localhost:4000/auth/${routeValue}`)
-    const response = await fetch(`http://localhost:4000/auth/${routeValue}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/${routeValue}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userInput }),

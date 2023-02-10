@@ -90,10 +90,10 @@ const GymRentalPost = () => {
     for (const pair of imgFormData.entries()) {
       FD.append(pair[0], pair[1]);
     }
-
+    
     // 전송
     try {
-      await fetch("http://localhost:4000/rental/article", {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/article`, {
         method: "POST",
         body: FD,
       });

@@ -32,8 +32,9 @@ const PostReview = (props: Props) => {
       content,
       rating,
     };
+    
     try{
-      await fetch("http://localhost:4000/rental/review", {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reviewObj),

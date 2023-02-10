@@ -59,8 +59,8 @@ const LoginForm = (props: any) => {
     if (isValid === false) {
       return;
     }
-
-    const response = await fetch("http://localhost:4000/register", {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

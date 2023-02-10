@@ -39,9 +39,10 @@ const EditReply = (props: Props) => {
       contents: fixedContent,
       // indentLevel: props.replys.indentLevel,
     };
+    
     try {
       await fetch(
-        `http://localhost:4000/rental/reply?replyId=${replyId}&commentId=${commentId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/reply?replyId=${replyId}&commentId=${commentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -33,7 +33,8 @@ const CertPW = () => {
 
   const compareCertNum = async (certificationNumber: any) => {
     try {
-      const res = await fetch("http://localhost:4000/auth/matchpw", {
+      
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/matchpw`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ certificationNumber }),
@@ -79,7 +80,8 @@ const CertPW = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:4000/auth/setpw", {
+      
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/setpw`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ resetPwBody }),
