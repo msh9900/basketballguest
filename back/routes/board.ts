@@ -64,6 +64,7 @@ router.put(
   '/article',
   upload.array('img', 6),
   async (req: Request, res: Response) => {
+    console.log('img', req.body.imgSrc);
     const resultFiles = req.files as any;
 
     let fileNameArray: any = [];
@@ -83,10 +84,10 @@ router.put(
     };
 
     if (req.files?.length === 0) {
-      data.imgSrc = req.body.imgSrc;
+      data.imgSrc = JSON.parse(req.body.imgSrc);
     }
     const result = await mongoClient.guestUpdateArticle(data);
-    return result;
+    // return result;
   }
 );
 router.delete('/article', async (req: Request, res: Response) => {
