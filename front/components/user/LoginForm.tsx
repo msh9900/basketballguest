@@ -42,15 +42,18 @@ const LoginForm = () => {
     if (isIdPwValid === false) {
       return;
     }
-    
-    const response: any = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: id,
-        pw: pw,
-      }),
-    });
+
+    const response: any = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: id,
+          pw: pw,
+        }),
+      }
+    );
     const data = await response.json();
     console.log("login data", data);
     try {
@@ -59,7 +62,10 @@ const LoginForm = () => {
       } else if (data.msg === "해당 아이디를 찾을 수 없습니다.") {
         alert(" 아이디를 확인해주세요");
       } else {
-        setCookie("login", JSON.stringify(data));
+        let now = new Date();
+        let after10m = new Date();
+        after10m.setMinutes(now.getMinutes() + 10);
+        setCookie("login", JSON.stringify(data), { expires: after10m });
         alert("로그인성공");
         router.push("/");
         dispatch(IsLogin(data));
