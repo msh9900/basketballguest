@@ -18,14 +18,15 @@ const crawler = async (address) => {
     await dialog.dismiss();
   });
 
-  //await Promise.all([
-  
+  //await Promise.all([ await page.goto('https://address.dawul.co.kr/'),
+   //page.waitForNavigation(),
+  //]);
   await page.goto('https://address.dawul.co.kr/'),{
       waitUntil: 'load',
     // Remove the timeout
     timeout: 0
-    //page.waitForNavigation(),
-  });//
+   
+  });
 
   // 팝업제거
   const pages = await browser.pages();
