@@ -20,10 +20,6 @@ const Seo = (props: Props) => {
   const pageTitle = getTitleFromPath(pagePath);
   const pageDesc = getDescFromPath(pagePath);
   const pageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-  // "www.bpt.com"
-  // const ogImageSrc = `${process.env.NEXT_PUBLIC_BASE_URL}/images`;
-  const ogImageSrc = `/images/basketball1.jpg`;
-
   return (
     <>
       {isMounted && (
@@ -34,6 +30,7 @@ const Seo = (props: Props) => {
           />
           <meta name="keywords" content="농구, 게스트모집, 체육관대여" />
           <meta name="description" content={pageDesc} />
+          <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_64.ico" />
 
           <meta name="application-name" content={serviceTitle} />
           <meta name="msapplication-tooltip" content={serviceTitle} />
@@ -47,7 +44,7 @@ const Seo = (props: Props) => {
           <meta property="og:locale" content="en_US" />
           <meta property="og:locale" content="ko_KR" />
           <meta property="og:type" content="website" />
-          <meta property='og:image' content={ogImageSrc} />
+          <meta property='og:image' content='/images/basketball1.jpg' />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="600" />
 
@@ -56,7 +53,7 @@ const Seo = (props: Props) => {
           <meta name="twitter:title" content={pageTitle} />
           <meta name="twitter:description" content={pageDesc} />
           <meta name="twitter:url" content={pageUrl} />
-          <meta name='twitter:image' content={ogImageSrc} />
+          <meta name='twitter:image' content='/images/basketball1.jpg' />
           <title>
             {serviceTitle} : {pageTitle}
           </title>

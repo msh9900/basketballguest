@@ -26,6 +26,7 @@ const articles = (props:Props) => {
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <meta name='keywords' content='농구, 게스트모집, 체육관대여' />
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_64.ico" />
         <meta name='description' content={pageDesc} />
 
         <meta name='application-name' content={serviceTitle} />
