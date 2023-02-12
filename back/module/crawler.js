@@ -3,8 +3,8 @@ const puppeteer = require('puppeteer');
 const crawler = async (address) => {
   const browser = await puppeteer.launch({
     // headless: false,
-    slowMo: 10,
-    // args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    slowMo:20,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     // args: ['--window-size=1920,1080'],
   });
 
