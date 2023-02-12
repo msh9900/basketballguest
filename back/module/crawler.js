@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const crawler = async (address) => {
   const browser = await puppeteer.launch({
     // headless: false,
-    slowMo:30,
+    slowMo: 30,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     // args: ['--window-size=1920,1080'],
   });
@@ -19,13 +19,12 @@ const crawler = async (address) => {
   });
 
   //await Promise.all([ await page.goto('https://address.dawul.co.kr/'),
-   //page.waitForNavigation(),
+  //page.waitForNavigation(),
   //]);
-  await page.goto('https://address.dawul.co.kr/'),{
-      waitUntil: 'load',
+  await page.goto('https://address.dawul.co.kr/', {
+    waitUntil: 'load',
     // Remove the timeout
-    timeout: 0
-   
+    timeout: 0,
   });
 
   // 팝업제거
@@ -36,7 +35,6 @@ const crawler = async (address) => {
   await page.waitForSelector('#input_juso');
   await page.type('#input_juso', address);
   await page.click('#btnSch');
-
 
   // 값 받아오기
   await page.waitForSelector('#insert_data_5');
