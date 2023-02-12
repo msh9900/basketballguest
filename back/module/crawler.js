@@ -35,7 +35,7 @@ const crawler = async (address) => {
   await page.waitForSelector('#input_juso');
   await page.type('#input_juso', address);
   await page.click('#btnSch');
-  await page.waitFor(3000)
+
 
   // 값 받아오기
   await page.waitForSelector('#insert_data_5');
