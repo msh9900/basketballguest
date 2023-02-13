@@ -50,7 +50,7 @@ const CertPW = () => {
         setIsCertSuccess(true);
         setBackupCertNum(certificationNumber);
         alert("이메일 인증 성공");
-        router.push("/");
+        router.push("/login");
       } else {
         // 사용자에게 인증번호 불일치 안내 메시지
         setIsCertSuccess(false);
