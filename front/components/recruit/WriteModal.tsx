@@ -55,11 +55,14 @@ export default function WriteModal() {
 
     FD.get("articleImg");
     //글쓰기 fetch 구현
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/article`, {
-      method: "POST",
-      body: FD,
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/article`,
+      {
+        method: "POST",
+        body: FD,
+      }
+    );
   };
   return (
     <>
@@ -80,6 +83,7 @@ export default function WriteModal() {
               className={classes.inputTitle}
               type="text"
               onChange={titleChange}
+              required
             ></input>
           </div>
           <div>
