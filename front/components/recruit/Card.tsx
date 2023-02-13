@@ -42,12 +42,15 @@ export default function RecipeReviewCard(props: any) {
         content: writeComment,
         userImg: userImg,
       };
-      
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/comment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/board/comment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
       const res = await response.json();
       console.log(res);
       setGetDataClick(true);
@@ -62,13 +65,42 @@ export default function RecipeReviewCard(props: any) {
   const cardClickHandler = () => {
     setCardClick(!cardClick);
   };
+  function convertDate(date: any) {
+    const convertDate = new Date(date);
+    var year = convertDate.getFullYear();
+    var month = ("0" + (1 + convertDate.getMonth())).slice(-2);
+    var day = ("0" + convertDate.getDate()).slice(-2);
+    var hours = ("0" + convertDate.getHours()).slice(-2);
+    const today: any = new Date();
+    const started: any = new Date(
+      year,
+      Number(month) - 1,
+      Number(day),
+      Number(hours)
+    );
+
+    const daysPassed = Math.ceil((started - today) / (1000 * 60 * 60 * 24));
+    const hoursPassed = Math.ceil((started - today) / (1000 * 60 * 60));
+
+    let result = "";
+
+    if (Math.abs(daysPassed) === 0) {
+      result = Math.abs(hoursPassed) + "시간전";
+    } else if (Math.abs(daysPassed) > 0 && Math.abs(daysPassed) < 8) {
+      result = Math.abs(daysPassed) + "일전";
+    } else {
+      result = `${year}년 ${month}월 ${day} 일`;
+    }
+    return result;
+  }
   const getData = async () => {
     //카드에 해당되는 댓글 가져오기
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/board/comment?contentIdx=${props.data.contentIdx}`
     );
     const res = await response.json();
-    console.log(res);
+    const Date = convertDate(res.date);
+    res.date = Date;
     setContentData(res);
     setGetDataClick(false);
   };
@@ -112,7 +144,11 @@ export default function RecipeReviewCard(props: any) {
               />
 
               <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ fontSize: 24 }}
+                >
                   {contentData.content}
                 </Typography>
               </CardContent>

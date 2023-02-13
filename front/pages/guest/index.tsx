@@ -46,11 +46,9 @@ export default function GuestRecruitmentPage(props: any) {
   };
 
   const getData = async () => {
-    console.log("모든 데이터 들어옴");
     setGuestData(props.data);
   };
   const globalGetData = async () => {
-    console.log("검색해서 들어옴");
     const data = {
       keyWord: globalSearchValue,
     };
@@ -94,7 +92,11 @@ export default function GuestRecruitmentPage(props: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="keywords" content="농구, 게스트모집, 체육관대여" />
         <meta name="description" content={pageDesc} />
-        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_64.ico" />
+        <link
+          rel="shortcut icon"
+          type="image/x-icon"
+          href="/images/favicon_64.ico"
+        />
 
         <meta name="application-name" content={serviceTitle} />
         <meta name="msapplication-tooltip" content={serviceTitle} />
@@ -108,7 +110,7 @@ export default function GuestRecruitmentPage(props: any) {
         <meta property="og:locale" content="en_US" />
         <meta property="og:locale" content="ko_KR" />
         <meta property="og:type" content="website" />
-        <meta property='og:image' content={ogImageSrc} />
+        <meta property="og:image" content={ogImageSrc} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
 
@@ -117,7 +119,7 @@ export default function GuestRecruitmentPage(props: any) {
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDesc} />
         <meta name="twitter:url" content={pageUrl} />
-        <meta name='twitter:image' content={ogImageSrc} />
+        <meta name="twitter:image" content={ogImageSrc} />
         <title>
           {serviceTitle} : {pageTitle}
         </title>
