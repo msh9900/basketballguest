@@ -59,7 +59,6 @@ const DetailArticles_EditForm = (props: Props) => {
   // update
   const updateArticle = async () => {
     const formBody = getArticleEditFormData();
-    console.log("!");
 
     // return;
     try {
@@ -71,7 +70,7 @@ const DetailArticles_EditForm = (props: Props) => {
         }
       );
       const data = await response.json();
-      console.log("메시지", data);
+
       props.setIsFetchingArticles(true);
       props.setIsArticleEditing(false);
       alert("게시글 수정 성공");
@@ -124,8 +123,8 @@ const DetailArticles_EditForm = (props: Props) => {
     }
 
     /* value 확인하기 */
-    console.log("폼 이미지 데이터 확인");
-    console.log(FD.get("gymImg"));
+    // console.log("폼 이미지 데이터 확인");
+    // console.log(FD.get("gymImg"));
 
     return FD;
   };

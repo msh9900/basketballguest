@@ -31,13 +31,12 @@ const mongoDatabase = {
   },
   //게스트 글 PUT
   guestUpdateArticle: async (data: any) => {
-    console.log('db 진입 데이터', data);
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleId = await col.findOne({
       contentIdx: data.contentIdx,
     });
-    console.log('찾은 데이터', findArticleId);
+
     if (findArticleId) {
       await col.updateOne(
         { contentIdx: data.contentIdx },
