@@ -20,13 +20,13 @@ const DetailArticles_EditForm = (props: Props) => {
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
   const [openingDays, setOpeningDays] = useState([
-    { name: "일", open: false },
-    { name: "월", open: false },
-    { name: "화", open: false },
-    { name: "수", open: false },
-    { name: "목", open: false },
-    { name: "금", open: false },
-    { name: "토", open: false },
+    { name: "일", open: true },
+    { name: "월", open: true },
+    { name: "화", open: true },
+    { name: "수", open: true },
+    { name: "목", open: true },
+    { name: "금", open: true },
+    { name: "토", open: true },
   ]);
   const [imgFormData, setImgFormData] = useState<any>(props.gymInfo.gymImg);
   const [inputImgs, setInputImgs] = useState<any>(props.gymInfo.gymImg);
