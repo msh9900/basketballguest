@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import gymArticleDataType from "util/types/gymArticleDataType";
 import setInitialValue from "./setInitialValue";
 import DetailArticles_EditImg from "./DetailArticles_EditImg";
-import { CLOSING } from 'ws';
+import { CLOSING } from "ws";
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -59,20 +59,21 @@ const DetailArticles_EditForm = (props: Props) => {
   // update
   const updateArticle = async () => {
     const formBody = getArticleEditFormData();
-    const data = {
-      formBody,
-      // url...
-    }
+    console.log("!");
 
     // return;
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/articles`,  {
-        method: "PUT",
-        body: formBody,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/rental/article`,
+        {
+          method: "PUT",
+          body: formBody,
+        }
+      );
       const data = await response.json();
-      await props.setIsFetchingArticles(true);
-      await props.setIsArticleEditing(false);
+      console.log("메시지", data);
+      props.setIsFetchingArticles(true);
+      props.setIsArticleEditing(false);
       alert("게시글 수정 성공");
     } catch (err: any) {
       alert("게시글 수정 실패");
@@ -123,8 +124,8 @@ const DetailArticles_EditForm = (props: Props) => {
     }
 
     /* value 확인하기 */
-    console.log('폼 이미지 데이터 확인')
-    console.log(FD.get('img'))
+    console.log("폼 이미지 데이터 확인");
+    console.log(FD.get("gymImg"));
 
     return FD;
   };
