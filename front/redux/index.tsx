@@ -1,7 +1,6 @@
-import counter from '../redux/modules/counterSlice';
-import login from './modules/login';
-import search from './modules/search';
-import { configureStore } from '@reduxjs/toolkit';
+import login from "./modules/login";
+import search from "./modules/search";
+import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: { login, search },

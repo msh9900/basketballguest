@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState, useCallback } from "react";
 
 import cls from "./Cert.module.scss";
@@ -9,6 +10,8 @@ const CertPW = () => {
   const [resultByCert, setResultByCert] = useState();
   const [newPw1, setNewPw1] = useState("");
   const [newPw2, setNewPw2] = useState("");
+
+  const router = useRouter();
 
   // Certification Number
   const onChangeCertNum = (e: any) => {
@@ -33,18 +36,21 @@ const CertPW = () => {
 
   const compareCertNum = async (certificationNumber: any) => {
     try {
-      
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/matchpw`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ certificationNumber }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/matchpw`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ certificationNumber }),
+        }
+      );
       const result = await res.json();
 
       if (result.msg == "이메일 인증 완료") {
         setIsCertSuccess(true);
         setBackupCertNum(certificationNumber);
         alert("이메일 인증 성공");
+        router.push("/");
       } else {
         // 사용자에게 인증번호 불일치 안내 메시지
         setIsCertSuccess(false);
@@ -80,12 +86,14 @@ const CertPW = () => {
     };
 
     try {
-      
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/setpw`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resetPwBody }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/setpw`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resetPwBody }),
+        }
+      );
       const result = await res.json();
       await alert("비밀번호 변경 성공");
     } catch (err: any) {
