@@ -45,7 +45,9 @@ export default function Header() {
 
   const MenuLinkClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     const text = event.currentTarget.textContent as string;
-    router.push(RouteMap[text]);
+    if (text) {
+      router.push(RouteMap[text]);
+    }
     setAnchorElNav(null);
   };
 

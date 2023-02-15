@@ -3,6 +3,10 @@ import React, { Suspense, useContext, useEffect, useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CookiesProvider } from "react-cookie";
 
+//chat bot
+import "react-chatbot-kit/build/main.css";
+import "../styles/chatbot.css";
+
 // components
 import { Provider } from "react-redux";
 import store from "../redux/index";
