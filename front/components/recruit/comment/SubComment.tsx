@@ -38,12 +38,15 @@ export default function SubComment(props: any) {
       replyIdx: props.data.replyIdx,
       content: writeComment,
     };
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
     const res = await response.json();
 
     props.setGetDataClick(true);
@@ -52,7 +55,7 @@ export default function SubComment(props: any) {
   return (
     <div className={classes.maincontainer} style={{ marginLeft: "25px" }}>
       <div className={classes.container}>
-        <Avatar alt="Remy Sharp" src="" />
+        <Avatar alt="Remy Sharp" src={props.data.userImg} />
         <div className={classes.content_container}>
           <div className={classes.id}>{props.data.userId}</div>
           <div className={classes.content}>{props.data.content}</div>
