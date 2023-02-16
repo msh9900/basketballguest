@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
 import ImgPop from "util/ImgPop";
+import Grid from "@mui/material/Grid";
 
 export default function RecipeReviewCard(props: any) {
   const userId = useSelector((state: any) => state.login?.userId);
@@ -153,23 +154,25 @@ export default function RecipeReviewCard(props: any) {
                 </Typography>
               </CardContent>
 
-              <div className={classes.cardImgContainer}>
+              <Grid container>
                 {contentData.imgSrc[0] &&
                   contentData.imgSrc.map((val: string, idx: number) => (
-                    <CardMedia
-                      key={idx}
-                      component="img"
-                      width="200"
-                      height="194"
-                      src={val}
-                      alt="사진 이미지"
-                      sx={{ objectFit: "contain" }}
-                      onClick={() => {
-                        ImgPop(val);
-                      }}
-                    />
+                    <Grid key={idx} item xs={6} md={2}>
+                      <CardMedia
+                        component="img"
+                        width="200"
+                        height="194"
+                        src={val}
+                        alt="사진 이미지"
+                        sx={{ objectFit: "cover", cursor: "pointer" }}
+                        onClick={() => {
+                          ImgPop(val);
+                        }}
+                      />
+                    </Grid>
                   ))}
-              </div>
+              </Grid>
+
               <div className={classes.comment}>
                 <Avatar aria-label="recipe" src={userImg}>
                   R
