@@ -55,7 +55,6 @@ const LoginForm = () => {
       }
     );
     const data = await response.json();
-    console.log("login data", data);
     try {
       if (data.msg === "비밀번호 확인 필요") {
         alert(" 패스워드를 확인해주세요");
@@ -63,9 +62,9 @@ const LoginForm = () => {
         alert(" 아이디를 확인해주세요");
       } else {
         let now = new Date();
-        let after10m = new Date();
-        after10m.setMinutes(now.getMinutes() + 10);
-        setCookie("login", JSON.stringify(data), { expires: after10m });
+        let after60m = new Date();
+        after60m.setMinutes(now.getMinutes() + 60);
+        setCookie("login", JSON.stringify(data), { expires: after60m });
         alert("로그인성공");
         router.push("/");
         dispatch(IsLogin(data));

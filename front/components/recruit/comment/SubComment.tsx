@@ -38,6 +38,7 @@ export default function SubComment(props: any) {
       replyIdx: props.data.replyIdx,
       content: writeComment,
     };
+    console.log(data);
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`,

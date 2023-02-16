@@ -45,12 +45,15 @@ export default function MainComment(props: any) {
       userId,
       userImg,
     };
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
     const res = await response.json();
     props.setGetDataClick(true);
   };
@@ -60,12 +63,15 @@ export default function MainComment(props: any) {
       commentIdx: props.data.commentIdx,
       content: writeComment,
     };
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/comment`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/comment`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
     const res = await response.json();
 
     props.setGetDataClick(true);
