@@ -35,8 +35,11 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
+    console.log('first', req.file);
+    console.log('body', req.body);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     let imgpath = req.file?.filename;
+
     let logindata = {
       id: req.body.id.replaceAll('"', ''),
       pw: req.body.pw.replaceAll('"', ''),
@@ -46,6 +49,9 @@ router.post(
     };
 
     const result = await mongoClient.userData(logindata);
+    // if (req.file !== undefined) {
+    //   fs.unlink();
+    // }
     res.send(JSON.stringify(result));
   }
 );
