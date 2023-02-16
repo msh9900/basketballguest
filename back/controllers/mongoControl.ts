@@ -213,7 +213,7 @@ const mongoDB = {
     foundArticles.map((val: any) => {
       result.push(val.data);
     });
-    console.log('get data', result);
+
     return result;
   },
   // 게시글 상세 페이지

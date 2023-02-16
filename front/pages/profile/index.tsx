@@ -1,4 +1,4 @@
-import withGetServerSideProps from 'hocs/withServersideProps';
+import withGetServerSideProps from "hocs/withServersideProps";
 import classes from "./Profile.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { IsLogin } from "../../redux/modules/login";
 
 const Profile = () => {
-  // let formData: any = new FormData();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -45,6 +44,7 @@ const Profile = () => {
     setUserName(stateUserName);
     setEmail(stateUserEmail);
     setUserImg(stateUserImg);
+    setImgData(stateUserImg);
     // formData = new FormData();
   }, []);
 
@@ -97,8 +97,10 @@ const Profile = () => {
       throw new Error("데이터 통신 오류");
     }
     if (data) {
+      console.log("data", data);
       setCookie("login", JSON.stringify(data));
       dispatch(IsLogin(data));
+      setUserImg(data.userImg);
       alert("프로필 변경 완료");
       router.push("/");
 
@@ -201,8 +203,10 @@ const Profile = () => {
   );
 };
 export default Profile;
-export const getServerSideProps = withGetServerSideProps(async (context:any) => {
-	return {
-		props: {},
-	};
-});
+export const getServerSideProps = withGetServerSideProps(
+  async (context: any) => {
+    return {
+      props: {},
+    };
+  }
+);

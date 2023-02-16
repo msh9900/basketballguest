@@ -86,12 +86,11 @@ router.post(
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
     let fileNameArray: string[] = [];
-    console.log('resultfiles', req.files);
+
     resultFiles.map((ele: rentalArticleFileDataType) => {
       const eachFilename = `${process.env.SERVER_URL}/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
-    console.log('file', fileNameArray);
 
     // crawling
     const roadAddress = JSON.parse(req.body.address)[1].val;

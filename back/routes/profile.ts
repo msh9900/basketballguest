@@ -37,8 +37,7 @@ router.post(
   async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     let imgpath = req.file?.filename;
-
-    const logindata = {
+    let logindata = {
       id: req.body.id.replaceAll('"', ''),
       pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
@@ -47,7 +46,6 @@ router.post(
     };
 
     const result = await mongoClient.userData(logindata);
-
     res.send(JSON.stringify(result));
   }
 );
