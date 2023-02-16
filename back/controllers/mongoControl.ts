@@ -1,4 +1,4 @@
-const mongoClient = require('../routes/mongoconnet');
+const mongoClient = require('../routes/mongoConnet');
 const _user = mongoClient.connect();
 
 import { rentalFilterDataType } from '../type/rentalDataType';
@@ -54,8 +54,8 @@ const mongoDB = {
         }
 
         if (isAsc) {
-          const result: any[] = [];
-          const priceAscSort = temp.sort(function (a: any, b: any) {
+          const result: string | number[] = [];
+          const priceAscSort = temp.sort(function (a: number, b: number) {
             return a - b;
           });
           priceAscSort.map((val: any) => {
@@ -63,8 +63,8 @@ const mongoDB = {
           });
           return result;
         } else {
-          const result: any = [];
-          const priceDescSort = temp.sort(function (a: any, b: any) {
+          const result: string | number[] = [];
+          const priceDescSort = temp.sort(function (a: number, b: number) {
             return b - a;
           });
           priceDescSort.map((val: any) => {
@@ -142,7 +142,7 @@ const mongoDB = {
             const bVal = Math.pow(bx + by, 0.5);
             return aVal - bVal;
           });
-          const result: any = [];
+          const result: string | number[] = [];
           getDistanceSort.map((val: any) => {
             result.push(val.data);
           });
@@ -187,7 +187,7 @@ const mongoDB = {
           const bVal = Math.pow(bx + by, 0.5);
           return aVal - bVal;
         });
-        const result: any = [];
+        const result: string | number[] = [];
         getDistanceSort.map((val: any) => {
           result.push(val.data);
         });
@@ -213,6 +213,7 @@ const mongoDB = {
     foundArticles.map((val: any) => {
       result.push(val.data);
     });
+    console.log('get data', result);
     return result;
   },
   // 게시글 상세 페이지
@@ -325,7 +326,7 @@ const mongoDB = {
     const user = await _user;
     const db = user.db('basket').collection('comment');
     const foundComment = await db.find({ 'data.articleId': pid }).toArray();
-    let result: any = [];
+    let result: string[] = [];
     foundComment.map((val: any) => {
       result.push(val.data);
     });
@@ -334,7 +335,6 @@ const mongoDB = {
 
   // 댓글 POST
   insertComment: async (data: rentalCommentDataType) => {
-    console.log('data', data);
     const user = await _user;
     const commentcol = user.db('basket').collection('comment');
     const successMsg = await commentcol.insertOne({ data });
@@ -396,7 +396,7 @@ const mongoDB = {
     });
 
     let idx: number = -1;
-    replyFound.data.replys.map((ele: any, i: number) => {
+    replyFound.data.replys.map((ele: rentalReplyUpdateDataType, i: number) => {
       if (ele.replyId == data.replyId) {
         idx = i;
       }

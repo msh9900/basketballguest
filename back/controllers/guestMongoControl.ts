@@ -1,4 +1,4 @@
-const MongoClient = require('../routes/mongoconnet');
+const MongoClient = require('../routes/mongoConnet');
 const _guest = MongoClient.connect();
 
 import { guestDataType } from '../type/guestDataType';

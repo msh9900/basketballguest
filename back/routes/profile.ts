@@ -1,7 +1,6 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import multer from 'multer';
 import fs from 'fs';
-import path from 'path';
 
 //env config
 require('dotenv').config();
@@ -36,9 +35,9 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log(req.file);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     let imgpath = req.file?.filename;
-    console.log(imgpath);
+
     const logindata = {
       id: req.body.id.replaceAll('"', ''),
       pw: req.body.pw.replaceAll('"', ''),

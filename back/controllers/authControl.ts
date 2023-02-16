@@ -1,4 +1,4 @@
-const mongoClient = require('../routes/mongoconnet');
+const mongoClient = require('../routes/mongoConnet');
 const _user = mongoClient.connect();
 import crypto from 'crypto';
 import loginDataType from '../type/loginDataType';
