@@ -1,6 +1,8 @@
 // library
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/router";
+
+
 
 // style
 import cls from "./Gym.module.scss";
@@ -34,20 +36,21 @@ const Rental = () => {
     isPeriodActive: false,
   });
 
-  const goToPosting = () => {
+
+  const goToPosting = useCallback((stateId:string) => {
     if (stateId == "") {
       alert("로그인이 필요합니다.");
       return;
     }
     router.push("/gym/post");
-  };
+  },[stateId])
 
   return (
     <>
       <div className={cls.rentalCompLayout}>
 
         <div className={cls.emptyBox}></div>
-        <button className={cls.postButton} onClick={goToPosting}>
+        <button className={cls.postButton} onClick={()=>goToPosting(stateId)}>
           글쓰기
         </button>
         <Order 
