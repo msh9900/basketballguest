@@ -1,6 +1,7 @@
 const mongoClient = require('../routes/mongoconnet');
 const _user = mongoClient.connect();
 import crypto from 'crypto';
+import loginDataType from '../type/loginDataType';
 
 // 해시 암호화
 const createHashPassword = (password: string) => {
@@ -12,7 +13,11 @@ const createHashPassword = (password: string) => {
 };
 
 // 해시 복호화
-const verfiyPassword = (password: string, salt: any, userPassword: any) => {
+const verfiyPassword = (
+  password: string,
+  salt: string,
+  userPassword: string
+) => {
   const hashed = crypto
     .pbkdf2Sync(password, salt, 10, 64, 'sha512')
     .toString('base64');
@@ -148,8 +153,7 @@ const mongoDB = {
     }
   },
 
-  // 프로필 페이지
-  userData: async (logindata: any) => {
+  userData: async (logindata: loginDataType) => {
     const user = await _user;
     const db = user.db('basket').collection('login');
     const data = await db.findOne({ id: logindata.id });

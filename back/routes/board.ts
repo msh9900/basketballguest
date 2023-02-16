@@ -115,6 +115,7 @@ router.post('/comment', async (req: Request, res: Response) => {
 router.put('/comment', async (req: Request, res: Response) => {
   const data = {
     commentIdx: req.body.commentIdx,
+    replyIdx: req.body.replyIdx,
     content: req.body.content,
   };
   const result = await mongoClient.updateComment(data);
@@ -137,6 +138,7 @@ router.post('/reply', async (req: Request, res: Response) => {
   res.send(JSON.stringify(result));
 });
 router.put('/reply', async (req: Request, res: Response) => {
+  console.log('진입 데이터', req.body);
   const data = {
     commentIdx: req.body.commentIdx,
     replyIdx: req.body.replyIdx,

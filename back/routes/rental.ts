@@ -81,7 +81,7 @@ router.get('/articles', async (req: Request, res: Response) => {
 router.post(
   '/article',
   upload.array('img', 10),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];
@@ -138,9 +138,6 @@ router.put(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response) => {
-    console.log('!');
-    console.log('req.file', req.files);
-    console.log('data 진입', req.body);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
     let fileNameArray: any = [];

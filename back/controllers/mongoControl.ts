@@ -1,13 +1,26 @@
 const mongoClient = require('../routes/mongoconnet');
 const _user = mongoClient.connect();
 
+import { rentalFilterDataType } from '../type/rentalDataType';
+import { rentalOrderDataType } from '../type/rentalDataType';
+import { rentalArticeDataType } from '../type/rentalDataType';
+import { rentalReviewDataType } from '../type/rentalDataType';
+import { rentalCommentDataType } from '../type/rentalDataType';
+import { rentalReplyDataType } from '../type/rentalDataType';
+import { rentalReplyUpdateDataType } from '../type/rentalDataType';
+import { rentalReplyDeleteDataType } from '../type/rentalDataType';
+
 const mongoDB = {
   // ----------- <게시글 목록 찾기 (정렬, 필터)> -----------
-  searchArticles: async (filter: any, order: any, keyWord: any) => {
+  searchArticles: async (
+    filter: rentalFilterDataType,
+    order: rentalOrderDataType,
+    keyWord: string
+  ) => {
     const user = await _user;
     const articleCollection = user.db('basket').collection('article');
 
-    let temp: any = [];
+    let temp: string | number[] = [];
     const isAsc = order.isAsc ? 1 : -1;
 
     // <1. 가격 정렬 O >
@@ -41,7 +54,7 @@ const mongoDB = {
         }
 
         if (isAsc) {
-          const result: any = [];
+          const result: any[] = [];
           const priceAscSort = temp.sort(function (a: any, b: any) {
             return a - b;
           });
@@ -203,7 +216,7 @@ const mongoDB = {
     return result;
   },
   // 게시글 상세 페이지
-  findArticle: async (pid: any) => {
+  findArticle: async (pid: string) => {
     const user = await _user;
     const db = user.db('basket').collection('article');
     const foundArticle = await db.findOne({ 'data.articleId': pid });
@@ -211,7 +224,7 @@ const mongoDB = {
     return result;
   },
   // 게시글 작성
-  insertArticle: async (data: any) => {
+  insertArticle: async (data: rentalArticeDataType) => {
     const user = await _user;
     const col = user.db('basket').collection('article');
     const insertArticle = await col.insertOne({ data });
@@ -220,7 +233,7 @@ const mongoDB = {
     }
   },
   // 게시글 수정
-  updateArticle: async (data: any) => {
+  updateArticle: async (data: rentalArticeDataType) => {
     const user = await _user;
     const db = user.db('basket').collection('article');
     const foundArticle = await db.findOne({ 'data.articleId': data.articleId });
@@ -236,8 +249,6 @@ const mongoDB = {
             'data.openingHours': data.openingHours,
             'data.openingPeriod': data.openingPeriod,
             'data.openingDays': data.openingDays,
-            'data.periodStart': data.PeriodStart,
-            'data.PeriodEnd': data.PeriodEnd,
             'data.gymImg': data.gymImg,
           },
         }
@@ -246,7 +257,7 @@ const mongoDB = {
     }
   },
   // 게시글 삭제
-  deleteArticle: async (pid: any) => {
+  deleteArticle: async (pid: string) => {
     const user = await _user;
     const db = user.db('basket').collection('article');
     const db2 = user.db('basket').collection('review');
@@ -256,9 +267,20 @@ const mongoDB = {
       return { msg: '삭제 완료' };
     }
   },
+  // 게시글 별 리뷰 GET
+  findReview: async (pid: string) => {
+    const user = await _user;
+    const db = user.db('basket').collection('review');
+    const foundReview = await db.find({ 'data.articleId': pid }).toArray();
+    let result: string[] = [];
+    foundReview.map((val: any) => {
+      result.push(val.data);
+    });
+    return result;
+  },
 
   // 게시글 별 리뷰 POST
-  insertReview: async (data: any) => {
+  insertReview: async (data: rentalReviewDataType) => {
     const user = await _user;
     const db = user.db('basket').collection('review');
     const insertReview = await db.insertOne({ data });
@@ -267,7 +289,7 @@ const mongoDB = {
     }
   },
   // 게시글 별 리뷰 UPDATE
-  updateReview: async (data: any) => {
+  updateReview: async (data: rentalReviewDataType) => {
     const user = await _user;
     const db = user.db('basket').collection('review');
     const findMsg = await db.findOne({ 'data.reviewId': data.reviewId });
@@ -283,25 +305,14 @@ const mongoDB = {
         }
       );
       const updateData = await db.findOne({
-        'data.reviewId': data.ReviewId,
+        'data.reviewId': data.reviewId,
       });
       return updateData;
     }
   },
-  // 게시글 별 리뷰 GET
-  findReview: async (pid: any) => {
-    const user = await _user;
-    const db = user.db('basket').collection('review');
-    const foundReview = await db.find({ 'data.articleId': pid }).toArray();
-    let result: any = [];
-    foundReview.map((val: any) => {
-      result.push(val.data);
-    });
-    return result;
-  },
 
   // 게시글 별 리뷰 Delete
-  deleteReview: async (reviewId: any) => {
+  deleteReview: async (reviewId: string) => {
     const user = await _user;
     const db = user.db('basket').collection('review');
     const successMsg = await db.deleteOne({ 'data.reviewId': reviewId });
@@ -309,20 +320,8 @@ const mongoDB = {
       return { msg: '리뷰 삭제 완료' };
     }
   },
-
-  // 댓글 POST
-  insertComment: async (data: any) => {
-    const user = await _user;
-    const commentcol = user.db('basket').collection('comment');
-    const articlecol = user.db('basket').collection('article');
-    const successMsg = await commentcol.insertOne({ data });
-    if (successMsg) {
-      return { msg: '댓글 생성 완료' };
-    }
-  },
-
   // 댓글 GET
-  findComment: async (pid: any) => {
+  findComment: async (pid: string) => {
     const user = await _user;
     const db = user.db('basket').collection('comment');
     const foundComment = await db.find({ 'data.articleId': pid }).toArray();
@@ -332,8 +331,20 @@ const mongoDB = {
     });
     return result;
   },
+
+  // 댓글 POST
+  insertComment: async (data: rentalCommentDataType) => {
+    console.log('data', data);
+    const user = await _user;
+    const commentcol = user.db('basket').collection('comment');
+    const successMsg = await commentcol.insertOne({ data });
+    if (successMsg) {
+      return { msg: '댓글 생성 완료' };
+    }
+  },
+
   // 댓글 수정
-  updateComment: async (data: any) => {
+  updateComment: async (data: rentalCommentDataType) => {
     const user = await _user;
     const col = user.db('basket').collection('comment');
     await col.updateOne(
@@ -349,7 +360,7 @@ const mongoDB = {
   },
 
   //댓글 DELETE
-  deleteComment: async (pid: any) => {
+  deleteComment: async (pid: string) => {
     const user = await _user;
     const db = user.db('basket').collection('comment');
     const successMsg = await db.deleteOne({ 'data.commentId': pid });
@@ -358,7 +369,7 @@ const mongoDB = {
     }
   },
   // 답글 POST
-  addInsertReply: async (data: any) => {
+  addInsertReply: async (data: rentalReplyDataType) => {
     const user = await _user;
     const commentCol = user.db('basket').collection('comment');
     await commentCol.updateOne(
@@ -372,8 +383,7 @@ const mongoDB = {
     return { msg: '댓글 작성 완료' };
   },
   //수정 Delete
-  updateReply: async (data: any) => {
-    console.log('몽고 수정 진입 data', data);
+  updateReply: async (data: rentalReplyUpdateDataType) => {
     const user = await _user;
     const col = user.db('basket').collection('comment');
 
@@ -385,8 +395,8 @@ const mongoDB = {
       'data.replys.replyId': data.replyId,
     });
 
-    let idx: any;
-    replyFound.data.replys.map((ele: any, i: any) => {
+    let idx: number = -1;
+    replyFound.data.replys.map((ele: any, i: number) => {
       if (ele.replyId == data.replyId) {
         idx = i;
       }
@@ -409,7 +419,7 @@ const mongoDB = {
   },
 
   // 답글 Delete
-  deleteReply: async (data: any) => {
+  deleteReply: async (data: rentalReplyDeleteDataType) => {
     const user = await _user;
     const col = user.db('basket').collection('comment');
     const Foundreply = await col.updateOne(
