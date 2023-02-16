@@ -210,8 +210,6 @@ const mongoDatabase = {
         }
       }
     );
-    console.log('commentIndex', commentIndex);
-    console.log('replyIndex', replyIndex);
 
     const replyIdx = `comment.${commentIndex}.replys.${replyIndex}.replyIdx`;
     const replyContent = `comment.${commentIndex}.replys.${replyIndex}.content`;
