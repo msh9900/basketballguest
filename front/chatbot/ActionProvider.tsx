@@ -17,12 +17,26 @@ const ActionProvider = ({ createChatBotMessage, setState, children }: any) => {
         widget: "dogPicture",
       }
     );
-
     setState((prev: any) => ({
       ...prev,
       messages: [...prev.messages, botMessage],
     }));
   };
+
+  const handleSiteGuidance = () => {
+    const botMessage = createChatBotMessage(
+      "사이트는 다음과 같이 구성되어 있습니다.",
+      {
+        widget: "siteGuidance",
+      }
+    );
+    setState((prev: any) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
+
+
 
   // Put the handleHello and handleDog function in the actions object to pass to the MessageParser
   return (
@@ -32,6 +46,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }: any) => {
           actions: {
             handleHello,
             handleDog,
+            handleSiteGuidance,
           },
         });
       })}
