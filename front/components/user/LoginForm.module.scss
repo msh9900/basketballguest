@@ -59,7 +59,7 @@
     color: black;
     font-family: "Rubik Vinyl";
     min-width: 400px;
-    z-index:999;
+    z-index:2;
   }
 
   .login {
@@ -73,6 +73,11 @@
     max-width: 384px;
     border: 1px solid #c9c4c4;
     border-radius: 6px;
+    input{
+      padding-left:10px;
+      font-size:13px;
+      z-index:3;
+    }
 
     .font {
       font-size: 1em;
