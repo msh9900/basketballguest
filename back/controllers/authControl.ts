@@ -1,8 +1,9 @@
 const mongoClient = require('../routes/mongoConnet');
 const _user = mongoClient.connect();
 import crypto from 'crypto';
-import loginDataType  from '../type/loginDatatype';
+import { loginDataType } from '../type/loginDatatype';
 
+//env config
 require('dotenv').config();
 
 // 해시 암호화
