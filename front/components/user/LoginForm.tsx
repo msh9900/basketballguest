@@ -1,4 +1,3 @@
-import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import classes from "./LoginForm.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -88,8 +87,11 @@ const LoginForm = () => {
       <form onSubmit={loginFormHandler} className={classes.loginForm}>
         <div className={classes.logo}>
           <Link href="/" className={classes.title}>
-            <SportsBasketballIcon fontSize="inherit" className={classes.ball} />
-            BPT
+            <img
+              src="/images/logos/poster.png"
+              alt="poster"
+              width="320"
+            />
           </Link>
         </div>
         <div className={classes.login}>

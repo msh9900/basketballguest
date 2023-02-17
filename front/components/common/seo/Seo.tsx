@@ -30,7 +30,7 @@ const Seo = (props: Props) => {
           />
           <meta name="keywords" content="농구, 게스트모집, 체육관대여" />
           <meta name="description" content={pageDesc} />
-          <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_64.ico" />
+          <link rel="shortcut icon" type="image/x-icon" href="/images/logos/favicon.ico" />
 
           <meta name="application-name" content={serviceTitle} />
           <meta name="msapplication-tooltip" content={serviceTitle} />

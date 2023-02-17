@@ -48,7 +48,6 @@
     color: black;
   }
 
-
   .logo {
     top: 15%;
     text-align: center;
@@ -60,9 +59,7 @@
     color: black;
     font-family: "Rubik Vinyl";
     min-width: 400px;
-  }
-  .ball {
-    position: relative;
+    z-index:999;
   }
 
   .login {

@@ -95,7 +95,7 @@ export default function GuestRecruitmentPage(props: any) {
         <link
           rel="shortcut icon"
           type="image/x-icon"
-          href="/images/favicon_64.ico"
+          href="/images/logos/favicon.ico"
         />
 
         <meta name="application-name" content={serviceTitle} />
