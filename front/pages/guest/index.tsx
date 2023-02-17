@@ -10,9 +10,13 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { search } from "redux/modules/search";
+import {
+  PropsInterface,
+  PropDataInterface,
+} from "../../components/interfaces/guest.interface";
 import Head from "next/head";
 
-export default function GuestRecruitmentPage(props: any) {
+export default function GuestRecruitmentPage(props: PropsInterface) {
   const router = useRouter();
   const isLogin = useSelector((state: any) => state.login?.isLogin);
   const globalSearchValue = useSelector(
@@ -22,7 +26,7 @@ export default function GuestRecruitmentPage(props: any) {
     (state: any) => state.search.globalSearchNeeded
   );
   const dispatch = useDispatch();
-  const [guestdata, setGuestData] = useState([]);
+  const [guestdata, setGuestData] = useState<PropDataInterface[]>([]);
   const [contentList, setContentList] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [open, setOpen] = useState(false);
@@ -75,6 +79,7 @@ export default function GuestRecruitmentPage(props: any) {
     }
   }, [globalSearchNeeded]);
   useEffect(() => {
+    console.log("렌더링테스트");
     if (!globalSearchNeeded) {
       getData();
     }
@@ -147,7 +152,7 @@ export default function GuestRecruitmentPage(props: any) {
           scrollableTarget="parentScrollDiv"
         >
           <div className={classes.container}>
-            {guestdata.slice(0, contentList).map((val: any) => (
+            {guestdata.slice(0, contentList).map((val: PropDataInterface) => (
               <Card key={val.contentIdx} data={val} />
             ))}
           </div>
