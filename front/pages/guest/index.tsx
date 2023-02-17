@@ -31,15 +31,12 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<PropDataInterface[]>(props.data);
-  // const [currentTime, setCurrentTime] = useState(Date.now())
 
   const [isMounted, setIsMounted] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(true);
-
-  // let bundleIdx = 1;
+  
+  const bundleIdx = useRef<number>(1);
   const bundleSize: number = 10;
-  const [bundleIdx, setBundleIdx] = useState<number>(1);
 
   const getData = async (bundleIdx: number) => {
     const pid = bundleIdx * bundleSize;
@@ -58,7 +55,7 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
 
   // TOGGLE LOADING COMPONENT
   const checkAllLoaded = () => {
-    if (bundleSize * bundleIdx > props.dataLength) {
+    if (bundleSize * bundleIdx.current > props.dataLength) {
       return true;
     } else {
       return false;
@@ -71,15 +68,17 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   ]) => {
     if (isIntersecting) {
       console.log("실행...");
-      Controller();
+      setTimeout(()=>{
+        Controller();
+      }, 500)
       return;
     }
   };
 
   const Controller = async () => {
-    // bundleIdx++;
-    setBundleIdx((prev) => prev + 1);
-    await getData(bundleIdx);
+    bundleIdx.current += 1
+    console.log('bundleIdx.current', bundleIdx.current)
+    await getData(bundleIdx.current);
 
     const isAllLoaded = checkAllLoaded();
     if (isAllLoaded) {
@@ -190,7 +189,6 @@ export async function getServerSideProps() {
   );
   const res = await response.json();
 
-  // Pass data to the page via props
   return {
     props: {
       data: res[0],
