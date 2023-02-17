@@ -15,12 +15,12 @@ import ImgPop from "util/ImgPop";
 import Grid from "@mui/material/Grid";
 
 import {
-  CardPropInterace,
+  CardPropInterface,
   PropDataInterface,
   CommentInterface,
 } from "../../components/interfaces/guest.interface";
 
-export default function RecipeReviewCard(props: CardPropInterace) {
+export default function RecipeReviewCard(props: CardPropInterface) {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const isLogin = useSelector((state: any) => state.login?.isLogin);
@@ -111,11 +111,16 @@ export default function RecipeReviewCard(props: CardPropInterace) {
     setContentData(res);
     setGetDataClick(false);
   };
+
   useEffect(() => {
     if (getDataClick) {
       getData();
     }
   }, [getDataClick]);
+
+  useEffect(() => {
+    props.setIsMounted(true);
+  }, []);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
@@ -10,11 +10,14 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { search } from "redux/modules/search";
+import useIntersectionObserver from "hooks/useIntersectionObserver";
+import AnimationBox from "../../components/LoadingAnimation";
+import GuestHead from "components/common/headTags/guestHead";
+
 import {
   PropsInterface,
   PropDataInterface,
 } from "../../components/interfaces/guest.interface";
-import Head from "next/head";
 
 export default function GuestRecruitmentPage(props: PropsInterface) {
   const router = useRouter();
@@ -26,10 +29,66 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     (state: any) => state.search.globalSearchNeeded
   );
   const dispatch = useDispatch();
-  const [guestdata, setGuestData] = useState<PropDataInterface[]>([]);
-  const [contentList, setContentList] = useState(10);
-  const [hasMore, setHasMore] = useState(true);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState<PropDataInterface[]>(props.data);
+  // const [currentTime, setCurrentTime] = useState(Date.now())
+
+  const [isMounted, setIsMounted] = useState(false);
+  const [allLoaded, setAllLoaded] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(true);
+
+  // let bundleIdx = 1;
+  const bundleSize: number = 10;
+  const [bundleIdx, setBundleIdx] = useState<number>(1);
+
+  const getData = async (bundleIdx: number) => {
+    const pid = bundleIdx * bundleSize;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=${pid}`
+    );
+    const res = await response.json();
+    setData((prev) => [...prev, ...res]);
+  };
+
+  // GET DATA FIRST TIME
+  useEffect(() => {
+    console.log("isMounted", isMounted);
+  }, []);
+
+  // TOGGLE LOADING COMPONENT
+  const checkAllLoaded = () => {
+    if (bundleSize * bundleIdx > props.dataLength) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  // SET OBSERVER
+  const onIntersect: IntersectionObserverCallback = async ([
+    { isIntersecting },
+  ]) => {
+    if (isIntersecting) {
+      console.log("실행...");
+      Controller();
+      return;
+    }
+  };
+
+  const Controller = async () => {
+    // bundleIdx++;
+    setBundleIdx((prev) => prev + 1);
+    await getData(bundleIdx);
+
+    const isAllLoaded = checkAllLoaded();
+    if (isAllLoaded) {
+      console.log("isAllLoaded", isAllLoaded);
+      setAllLoaded(true);
+    }
+  };
+
+  const { setTarget } = useIntersectionObserver({ onIntersect });
+
   const handleOpen = () => {
     if (isLogin) {
       setOpen(true);
@@ -38,98 +97,42 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     }
   };
   const handleClose = () => setOpen(false);
-  const fetchMoreData = () => {
-    if (contentList < guestdata.length) {
-      setTimeout(() => {
-        setContentList(contentList + 10);
-        setHasMore(true);
-      }, 500);
-    } else {
-      setHasMore(false);
-    }
-  };
 
-  const getData = async () => {
-    setGuestData(props.data);
-  };
-  const globalGetData = async () => {
-    const data = {
-      keyWord: globalSearchValue,
-    };
+  // const getData = async () => {
+  //   await setGuestData(props.data);
+  // };
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/board/search`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    );
-    const res = await response.json();
-    setGuestData(res);
-    const stateObj = {
-      searchValue: "",
-      globalSearchNeeded: false,
-    };
-    dispatch(search(stateObj));
-  };
-  useEffect(() => {
-    if (globalSearchNeeded) {
-      globalGetData();
-    }
-  }, [globalSearchNeeded]);
-  useEffect(() => {
-    console.log("렌더링테스트");
-    if (!globalSearchNeeded) {
-      getData();
-    }
-  }, []);
+  // const globalGetData = async () => {
+  //   const data = {
+  //     keyWord: globalSearchValue,
+  //   };
 
-  const serviceTitle = "BPT";
-  const pageTitle = "게스트 모집";
-  const pageDesc = "게스트 모집 페이지";
-  const pageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-  const ogImageSrc = `/images/basketball1.jpg`;
+  //   const response = await fetch(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/board/search`,
+  //     {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     }
+  //   );
+  //   const res = await response.json();
+  //   setGuestData(res);
+  //   const stateObj = {
+  //     searchValue: "",
+  //     globalSearchNeeded: false,
+  //   };
+  //   dispatch(search(stateObj));
+  // };
+
+  // useEffect(() => {
+  //   if (globalSearchNeeded) {
+  //     globalGetData();
+  //   }
+  // }, [globalSearchNeeded]);
 
   return (
     <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="keywords" content="농구, 게스트모집, 체육관대여" />
-        <meta name="description" content={pageDesc} />
-        <link
-          rel="shortcut icon"
-          type="image/x-icon"
-          href="/images/logos/favicon.ico"
-        />
-
-        <meta name="application-name" content={serviceTitle} />
-        <meta name="msapplication-tooltip" content={serviceTitle} />
-        <meta name="msapplication-starturl" content={pageUrl} />
-
-        {/* Open Graph (Naver & Kakao */}
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:site_name" content={serviceTitle} />
-        <meta property="og:description" content={pageDesc} />
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:locale" content="ko_KR" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={ogImageSrc} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="600" />
-
-        {/* OP: Twitter */}
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDesc} />
-        <meta name="twitter:url" content={pageUrl} />
-        <meta name="twitter:image" content={ogImageSrc} />
-        <title>
-          {serviceTitle} : {pageTitle}
-        </title>
-      </Head>
-
+      <GuestHead />
       <div className={classes.writeButton} onClick={handleOpen}>
         <ModeIcon />
       </div>
@@ -143,31 +146,54 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
           <WriteModal />
         </div>
       </Modal>
-      <div id="parentScrollDiv" className={classes.wrap}>
-        <InfiniteScroll
-          dataLength={contentList}
-          next={fetchMoreData}
-          hasMore={hasMore}
-          loader={<p>Loading...</p>}
-          scrollableTarget="parentScrollDiv"
-        >
-          <div className={classes.container}>
-            {guestdata.slice(0, contentList).map((val: PropDataInterface) => (
-              <Card key={val.contentIdx} data={val} />
-            ))}
-          </div>
-        </InfiniteScroll>
+
+      <div className={classes.wrap}>
+        <div className={classes.container}>
+          {data.map((val: PropDataInterface) => (
+            <Card
+              key={val.contentIdx}
+              data={val}
+              setIsMounted={setIsMounted}
+              isMounted={isMounted}
+            />
+          ))}
+        </div>
+
+        {isMounted && data.length && (
+          <>
+            {!allLoaded && (
+              <div ref={setTarget} className="test">
+                로딩 애니메이션 박스
+              </div>
+            )}
+          </>
+        )}
       </div>
+
+      {/* {!allLoaded && (
+        <>
+          <AnimationBox>
+            <div ref={setTarget} className="loader"></div>
+          </AnimationBox>
+        </>
+      )} */}
     </>
   );
 }
+
 export async function getServerSideProps() {
-  //여기서 글데이터 다 받아야됨.
+  // 여기서 글데이터 다 받아야됨.
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/board/article`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=0`
   );
   const res = await response.json();
+
   // Pass data to the page via props
-  return { props: { data: res } };
+  return {
+    props: {
+      data: res[0],
+      dataLength: res[1],
+    },
+  };
 }

@@ -1,5 +1,6 @@
 export interface PropsInterface {
   data: PropDataInterface[];
+  dataLength: number;
 }
 export interface PropDataInterface {
   comment: Array<CommentInterface>;
@@ -28,8 +29,10 @@ export interface ReplysInterface {
   userImg: string;
 }
 
-export interface CardPropInterace {
+export interface CardPropInterface {
   data: PropDataInterface;
+  setIsMounted: (a: boolean) => void;
+  isMounted: boolean;
 }
 
 export interface MainCommentInterface {

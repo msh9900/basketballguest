@@ -25,17 +25,17 @@ const AppLayout = ({ children }: any) => {
   const [headerDel, setHeaderDel] = useState(false);
   const [footerDel, setFooterDel] = useState(false);
 
-  useEffect(() => {
-    const path = router.pathname;
-    if (path === "/guest") {
-      setFooterDel(true);
-    } else if (path === "/login" || path === "/register") {
-      setHeaderDel(true);
-    } else {
-      setHeaderDel(false);
-      setFooterDel(false);
-    }
-  }, [router.pathname]);
+  // useEffect(() => {
+  //   const path = router.pathname;
+  //   if (path === "/guest") {
+  //     setFooterDel(true);
+  //   } else if (path === "/login" || path === "/register") {
+  //     setHeaderDel(true);
+  //   } else {
+  //     setHeaderDel(false);
+  //     setFooterDel(false);
+  //   }
+  // }, [router.pathname]);
 
   return (
     <div className={classes.wrapper}>

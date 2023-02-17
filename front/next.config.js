@@ -2,7 +2,7 @@ const path = require("path"); // 1. path 선언
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   sassOptions: {
     includePaths: [
       path.join(__dirname, "components"),
