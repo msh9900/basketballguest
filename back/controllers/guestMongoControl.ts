@@ -22,10 +22,15 @@ const mongoDatabase = {
   },
 
   // 게스트 글 GET
-  guestfindArticle: async () => {
+  guestfindArticle: async (number: number) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
-    const findArticle = await col.find().sort({ date: -1 }).toArray();
+    const findArticle = await col
+      .find()
+      .sort({ date: -1 })
+      .limit(10)
+      .skip(number)
+      .toArray();
     return findArticle;
   },
 

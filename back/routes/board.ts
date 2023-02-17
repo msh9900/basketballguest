@@ -32,7 +32,8 @@ router.post('/search', async (req: Request, res: Response) => {
 
 // 게스트모집 게시판  db 가져오기
 router.get('/article', async (req: Request, res: Response) => {
-  const result = await mongoClient.guestfindArticle();
+  const pidNumber = Number(req.query.pid);
+  const result = await mongoClient.guestfindArticle(pidNumber);
   res.send(JSON.stringify(result));
 });
 
