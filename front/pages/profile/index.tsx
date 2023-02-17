@@ -123,7 +123,12 @@ const Profile = () => {
 
   return (
     <form onSubmit={profileSumbit} className={classes.profile}>
-      <p className={classes.headertitle}>Profile</p>
+      {/* <p className={classes.headertitle}>Profile</p> */}
+      <img
+        className={classes.imgPoster}
+        src='/images/logos/poster.png'
+        
+      />
       {/* <p className={classes.imgtitle}>프로필사진</p> */}
       <div className={classes.img}>
         <label htmlFor="asdf" className={classes.imglabel}>

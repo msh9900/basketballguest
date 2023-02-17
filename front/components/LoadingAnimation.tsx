@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const AnimationBox = styled.div`
+
   .loader,
   .loader:before,
   .loader:after {
@@ -13,7 +14,7 @@ const AnimationBox = styled.div`
     animation: load7 1.8s infinite ease-in-out;
   }
   .loader {
-    color: #ffffff;
+    color: black;
     font-size: 5px;
     margin: 0 auto;
     margin-top: 10px;

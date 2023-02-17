@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 
 import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
-import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from "@mui/material/Modal";
 import WriteModal from "../../components/recruit/WriteModal";
 import ModeIcon from "@mui/icons-material/Mode";
@@ -11,7 +10,8 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { search } from "redux/modules/search";
 import useIntersectionObserver from "hooks/useIntersectionObserver";
-import AnimationBox from "../../components/LoadingAnimation";
+// import AnimationBox from "../../components/LoadingAnimation";
+import AnimationBox from "components/LoadingAnimation";
 import GuestHead from "components/common/headTags/guestHead";
 
 import {
@@ -34,7 +34,7 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
 
   const [isMounted, setIsMounted] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
-  
+
   const bundleIdx = useRef<number>(1);
   const bundleSize: number = 10;
 
@@ -68,16 +68,16 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   ]) => {
     if (isIntersecting) {
       console.log("실행...");
-      setTimeout(()=>{
+      setTimeout(() => {
         Controller();
-      }, 500)
+      }, 500);
       return;
     }
   };
 
   const Controller = async () => {
-    bundleIdx.current += 1
-    console.log('bundleIdx.current', bundleIdx.current)
+    bundleIdx.current += 1;
+    console.log("bundleIdx.current", bundleIdx.current);
     await getData(bundleIdx.current);
 
     const isAllLoaded = checkAllLoaded();
@@ -162,9 +162,12 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
         {isMounted && data.length && (
           <>
             {!allLoaded && (
-              <div ref={setTarget} className="test">
-                로딩 애니메이션 박스
-              </div>
+              // <div ref={setTarget} className="test">
+              //   로딩 애니메이션 박스
+              // </div>
+              <AnimationBox>
+                <div ref={setTarget} className="loader"></div>
+              </AnimationBox>
             )}
           </>
         )}
