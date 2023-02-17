@@ -1,7 +1,19 @@
+//routes
+export interface rentalArticleFileDataType {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
+}
+//controllers
 export interface rentalFilterDataType {
   activeAreas: string[];
-  MinPrice: number;
-  MaxPrice: number;
+  MinPrice: Number;
+  MaxPrice: Number;
   MinPeriod: Date;
   MaxPeriod: Date;
   keyWord: string;
@@ -25,8 +37,8 @@ export interface rentalArticeDataType {
   contact: string;
   createdAt: string;
   address: string[];
-  offsetX: number;
-  offsetY: number;
+  offsetX: Number;
+  offsetY: Number;
   areaTag: string;
   price: number;
   openingHours: string;

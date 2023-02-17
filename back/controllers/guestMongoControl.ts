@@ -1,4 +1,4 @@
-const MongoClient = require('../routes/mongoconnet');
+const MongoClient = require('../routes/mongoConnet');
 const _guest = MongoClient.connect();
 
 import { guestDataType } from '../type/guestDataType';
@@ -187,7 +187,6 @@ const mongoDatabase = {
   },
   //게스트 답글 UPDATE
   updateReply: async (data: guestUpdateReplyType) => {
-    console.log('data', data);
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFound = await col.findOne({

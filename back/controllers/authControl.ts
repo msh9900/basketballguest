@@ -1,11 +1,13 @@
-const mongoClient = require('../routes/mongoconnet');
+const mongoClient = require('../routes/mongoConnet');
 const _user = mongoClient.connect();
 import crypto from 'crypto';
-import loginDataType from '../type/loginDataType';
+import { loginDataType } from '../type/loginDatatype';
+
+require('dotenv').config();
 
 // 해시 암호화
 const createHashPassword = (password: string) => {
-  const salt: any = crypto.randomBytes(64).toString('base64')!;
+  const salt: string = crypto.randomBytes(64).toString('base64')!;
   const hashedPasssword = crypto
     .pbkdf2Sync(password, salt, 10, 64, 'sha512')
     .toString('base64');
@@ -156,9 +158,27 @@ const mongoDB = {
   userData: async (logindata: loginDataType) => {
     const user = await _user;
     const db = user.db('basket').collection('login');
-    const data = await db.findOne({ id: logindata.id });
+
     const hashPw = createHashPassword(logindata.pw);
-    if (data) {
+    if (logindata.userImg === `${process.env.SERVER_URL}/images/undefined`) {
+      await db.updateOne(
+        { id: logindata.id },
+        {
+          $set: {
+            pw: hashPw.hashedPasssword,
+            email: logindata.email,
+            userName: logindata.userName,
+            salt: hashPw.salt,
+          },
+        }
+      );
+      const updateData = await db.findOne({
+        id: logindata.id,
+        email: logindata.email,
+        userName: logindata.userName,
+      });
+      return updateData;
+    } else {
       await db.updateOne(
         { id: logindata.id },
         {

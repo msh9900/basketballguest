@@ -1,7 +1,7 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import multer from 'multer';
 import fs from 'fs';
-import path from 'path';
+
 const mongoClient = require('../controllers/guestMongoControl').mongoDatabase;
 const router = express.Router();
 
@@ -41,7 +41,7 @@ router.post(
 
     const resultFiles = req.files as any;
 
-    let fileNameArray: any = [];
+    let fileNameArray: string[] = [];
     resultFiles.map((ele: any) => {
       const eachFilename = `${process.env.SERVER_URL}/guest/` + ele.filename;
       fileNameArray.push(eachFilename);
@@ -64,10 +64,9 @@ router.put(
   '/article',
   upload.array('img', 6),
   async (req: Request, res: Response) => {
-    console.log('img', req.body.imgSrc);
     const resultFiles = req.files as any;
 
-    let fileNameArray: any = [];
+    let fileNameArray: string[] = [];
     resultFiles.map((ele: any) => {
       const eachFilename = `${process.env.SERVER_URL}/guest/` + ele.filename;
       fileNameArray.push(eachFilename);
@@ -138,7 +137,6 @@ router.post('/reply', async (req: Request, res: Response) => {
   res.send(JSON.stringify(result));
 });
 router.put('/reply', async (req: Request, res: Response) => {
-  console.log('진입 데이터', req.body);
   const data = {
     commentIdx: req.body.commentIdx,
     replyIdx: req.body.replyIdx,
