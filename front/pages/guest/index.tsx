@@ -165,10 +165,10 @@ export async function getServerSideProps() {
   //여기서 글데이터 다 받아야됨.
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/board/article`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=0`
   );
   const res = await response.json();
-
+  console.log("data", res);
   // Pass data to the page via props
   return { props: { data: res } };
 }

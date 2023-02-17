@@ -25,13 +25,25 @@ const mongoDatabase = {
   guestfindArticle: async (number: number) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
-    const findArticle = await col
-      .find()
-      .sort({ date: -1 })
-      .limit(10)
-      .skip(number)
-      .toArray();
-    return findArticle;
+
+    if (number === 0) {
+      const findArticleCount = await col.find().count();
+      const findArticle = await col
+        .find()
+        .sort({ date: -1 })
+        .limit(10)
+        .skip(number)
+        .toArray();
+      return [findArticle, findArticleCount];
+    } else {
+      const findArticle = await col
+        .find()
+        .sort({ date: -1 })
+        .limit(10)
+        .skip(number)
+        .toArray();
+      return findArticle;
+    }
   },
 
   //게스트 글 POST
