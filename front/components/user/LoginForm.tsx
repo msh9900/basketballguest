@@ -42,17 +42,14 @@ const LoginForm = () => {
       return;
     }
 
-    const response: any = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: id,
-          pw: pw,
-        }),
-      }
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: id,
+        pw: pw,
+      }),
+    });
     const data = await response.json();
     try {
       if (data.msg === "비밀번호 확인 필요") {
@@ -86,11 +83,7 @@ const LoginForm = () => {
       <form onSubmit={loginFormHandler} className={classes.loginForm}>
         <div className={classes.logo}>
           <Link href="/" className={classes.title}>
-            <img
-              src="/images/logos/poster.png"
-              alt="poster"
-              width="320"
-            />
+            <img src="/images/logos/poster.png" alt="poster" width="320" />
           </Link>
         </div>
         <div className={classes.login}>

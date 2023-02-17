@@ -12,8 +12,8 @@ export interface rentalArticleFileDataType {
 //controllers
 export interface rentalFilterDataType {
   activeAreas: string[];
-  MinPrice: Number;
-  MaxPrice: Number;
+  MinPrice: number;
+  MaxPrice: number;
   MinPeriod: Date;
   MaxPeriod: Date;
   keyWord: string;
@@ -37,8 +37,8 @@ export interface rentalArticeDataType {
   contact: string;
   createdAt: string;
   address: string[];
-  offsetX: Number;
-  offsetY: Number;
+  offsetX: number;
+  offsetY: number;
   areaTag: string;
   price: number;
   openingHours: string;

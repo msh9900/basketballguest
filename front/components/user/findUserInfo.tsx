@@ -8,7 +8,7 @@ import { serialize } from "v8";
 const findUserInfo = () => {
   const [userInput, setUserInput] = useState("");
   const [searchTarget, setSearchTarget] = useState("");
-  // const [searchTarget, setSearchTarget] = useState("");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -29,11 +29,14 @@ const findUserInfo = () => {
   };
 
   const fetchIdPw = async (routeValue: string, userInput: string) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/${routeValue}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userInput }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/auth/${routeValue}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userInput }),
+      }
+    );
     const data = await response.json();
 
     if (data.msg === "이메일 확인 불가") {

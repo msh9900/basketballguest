@@ -76,7 +76,7 @@ const mongoDB = {
     }
   },
   //이메일로 부합 확인
-  foundId: async (userInput: string, AuthNumber: Number) => {
+  foundId: async (userInput: string, AuthNumber: number) => {
     const user = await _user;
     const loginCol = user.db('basket').collection('login');
     const authCol = user.db('basket').collection('authBook');
@@ -157,11 +157,13 @@ const mongoDB = {
 
   userData: async (logindata: loginDataType) => {
     const user = await _user;
-    const db = user.db('basket').collection('login');
-
+    const col = user.db('basket').collection('login');
+    const periodCol = await col.findOne({ id: logindata.id });
     const hashPw = createHashPassword(logindata.pw);
-    if (logindata.userImg === `${process.env.SERVER_URL}/images/undefined`) {
-      await db.updateOne(
+    if (
+      logindata.userImg === `${process.env.SERVER_URL}/userImages/undefined`
+    ) {
+      await col.updateOne(
         { id: logindata.id },
         {
           $set: {
@@ -172,14 +174,14 @@ const mongoDB = {
           },
         }
       );
-      const updateData = await db.findOne({
+      const updateData = await col.findOne({
         id: logindata.id,
         email: logindata.email,
         userName: logindata.userName,
       });
       return updateData;
     } else {
-      await db.updateOne(
+      await col.updateOne(
         { id: logindata.id },
         {
           $set: {
@@ -191,14 +193,14 @@ const mongoDB = {
           },
         }
       );
-      const updateData = await db.findOne({
+      const updateData = await col.findOne({
         id: logindata.id,
         email: logindata.email,
         userName: logindata.userName,
         userImg: logindata.userImg,
       });
 
-      return updateData;
+      return [updateData, periodCol.userImg];
     }
   },
 };

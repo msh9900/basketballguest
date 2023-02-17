@@ -38,7 +38,6 @@ router.post(
   upload.array('img', 6),
   async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-
     const resultFiles = req.files as any;
 
     let fileNameArray: string[] = [];
@@ -65,6 +64,8 @@ router.put(
   upload.array('img', 6),
   async (req: Request, res: Response) => {
     const resultFiles = req.files as any;
+    console.log('req.body', req.body);
+    console.log('req.files', req.files);
 
     let fileNameArray: string[] = [];
     resultFiles.map((ele: any) => {

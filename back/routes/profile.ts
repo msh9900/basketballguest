@@ -8,9 +8,9 @@ require('dotenv').config();
 const mongoClient = require('../controllers/authControl').mongoDB;
 const router = express.Router();
 
-router.use('/images', express.static('images'));
+router.use('/userImages', express.static('userImages'));
 
-const dir = './images';
+const dir = './userImages';
 const storage = multer.diskStorage({
   destination: function (req: Request, file: Express.Multer.File, cb) {
     cb(null, dir);
@@ -35,8 +35,6 @@ router.post(
   '/userdata',
   upload.single('img'),
   async (req: Request, res: Response) => {
-    console.log('first', req.file);
-    console.log('body', req.body);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     let imgpath = req.file?.filename;
 
@@ -45,14 +43,24 @@ router.post(
       pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
       email: req.body.email.replaceAll('"', ''),
-      userImg: `${process.env.SERVER_URL}/images/${imgpath}`,
+      userImg: `${process.env.SERVER_URL}/userImages/${imgpath}`,
     };
+    let dbData = await mongoClient.userData(logindata);
+    let result;
+    if (req.file !== undefined) {
+      const foundImg = dbData[1];
+      const willDeleteImg = foundImg.slice(32, foundImg.length);
 
-    const result = await mongoClient.userData(logindata);
-    // if (req.file !== undefined) {
-    //   fs.unlink();
-    // }
-    res.send(JSON.stringify(result));
+      fs.unlink(`${dir}${willDeleteImg}`, (err) => {
+        if (err) throw err;
+        console.log('이전 이미지 삭제 완료');
+      });
+      dbData.pop(1);
+      result = dbData[0];
+      res.send(JSON.stringify(result));
+    } else {
+      res.send(JSON.stringify(dbData));
+    }
   }
 );
 

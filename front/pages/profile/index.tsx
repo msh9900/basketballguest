@@ -92,6 +92,7 @@ const Profile = () => {
       }
     );
     const data = await response.json();
+    console.log("data", data);
 
     if (!response.ok) {
       throw new Error("데이터 통신 오류");

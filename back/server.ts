@@ -6,7 +6,7 @@ const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(cors());
-server.use('/images', express.static('images'));
+server.use('/userImages', express.static('userImages'));
 server.use('/rental', express.static('rental'));
 server.use('/guest', express.static('guest'));
 
