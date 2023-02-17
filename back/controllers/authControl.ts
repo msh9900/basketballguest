@@ -1,7 +1,7 @@
 const mongoClient = require('../routes/mongoConnet');
 const _user = mongoClient.connect();
 import crypto from 'crypto';
-import { loginDataType } from '../type/loginDatatype';
+import { loginDataType } from '../type/loginDataType';
 
 //env config
 require('dotenv').config();
