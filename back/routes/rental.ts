@@ -1,7 +1,8 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import fs, { lutimes } from 'fs';
 import multer from 'multer';
-import path from 'path';
+
+import { rentalArticleFileDataType } from '../type/rentalDataType';
 
 //env config
 require('dotenv').config();
@@ -81,11 +82,12 @@ router.get('/articles', async (req: Request, res: Response) => {
 router.post(
   '/article',
   upload.array('img', 10),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
-    let fileNameArray: any = [];
-    resultFiles.map((ele: any) => {
+    let fileNameArray: string[] = [];
+
+    resultFiles.map((ele: rentalArticleFileDataType) => {
       const eachFilename = `${process.env.SERVER_URL}/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });
@@ -138,13 +140,10 @@ router.put(
   '/article',
   upload.array('img', 10),
   async (req: Request, res: Response) => {
-    console.log('!');
-    console.log('req.file', req.files);
-    console.log('data 진입', req.body);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
-    let fileNameArray: any = [];
-    resultFiles.map((ele: any) => {
+    let fileNameArray: string[] = [];
+    resultFiles.map((ele: rentalArticleFileDataType) => {
       const eachFilename = `${process.env.SERVER_URL}/rental/` + ele.filename;
       fileNameArray.push(eachFilename);
     });

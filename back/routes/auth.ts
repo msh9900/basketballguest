@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 
 const mongoClient = require('../controllers/authControl').mongoDB;
 const nodemailer = require('nodemailer');
@@ -49,7 +49,6 @@ router.post('/findid', async (req: Request, res: Response) => {
 });
 //해당 아이디와 인증번호가 부합하는지 확인
 router.post('/matchid', async (req: Request, res: Response) => {
-  console.log(req.body.certificationNumber);
   const certificationNumber = parseInt(req.body.certificationNumber);
   const result = await mongoClient.AuthMatchEmail(certificationNumber);
   res.send(JSON.stringify(result));

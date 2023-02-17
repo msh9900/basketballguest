@@ -1,9 +1,16 @@
-const MongoClient = require('../routes/mongoconnet');
+const MongoClient = require('../routes/mongoConnet');
 const _guest = MongoClient.connect();
+
+import { guestDataType } from '../type/guestDataType';
+import { guestCommentType } from '../type/guestDataType';
+import { guestReplyType } from '../type/guestDataType';
+import { guestUpdateReplyType } from '../type/guestDataType';
+import { guestDBCommentType } from '../type/guestDataType';
+import { guestDBReplyType } from '../type/guestDataType';
 
 const mongoDatabase = {
   // 게스트 글 HEADER에서 찾기
-  guestSerachArticle: async (keyWord: string, item: string) => {
+  guestSerachArticle: async (keyWord: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findGuestArticle = await col
@@ -13,6 +20,7 @@ const mongoDatabase = {
       .toArray();
     return findGuestArticle;
   },
+
   // 게스트 글 GET
   guestfindArticle: async () => {
     const user = await _guest;
@@ -20,8 +28,9 @@ const mongoDatabase = {
     const findArticle = await col.find().sort({ date: -1 }).toArray();
     return findArticle;
   },
+
   //게스트 글 POST
-  guestInsertArticle: async (data: any) => {
+  guestInsertArticle: async (data: guestDataType) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const insertArticle = await col.insertOne(data);
@@ -30,7 +39,7 @@ const mongoDatabase = {
     }
   },
   //게스트 글 PUT
-  guestUpdateArticle: async (data: any) => {
+  guestUpdateArticle: async (data: guestDataType) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleId = await col.findOne({
@@ -62,17 +71,17 @@ const mongoDatabase = {
     }
   },
   //게스트 댓글 GET
-  findComment: async (data: any) => {
+  findComment: async (pid: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
-    const commentFindOne = await col.findOne({ contentIdx: data });
+    const commentFindOne = await col.findOne({ contentIdx: pid });
     if (commentFindOne) {
       return commentFindOne;
     }
   },
 
   //게스트 댓글 POST
-  insertComment: async (data: any) => {
+  insertComment: async (data: guestCommentType) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const articleFindOne = await col.findOne({
@@ -89,7 +98,6 @@ const mongoDatabase = {
               content: data.content,
               userImg: data.userImg,
               replys: data.replys,
-              //시간 타입 확인하기
               date: data.date,
             },
           },
@@ -99,16 +107,15 @@ const mongoDatabase = {
     return { msg: '댓글 작성완료' };
   },
   // 게스트 댓글 PUT
-  updateComment: async (data: any) => {
-    console.log('게시글 수정 진입', data);
+  updateComment: async (data: guestCommentType) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFound = await col.findOne({
       'comment.commentIdx': data.commentIdx,
     });
 
-    let idx: any;
-    commentFound.comment.map((ele: any, i: any) => {
+    let idx: number = -1;
+    commentFound.comment.map((ele: guestCommentType, i: number) => {
       if (ele.commentIdx === data.commentIdx) {
         idx = i;
       }
@@ -130,7 +137,7 @@ const mongoDatabase = {
     }
   },
   //게스트 댓글 DELETE
-  deleteComment: async (commentIdx: any) => {
+  deleteComment: async (commentIdx: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFindOne = await col.updateOne(
@@ -141,15 +148,17 @@ const mongoDatabase = {
       return { msg: '댓글 삭제 완료' };
     }
   },
+
   //게스트 답글 POST
-  insertReply: async (data: any, commentIdx: any) => {
+  insertReply: async (data: guestReplyType, commentIdx: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFind = await col.findOne({
       'comment.commentIdx': commentIdx,
     });
-    let idx: any;
-    commentFind.comment.map((ele: any, i: any) => {
+
+    let idx: number = -1;
+    commentFind.comment.map((ele: guestDBCommentType, i: number) => {
       if (ele.commentIdx === commentIdx) {
         idx = i;
       }
@@ -177,28 +186,36 @@ const mongoDatabase = {
     }
   },
   //게스트 답글 UPDATE
-  updateReply: async (data: any) => {
+  updateReply: async (data: guestUpdateReplyType) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const commentFound = await col.findOne({
       'comment.commentIdx': data.commentIdx,
     });
-    let commentIndex: any;
-    let replyIndex: any;
-    commentFound.comment.map((ele: any, i: any) => {
+
+    let commentIndex: number = -1;
+    let replyIndex: number = -1;
+
+    commentFound.comment.map((ele: guestDBCommentType, i: number) => {
       if (ele.commentIdx === data.commentIdx) {
         commentIndex = i;
       }
     });
-    commentFound.comment[commentIndex].replys.map((ele: any, i: any) => {
-      if (ele.replyIdx === data.replyIdx) {
-        replyIndex = i;
+
+    commentFound.comment[commentIndex].replys.map(
+      (ele: guestDBReplyType, i: number) => {
+        if (ele.replyIdx === data.replyIdx) {
+          replyIndex = i;
+        }
       }
-    });
-    const replyidx = `comment.${commentIndex}.replys.${replyIndex}.replyIdx`;
+    );
+
+    const replyIdx = `comment.${commentIndex}.replys.${replyIndex}.replyIdx`;
+    const replyContent = `comment.${commentIndex}.replys.${replyIndex}.content`;
+
     const replyUpdateOne = await col.updateOne(
-      { [replyidx]: data.replyIdx },
-      { $set: { [replyidx]: { content: data.content } } }
+      { [replyIdx]: data.replyIdx },
+      { $set: { [replyContent]: data.content } }
     );
     if (replyUpdateOne) {
       return { msg: '답글 수정 완료' };
@@ -207,26 +224,29 @@ const mongoDatabase = {
 
   //게스트 답글 DELETE
 
-  deleteReply: async (commentIdx: any, replyIdx: any) => {
+  deleteReply: async (commentIdx: string, replyIdx: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
 
     const commentFound = await col.findOne({
       'comment.commentIdx': commentIdx,
     });
-    let commentIndex: any;
-    let replyIndex: any;
-    commentFound.comment.map((ele: any, i: any) => {
+
+    let commentIndex: number = -1;
+    let replyIndex: number = -1;
+    commentFound.comment.map((ele: guestDBCommentType, i: number) => {
       if (ele.commentIdx === commentIdx) {
         commentIndex = i;
       }
     });
 
-    commentFound.comment[commentIndex].replys.map((ele: any, i: any) => {
-      if (ele.replyIdx === replyIdx) {
-        replyIndex = i;
+    commentFound.comment[commentIndex].replys.map(
+      (ele: guestDBReplyType, i: number) => {
+        if (ele.replyIdx === replyIdx) {
+          replyIndex = i;
+        }
       }
-    });
+    );
 
     const replyidx = `comment.${commentIndex}.replys.${replyIndex}.replyIdx`;
     const arrayresult = `comment.${commentIndex}.replys`;

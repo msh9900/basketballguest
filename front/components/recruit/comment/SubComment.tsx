@@ -1,17 +1,18 @@
 import classes from "./SubComment.module.scss";
 import Avatar from "@mui/material/Avatar";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-export default function SubComment(props: any) {
+import { useRef, useState } from "react";
+import { SubCommentInterface } from "../../../components/interfaces/guest.interface";
+
+export default function SubComment(props: SubCommentInterface) {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
-  const isLogin = useSelector((state: any) => state.login?.isLogin);
-  const router = useRouter();
+
   const [textareaHeight, setTextareaHeight] = useState(0);
   const [writeReplyClick, setWriteReplyClick] = useState<Boolean>(false);
   const [updateReplyClick, setUpdateReplyClick] = useState<Boolean>(false);
-  const [writeComment, setWriteComment] = useState("");
+  const writeComment = useRef<HTMLTextAreaElement>(null);
+  const updateComment = useRef<HTMLTextAreaElement>(null);
 
   const replyDeleteHandler = async () => {
     const response = await fetch(
@@ -25,25 +26,29 @@ export default function SubComment(props: any) {
   const replyUpdateHandler = () => {
     setWriteReplyClick(false);
     setUpdateReplyClick(true);
-    setWriteComment(props.data.content);
   };
-  const checkItemChangeHandler = (event: any) => {
+  const checkItemChangeHandler = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setTextareaHeight(event.target.value.split("\n").length - 1);
-    setWriteComment(event.target.value);
   };
   const commentUpdateHandler = async () => {
     //댓글 update 구현.
     const data = {
       commentIdx: props.commentIdx,
       replyIdx: props.data.replyIdx,
-      content: writeComment,
+      content: updateComment.current!.value,
     };
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    console.log(data);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/reply`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
     const res = await response.json();
 
     props.setGetDataClick(true);
@@ -52,7 +57,7 @@ export default function SubComment(props: any) {
   return (
     <div className={classes.maincontainer} style={{ marginLeft: "25px" }}>
       <div className={classes.container}>
-        <Avatar alt="Remy Sharp" src="" />
+        <Avatar alt="Remy Sharp" src={props.data.userImg} />
         <div className={classes.content_container}>
           <div className={classes.id}>{props.data.userId}</div>
           <div className={classes.content}>{props.data.content}</div>
@@ -78,7 +83,7 @@ export default function SubComment(props: any) {
           <textarea
             className={classes.comment_input}
             placeholder="답글을 입력해주세요"
-            value={writeComment}
+            ref={writeComment}
             onChange={checkItemChangeHandler}
             style={{ height: 50 + textareaHeight * 24 + "px" }}
           />
