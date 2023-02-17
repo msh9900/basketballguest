@@ -27,12 +27,11 @@ const mongoDatabase = {
     const col = user.db('basket').collection('guestarticle');
 
     if (number === 0) {
-      const findArticleCount = await col.find().count();
+      const findArticleCount = await col.countDocuments();
       const findArticle = await col
         .find()
         .sort({ date: -1 })
         .limit(10)
-        .skip(number)
         .toArray();
       return [findArticle, findArticleCount];
     } else {
