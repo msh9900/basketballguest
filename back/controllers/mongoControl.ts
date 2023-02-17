@@ -236,10 +236,12 @@ const mongoDB = {
   // 게시글 수정
   updateArticle: async (data: rentalArticeDataType) => {
     const user = await _user;
-    const db = user.db('basket').collection('article');
-    const foundArticle = await db.findOne({ 'data.articleId': data.articleId });
+    const col = user.db('basket').collection('article');
+    const foundArticle = await col.findOne({
+      'data.articleId': data.articleId,
+    });
     if (foundArticle) {
-      await db.updateOne(
+      await col.updateOne(
         { 'data.articleId': data.articleId },
         {
           $set: {
@@ -254,7 +256,10 @@ const mongoDB = {
           },
         }
       );
-      return { foundmsg: '게시글 수정 완료' };
+      return [
+        { foundmsg: '게시글 수정 완료' },
+        { img: foundArticle.data.gymImg },
+      ];
     }
   },
   // 게시글 삭제

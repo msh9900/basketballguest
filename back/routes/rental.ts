@@ -173,8 +173,27 @@ router.put(
     data.openingPeriod[1] = new Date(
       new Date(data.openingPeriod[1]).toISOString()
     );
-    const result = await mongoClient.updateArticle(data);
-    res.send(JSON.stringify(result));
+
+    const dbData = await mongoClient.updateArticle(data);
+
+    let result;
+    if (req.files?.length !== 0) {
+      let foundImg = dbData[1];
+      let imgLength = foundImg.img.length;
+
+      for (let i = 0; i < imgLength; i++) {
+        let filterImg = foundImg.img[i].slice(28, foundImg.img[i].length);
+        fs.unlink(`${dir}${filterImg}`, (err) => {
+          if (err) throw err;
+        });
+      }
+      dbData.pop(1);
+      result = dbData[0];
+      res.send(JSON.stringify(result));
+    } else {
+      dbData.pop(1);
+      res.send(JSON.stringify(dbData));
+    }
   }
 );
 //게시글 삭제

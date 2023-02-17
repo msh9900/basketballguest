@@ -8,6 +8,7 @@ const router = express.Router();
 //env config
 require('dotenv').config();
 
+//multer
 const dir = './guest';
 const storage = multer.diskStorage({
   destination: function (req: Request, file: Express.Multer.File, cb) {
@@ -22,17 +23,20 @@ const limits = {
   fileSize: 2048 * 2048 * 2,
 };
 const upload = multer({ storage, limits });
+
 //게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
   const result = await mongoClient.guestSerachArticle(req.body.keyWord);
   res.send(JSON.stringify(result));
 });
 
-// 게시판 db 가져오기
+// 게스트모집 게시판  db 가져오기
 router.get('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.guestfindArticle();
   res.send(JSON.stringify(result));
 });
+
+// 게스트모집 게시판 만들기
 router.post(
   '/article',
   upload.array('img', 6),
@@ -59,13 +63,13 @@ router.post(
     return result;
   }
 );
+
+// 게스트모집 게시판 수정하기
 router.put(
   '/article',
   upload.array('img', 6),
   async (req: Request, res: Response) => {
     const resultFiles = req.files as any;
-    console.log('req.body', req.body);
-    console.log('req.files', req.files);
 
     let fileNameArray: string[] = [];
     resultFiles.map((ele: any) => {
@@ -82,23 +86,46 @@ router.put(
       imgSrc: fileNameArray,
       comment: [],
     };
-
     if (req.files?.length === 0) {
       data.imgSrc = JSON.parse(req.body.imgSrc);
     }
-    const result = await mongoClient.guestUpdateArticle(data);
-    res.send(JSON.stringify(result));
+
+    const dbData = await mongoClient.guestUpdateArticle(data);
+
+    let result;
+    if (req.files?.length !== 0) {
+      let foundImg = dbData[1];
+      let imgLength = foundImg.img.length;
+      for (let i = 0; i < imgLength; i++) {
+        let filterImg = foundImg.img[i].slice(27, foundImg.img[i].length);
+        fs.unlink(`${dir}${filterImg}`, (err) => {
+          if (err) throw err;
+        });
+      }
+
+      dbData.pop(1);
+      result = dbData[0];
+      res.send(JSON.stringify(result));
+    } else {
+      dbData.pop(1);
+      res.send(JSON.stringify(dbData));
+    }
   }
 );
+
+// 게스트모집 게시판 삭제하기
 router.delete('/article', async (req: Request, res: Response) => {
   const result = await mongoClient.guestDeleteArticle(req.body.contentIdx);
   res.send(JSON.stringify(result));
 });
+
+// 게스트모집 댓글 불러오기
 router.get('/comment', async (req: Request, res: Response) => {
   const result = await mongoClient.findComment(req.query.contentIdx);
   res.send(JSON.stringify(result));
 });
 
+//게스트모집 댓글 생성하기
 router.post('/comment', async (req: Request, res: Response) => {
   const data = {
     contentIdx: req.body.contentIdx,
@@ -112,6 +139,8 @@ router.post('/comment', async (req: Request, res: Response) => {
   const result = await mongoClient.insertComment(data);
   res.send(JSON.stringify(result));
 });
+
+//게스트모집 댓글 수정하기
 router.put('/comment', async (req: Request, res: Response) => {
   const data = {
     commentIdx: req.body.commentIdx,
@@ -121,11 +150,14 @@ router.put('/comment', async (req: Request, res: Response) => {
   const result = await mongoClient.updateComment(data);
   res.send(JSON.stringify(result));
 });
+
+//게스트모집 댓글 삭제하기
 router.delete('/comment', async (req: Request, res: Response) => {
   const result = await mongoClient.deleteComment(req.query.commentIdx);
   res.send(JSON.stringify(result));
 });
 
+//게스트모집 답글 생성하기
 router.post('/reply', async (req: Request, res: Response) => {
   const data = {
     replyIdx: (Date.now() + Math.random()).toFixed(13),
@@ -137,6 +169,8 @@ router.post('/reply', async (req: Request, res: Response) => {
   const result = await mongoClient.insertReply(data, req.body.commentIdx);
   res.send(JSON.stringify(result));
 });
+
+//게스트모집 답글 수정하기
 router.put('/reply', async (req: Request, res: Response) => {
   const data = {
     commentIdx: req.body.commentIdx,
@@ -146,6 +180,8 @@ router.put('/reply', async (req: Request, res: Response) => {
   const result = await mongoClient.updateReply(data);
   res.send(JSON.stringify(result));
 });
+
+//게스트모집 답글 삭제하기
 router.delete('/reply', async (req: Request, res: Response) => {
   const result = await mongoClient.deleteReply(
     req.query.commentIdx,

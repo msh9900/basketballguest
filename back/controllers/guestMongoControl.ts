@@ -58,7 +58,7 @@ const mongoDatabase = {
           },
         }
       );
-      return { msg: '게시글 수정 완료' };
+      return [{ msg: '게시글 수정 완료' }, { img: findArticleId.imgSrc }];
     }
   },
   //게스트 글 DELETE

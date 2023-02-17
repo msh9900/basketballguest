@@ -53,7 +53,6 @@ router.post(
 
       fs.unlink(`${dir}${willDeleteImg}`, (err) => {
         if (err) throw err;
-        console.log('이전 이미지 삭제 완료');
       });
       dbData.pop(1);
       result = dbData[0];
