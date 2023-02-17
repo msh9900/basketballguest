@@ -34,7 +34,6 @@ router.post('/search', async (req: Request, res: Response) => {
 router.get('/article', async (req: Request, res: Response) => {
   const pidNumber = Number(req.query.pid);
   const result = await mongoClient.guestfindArticle(pidNumber);
-  console.log('result', result);
   res.send(JSON.stringify(result));
 });
 

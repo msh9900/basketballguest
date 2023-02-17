@@ -47,6 +47,7 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
       `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=${pid}`
     );
     const res = await response.json();
+    console.log("res", res);
     setData((prev) => [...prev, ...res]);
   };
 
