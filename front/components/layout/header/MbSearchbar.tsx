@@ -1,30 +1,36 @@
 import classes from "./Header.module.scss";
 import SearchIcon from "@mui/icons-material/Search";
-import triggerSearch from './_triggerSearch';
+import triggerSearch from "./_triggerSearch";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 interface Props {
-  selectValue: string,
-  searchValue: string;
+  selectValue: string;
+  searchValue: any;
   selectChangeHanlder: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MbSearchbar = (props: Props) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const onChangeSearchValue = (e: any) => {
-    props.setSearchValue(e.target.value)
-  }
 
   // ACTIVATE TRIGGER FUNCTION
   const searchBtn_Clicked = () => {
-    triggerSearch(props.searchValue, props.selectValue, router, dispatch)
+    triggerSearch(
+      props.searchValue.current.value,
+      props.selectValue,
+      router,
+      dispatch
+    );
   };
   const searchBar_Entered = (e: any) => {
-    e.preventDefault()
-    triggerSearch(props.searchValue, props.selectValue, router, dispatch)
+    e.preventDefault();
+    triggerSearch(
+      props.searchValue.current.value,
+      props.selectValue,
+      router,
+      dispatch
+    );
   };
 
   return (
@@ -42,11 +48,10 @@ const MbSearchbar = (props: Props) => {
           type="text"
           className={classes.searchinputbox}
           placeholder="search..."
-          value={props.searchValue}
-          onChange={onChangeSearchValue}
+          ref={props.searchValue}
         />
       </form>
-      <SearchIcon className={classes.searchIcon} onClick={searchBtn_Clicked}/>
+      <SearchIcon className={classes.searchIcon} onClick={searchBtn_Clicked} />
     </div>
   );
 };

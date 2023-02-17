@@ -51,7 +51,7 @@ export default function Header() {
     setAnchorElNav(null);
   };
 
-  const [searchValue, setSearchValue] = useState("");
+  const searchValue = React.useRef();
 
   const UserMenuClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.textContent === "프로필") {
@@ -102,7 +102,6 @@ export default function Header() {
             selectValue={selectValue}
             selectChangeHanlder={selectChangeHanlder}
             searchValue={searchValue}
-            setSearchValue={setSearchValue}
           />
           <UserMenu
             handleOpenUserMenu={handleOpenUserMenu}
@@ -115,7 +114,6 @@ export default function Header() {
           selectValue={selectValue}
           selectChangeHanlder={selectChangeHanlder}
           searchValue={searchValue}
-          setSearchValue={setSearchValue}
         />
       </div>
     </AppBar>
