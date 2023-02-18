@@ -58,15 +58,14 @@
 <img src="https://img.shields.io/badge/Github-black?style=flat-square&logo=Github&logoColor=white" height="25"/>&nbsp
 </div>
 
-##  📁자료구조
+## 📁자료구조
+![image](https://user-images.githubusercontent.com/100825999/219877403-a57d89fe-e7f8-486a-b86c-6557f7083d38.png)
+![POWERPNT_fTwYvFt4Wy](https://user-images.githubusercontent.com/100825999/219877413-b8f061de-15b7-44f7-9e0d-aef09272bacf.png)
 
 
-## 📜로그인 기능
+## 📜로그인 및 회원가입 기능
 
 ## 📜게스트 모집 게시판 쓰기 및 검색 기능
 
 ## 📜체육관 대여 게시판 쓰기 및 검색 기능
- https://www.notion.so/BPT-f7c3e2f096154aa4bf6c3c8619384381?pvs=4#228edf119c2f46b7989e3cdd67ce7cd6
- 
-
 
