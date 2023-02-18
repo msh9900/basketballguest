@@ -60,7 +60,8 @@
 <br />
 
 ## 📁자료구조
-![image](https://user-images.githubusercontent.com/100825999/219879901-18dbd65f-bc8f-4779-9adb-62ca9d1f321b.png)
+![image](https://user-images.githubusercontent.com/100825999/219880699-971ae1f9-144b-4937-a045-706aee9d7822.png)
+
 
 
 ## 📜로그인 및 회원가입 기능
