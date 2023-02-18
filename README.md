@@ -66,7 +66,7 @@
 ## 📜게스트 모집 게시판 쓰기 및 검색 기능
 
 ## 📜체육관 대여 게시판 쓰기 및 검색 기능
- 
+ https://www.notion.so/BPT-f7c3e2f096154aa4bf6c3c8619384381?pvs=4#228edf119c2f46b7989e3cdd67ce7cd6
  
 
 
