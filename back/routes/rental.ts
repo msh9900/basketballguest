@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import fs, { lutimes } from 'fs';
+import fs from 'fs';
 import multer from 'multer';
 
 import { rentalArticleFileDataType } from '../type/rentalDataType';
