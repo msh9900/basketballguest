@@ -52,7 +52,7 @@ router.post(
       const willDeleteImg = foundImg.slice(32, foundImg.length);
 
       fs.unlink(`${dir}${willDeleteImg}`, (err) => {
-        if (err) throw err;
+        if (err) console.log('이전 사진 없음');
       });
       dbData.pop(1);
       result = dbData[0];
