@@ -103,7 +103,6 @@ router.put(
           if (err) throw err;
         });
       }
-
       dbData.pop(1);
       result = dbData[0];
       res.send(JSON.stringify(result));
