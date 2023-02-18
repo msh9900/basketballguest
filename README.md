@@ -52,11 +52,12 @@
  <img src="https://img.shields.io/badge/AWS-black?style=flat-square&logo=AWS&logoColor=white" height="25"/>&nbsp
 </div>
 
-## DevOps
+### DevOps
 <div>
 <img src="https://img.shields.io/badge/PostMan-FAAC58?style=flat-square&logo=PostMan&logoColor=white" height="25"/>&nbsp
 <img src="https://img.shields.io/badge/Github-black?style=flat-square&logo=Github&logoColor=white" height="25"/>&nbsp
 </div>
+
 
 ## 📁자료구조
 ![image](https://user-images.githubusercontent.com/100825999/219877403-a57d89fe-e7f8-486a-b86c-6557f7083d38.png)
