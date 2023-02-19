@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-
-import Card from "../../components/recruit/Card";
 import classes from "./guest.module.scss";
 import Modal from "@mui/material/Modal";
 import WriteModal from "../../components/recruit/WriteModal";
@@ -10,7 +8,9 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { search } from "redux/modules/search";
 import useIntersectionObserver from "hooks/useIntersectionObserver";
-// import AnimationBox from "../../components/LoadingAnimation";
+
+// comp
+import Card from "components/recruit/Card";
 import AnimationBox from "components/LoadingAnimation";
 import GuestHead from "components/common/headTags/guestHead";
 
@@ -32,7 +32,7 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<PropDataInterface[]>(props.data);
 
-  const [isMounted, setIsMounted] = useState(false);
+  // const [isMounted, setIsMounted] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
 
   const bundleIdx = useRef<number>(1);
@@ -44,14 +44,8 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
       `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=${pid}`
     );
     const res = await response.json();
-    console.log("res", res);
     setData((prev) => [...prev, ...res]);
   };
-
-  // GET DATA FIRST TIME
-  useEffect(() => {
-    console.log("isMounted", isMounted);
-  }, []);
 
   // TOGGLE LOADING COMPONENT
   const checkAllLoaded = () => {
@@ -67,7 +61,6 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     { isIntersecting },
   ]) => {
     if (isIntersecting) {
-      console.log("실행...");
       setTimeout(() => {
         Controller();
       }, 500);
@@ -75,20 +68,17 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     }
   };
 
+  // CONTROL WHEN OBSERVED...
   const Controller = async () => {
     bundleIdx.current += 1;
-    console.log("bundleIdx.current", bundleIdx.current);
     await getData(bundleIdx.current);
-
     const isAllLoaded = checkAllLoaded();
     if (isAllLoaded) {
-      console.log("isAllLoaded", isAllLoaded);
       setAllLoaded(true);
     }
   };
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
-
   const handleOpen = () => {
     if (isLogin) {
       setOpen(true);
@@ -150,43 +140,23 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
       <div className={classes.wrap}>
         <div className={classes.container}>
           {data.map((val: PropDataInterface) => (
-            <Card
-              key={val.contentIdx}
-              data={val}
-              setIsMounted={setIsMounted}
-              isMounted={isMounted}
-            />
+            <Card key={val.contentIdx} data={val} />
           ))}
         </div>
 
-        {isMounted && data.length && (
-          <>
-            {!allLoaded && (
-              // <div ref={setTarget} className="test">
-              //   로딩 애니메이션 박스
-              // </div>
-              <AnimationBox>
-                <div ref={setTarget} className="loader"></div>
-              </AnimationBox>
-            )}
-          </>
+        {data.length && !allLoaded && (
+          <div className={classes.outerBox}>
+            <AnimationBox>
+              <div ref={setTarget} className="loader"></div>
+            </AnimationBox>
+          </div>
         )}
       </div>
-
-      {/* {!allLoaded && (
-        <>
-          <AnimationBox>
-            <div ref={setTarget} className="loader"></div>
-          </AnimationBox>
-        </>
-      )} */}
     </>
   );
 }
 
 export async function getServerSideProps() {
-  // 여기서 글데이터 다 받아야됨.
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=0`
   );

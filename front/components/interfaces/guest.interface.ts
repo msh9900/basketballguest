@@ -31,8 +31,6 @@ export interface ReplysInterface {
 
 export interface CardPropInterface {
   data: PropDataInterface;
-  setIsMounted: (a: boolean) => void;
-  isMounted: boolean;
 }
 
 export interface MainCommentInterface {

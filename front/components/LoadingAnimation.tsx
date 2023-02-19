@@ -19,7 +19,6 @@ const AnimationBox = styled.div`
     margin: 0 auto;
     margin-top: 10px;
     margin-bottom: 20px;
-
     position: relative;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);

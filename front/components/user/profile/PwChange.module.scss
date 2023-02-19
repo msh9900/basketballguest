@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
+
+.PwChangeLayout{
+  // max-width:350px;
+  width:100%;
+  border-radius: 10px;
+  border:1px solid black;
+  padding-top:30px;
+  padding:10px;
+  // margin:1110px;
+
+  .innerForm{
+    border: 1px solid #c9c4c4;  
+    max-width:350px;
+    margin:0 auto;
+    margin-top:40px;
+    margin-bottom:40px;
+    h1{
+      padding:20px;
+    }
+  }
+
+  .headertitle {
+    margin-top: 50px;
+    padding: 1em;
+    font-family: "Rubik Vinyl";
+    font-weight: bold;
+    font-size: 4em;
+    @media (max-width: 900px) {
+      font-size: 2em;
+    }
+  }
+
+  text-align: center;
+  margin:0 auto;
+
+  .PwSubmitBtn{
+    
+    font-weight: bold;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    
+    line-height: 40px;
+    font-size: 17px;
+    color: white;
+    
+    border-radius: 10px;
+    border:3px solid gainsboro;
+    background-color: whitesmoke;
+
+    cursor: pointer;
+    width:100px;
+    height: 35px;
+
+    &:hover {
+      color: black;
+      border:3px solid brown;
+      background-color: orange;
+    }
+    img{
+      width:30px;
+    }
+  }
+}

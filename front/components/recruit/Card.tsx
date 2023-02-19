@@ -118,10 +118,6 @@ export default function RecipeReviewCard(props: CardPropInterface) {
     }
   }, [getDataClick]);
 
-  useEffect(() => {
-    props.setIsMounted(true);
-  }, []);
-
   return (
     <>
       {!getDataClick && (
