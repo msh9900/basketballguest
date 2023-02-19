@@ -100,10 +100,9 @@ router.put(
       for (let i = 0; i < imgLength; i++) {
         let filterImg = foundImg.img[i].slice(27, foundImg.img[i].length);
         fs.unlink(`${dir}${filterImg}`, (err) => {
-          if (err) throw err;
+          if (err) console.log('이전 사진 없음');
         });
       }
-
       dbData.pop(1);
       result = dbData[0];
       res.send(JSON.stringify(result));

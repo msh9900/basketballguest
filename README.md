@@ -3,7 +3,7 @@
 
 ## 📄 개요
 - 서비스명 : BPT
-- 개발기간 : 2022.01.02~ 2022.02.08
+- 개발기간 : 2022.01.02~ 2022.02.18 (진행중)
 - 주제 : 농구하고 싶은 사람들을 모집하는 게스트 페이지
 
 ## 🫶 팀원 소개
@@ -38,7 +38,6 @@
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black" height="25"/>&nbsp
 <img src="https://img.shields.io/badge/TypeScript-9TDAFB?style=flat-square&logo=TypeScript&logoColor=white" height="25"/>&nbsp
 </div>
-<br />
 
 ### Back-end
 <div>
@@ -49,16 +48,24 @@
 <img src="https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=mongoDB&logoColor=white" height="25px">
 <img src="https://img.shields.io/badge/nodemailer-686854?style=flat-square&logo=nodemailer&logoColor=white" height="25px">
 <img src="https://img.shields.io/badge/puppeteer-95B854?style=flat-square&logo=puppeteer&logoColor=white"height="25px">
- <img src="https://img.shields.io/badge/Aws-FAAC58?style=flat-square&logo=Aws&logoColor=white" height="25"/>&nbsp
+ <img src="https://img.shields.io/badge/AWS-black?style=flat-square&logo=AWS&logoColor=white" height="25"/>&nbsp
 </div>
 
-## DevOps
+### DevOps
 <div>
 <img src="https://img.shields.io/badge/PostMan-FAAC58?style=flat-square&logo=PostMan&logoColor=white" height="25"/>&nbsp
 <img src="https://img.shields.io/badge/Github-black?style=flat-square&logo=Github&logoColor=white" height="25"/>&nbsp
 </div>
+<br />
 
- 
- 
+## 📁자료구조
+![image](https://user-images.githubusercontent.com/100825999/219928906-23a28c22-c7d6-45bb-b593-cd9c7a8b9354.png)
 
+
+
+## 📜로그인 및 회원가입 기능
+
+## 📜게스트 모집 게시판 쓰기 및 검색 기능
+
+## 📜체육관 대여 게시판 쓰기 및 검색 기능
 

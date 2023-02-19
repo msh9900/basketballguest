@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import fs, { lutimes } from 'fs';
+import fs from 'fs';
 import multer from 'multer';
 
 import { rentalArticleFileDataType } from '../type/rentalDataType';
@@ -184,7 +184,7 @@ router.put(
       for (let i = 0; i < imgLength; i++) {
         let filterImg = foundImg.img[i].slice(28, foundImg.img[i].length);
         fs.unlink(`${dir}${filterImg}`, (err) => {
-          if (err) throw err;
+          if (err) console.log('이전 사진 없음');
         });
       }
       dbData.pop(1);
