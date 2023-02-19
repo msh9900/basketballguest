@@ -69,7 +69,20 @@ const PwChange = () => {
     <div className={cls.PwChangeLayout}>
       <div className={cls.innerForm}>
         <h1>비밀번호 변경</h1>
-        <p className={cls.guidance}>비밀번호 입력</p>
+
+        <div className={cls.pair}> 
+          <div className={cls.L}>PW 입력</div>
+          <input type="password" value={pw} onChange={InputPasswordHandler} autoComplete="off"/>
+        </div>
+
+        <form onSubmit={submitEntered}>
+          <div className={cls.pair}> 
+            <div className={cls.L}>PW 재입력</div>
+            <input type="email" value={pw2} onChange={InputPasswordHandler} autoComplete="off"/>
+          </div>
+        </form>
+        
+        {/* <p className={cls.guidance}>비밀번호 입력</p>
         <input
           type="password"
           value={pw}
@@ -84,7 +97,8 @@ const PwChange = () => {
             onChange={InputPasswordHandler2}
             autoComplete="off"
           />
-        </form>
+        </form> */}
+
         {!isPwSame && pw.length >= 1 && isRecentSubmitted && (
           <p className={cls.invalid}>PW가 일치하지 않습니다.</p>
         )}

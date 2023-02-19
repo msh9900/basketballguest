@@ -10,7 +10,6 @@ const ProfileChange = () => {
   
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
-  
   const stateUserEmail = useSelector((state: any) => state.login.email);
   const stateUserImg = useSelector((state: any) => state.login.userImg);
   const defaultUserImg = useSelector((state: any) => state.login.defaultImgUrl);
@@ -107,12 +106,21 @@ const ProfileChange = () => {
             />
           </div>
 
-          <p>아이디</p>
-          <input type="text" defaultValue={stateId} disabled />
-          <p>이메일</p>
-          <input type="email" value={email} onChange={InputEmailHandler} />
-          <p>이름</p>
-          <input type="text" value={userName} onChange={InputNameHandler} />
+          <div className={classes.pair}> 
+            <div className={classes.L}>아이디</div>
+            <input type="text" defaultValue={stateId} disabled />
+          </div>
+
+          <div className={classes.pair}> 
+            <div className={classes.L}>이메일</div>
+            <input type="email" value={email} onChange={InputEmailHandler} />
+          </div>
+
+          <div className={classes.pair}> 
+            <div className={classes.L}>이름</div>
+            <input type="email" value={userName} onChange={InputEmailHandler} />
+          </div>
+          
           <button type="submit" className={classes.button}>
             <img
               src='/images/rental/checked.png'  

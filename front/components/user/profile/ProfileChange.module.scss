@@ -12,19 +12,29 @@
   border:1px solid black;
   border-radius: 10px;
 
+  .pair{
+    color:black;
+    display:flex;
+    .L{
+      padding:10px;
+      width:80px;
+      line-height: 20px;
+    }
+    input{
+      margin-left:10px;
+      // height:35px;
+    }
+  }
+
   .profileForm {
     display: flex;
     flex-direction: column;
     width: 100%;
     align-items: center;
     position: relative;
-    padding: 3em;
     min-width: 290px;
     max-width: 384px;
-    
-    border: 1px solid #c9c4c4;
     border-radius: 6px;
-
     .invalid {
       color: red;
     }
@@ -84,32 +94,6 @@
           cursor: pointer;
         }
       }
-    }
-  }
-  
-  button {
-    font-weight: bold;
-    margin-top: 2em;
-    
-    line-height: 40px;
-    font-size: 17px;
-    color: white;
-    
-    border-radius: 10px;
-    border:3px solid gainsboro;
-    background-color: whitesmoke;
-
-    cursor: pointer;
-    width:100px;
-    height: 35px;
-
-    &:hover {
-      color: black;
-      border:3px solid brown;
-      background-color: orange;
-    }
-    img{
-      width:30px;
     }
   }
 }
