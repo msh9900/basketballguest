@@ -68,7 +68,7 @@ const PwChange = () => {
   return (
     <div className={cls.PwChangeLayout}>
       <div className={cls.innerForm}>
-        <h1>비밀번호 변경</h1>
+        {/* <h1>비밀번호 변경</h1> */}
 
         <div className={cls.pair}> 
           <div className={cls.L}>PW 입력</div>

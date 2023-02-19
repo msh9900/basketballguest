@@ -80,7 +80,7 @@ const ProfileChange = () => {
       <form onSubmit={profileSumbit} className={classes.ProfileChangeLayout}>
         
         <div className={classes.profileForm}>
-        <h1>프로필 변경</h1>
+        {/* <h1>프로필 변경</h1> */}
           <div className={classes.profileImgBox}>
             
             {/* 프로필 이미지 선택*/}
