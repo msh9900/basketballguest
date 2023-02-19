@@ -59,7 +59,7 @@
 <br />
 
 ## 📁자료구조
-![image](https://user-images.githubusercontent.com/100825999/219880699-971ae1f9-144b-4937-a045-706aee9d7822.png)
+![image](https://user-images.githubusercontent.com/100825999/219928906-23a28c22-c7d6-45bb-b593-cd9c7a8b9354.png)
 
 
 
