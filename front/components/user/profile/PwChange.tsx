@@ -2,6 +2,7 @@ import cls from "./PwChange.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import usePwChecker from "hooks/usePwChecker";
+import { useSelector } from "react-redux";
 
 const PwChange = () => {
   
@@ -12,6 +13,7 @@ const PwChange = () => {
   // VALUES
   const [pw, setPw] = useState<string>("");
   const [pw2, setPw2] = useState<string>("");
+  const stateId = useSelector((state: any) => state.login.userId) as string;
 
   // ETC
   const [isRecentSubmitted, setIsRecentSubmitted] = useState(false);
@@ -45,15 +47,18 @@ const PwChange = () => {
     if (isPwSame === false) return;
     setIsRecentSubmitted(true);
 
-    alert("일치 + 유효");
-    console.log("일치 + 유효");
+    // alert("일치 + 유효");
+    // console.log("일치 + 유효");
+    const userInfo = {
+      userId: stateId,
+      userPw : pw
+    }
 
-    return;
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/profile/pwChange?`,
       {
         method: "POST",
-        body: pw,
+        body: JSON.stringify(userInfo),
       }
     );
     const data = await response.json();
