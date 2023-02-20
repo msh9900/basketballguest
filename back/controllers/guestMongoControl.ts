@@ -11,26 +11,20 @@ import { guestDBReplyType } from '../type/guestDataType';
 const mongoDatabase = {
   // 게스트 글 HEADER에서 찾기
   guestSerachArticle: async (pid: number, keyword: string) => {
+    console.log('data', keyword);
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleCount = await col.countDocuments();
-    if (keyword === null) {
-      const findGuestArticle = await col
-        .find({
-          $or: [
-            { title: { $regex: keyword } },
-            { content: { $regex: keyword } },
-          ],
-        })
-        .sort({ date: -1 })
-        .limit(10)
-        .skip(pid - 10)
-        .toArray();
-      console.log('data', findGuestArticle);
-      return [findGuestArticle, findArticleCount];
-    } else {
-      return [[], findArticleCount];
-    }
+    const findGuestArticle = await col
+      .find({
+        $or: [{ title: { $regex: keyword } }, { content: { $regex: keyword } }],
+      })
+      .sort({ date: -1 })
+      .limit(10)
+      .skip(pid - 10)
+      .toArray();
+    console.log('data', findGuestArticle);
+    return [findGuestArticle, findArticleCount];
   },
 
   // 게스트 글 GET

@@ -26,12 +26,16 @@ const upload = multer({ storage, limits });
 
 //게시판 특정 db 찾기
 router.get('/search', async (req: Request, res: Response) => {
-  const result = await mongoClient.guestSerachArticle(
-    req.query.pid,
-    req.query.keyword
-  );
-  console.log('result', result);
-  res.send(JSON.stringify(result));
+  if (req.query.keyword === '') {
+    let result = [[], 0];
+    res.send(JSON.stringify(result));
+  } else {
+    let result = await mongoClient.guestSerachArticle(
+      req.query.pid,
+      req.query.keyword
+    );
+    res.send(JSON.stringify(result));
+  }
 });
 
 // 게스트모집 게시판  db 가져오기
