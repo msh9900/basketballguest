@@ -10,14 +10,16 @@ import { guestDBReplyType } from '../type/guestDataType';
 
 const mongoDatabase = {
   // 게스트 글 HEADER에서 찾기
-  guestSerachArticle: async (pid: number, keyword: string) => {
-    console.log('data', keyword);
+  guestSerachArticle: async (pid: number, keyWord: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
-    const findArticleCount = await col.countDocuments();
+    const findArticleCount = await col.countDocuments({
+      $or: [{ title: { $regex: keyWord } }, { content: { $regex: keyWord } }],
+    });
+
     const findGuestArticle = await col
       .find({
-        $or: [{ title: { $regex: keyword } }, { content: { $regex: keyword } }],
+        $or: [{ title: { $regex: keyWord } }, { content: { $regex: keyWord } }],
       })
       .sort({ date: -1 })
       .limit(10)
@@ -32,23 +34,14 @@ const mongoDatabase = {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
 
-    if (number === 0) {
-      const findArticleCount = await col.countDocuments();
-      const findArticle = await col
-        .find()
-        .sort({ date: -1 })
-        .limit(10)
-        .toArray();
-      return [findArticle, findArticleCount];
-    } else {
-      const findArticle = await col
-        .find()
-        .sort({ date: -1 })
-        .limit(10)
-        .skip(number)
-        .toArray();
-      return findArticle;
-    }
+    const findArticleCount = await col.countDocuments();
+    const findArticle = await col
+      .find()
+      .sort({ date: -1 })
+      .limit(10)
+      .skip(number - 10)
+      .toArray();
+    return [findArticle, findArticleCount];
   },
 
   //게스트 글 POST

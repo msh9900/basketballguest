@@ -31,7 +31,7 @@ export default function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const [selectValue, setSelectValue] = React.useState("gym");
+  const [selectValue, setSelectValue] = React.useState("guest");
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -51,7 +51,7 @@ export default function Header() {
     setAnchorElNav(null);
   };
 
-  const searchValue = React.useRef();
+  const [searchValue, setSearchValue] = useState("");
 
   const UserMenuClickHandler = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.textContent === "프로필") {
@@ -102,6 +102,7 @@ export default function Header() {
             selectValue={selectValue}
             selectChangeHanlder={selectChangeHanlder}
             searchValue={searchValue}
+            setSearchValue={setSearchValue}
           />
           <UserMenu
             handleOpenUserMenu={handleOpenUserMenu}
@@ -114,6 +115,7 @@ export default function Header() {
           selectValue={selectValue}
           selectChangeHanlder={selectChangeHanlder}
           searchValue={searchValue}
+          setSearchValue={setSearchValue}
         />
       </div>
     </AppBar>

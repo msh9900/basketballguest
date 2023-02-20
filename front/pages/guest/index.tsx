@@ -1,15 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+// style
 import classes from "./guest.module.scss";
-import Modal from "@mui/material/Modal";
-import WriteModal from "../../components/recruit/WriteModal";
 import ModeIcon from "@mui/icons-material/Mode";
+import Modal from "@mui/material/Modal";
+
+// hooks
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { search } from "redux/modules/search";
 import useIntersectionObserver from "hooks/useIntersectionObserver";
 
-// comp
+// custom utils
+import globalGetData from "util/data/globalgetData";
+import getData from "util/data/getData";
+
+// components
+import WriteModal from "components/recruit/WriteModal";
 import Card from "components/recruit/Card";
 import AnimationBox from "components/LoadingAnimation";
 import GuestHead from "components/common/headTags/guestHead";
@@ -17,7 +24,7 @@ import GuestHead from "components/common/headTags/guestHead";
 import {
   PropsInterface,
   PropDataInterface,
-} from "../../components/interfaces/guest.interface";
+} from "components/interfaces/guest.interface";
 
 export default function GuestRecruitmentPage(props: PropsInterface) {
   const router = useRouter();
@@ -30,26 +37,37 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   );
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState<PropDataInterface[]>(props.data);
+  const [data, setData] = useState<PropDataInterface[]>([]);
 
-  // const [isMounted, setIsMounted] = useState(false);
+  const [searchAdapted, setSearchAdapted] = useState(globalSearchNeeded);
+  // globalSearchNeeded : 새로고침할 때 false가 된다...
+  // 검색버튼 누르면 true 되어야 하는데,...
+  // 그런데
   const [allLoaded, setAllLoaded] = useState(false);
 
-  const bundleIdx = useRef<number>(1);
+  const bundleIdx = useRef<number>(0);
   const bundleSize: number = 10;
 
-  const getData = async (bundleIdx: number) => {
-    const pid = bundleIdx * bundleSize;
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=${pid}`
-    );
-    const res = await response.json();
-    setData((prev) => [...prev, ...res]);
-  };
+  useEffect(() => {
+    // console.log("globalSearchNeeded 값", globalSearchNeeded);
+    // console.log("searchAdapted", searchAdapted);
+    console.log;
+    if (globalSearchNeeded) {
+      setAllLoaded(false);
+      setData([]);
+      bundleIdx.current = 0;
+      setSearchAdapted(true);
+      const stateObj = {
+        searchValue: globalSearchValue,
+        globalSearchNeeded: false,
+      };
+      dispatch(search(stateObj));
+    }
+  }, [globalSearchNeeded]);
 
   // TOGGLE LOADING COMPONENT
-  const checkAllLoaded = () => {
-    if (bundleSize * bundleIdx.current > props.dataLength) {
+  const checkAllLoaded = (dataLength: number) => {
+    if (bundleSize * bundleIdx.current > dataLength) {
       return true;
     } else {
       return false;
@@ -61,6 +79,10 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     { isIntersecting },
   ]) => {
     if (isIntersecting) {
+      console.log("searchAdapted:", searchAdapted);
+      console.log("globalSearchNeeded:", globalSearchNeeded);
+      console.log("globalSearchValue:", globalSearchValue);
+
       setTimeout(() => {
         Controller();
       }, 500);
@@ -71,14 +93,28 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   // CONTROL WHEN OBSERVED...
   const Controller = async () => {
     bundleIdx.current += 1;
-    await getData(bundleIdx.current);
-    const isAllLoaded = checkAllLoaded();
-    if (isAllLoaded) {
-      setAllLoaded(true);
+    // globalSearchNeeded 일때 한번 검색하고 false 처리해둘예정?
+    console.log("searchAdapted:", searchAdapted);
+    let dataLen = 0;
+    // 검색
+    if (searchAdapted) {
+      dataLen = await globalGetData(
+        bundleIdx.current,
+        bundleSize,
+        setData,
+        globalSearchValue
+      );
     }
+
+    // 기본값
+    else {
+      dataLen = await getData(bundleIdx.current, bundleSize, setData);
+    }
+    if (checkAllLoaded(dataLen)) setAllLoaded(true);
   };
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
+
   const handleOpen = () => {
     if (isLogin) {
       setOpen(true);
@@ -87,38 +123,6 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     }
   };
   const handleClose = () => setOpen(false);
-
-  // const getData = async () => {
-  //   await setGuestData(props.data);
-  // };
-
-  // const globalGetData = async () => {
-  //   const data = {
-  //     keyWord: globalSearchValue,
-  //   };
-
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_BASE_URL}/board/search`,
-  //     {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     }
-  //   );
-  //   const res = await response.json();
-  //   setGuestData(res);
-  //   const stateObj = {
-  //     searchValue: "",
-  //     globalSearchNeeded: false,
-  //   };
-  //   dispatch(search(stateObj));
-  // };
-
-  // useEffect(() => {
-  //   if (globalSearchNeeded) {
-  //     globalGetData();
-  //   }
-  // }, [globalSearchNeeded]);
 
   return (
     <>
@@ -144,7 +148,7 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
           ))}
         </div>
 
-        {data.length && !allLoaded && (
+        {!allLoaded && (
           <div className={classes.outerBox}>
             <AnimationBox>
               <div ref={setTarget} className="loader"></div>
@@ -156,16 +160,16 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   );
 }
 
-export async function getServerSideProps() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=0`
-  );
-  const res = await response.json();
+// export async function getServerSideProps() {
+//   const response = await fetch(
+//     `${process.env.NEXT_PUBLIC_BASE_URL}/board/article?pid=0`
+//   );
+//   const res = await response.json();
 
-  return {
-    props: {
-      data: res[0],
-      dataLength: res[1],
-    },
-  };
-}
+//   return {
+//     props: {
+//       data: res[0],
+//       dataLength: res[1],
+//     },
+//   };
+// }
