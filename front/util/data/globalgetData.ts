@@ -4,7 +4,6 @@ const globalGetData = async (
   setData: React.Dispatch<React.SetStateAction<any[]>>,
   globalSearchValue: string
 ) => {
-  console.log("검색:", globalSearchValue);
   if (!globalSearchValue) {
     globalSearchValue = "";
   }

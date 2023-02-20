@@ -38,23 +38,19 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<PropDataInterface[]>([]);
+  const [searchData, setSearchData] = useState<PropDataInterface[]>([]);
 
   const [searchAdapted, setSearchAdapted] = useState(globalSearchNeeded);
-  // globalSearchNeeded : 새로고침할 때 false가 된다...
-  // 검색버튼 누르면 true 되어야 하는데,...
-  // 그런데
+
   const [allLoaded, setAllLoaded] = useState(false);
 
   const bundleIdx = useRef<number>(0);
   const bundleSize: number = 10;
 
   useEffect(() => {
-    // console.log("globalSearchNeeded 값", globalSearchNeeded);
-    // console.log("searchAdapted", searchAdapted);
-    console.log;
     if (globalSearchNeeded) {
       setAllLoaded(false);
-      setData([]);
+      setSearchData([]);
       bundleIdx.current = 0;
       setSearchAdapted(true);
       const stateObj = {
@@ -62,6 +58,9 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
         globalSearchNeeded: false,
       };
       dispatch(search(stateObj));
+    } else {
+      setData([]);
+      bundleIdx.current = 0;
     }
   }, [globalSearchNeeded]);
 
@@ -79,10 +78,6 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
     { isIntersecting },
   ]) => {
     if (isIntersecting) {
-      console.log("searchAdapted:", searchAdapted);
-      console.log("globalSearchNeeded:", globalSearchNeeded);
-      console.log("globalSearchValue:", globalSearchValue);
-
       setTimeout(() => {
         Controller();
       }, 500);
@@ -93,15 +88,13 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
   // CONTROL WHEN OBSERVED...
   const Controller = async () => {
     bundleIdx.current += 1;
-    // globalSearchNeeded 일때 한번 검색하고 false 처리해둘예정?
-    console.log("searchAdapted:", searchAdapted);
     let dataLen = 0;
     // 검색
     if (searchAdapted) {
       dataLen = await globalGetData(
         bundleIdx.current,
         bundleSize,
-        setData,
+        setSearchData,
         globalSearchValue
       );
     }
@@ -141,21 +134,44 @@ export default function GuestRecruitmentPage(props: PropsInterface) {
         </div>
       </Modal>
 
-      <div className={classes.wrap}>
-        <div className={classes.container}>
-          {data.map((val: PropDataInterface) => (
-            <Card key={val.contentIdx} data={val} />
-          ))}
-        </div>
-
-        {!allLoaded && (
-          <div className={classes.outerBox}>
-            <AnimationBox>
-              <div ref={setTarget} className="loader"></div>
-            </AnimationBox>
+      {!searchAdapted && (
+        <div className={classes.wrap}>
+          <div className={classes.container}>
+            {data.map((val: PropDataInterface) => (
+              <Card key={val.contentIdx} data={val} />
+            ))}
           </div>
-        )}
-      </div>
+
+          {!allLoaded && (
+            <div className={classes.outerBox}>
+              <AnimationBox>
+                <div ref={setTarget} className="loader"></div>
+              </AnimationBox>
+            </div>
+          )}
+        </div>
+      )}
+      {searchAdapted && (
+        <div className={classes.wrap}>
+          <div className={classes.container}>
+            {searchData.length === 0 ? (
+              <div>검색 결과가 없습니다</div>
+            ) : (
+              searchData.map((val: PropDataInterface) => (
+                <Card key={val.contentIdx} data={val} />
+              ))
+            )}
+          </div>
+
+          {!allLoaded && (
+            <div className={classes.outerBox}>
+              <AnimationBox>
+                <div ref={setTarget} className="loader"></div>
+              </AnimationBox>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
