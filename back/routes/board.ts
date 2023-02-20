@@ -30,6 +30,7 @@ router.get('/search', async (req: Request, res: Response) => {
     req.query.pid,
     req.query.keyword
   );
+  console.log('result', result);
   res.send(JSON.stringify(result));
 });
 

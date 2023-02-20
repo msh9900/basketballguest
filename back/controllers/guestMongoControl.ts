@@ -14,16 +14,23 @@ const mongoDatabase = {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleCount = await col.countDocuments();
-    const findGuestArticle = await col
-      .find({
-        $or: [{ title: { $regex: keyword } }, { content: { $regex: keyword } }],
-      })
-      .sort({ date: -1 })
-      .limit(10)
-      .skip(pid - 10)
-      .toArray();
-    console.log('data', findGuestArticle);
-    return [findGuestArticle, findArticleCount];
+    if (keyword === null) {
+      const findGuestArticle = await col
+        .find({
+          $or: [
+            { title: { $regex: keyword } },
+            { content: { $regex: keyword } },
+          ],
+        })
+        .sort({ date: -1 })
+        .limit(10)
+        .skip(pid - 10)
+        .toArray();
+      console.log('data', findGuestArticle);
+      return [findGuestArticle, findArticleCount];
+    } else {
+      return { msg: '키워드 없음' };
+    }
   },
 
   // 게스트 글 GET
