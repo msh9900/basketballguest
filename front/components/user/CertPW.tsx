@@ -50,7 +50,6 @@ const CertPW = () => {
         setIsCertSuccess(true);
         setBackupCertNum(certificationNumber);
         alert("이메일 인증 성공");
-        router.push("/login");
       } else {
         // 사용자에게 인증번호 불일치 안내 메시지
         setIsCertSuccess(false);
@@ -96,6 +95,7 @@ const CertPW = () => {
       );
       const result = await res.json();
       await alert("비밀번호 변경 성공");
+      router.push("/login");
     } catch (err: any) {
       console.log("인증 API 작동 실패", err);
       await alert("새 비밀번호 POST 실패");

@@ -40,7 +40,6 @@ router.post(
 
     let logindata = {
       id: req.body.id.replaceAll('"', ''),
-      pw: req.body.pw.replaceAll('"', ''),
       userName: req.body.userName.replaceAll('"', ''),
       email: req.body.email.replaceAll('"', ''),
       userImg: `${process.env.SERVER_URL}/userImages/${imgpath}`,
@@ -60,7 +59,11 @@ router.post(
     } else {
       res.send(JSON.stringify(dbData));
     }
-  }
+  },
+  router.post('/pw', async (req: Request, res: Response) => {
+    const result = await mongoClient.userPw(req.body.userId, req.body.userPw);
+    res.send(JSON.stringify(result));
+  })
 );
 
 module.exports = router;

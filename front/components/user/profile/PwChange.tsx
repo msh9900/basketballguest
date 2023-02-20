@@ -5,7 +5,6 @@ import usePwChecker from "hooks/usePwChecker";
 import { useSelector } from "react-redux";
 
 const PwChange = () => {
-  
   // CHECKERS
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isPwSame, setIsPwSame] = useState<boolean>(false);
@@ -51,13 +50,14 @@ const PwChange = () => {
     // console.log("일치 + 유효");
     const userInfo = {
       userId: stateId,
-      userPw : pw
-    }
+      userPw: pw,
+    };
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/profile/pwChange?`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/profile/pw`,
       {
         method: "POST",
+        headers: { "content-type": "application/json" },
         body: JSON.stringify(userInfo),
       }
     );
@@ -67,6 +67,7 @@ const PwChange = () => {
       throw new Error("데이터 통신 오류");
     }
     if (data) {
+      alert("비빌번호 변경 완료");
       router.push("/");
     }
   }
@@ -74,16 +75,25 @@ const PwChange = () => {
   return (
     <div className={cls.PwChangeLayout}>
       <div className={cls.innerForm}>
-
-        <div className={cls.pair}> 
+        <div className={cls.pair}>
           <div className={cls.L}>PW 입력</div>
-          <input type="password" value={pw} onChange={InputPasswordHandler} autoComplete="off"/>
+          <input
+            type="password"
+            value={pw}
+            onChange={InputPasswordHandler}
+            autoComplete="off"
+          />
         </div>
 
         <form onSubmit={submitEntered}>
-          <div className={cls.pair}> 
+          <div className={cls.pair}>
             <div className={cls.L}>PW 재입력</div>
-            <input type="email" value={pw2} onChange={InputPasswordHandler2} autoComplete="off"/>
+            <input
+              type="password"
+              value={pw2}
+              onChange={InputPasswordHandler2}
+              autoComplete="off"
+            />
           </div>
         </form>
 
@@ -98,13 +108,8 @@ const PwChange = () => {
           </p>
         )}
 
-        <button 
-          className={cls.PwSubmitBtn}
-          disabled={isValid ? false : true}>
-          <img
-            src="/images/rental/checked.png"
-            onClick={submitClicked}
-          />
+        <button className={cls.PwSubmitBtn} disabled={isValid ? false : true}>
+          <img src="/images/rental/checked.png" onClick={submitClicked} />
         </button>
       </div>
     </div>

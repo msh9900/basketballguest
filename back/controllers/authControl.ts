@@ -156,11 +156,12 @@ const mongoDB = {
     }
   },
 
+  //프로필
+
   userData: async (logindata: loginDataType) => {
     const user = await _user;
     const col = user.db('basket').collection('login');
     const periodCol = await col.findOne({ id: logindata.id });
-    const hashPw = createHashPassword(logindata.pw);
     if (
       logindata.userImg === `${process.env.SERVER_URL}/userImages/undefined`
     ) {
@@ -168,10 +169,8 @@ const mongoDB = {
         { id: logindata.id },
         {
           $set: {
-            pw: hashPw.hashedPasssword,
             email: logindata.email,
             userName: logindata.userName,
-            salt: hashPw.salt,
           },
         }
       );
@@ -186,11 +185,9 @@ const mongoDB = {
         { id: logindata.id },
         {
           $set: {
-            pw: hashPw.hashedPasssword,
             email: logindata.email,
             userName: logindata.userName,
             userImg: logindata.userImg,
-            salt: hashPw.salt,
           },
         }
       );
@@ -203,6 +200,22 @@ const mongoDB = {
 
       return [updateData, periodCol.userImg];
     }
+  },
+  //프로필 비밀번호 변경
+  userPw: async (id: string, password: string) => {
+    const user = await _user;
+    const col = user.db('basket').collection('login');
+    const hashPw = createHashPassword(password);
+    const userDataFind = await col.findOne({ id });
+    if (userDataFind != null) {
+      await col.updateOne(
+        {
+          id,
+        },
+        { $set: { pw: hashPw.hashedPasssword, salt: hashPw.salt } }
+      );
+    }
+    return { msg: '비밀번호 변경 완료' };
   },
 };
 module.exports = { mongoDB };

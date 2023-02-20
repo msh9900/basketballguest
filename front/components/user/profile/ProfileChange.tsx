@@ -7,7 +7,6 @@ import { IsLogin } from "redux/modules/login";
 import ImgPop from "util/ImgPop";
 
 const ProfileChange = () => {
-  
   const stateId = useSelector((state: any) => state.login.userId);
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
@@ -26,11 +25,11 @@ const ProfileChange = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    setEmail(stateUserEmail)
-    setUserName(stateUserName)
-    setUserImg(getUserImgFirstTime())
-  }, [])
+  useEffect(() => {
+    setEmail(stateUserEmail);
+    setUserName(stateUserName);
+    setUserImg(getUserImgFirstTime());
+  }, []);
 
   async function profileSumbit(event: any) {
     event.preventDefault();
@@ -40,7 +39,7 @@ const ProfileChange = () => {
     formData.append("email", JSON.stringify(email));
     formData.append("userName", JSON.stringify(userName));
     formData.append("userImg", JSON.stringify(userImg));
-    
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/profile/userdata`,
       {
@@ -78,11 +77,9 @@ const ProfileChange = () => {
   return (
     <>
       <form onSubmit={profileSumbit} className={classes.ProfileChangeLayout}>
-        
         <div className={classes.profileForm}>
-        {/* <h1>프로필 변경</h1> */}
+          {/* <h1>프로필 변경</h1> */}
           <div className={classes.profileImgBox}>
-            
             {/* 프로필 이미지 선택*/}
             <label htmlFor="profileImgFile" className={classes.imgFileLabel}>
               프로필 사진 선택
@@ -106,25 +103,23 @@ const ProfileChange = () => {
             />
           </div>
 
-          <div className={classes.pair}> 
+          <div className={classes.pair}>
             <div className={classes.L}>아이디</div>
             <input type="text" defaultValue={stateId} disabled />
           </div>
 
-          <div className={classes.pair}> 
+          <div className={classes.pair}>
             <div className={classes.L}>이메일</div>
             <input type="email" value={email} onChange={InputEmailHandler} />
           </div>
 
-          <div className={classes.pair}> 
+          <div className={classes.pair}>
             <div className={classes.L}>이름</div>
-            <input type="email" value={userName} onChange={InputNameHandler} />
+            <input type="text" value={userName} onChange={InputNameHandler} />
           </div>
-          
+
           <button type="submit" className={classes.button}>
-            <img
-              src='/images/rental/checked.png'  
-            />
+            <img src="/images/rental/checked.png" />
           </button>
         </div>
       </form>
