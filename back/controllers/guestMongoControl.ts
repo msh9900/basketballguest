@@ -29,7 +29,7 @@ const mongoDatabase = {
       console.log('data', findGuestArticle);
       return [findGuestArticle, findArticleCount];
     } else {
-      return { msg: '키워드 없음' };
+      return [[], findArticleCount];
     }
   },
 
