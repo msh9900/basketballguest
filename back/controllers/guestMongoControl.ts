@@ -10,13 +10,13 @@ import { guestDBReplyType } from '../type/guestDataType';
 
 const mongoDatabase = {
   // 게스트 글 HEADER에서 찾기
-  guestSerachArticle: async (pid: number, keyWord: string) => {
+  guestSerachArticle: async (pid: number, keyword: string) => {
     const user = await _guest;
     const col = user.db('basket').collection('guestarticle');
     const findArticleCount = await col.countDocuments();
     const findGuestArticle = await col
       .find({
-        $or: [{ title: { $regex: keyWord } }, { content: { $regex: keyWord } }],
+        $or: [{ title: { $regex: keyword } }, { content: { $regex: keyword } }],
       })
       .sort({ date: -1 })
       .limit(10)

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { IsLogin } from "redux/modules/login";
+import { IsLogout } from "redux/modules/login";
 
 const AppLayout = ({ children }: any) => {
   const [cookie, setCookie, removeCookie] = useCookies<any>();
@@ -17,6 +18,9 @@ const AppLayout = ({ children }: any) => {
       } catch (error) {
         throw new Error("쿠키 에러");
       }
+    }
+    if (cookie === undefined) {
+      dispatch(IsLogout());
     }
   }, [cookie]);
 

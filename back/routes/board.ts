@@ -28,7 +28,7 @@ const upload = multer({ storage, limits });
 router.post('/search', async (req: Request, res: Response) => {
   const result = await mongoClient.guestSerachArticle(
     req.query.pid,
-    req.body.keyWord
+    req.query.keyword
   );
   res.send(JSON.stringify(result));
 });

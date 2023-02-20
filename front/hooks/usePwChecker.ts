@@ -7,8 +7,7 @@ interface Props {
   setIsPwSame: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const usePwChecker = ({pw, pw2, setIsValid, setIsPwSame}:Props) => {
-
+const usePwChecker = ({ pw, pw2, setIsValid, setIsPwSame }: Props) => {
   useEffect(() => {
     // CHECK VALIDITY
     if (
@@ -23,11 +22,9 @@ const usePwChecker = ({pw, pw2, setIsValid, setIsPwSame}:Props) => {
     }
 
     // CHECK MATCHING
-    if(pw === pw2) setIsPwSame(true)
-    else setIsPwSame(false)
-
+    if (pw === pw2) setIsPwSame(true);
+    else setIsPwSame(false);
   }, [pw, pw2]);
+};
 
-}
-
-export default usePwChecker
+export default usePwChecker;

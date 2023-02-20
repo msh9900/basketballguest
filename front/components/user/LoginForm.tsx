@@ -59,11 +59,11 @@ const LoginForm = () => {
       } else {
         let now = new Date();
         let after60m = new Date();
-        after60m.setMinutes(now.getMinutes() + 60);
+        after60m.setMinutes(now.getMinutes());
+        dispatch(IsLogin(data));
         setCookie("login", JSON.stringify(data), { expires: after60m });
         alert("로그인성공");
         router.push("/");
-        dispatch(IsLogin(data));
       }
     } catch {
       throw new Error("통신 에러");
