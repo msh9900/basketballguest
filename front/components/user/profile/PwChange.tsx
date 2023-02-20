@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import usePwChecker from "hooks/usePwChecker";
 
 const PwChange = () => {
+  
   // CHECKERS
   const [isValid, setIsValid] = useState<boolean>(false);
   const [isPwSame, setIsPwSame] = useState<boolean>(false);
@@ -68,7 +69,6 @@ const PwChange = () => {
   return (
     <div className={cls.PwChangeLayout}>
       <div className={cls.innerForm}>
-        {/* <h1>비밀번호 변경</h1> */}
 
         <div className={cls.pair}> 
           <div className={cls.L}>PW 입력</div>
@@ -78,26 +78,9 @@ const PwChange = () => {
         <form onSubmit={submitEntered}>
           <div className={cls.pair}> 
             <div className={cls.L}>PW 재입력</div>
-            <input type="email" value={pw2} onChange={InputPasswordHandler} autoComplete="off"/>
+            <input type="email" value={pw2} onChange={InputPasswordHandler2} autoComplete="off"/>
           </div>
         </form>
-        
-        {/* <p className={cls.guidance}>비밀번호 입력</p>
-        <input
-          type="password"
-          value={pw}
-          onChange={InputPasswordHandler}
-          autoComplete="off"
-        />
-        <form onSubmit={submitEntered}>
-          <p className={cls.guidance}>비밀번호 재입력</p>
-          <input
-            type="password"
-            value={pw2}
-            onChange={InputPasswordHandler2}
-            autoComplete="off"
-          />
-        </form> */}
 
         {!isPwSame && pw.length >= 1 && isRecentSubmitted && (
           <p className={cls.invalid}>PW가 일치하지 않습니다.</p>
