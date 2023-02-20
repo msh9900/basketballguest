@@ -26,7 +26,10 @@ const upload = multer({ storage, limits });
 
 //게시판 특정 db 찾기
 router.post('/search', async (req: Request, res: Response) => {
-  const result = await mongoClient.guestSerachArticle(req.body.keyWord);
+  const result = await mongoClient.guestSerachArticle(
+    req.query.pid,
+    req.body.keyWord
+  );
   res.send(JSON.stringify(result));
 });
 
