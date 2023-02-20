@@ -22,6 +22,7 @@ const mongoDatabase = {
       .limit(10)
       .skip(pid - 10)
       .toArray();
+    console.log('data', findGuestArticle);
     return [findGuestArticle, findArticleCount];
   },
 
