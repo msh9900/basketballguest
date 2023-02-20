@@ -118,7 +118,7 @@ const ProfileChange = () => {
 
           <div className={classes.pair}> 
             <div className={classes.L}>이름</div>
-            <input type="email" value={userName} onChange={InputEmailHandler} />
+            <input type="email" value={userName} onChange={InputNameHandler} />
           </div>
           
           <button type="submit" className={classes.button}>
