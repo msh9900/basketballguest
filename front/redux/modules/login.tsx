@@ -3,9 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userId: "",
   email: "",
-  userImg: "",
-  defaultImgUrl:
-    "https://blog.kakaocdn.net/dn/EtXLd/btrcf61KuuI/luhp9I8a1nfwUwQ4MwSTQk/img.jpg",
+  userImg:
+    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2513B53E55DB206927",
   userName: "",
   isLogin: false,
 };
@@ -24,7 +23,8 @@ const AuthSlice = createSlice({
     IsLogout: (state) => {
       state.userId = "";
       state.email = "";
-      state.userImg = "";
+      state.userImg =
+        "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2513B53E55DB206927";
       state.userName = "";
       state.isLogin = false;
     },

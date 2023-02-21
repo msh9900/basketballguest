@@ -59,9 +59,9 @@ const LoginForm = () => {
       } else {
         let now = new Date();
         let after60m = new Date();
-        after60m.setMinutes(now.getMinutes());
-        dispatch(IsLogin(data));
+        after60m.setMinutes(now.getMinutes() + 60);
         setCookie("login", JSON.stringify(data), { expires: after60m });
+        dispatch(IsLogin(data));
         alert("로그인성공");
         router.push("/");
       }

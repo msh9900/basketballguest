@@ -11,14 +11,9 @@ const ProfileChange = () => {
   const stateUserName = useSelector((state: any) => state.login.userName);
   const stateUserEmail = useSelector((state: any) => state.login.email);
   const stateUserImg = useSelector((state: any) => state.login.userImg);
-  const defaultUserImg = useSelector((state: any) => state.login.defaultImgUrl);
-  const getUserImgFirstTime = () => {
-    return stateUserImg.length > 0 ? stateUserImg : defaultUserImg;
-  };
-
   const [email, setEmail] = useState<string>(stateUserEmail);
   const [userName, setUserName] = useState<string>(stateUserName);
-  const [userImg, setUserImg] = useState<any>(getUserImgFirstTime()); // for img output
+  const [userImg, setUserImg] = useState<string>(stateUserImg); // for img output
   const [imgData, setImgData] = useState(); // for submit
   const [cookie, setCookie] = useCookies(["login"]);
 
@@ -28,7 +23,7 @@ const ProfileChange = () => {
   useEffect(() => {
     setEmail(stateUserEmail);
     setUserName(stateUserName);
-    setUserImg(getUserImgFirstTime());
+    setUserImg(stateUserImg);
   }, []);
 
   async function profileSumbit(event: any) {
