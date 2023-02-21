@@ -12,6 +12,19 @@
     margin:20px;
     text-align: center;
   }
+  button {
+    margin-right:10px;
+    margin-top:10px;
+    font-weight: bold;
+    height: 35px;
+    border-radius:5px;
+    cursor:pointer;
+    border:1px solid bisque;
+    background-color: ivory;
+    &:hover{
+      background-color: bisque;
+    }
+  }
 }
 
 .contentBox{
@@ -27,33 +40,45 @@
   margin:5px auto;
   background-color:white;
   padding:5px;
+
+  .titleSection{
+    display:flex;
+    margin:0;
+    width:100%;
+    .Left{
+      width:80%;
+      min-width:60px;
+      padding:5px;
+      font-weight:bold;
+    }
+    .Right{
+      width:20%;
+      padding:5px;
+    }
+
+  }
+}
+
+.flex{
+  display:flex;
+  margin:0;
+  width:100%;
+  .Left{
+    width:20%;
+    min-width:60px;
+    padding:5px;
+    font-weight:bold;
+  }
+  .Right{
+    width:80%;
+    padding:5px;
+  }
 }
 
 .eachContent{
-  display:flex;
-  justify-content: space-between;
-  
   background-color:white;
-  padding:5px;
-
-  .gym_Article_title{
-    margin-left:10px;
-  }
-  .gym_Article_controlBtns{
-    margin-top:10px;
-    button {
-      margin-right:10px;
-      font-weight: bold;
-      height: 35px;
-      border-radius:5px;
-      cursor:pointer;
-      border:1px solid bisque;
-      background-color: ivory;
-      &:hover{
-        background-color: bisque;
-      }
-    }
-  }
+  padding:0px;
+  margin:0px auto;
 }
 
 .imgContent{

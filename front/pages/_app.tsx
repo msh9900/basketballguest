@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import React, { Suspense, useContext, useEffect, useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CookiesProvider } from "react-cookie";
+import "../styles/globals.scss"
 
 //chat bot
 import "react-chatbot-kit/build/main.css";
