@@ -3,6 +3,7 @@ import cls from "./DetailArticles.module.scss";
 import SlickSlider from "./SlickSlider";
 // react & next
 import { useRouter } from "next/router";
+import {useEffect} from 'react'
 import Image from "next/image";
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
@@ -13,6 +14,11 @@ interface Props {
 }
 
 const DetailArticles_GymInfo = (props: Props) => {
+
+  useEffect(() => {
+    autoResizeTextarea()
+  }, []);
+
   const router = useRouter();
   // DELETE
   const deleteArticle = async () => {
@@ -37,6 +43,15 @@ const DetailArticles_GymInfo = (props: Props) => {
       if (ele.open === true) temp.push(ele.name);
     });
     return temp;
+  };
+
+  const autoResizeTextarea = () => {
+    let textarea = document.querySelector('.autoTextarea') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      let height = textarea.scrollHeight; // 높이
+      textarea.style.height = `${height + 8}px`;
+    }
   };
 
   return (
@@ -82,7 +97,15 @@ const DetailArticles_GymInfo = (props: Props) => {
         </div>
 
         <div className={cls.mainContent}>
-          <div className={cls.eachContent}>{props.gymInfo.content}</div>
+          <div className={cls.eachContent}>
+            <textarea 
+              readOnly
+              className='autoTextarea'
+              >
+              
+              {props.gymInfo.content}
+            </textarea>
+          </div>
         </div>
 
         <div className={cls.mainContent}>
