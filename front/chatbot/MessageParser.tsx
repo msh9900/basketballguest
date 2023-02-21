@@ -1,10 +1,25 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const MessageParser = ({ children, actions }: any) => {
   const [inquiry, setInquiry] = useState(false);
-  const parse = (message: any) => {
+  const stateId = useSelector((state: any) => state.login.userId);
+  const parse = async (message: string) => {
     if (inquiry) {
-      //고객문의 데이터전송 하고 나서 메시지 액션 작성
+      const data = {
+        userId: stateId,
+        message: message,
+      };
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/service/chat`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+      const res = await response.json();
+      console.log(res);
       actions.handleEndInquiry();
       setInquiry(false);
     } else {
