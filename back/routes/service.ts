@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 
-const MongoClient = require('../routes/chatControl').mongoDB;
+const MongoClient = require('../controllers/chatControl').mongoDB;
 const router = express.Router();
 
 router.post('/chat', async (req: Request, res: Response) => {
