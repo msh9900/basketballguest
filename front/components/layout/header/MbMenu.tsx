@@ -1,6 +1,6 @@
-import Menu from '@mui/material/Menu';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
+import Menu from "@mui/material/Menu";
+import Typography from "@mui/material/Typography";
+import MenuItem from "@mui/material/MenuItem";
 
 export type RouteMapType = {
   [index: string]: string;
@@ -23,19 +23,20 @@ const MbMenu = (props: Props) => {
         id="menu-appbar"
         anchorEl={props.anchorElNav}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
         keepMounted
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: "top",
+          horizontal: "left",
         }}
         open={Boolean(props.anchorElNav)}
         onClose={props.MenuLinkClickHandler}
         sx={{
-          display: { xs: 'block', md: 'none' },
+          display: { xs: "block", md: "none" },
         }}
+        disableScrollLock={true}
       >
         {Object.entries(props.RouteMap).map(([idx]) => (
           <MenuItem key={idx} onClick={props.MenuLinkClickHandler}>
