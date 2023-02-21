@@ -22,6 +22,7 @@ const boardRouter = require('./routes/board');
 const profileRouter = require('./routes/profile');
 const rentalRouter = require('./routes/rental');
 const authRouter = require('./routes/auth');
+const serviceRouter = require('./routes/service');
 
 server.use('/login', loginRouter);
 server.use('/register', registerRouter);
@@ -29,6 +30,7 @@ server.use('/board', boardRouter);
 server.use('/profile', profileRouter);
 server.use('/rental', rentalRouter);
 server.use('/auth', authRouter);
+server.use('/service', serviceRouter);
 
 // ERROR 처리
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {
