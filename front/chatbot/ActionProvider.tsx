@@ -32,6 +32,13 @@ const ActionProvider = ({ createChatBotMessage, setState, children }: any) => {
       messages: [...prev.messages, botMessage],
     }));
   };
+  const handleCancelInquiry = () => {
+    const botMessage = createChatBotMessage("취소 되었습니다.", {});
+    setState((prev: any) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
   const handleEndInquiry = () => {
     const botMessage = createChatBotMessage(
       "내용이 정상적으로 등록 되었습니다",
@@ -67,6 +74,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }: any) => {
             handleSiteGuidance,
             handleStartInquiry,
             handleEndInquiry,
+            handleCancelInquiry,
           },
         });
       })}

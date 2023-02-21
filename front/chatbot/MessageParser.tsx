@@ -22,6 +22,9 @@ const MessageParser = ({ children, actions }: any) => {
       console.log(res);
       actions.handleEndInquiry();
       setInquiry(false);
+    } else if (message.includes("취소")) {
+      actions.handleCancelInquiry();
+      setInquiry(false);
     } else {
       if (message.includes("hello")) {
         actions.handleHello();
