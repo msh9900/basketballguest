@@ -1,3 +1,10 @@
+.wrap {
+  .container {
+    margin-top: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+}
 .writeButton {
   display: flex;
   align-items: center;
@@ -24,35 +31,12 @@
   border: 2px solid black;
 }
 
-.outerBox{
-  height:50px;
-  width:100px;
+.outerBox {
+  margin-left: 100px;
+  margin-right: 100px;
+  height: 50px;
+  width: 100px;
 }
-// .wrap {
-//   overflow: auto;
-//   .container {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     flex-direction: column;
-//     width: 100%;
-//   }
-// }
-// .wrap::-webkit-scrollbar {
-//   width: 10px;
-// }
-
-// /* 스크롤바 막대 설정*/
-// .wrap::-webkit-scrollbar-thumb {
-//   background-color: rgb(200, 200, 200);
-//   /* 스크롤바 둥글게 설정    */
-//   border-radius: 10px;
-// }
-
-// /* 스크롤바 뒷 배경 설정*/
-// .wrap::-webkit-scrollbar-track {
-//   background-color: #797979;
-// }
 @media (max-width: 900px) {
   .modal {
     width: 300px;
@@ -63,6 +47,8 @@
   .wrap {
     .container {
       margin-top: 16px;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }

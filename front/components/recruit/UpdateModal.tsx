@@ -39,7 +39,7 @@ export default function UpdateModal(props: any) {
   };
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
-    console.log("모승환 이미지", imgFile);
+
     router.reload();
     const FD = new FormData();
     FD.append("userId", userId);
@@ -51,19 +51,18 @@ export default function UpdateModal(props: any) {
     for (let i = 0; i < imgRef.current.files.length; i++) {
       FD.append("img", imgRef.current.files[i]);
     }
-
-    console.log(FD.get("articleImg"));
     //글 업데이트 fetch 구현
 
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/board/article`, {
-      method: "PUT",
-      body: FD,
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/board/article`,
+      {
+        method: "PUT",
+        body: FD,
+      }
+    );
   };
 
   useEffect(() => {
-    console.log(props.data);
     setTitleText(props.data.title);
     setContentText(props.data.content);
     setImgFile(props.data.imgSrc);
@@ -81,9 +80,14 @@ export default function UpdateModal(props: any) {
             <Avatar alt="Remy Sharp" src={userImg} />
             <div>{userId}</div>
           </div>
-          <div>
-            <div>제목</div>
-            <input type="test" onChange={titleChange} value={titleText}></input>
+          <div className={classes.contentTitle}>
+            <div>글 제목:</div>
+            <input
+              className={classes.inputTitle}
+              type="test"
+              onChange={titleChange}
+              value={titleText}
+            ></input>
           </div>
           <div>
             <TextField

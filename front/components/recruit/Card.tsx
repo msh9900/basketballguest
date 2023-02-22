@@ -13,7 +13,7 @@ import MenuList from "./MenuList";
 import MainComment from "./comment/MainComment";
 import ImgPop from "util/ImgPop";
 import Grid from "@mui/material/Grid";
-
+import { useMediaQuery } from "react-responsive";
 import {
   CardPropInterface,
   PropDataInterface,
@@ -24,9 +24,12 @@ export default function RecipeReviewCard(props: CardPropInterface) {
   const userId = useSelector((state: any) => state.login?.userId);
   const userImg = useSelector((state: any) => state.login?.userImg);
   const isLogin = useSelector((state: any) => state.login?.isLogin);
+  const router = useRouter();
+  const isMobile = useMediaQuery({
+    query: "(max-width:900px)",
+  });
   const [getDataClick, setGetDataClick] = useState(true);
   const [contentData, setContentData] = useState<PropDataInterface>();
-  const router = useRouter();
   const [commentMore, setCommentMore] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const writeComment = useRef<HTMLTextAreaElement>(null);
@@ -130,7 +133,18 @@ export default function RecipeReviewCard(props: CardPropInterface) {
             <CardHeader
               title={contentData!.title}
               subheader={contentData!.date}
+              className={classes.title}
             />
+            {!isMobile && contentData!.imgSrc[0] && (
+              <CardMedia
+                component="img"
+                width="200"
+                height="194"
+                src={contentData?.imgSrc[0]}
+                alt="사진 이미지"
+                sx={{ objectFit: "cover", cursor: "pointer", width: "20%" }}
+              />
+            )}
           </Card>
           {cardClick && (
             <Card className={classes.textContent} variant="outlined">
