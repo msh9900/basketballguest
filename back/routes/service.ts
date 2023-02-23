@@ -4,7 +4,6 @@ const MongoClient = require('../controllers/chatControl').mongoDB;
 const router = express.Router();
 
 router.post('/chat', async (req: Request, res: Response) => {
-  console.log('req.body', req.body);
   const result = await MongoClient.insertChatting(
     req.body.userId,
     req.body.message
