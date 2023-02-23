@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app",
-    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" server.ts"
+    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" server.ts",
+    "build": "nodemon build",
+    "start": "nodemon start"
   },
   "author": "",
   "license": "ISC",
