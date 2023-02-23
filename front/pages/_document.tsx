@@ -37,6 +37,10 @@ export default class CustomDocument extends Document {
       <Html>
         <Head>
           <meta property="custom" content="123123" />
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+          />
         </Head>
         <body>
           <Main />
