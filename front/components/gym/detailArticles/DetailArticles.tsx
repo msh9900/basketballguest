@@ -4,38 +4,47 @@ import ReviewSection from "./review/ReviewSection";
 import CommentSection from "./comment/CommentSection";
 import DetailArticles_EditForm from "./DetailArticles_EditForm";
 // react & next
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DetailArticles_GymInfo from "./DetailArticles_GymInfo";
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
-// import gymArticleDataBase from "util/types/gymArticleDataBase";
+import getArticleData from 'util/getArticleData';
+import { useRouter } from 'next/router';
 
 interface Props {
   gymInfo: gymArticleDataType;
   setGymInfo: any;
   articleUserId: any;
-  setArticleUserId: any;
-  isFetchingArticles: any;
-  setIsFetchingArticles: any;
 }
 
 const DetailArticles = (props: Props) => {
   const [isArticleEditing, setIsArticleEditing] = useState(false);
+  const [isFetchingArticles, setIsFetchingArticles] = useState(false);
+  const router = useRouter()
+  
+  useEffect(() => {
+    const articleId = router.query.articles as string
+    if(isFetchingArticles){
+      getArticleData(articleId, setIsFetchingArticles, props.setGymInfo)
+    }
+  }, [isFetchingArticles]);
 
   return (
     <>
       <div className={cls.DetailArticlesLayout}>
-        {!isArticleEditing && (
+        {!isArticleEditing && !isFetchingArticles &&(
           <DetailArticles_GymInfo
             gymInfo={props.gymInfo}
             setIsArticleEditing={setIsArticleEditing}
+            isFetchingArticles={isFetchingArticles}
+            setIsFetchingArticles={setIsFetchingArticles}
           />
         )}
         {isArticleEditing && (
           <DetailArticles_EditForm
             gymInfo={props.gymInfo}
             setIsArticleEditing={setIsArticleEditing}
-            setIsFetchingArticles={props.setIsFetchingArticles}
+            setIsFetchingArticles={setIsFetchingArticles}
           />
         )}
 

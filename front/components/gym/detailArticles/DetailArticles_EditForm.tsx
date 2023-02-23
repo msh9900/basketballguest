@@ -70,7 +70,6 @@ const DetailArticles_EditForm = (props: Props) => {
         }
       );
       const data = await response.json();
-
       props.setIsFetchingArticles(true);
       props.setIsArticleEditing(false);
       alert("게시글 수정 성공");

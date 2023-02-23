@@ -2,19 +2,16 @@ import DetailArticles from "components/gym/detailArticles/DetailArticles";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from 'next/head'
-
 import gymArticleDataType from "util/types/gymArticleDataType";
 // import gymArticleDataBase from "util/types/gymArticleDataBase";
 
 interface Props{
   gymData:any, 
-  articleUserId:any, 
 }
 const articles = (props:Props) => {
 
   const [gymInfo, setGymInfo] = useState<gymArticleDataType>(props.gymData);
-  const [articleUserId, setArticleUserId] = useState('')
-  const [isFetchingArticles, setIsFetchingArticles] = useState(true);
+  const articleUserId = props.gymData.articleUserId
   
   const serviceTitle = 'BPT'
 	const pageTitle = '상세 정보'
@@ -58,9 +55,6 @@ const articles = (props:Props) => {
         gymInfo={gymInfo}
         setGymInfo={setGymInfo}
         articleUserId={articleUserId}
-        setArticleUserId={setArticleUserId}
-        isFetchingArticles={isFetchingArticles}
-        setIsFetchingArticles={setIsFetchingArticles}
       />
     </>
   );
@@ -81,7 +75,6 @@ export async function getServerSideProps(context:any) {
   return {
     props: {
       gymData : data,
-      articleUserId : data.articleUserId
     }, 
   }
 }
