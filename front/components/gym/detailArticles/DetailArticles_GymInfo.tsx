@@ -5,6 +5,8 @@ import SlickSlider from "./SlickSlider";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
+
+import parse from 'html-react-parser';
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
 
@@ -15,6 +17,7 @@ interface Props {
   setIsFetchingArticles: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const htmlString = '<div><p>hello</p><p>World</p></div>';
 const DetailArticles_GymInfo = (props: Props) => {
   useEffect(() => {
     autoResizeTextarea();
@@ -107,9 +110,10 @@ const DetailArticles_GymInfo = (props: Props) => {
 
             <div className={cls.mainContent}>
               <div className={cls.eachContent}>
-                <textarea readOnly className="autoTextarea">
+                {/* <textarea readOnly className="autoTextarea">
                   {props.gymInfo.content}
-                </textarea>
+                </textarea> */}
+                {parse(props.gymInfo.content)}
               </div>
             </div>
 

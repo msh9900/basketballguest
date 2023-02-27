@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import gymArticleDataType from "util/types/gymArticleDataType";
 import setInitialValue from "./setInitialValue";
 import DetailArticles_EditImg from "./DetailArticles_EditImg";
-import { CLOSING } from "ws";
+import Wyzywig from 'components/common/wyzywig/Wyzywig'
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -19,6 +19,7 @@ const DetailArticles_EditForm = (props: Props) => {
   const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
+  const [content, setContent] = useState(props.gymInfo.content)
   const [openingDays, setOpeningDays] = useState([
     { name: "일", open: true },
     { name: "월", open: true },
@@ -81,7 +82,7 @@ const DetailArticles_EditForm = (props: Props) => {
   // make Form data
   const getArticleEditFormData = () => {
     const x1 = document.querySelector("#art_title") as HTMLInputElement;
-    const x2 = document.querySelector("#art_content") as HTMLTextAreaElement;
+    // const x2 = document.querySelector("#art_content") as HTMLTextAreaElement;
     const x3 = document.querySelector("#art_contact") as HTMLInputElement;
     const x4 = document.querySelector("#art_price") as HTMLInputElement;
     const x5 = document.querySelector("#art_openingHours") as HTMLInputElement;
@@ -93,9 +94,8 @@ const DetailArticles_EditForm = (props: Props) => {
     ) as HTMLInputElement;
 
     // values
-    const [title, content, contact, price, openingHours, openingPeriod] = [
+    const [title, contact, price, openingHours, openingPeriod] = [
       x1.value,
-      x2.value,
       x3.value,
       x4.value,
       x5.value,
@@ -150,13 +150,13 @@ const DetailArticles_EditForm = (props: Props) => {
                 setInputImgs={setInputImgs}
               />
 
-              <div className={cls.eachField}>
-                <div className={cls.fieldName}>내용</div>
-                <div className={cls.dataField}>
-                  <textarea id="art_content" />
-                </div>
-              </div>
-
+            <div className={cls.outerWyz}>
+              <Wyzywig
+                content={content}
+                setContent={setContent}
+              />
+            </div>
+            
               <div className={cls.eachField}>
                 <div className={cls.fieldName}>연락처</div>
                 <div className={cls.dataField}>

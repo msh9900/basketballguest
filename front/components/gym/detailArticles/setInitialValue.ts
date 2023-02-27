@@ -1,7 +1,7 @@
 const setInitialValue = (gymInfo:any) => {
   // 위치
   const field1 = document.querySelector('#art_title') as HTMLInputElement 
-  const field2 = document.querySelector('#art_content')as HTMLTextAreaElement 
+  // const field2 = document.querySelector('#art_content')as HTMLTextAreaElement 
   const field3 = document.querySelector('#art_contact')as HTMLInputElement 
   const field_addr_1 = document.querySelector('#art_address_1') as HTMLInputElement 
   const field_addr_2 = document.querySelector('#art_address_2') as HTMLInputElement 
@@ -15,7 +15,7 @@ const setInitialValue = (gymInfo:any) => {
 
   // 값 입력
   field1.value = gymInfo.title
-  field2.value = gymInfo.content
+  // field2.value = gymInfo.content
   field3.value = gymInfo.contact
   field_addr_1.value = gymInfo.address[0].val
   field_addr_2.value = gymInfo.address[1].val
