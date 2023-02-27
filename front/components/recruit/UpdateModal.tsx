@@ -39,8 +39,8 @@ export default function UpdateModal(props: any) {
   };
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
-    setTimeout(() => router.reload(), 1000);
 
+    router.reload();
     const FD = new FormData();
     FD.append("userId", userId);
     FD.append("title", titleText);
