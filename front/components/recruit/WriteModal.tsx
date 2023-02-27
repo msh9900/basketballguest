@@ -18,7 +18,6 @@ export default function WriteModal() {
   const imgRef: any = useRef();
 
   const readImage = () => {
-    console.log(imgRef.current.files);
     if (imgRef.current.files.length > 6) {
       setImgFile([]);
       alert("이미지는 최대 6장 입니다.");
@@ -40,7 +39,6 @@ export default function WriteModal() {
   };
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
-    setTimeout(() => router.reload(), 1000);
 
     const FD = new FormData();
 
@@ -49,7 +47,6 @@ export default function WriteModal() {
     FD.append("userImg", userImg);
     FD.append("content", contentText);
     for (let i = 0; i < imgRef.current.files.length; i++) {
-      console.log(imgRef.current.files[i]);
       FD.append("img", imgRef.current.files[i]);
     }
 
@@ -63,6 +60,9 @@ export default function WriteModal() {
         body: FD,
       }
     );
+    const result = await response.json();
+
+    router.reload();
   };
   return (
     <>
