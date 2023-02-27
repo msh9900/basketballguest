@@ -2,6 +2,7 @@ import cls from "./AllArticles.module.scss";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import gymArticleDataType from "util/types/gymArticleDataType";
+import parse, { DomElement, Element, Text } from 'html-react-parser';
 
 // GLOBAL STATE
 import { useSelector } from "react-redux";
@@ -53,14 +54,12 @@ const AllArticles = (props: Props) => {
   // GETDATA FUNCTION
   const getArticleData = async (keyWord: string) => {
     const defaultSearch = !(
-      (
-        props.filter.activeAreas.length > 0 ||
-        props.filter.isPeriodActive ||
-        props.filter.isPriceActive ||
-        props.order.isDistanceOrderOn ||
-        props.order.isPriceOrderOn ||
-        keyWord.length > 0
-      )
+      props.filter.activeAreas.length > 0 ||
+      props.filter.isPeriodActive ||
+      props.filter.isPriceActive ||
+      props.order.isDistanceOrderOn ||
+      props.order.isPriceOrderOn ||
+      keyWord.length > 0
     );
 
     // 특정 목록
@@ -72,14 +71,16 @@ const AllArticles = (props: Props) => {
       };
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/search`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(fetchDataBody),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/rental/search`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(fetchDataBody),
+          }
+        );
         const res = await response.json();
         await setArticles(res);
-        // console.log("툴 적용 검색 성공 : ", res);
       } catch (err: any) {
         console.log("툴 적용 검색 실패 : ", err);
       }
@@ -87,7 +88,9 @@ const AllArticles = (props: Props) => {
     // 전체 목록
     else {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/rental/articles`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/rental/articles`
+        );
         const res = await response.json();
         await setArticles(res);
         // console.log("기본 검색 성공 : ", res);
@@ -95,7 +98,10 @@ const AllArticles = (props: Props) => {
         console.log("기본 검색 실패 : ", err);
       }
     }
-    const stateObj = { searchValue: globalSearchValue, globalSearchNeeded: false };
+    const stateObj = {
+      searchValue: globalSearchValue,
+      globalSearchNeeded: false,
+    };
     dispatch(search(stateObj));
     await props.setNeedToSearch(false);
   };
@@ -104,6 +110,12 @@ const AllArticles = (props: Props) => {
     router.push(`/gym/${num}/`);
   };
 
+  function extractContent(htmlString:string) {
+    var span = document.createElement('span');
+    span.innerHTML = htmlString;
+    return span.textContent || span.innerText;
+  };
+    
   return (
     <>
       {props.needToSearch && <>검색중</>}
@@ -128,14 +140,26 @@ const AllArticles = (props: Props) => {
                       <div className={cls.title}>{item.title}</div>
                       <div className={cls.price}>{item.price} 원/시간</div>
                       <div className={cls.areatag}>{item.areaTag}</div>
-                      {item.content.length > 60 && (
+
+                      {/* {item.content.length > 60 && (
                         <div className={cls.content}>
                           {item.content.slice(0, 60)} ...{" "}
                         </div>
-                      )}
-                      {item.content.length < 60 && (
-                        <div className={cls.content}>{item.content}</div>
-                      )}
+                      )} */}
+
+                        <div className={cls.content}>
+                          {extractContent(item.content).slice(0,60)}
+                        </div>
+                      
+                      {/* {extractTextFromHtmlString(item.content).length >= 60 && (
+                        <div className={cls.content}>
+                          {extractTextFromHtmlString(item.content)}
+                        </div>
+                      )} */}
+
+                      {/* <div className={cls.content}>
+                        {parse(item.content).slice(0,30)}
+                      </div> */}
                     </div>
                   </li>
                 </div>

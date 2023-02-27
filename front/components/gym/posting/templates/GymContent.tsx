@@ -1,5 +1,5 @@
 import cls from '../inputStyle/TextAreaInput.module.scss'
-import Wiziwig from 'components/common/wyzywig/Wyzywig'
+import Wyziwyg from 'components/common/wyzywig/Wyziwyg'
 
 interface Props{
   content:string
@@ -14,7 +14,7 @@ const GymContent = (props:Props) => {
       <div className={cls.TextAreaInputLayout}>
         <div></div>
         <div>
-          <Wiziwig
+          <Wyziwyg
             content={props.content}
             setContent={props.setContent}
           />

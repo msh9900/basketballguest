@@ -2,14 +2,14 @@ import { useState, useMemo } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useEffect } from "react";
 import React from 'react';
-import cls from './Wyzywig.module.scss'
+import cls from './Wyziwyg.module.scss'
 
 interface Props{
   content:string
   setContent:React.Dispatch<React.SetStateAction<string>>
 }
 
-const Quill = (props:Props) => {
+const Wyziwyg = (props:Props) => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
@@ -39,7 +39,7 @@ const Quill = (props:Props) => {
     <>
       {isMounted && (
         <ReactQuill
-          className={cls.WyzywigLayout}
+          className={cls.WyziwygLayout}
           value={props.content}
           onChange={props.setContent}
           modules={modules}
@@ -51,4 +51,4 @@ const Quill = (props:Props) => {
   );
 };
 
-export default Quill;
+export default Wyziwyg;

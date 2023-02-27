@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import gymArticleDataType from "util/types/gymArticleDataType";
 import setInitialValue from "./setInitialValue";
 import DetailArticles_EditImg from "./DetailArticles_EditImg";
-import Wyzywig from 'components/common/wyzywig/Wyzywig'
+import Wyziwyg from 'components/common/wyzywig/Wyziwyg'
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -151,7 +151,8 @@ const DetailArticles_EditForm = (props: Props) => {
               />
 
             <div className={cls.outerWyz}>
-              <Wyzywig
+              <p className={cls.outerWyzTitile}>내용</p>
+              <Wyziwyg
                 content={content}
                 setContent={setContent}
               />
