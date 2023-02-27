@@ -1,4 +1,5 @@
 import cls from '../inputStyle/TextAreaInput.module.scss'
+import Wyziwyg from 'components/common/wyzywig/Wyziwyg'
 
 interface Props{
   content:string
@@ -7,26 +8,19 @@ interface Props{
 
 const GymContent = (props:Props) => {
 
-  const onChange = (e:any) => {
-    props.setContent(e.target.value)
-  }
-
   return (
     <>
       <h3 className={cls.explanation}>내용</h3>
       <div className={cls.TextAreaInputLayout}>
-        
         <div></div>
         <div>
-          <textarea 
-            placeholder='ex : 많은 이용 부탁드립니다'
-            value={props.content}
-            onChange={onChange}
+          <Wyziwyg
+            content={props.content}
+            setContent={props.setContent}
           />
         </div>
       </div>
     </>
-
   )
 }
 

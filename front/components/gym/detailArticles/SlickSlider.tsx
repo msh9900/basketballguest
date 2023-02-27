@@ -7,7 +7,7 @@ import ImgPop from 'util/ImgPop';
 
 const slickStyle = `
   .slick-next:before, .slick-prev:before {
-      color: #000;
+    color: #000;
   }
 `;
 
@@ -15,7 +15,6 @@ interface Props {
   gymImg: string[];
 }
 const SlickSlider = (props: Props) => {
-
   const settings = {
     dots: true,
     infinite: true,
