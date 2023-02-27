@@ -78,8 +78,8 @@ router.put(
   '/article',
   upload.array('img', 6),
   async (req: Request, res: Response) => {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     const resultFiles = req.files as any;
-
     let fileNameArray: string[] = [];
     resultFiles.map((ele: any) => {
       const eachFilename = `${process.env.SERVER_URL}/guest/` + ele.filename;
