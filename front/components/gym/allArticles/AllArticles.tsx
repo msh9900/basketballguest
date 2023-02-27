@@ -2,7 +2,6 @@ import cls from "./AllArticles.module.scss";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import gymArticleDataType from "util/types/gymArticleDataType";
-import parse, { DomElement, Element, Text } from 'html-react-parser';
 
 // GLOBAL STATE
 import { useSelector } from "react-redux";

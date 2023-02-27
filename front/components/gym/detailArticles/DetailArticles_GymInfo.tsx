@@ -110,9 +110,6 @@ const DetailArticles_GymInfo = (props: Props) => {
 
             <div className={cls.mainContent}>
               <div className={cls.eachContent}>
-                {/* <textarea readOnly className="autoTextarea">
-                  {props.gymInfo.content}
-                </textarea> */}
                 {parse(props.gymInfo.content)}
               </div>
             </div>
