@@ -69,7 +69,7 @@ router.post(
       comment: [],
     };
     const result = await mongoClient.guestInsertArticle(data);
-    return result;
+    res.send(JSON.stringify(result));
   }
 );
 
