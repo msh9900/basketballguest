@@ -40,7 +40,6 @@ export default function UpdateModal(props: any) {
   const contentSubmitHandler = async (e: any) => {
     e.preventDefault();
 
-    router.reload();
     const FD = new FormData();
     FD.append("userId", userId);
     FD.append("title", titleText);
@@ -60,6 +59,9 @@ export default function UpdateModal(props: any) {
         body: FD,
       }
     );
+    const result = await response.json();
+
+    router.reload();
   };
 
   useEffect(() => {
