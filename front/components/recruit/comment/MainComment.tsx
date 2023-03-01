@@ -22,7 +22,7 @@ export default function MainComment(props: MainCommentInterface) {
   const replyWriteHandler = () => {
     if (isLogin) {
       setUpdateReplyClick(false);
-      setWriteReplyClick(true);
+      setWriteReplyClick(!writeReplyClick);
     } else {
       router.replace("/login");
     }
@@ -39,7 +39,7 @@ export default function MainComment(props: MainCommentInterface) {
   };
   const replyUpdateHandler = () => {
     setWriteReplyClick(false);
-    setUpdateReplyClick(true);
+    setUpdateReplyClick(!updateReplyClick);
   };
   const commentSubmitHandler = async () => {
     //댓글 입력 post 구현
@@ -136,7 +136,7 @@ export default function MainComment(props: MainCommentInterface) {
           </Avatar>
           <textarea
             className={classes.comment_input}
-            placeholder="답글을 입력해주세요"
+            placeholder="수정하실 답글을 입력해주세요"
             ref={updateComment}
             onChange={checkItemChangeHandler}
             style={{ height: 50 + textareaHeight * 24 + "px" }}

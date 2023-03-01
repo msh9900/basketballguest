@@ -25,7 +25,8 @@ export default function SubComment(props: SubCommentInterface) {
   };
   const replyUpdateHandler = () => {
     setWriteReplyClick(false);
-    setUpdateReplyClick(true);
+
+    setUpdateReplyClick(!updateReplyClick);
   };
   const checkItemChangeHandler = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -82,7 +83,7 @@ export default function SubComment(props: SubCommentInterface) {
           </Avatar>
           <textarea
             className={classes.comment_input}
-            placeholder="답글을 입력해주세요"
+            placeholder="댓글을 수정해주세요"
             ref={writeComment}
             onChange={checkItemChangeHandler}
             style={{ height: 50 + textareaHeight * 24 + "px" }}
