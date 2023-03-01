@@ -46,7 +46,7 @@
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white" height="25px">
 <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" height="25px">
 <img src="https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=mongoDB&logoColor=white" height="25px">
-<img src="https://img.shields.io/badge/nodemailer-686854?style=flat-square&logo=nodemailer&logoColor=white" height="25px">
+<img src="https://img.shields.io/badge/Nodemailer-686854?style=flat-square&logo=Nodemailer&logoColor=white" height="25px">
 <img src="https://img.shields.io/badge/puppeteer-95B854?style=flat-square&logo=puppeteer&logoColor=white"height="25px">
  <img src="https://img.shields.io/badge/AWS-black?style=flat-square&logo=AWS&logoColor=white" height="25"/>&nbsp
 </div>
