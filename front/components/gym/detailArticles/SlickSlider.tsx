@@ -30,7 +30,7 @@ const SlickSlider = (props: Props) => {
         {props.gymImg.map((ele, idx) => (
           <div className={cls.outerImg} key={'gymImg'+idx}>
             <div className={cls.innerImg}>
-              <img onClick={()=>{ImgPop(ele)}} src={ele} alt="체육관 이미지 | 확장자 문제로 이미지가 보이지 않을 수 있습니다." />
+              <img onClick={()=>{ImgPop(ele)}} src={ele} alt="체육관 이미지" />
             </div>
           </div>
         ))}

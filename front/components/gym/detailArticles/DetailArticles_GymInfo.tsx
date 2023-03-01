@@ -6,9 +6,10 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
 
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 // types
 import gymArticleDataType from "util/types/gymArticleDataType";
+import { useSelector } from "react-redux";
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -17,15 +18,12 @@ interface Props {
   setIsFetchingArticles: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const htmlString = '<div><p>hello</p><p>World</p></div>';
 const DetailArticles_GymInfo = (props: Props) => {
-  useEffect(() => {
-    autoResizeTextarea();
-  }, []);
-
+  const userId = useSelector((state: any) => state.login?.userId);
   // useEffect(() => {
-  //   console.log('isFetchingArticles', props.isFetchingArticles)
-  // }, [props.isFetchingArticles]);
+  //   console.log('gymInfo', props.gymInfo);
+  //   // articleUserId
+  // }, []);
 
   const router = useRouter();
   // DELETE
@@ -53,17 +51,6 @@ const DetailArticles_GymInfo = (props: Props) => {
     return temp;
   };
 
-  const autoResizeTextarea = () => {
-    let textarea = document.querySelector(
-      ".autoTextarea"
-    ) as HTMLTextAreaElement;
-    if (textarea) {
-      textarea.style.height = "auto";
-      let height = textarea.scrollHeight; // 높이
-      textarea.style.height = `${height + 8}px`;
-    }
-  };
-
   return (
     <>
       {!props.isFetchingArticles && (
@@ -76,26 +63,30 @@ const DetailArticles_GymInfo = (props: Props) => {
                   <h2>{props.gymInfo.title}</h2>
                 </div>
                 <div className={cls.Right}>
-                  <button
-                    onClick={() => {
-                      props.setIsArticleEditing(true);
-                    }}
-                  >
-                    <Image
-                      src="/images/rental/pencil.png"
-                      alt="수정 버튼"
-                      width="25"
-                      height="25"
-                    />
-                  </button>
-                  <button onClick={deleteArticle}>
-                    <Image
-                      src="/images/rental/bin.png"
-                      alt="삭제 버튼"
-                      width="25"
-                      height="25"
-                    />
-                  </button>
+                  {props.gymInfo.articleUserId === userId && (
+                    <>
+                      <button
+                        onClick={() => {
+                          props.setIsArticleEditing(true);
+                        }}
+                      >
+                        <Image
+                          src="/images/rental/pencil.png"
+                          alt="수정 버튼"
+                          width="25"
+                          height="25"
+                        />
+                      </button>
+                      <button onClick={deleteArticle}>
+                        <Image
+                          src="/images/rental/bin.png"
+                          alt="삭제 버튼"
+                          width="25"
+                          height="25"
+                        />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 

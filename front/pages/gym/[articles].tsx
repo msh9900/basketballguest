@@ -9,10 +9,7 @@ interface Props{
   gymData:any, 
 }
 const articles = (props:Props) => {
-
   const [gymInfo, setGymInfo] = useState<gymArticleDataType>(props.gymData);
-  const articleUserId = props.gymData.articleUserId
-  
   const serviceTitle = 'BPT'
 	const pageTitle = '상세 정보'
 	const pageDesc = '게시글 상세 정보, 리뷰, 댓글 페이지.'
@@ -54,7 +51,6 @@ const articles = (props:Props) => {
       <DetailArticles 
         gymInfo={gymInfo}
         setGymInfo={setGymInfo}
-        articleUserId={articleUserId}
       />
     </>
   );

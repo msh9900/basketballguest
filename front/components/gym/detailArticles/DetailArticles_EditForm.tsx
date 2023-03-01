@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import gymArticleDataType from "util/types/gymArticleDataType";
 import setInitialValue from "./setInitialValue";
 import DetailArticles_EditImg from "./DetailArticles_EditImg";
-import Wyziwyg from 'components/common/wyzywig/Wyziwyg'
+import Wyziwyg from "components/common/wyzywig/Wyziwyg";
 
 interface Props {
   gymInfo: gymArticleDataType;
@@ -19,7 +19,7 @@ const DetailArticles_EditForm = (props: Props) => {
   const router = useRouter();
   const stateId = useSelector((state: any) => state.login.userId);
   const stateName = useSelector((state: any) => state.login.userName);
-  const [content, setContent] = useState(props.gymInfo.content)
+  const [content, setContent] = useState(props.gymInfo.content);
   const [openingDays, setOpeningDays] = useState([
     { name: "일", open: true },
     { name: "월", open: true },
@@ -136,6 +136,7 @@ const DetailArticles_EditForm = (props: Props) => {
         <div className={cls.mainContent}>
           <div className={cls.eachContent}>
             <div className={cls.center}>
+              
               <div className={cls.eachField}>
                 <div className={cls.fieldName}>제목</div>
                 <div className={cls.dataField}>
@@ -143,21 +144,6 @@ const DetailArticles_EditForm = (props: Props) => {
                 </div>
               </div>
 
-              <DetailArticles_EditImg
-                imgFormData={imgFormData}
-                setImgFormData={setImgFormData}
-                inputImgs={inputImgs}
-                setInputImgs={setInputImgs}
-              />
-
-            <div className={cls.outerWyz}>
-              <p className={cls.outerWyzTitile}>내용</p>
-              <Wyziwyg
-                content={content}
-                setContent={setContent}
-              />
-            </div>
-            
               <div className={cls.eachField}>
                 <div className={cls.fieldName}>연락처</div>
                 <div className={cls.dataField}>
@@ -230,6 +216,19 @@ const DetailArticles_EditForm = (props: Props) => {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              <div className={cls.eachField}>
+                <DetailArticles_EditImg
+                  imgFormData={imgFormData}
+                  setImgFormData={setImgFormData}
+                  inputImgs={inputImgs}
+                  setInputImgs={setInputImgs}
+                />
+              </div>
+
+              <div className={cls.outerWyz}>
+                <Wyziwyg content={content} setContent={setContent} />
               </div>
             </div>
 

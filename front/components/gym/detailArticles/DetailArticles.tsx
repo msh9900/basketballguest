@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 interface Props {
   gymInfo: gymArticleDataType;
   setGymInfo: any;
-  articleUserId: any;
 }
 
 const DetailArticles = (props: Props) => {
@@ -50,12 +49,12 @@ const DetailArticles = (props: Props) => {
 
         <h1>리뷰</h1>
         <div className={cls.contentBox}>
-          <ReviewSection articleUserId={props.articleUserId} />
+          <ReviewSection articleUserId={props.gymInfo.articleUserId} />
         </div>
 
         <h1>댓글</h1>
         <div className={cls.contentBox}>
-          <CommentSection articleUserId={props.articleUserId} />
+          <CommentSection articleUserId={props.gymInfo.articleUserId} />
         </div>
       </div>
     </>

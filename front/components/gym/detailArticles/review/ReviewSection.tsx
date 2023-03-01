@@ -36,7 +36,7 @@ const ReviewSection = (props:Props) => {
 
       // 게시글 작성자는 리뷰 작성 금지 :
       if(stateId === props.articleUserId){
-        alert("게시글 작성인은 리뷰를 작성할 수 없습니다.");
+        alert("게시글 작성자는 리뷰를 작성할 수 없습니다.");
         return;
       }
 
