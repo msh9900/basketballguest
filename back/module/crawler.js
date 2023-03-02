@@ -21,7 +21,7 @@ const crawler = async (address) => {
   //await Promise.all([ await page.goto('https://address.dawul.co.kr/'),
   //page.waitForNavigation(),
   //]);
-  await page.goto('https://address.dawul.co.kr/', {
+  await page.goto('http://address.dawul.co.kr/', {
     waitUntil: 'load',
     // Remove the timeout
     timeout: 0,
