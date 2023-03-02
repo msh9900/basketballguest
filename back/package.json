@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" server.ts"
+    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" server.ts",
+    "build": "node build",
+    "start": "node start"
   },
   "author": "",
   "license": "ISC",
