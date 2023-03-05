@@ -13,34 +13,32 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  height: 700px;
+  height: 850px;
   max-width: 2600px;
-  
-  .buttons{
 
+  .buttons {
     display: flex;
-    width:100%;
-
+    width: 100%;
 
     .findUserInfoBtn {
       width: calc(50% - 5px);
       text-align: center;
       line-height: 40px;
-      height:40px;
-      border:1px solid black;
+      height: 40px;
+      border: 1px solid black;
       border-radius: 5px;
-      font-size:15px;
-      margin-top:-20px;
-      margin-bottom:10px;
-      cursor:pointer;
+      font-size: 15px;
+      margin-top: -20px;
+      margin-bottom: 10px;
+      cursor: pointer;
       background-color: burlywood;
-      color:white;
-      &:hover{
-        color:brown;
+      color: white;
+      &:hover {
+        color: brown;
       }
-      &:nth-of-type(2){
-        margin-left:10px;
-      } 
+      &:nth-of-type(2) {
+        margin-left: 10px;
+      }
     }
   }
   .title {
@@ -49,7 +47,7 @@
   }
 
   .logo {
-    top: 15%;
+    top: 11%;
     text-align: center;
     width: 100%;
     position: relative;
@@ -59,7 +57,7 @@
     color: black;
     font-family: "Rubik Vinyl";
     min-width: 400px;
-    z-index:2;
+    z-index: 2;
   }
 
   .login {
@@ -73,10 +71,10 @@
     max-width: 384px;
     border: 1px solid #c9c4c4;
     border-radius: 6px;
-    input{
-      padding-left:10px;
-      font-size:13px;
-      z-index:3;
+    input {
+      padding-left: 10px;
+      font-size: 13px;
+      z-index: 3;
     }
 
     .font {
