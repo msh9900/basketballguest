@@ -16,7 +16,7 @@
 
 **윤시준**
 <br />
-담당 부분: 체육관 검색 및 게시판 로직 
+담당 부분: 체육관 검색 및 게시판 로직 구현
 <br />
 -Github: [@webcodur](https://github.com/webcodur)
 
