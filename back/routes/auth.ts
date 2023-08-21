@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import  {transporter}  from "../routeModel/emailConfig";
+import {transporter}  from "../routeModel/emailConfig";
 import { createIdEmail, createPwEmail } from '../routeModel/emailTemplates';
 
 const mongoDB = require('../controllers/guestMongoControl').mongoDatabase;
