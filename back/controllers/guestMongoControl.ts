@@ -1,5 +1,5 @@
-const MongoClient = require('../routes/mongoConnet');
-const _guest = MongoClient.connect();
+const mongoClient = require('../connector/mongoConnect');
+const _guest = mongoClient.connect();
 
 import { guestDataType } from '../type/guestDataType';
 import { guestCommentType } from '../type/guestDataType';

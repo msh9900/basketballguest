@@ -1,4 +1,4 @@
-const mongoClient = require('../routes/mongoConnet');
+const mongoClient = require('../connector/mongoConnect');
 const _user = mongoClient.connect();
 
 import { rentalFilterDataType } from '../type/rentalDataType';

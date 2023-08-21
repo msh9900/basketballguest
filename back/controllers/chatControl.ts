@@ -1,5 +1,5 @@
-const MongoClient = require('../routes/mongoConnet');
-const _chat = MongoClient.connect();
+const mongoClient = require('../routes/mongoConnet');
+const _chat = mongoClient.connect();
 
 const mongoDB = {
   insertChatting: async (userId: string, message: string) => {
