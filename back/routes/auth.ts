@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import {transporter}  from "../routeModel/emailConfig";
 import { createIdEmail, createPwEmail } from '../routeModel/emailTemplates';
 
-const mongoDB = require('../controllers/guestMongoControl').mongoDatabase;
+const mongoDB = require('../controllers/authControl').mongoDatabase;
 const router = express.Router();
 
 router.post('/findid', async (req: Request, res: Response) => {

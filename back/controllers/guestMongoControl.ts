@@ -1,4 +1,5 @@
 const mongoClient = require('../connector/mongoConnect');
+
 const _guest = mongoClient.connect();
 
 import { guestDataType } from '../type/guestDataType';
